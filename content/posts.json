@@ -6,6 +6,7 @@
     "date": "2026-10-18",
     "source": "ACT with CrossEntropyLoss.html",
     "sourceCommit": "0db49e695147ddb7a48d11e3daf16d20114855dd",
-    "sections": []
+    "sections": [],
+    "descriptionEn": "From discrete base velocities to cross-entropy, L1, KL, visual features, latent variables, and temporal ensembling in ACT."
   }
 ]

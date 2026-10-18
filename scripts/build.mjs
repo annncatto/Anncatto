@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
 import katex from "katex";
@@ -18,6 +19,19 @@ await fs.cp("content/images", path.join(out, "assets/content"), {
   recursive: true,
 });
 await fs.cp(".build", path.join(out, "assets"), { recursive: true });
+const moduleNames = (await fs.readdir(".build")).filter(name => name.endsWith(".js")).sort();
+const versionHash = createHash("sha256");
+for (const name of moduleNames) versionHash.update(await fs.readFile(path.join(".build", name)));
+versionHash.update(await fs.readFile("public/style.css"));
+versionHash.update(await fs.readFile("public/fonts.css"));
+const assetVersion = versionHash.digest("hex").slice(0, 12);
+for (const name of moduleNames) {
+  const source = await fs.readFile(path.join(".build", name), "utf8");
+  const versioned = source.replace(/((?:from\s*|import\s*)["'])(\.[^"']+\.js)(["'])/g,
+    (_, start, rel, end) => `${start}${rel}?v=${assetVersion}${end}`);
+  await fs.writeFile(path.join(out, "assets", name), versioned);
+}
+
 await fs.mkdir(path.join(out, "assets/katex"), { recursive: true });
 await fs.copyFile(
   "node_modules/katex/dist/katex.min.css",
@@ -86,7 +100,7 @@ function math(s) {
 }
 function shell(title, description, body, interactive = false) {
   return `<!doctype html>
-<html lang="${interactive ? "en" : "zh-CN"}"${interactive ? ' data-language="en"' : ""}>
+<html lang="en" data-language="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -96,14 +110,15 @@ function shell(title, description, body, interactive = false) {
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/style.css">
-${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : ""}
+${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
 </head>
 <body>
-<a class="skip" href="#main">${interactive ? bilingual("Skip to article", "跳至正文") : "跳至正文"}</a>
-<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${interactive ? '<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>' : ""}</header>
+<a class="skip" href="#main">${bilingual("Skip to content", "跳至正文")}</a>
+<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${'<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
 ${body}
 </body>
-</html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`);
+</html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`)
+    .replace(/(href|src)="([^"?]*\/assets\/[^"?]+\.(?:js|css))"/g, `$1="$2?v=${assetVersion}"`);
 }
 
 async function write(rel, text) {
@@ -121,7 +136,7 @@ for (const p of posts) {
     `notes/${p.slug}/index.html`,
     shell(
       p.title,
-      p.description,
+      p.descriptionEn,
       `<main id="main" class="container"><article>${header}${toc}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
       true,
     ),
@@ -130,23 +145,23 @@ for (const p of posts) {
 const listing = posts
   .map(
     (p) =>
-      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${esc(p.title)}</a></h2><p>${esc(p.description)}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
+      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
   )
   .join("");
 await write(
   "index.html",
   shell(
-    "文章",
-    "Anncatto 的 AI 与机器人技术文章。",
-    `<main id="main" class="container"><h1>文章</h1><ul class="entries">${listing}</ul></main>`,
+    "Articles",
+    "AI and robotics articles by Anncatto.",
+    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul></main>`,
   ),
 );
 await write(
   "404.html",
   shell(
-    "页面不存在",
-    "请从文章索引查找。",
-    '<main id="main" class="container"><h1>页面不存在</h1><p><a href="/">返回文章列表</a>。</p></main>',
+    "Page not found",
+    "Find an article in the index.",
+    `<main id="main" class="container"><h1>${bilingual("Page not found","页面不存在")}</h1><p><a href="/">${bilingual("Back to articles","返回文章列表")}</a></p></main>`,
   ),
 );
 for (const id of Object.keys(defaults))

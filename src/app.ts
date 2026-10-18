@@ -1,25 +1,8 @@
-import { type Language } from "./i18n.js";
+import { language, onLanguageChange } from "./language.js";
 import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId } from "./diagrams.js";
 import { clamp } from "./math.js";
 import { mountCurveRenderer, type CurveRenderer } from "./gpu.js";
 const states = structuredClone(defaults);
-document.documentElement.classList.add("js");
-let language: Language = "en";
-try { if (localStorage.getItem("article-language") === "zh") language = "zh"; } catch {}
-const redraw = new Set<() => void>();
-function setLanguage(next: Language) {
-  language = next;
-  document.documentElement.dataset.language = language;
-  document.documentElement.lang = language === "en" ? "en" : "zh-CN";
-  for (const button of document.querySelectorAll<HTMLElement>("[data-language-choice]"))
-    button.setAttribute("aria-pressed", String(button.dataset.languageChoice === language));
-  try { localStorage.setItem("article-language", language); } catch {}
-  redraw.forEach(update => update());
-}
-for (const button of document.querySelectorAll<HTMLElement>("[data-language-choice]"))
-  button.addEventListener("click", () => setLanguage(button.dataset.languageChoice as Language));
-setLanguage(language);
-
 for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   const id = fig.dataset.diagram as DiagramId;
   const frame = fig.querySelector<HTMLElement>(".diagram-frame")!;
@@ -59,7 +42,7 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
-  redraw.add(update);
+  onLanguageChange(update);
   update();
   if (id === "gaussian" || id === "l1")
     void mountCurveRenderer(surface, id, states[id])

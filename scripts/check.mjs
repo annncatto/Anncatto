@@ -22,7 +22,7 @@ for (const file of files.filter((f) => f.endsWith(".html"))) {
     const link = m[1];
     if (!link.startsWith("/") && !link.startsWith("#")) continue;
     const [p, hash] = link.split("#");
-    let target = p ? path.join(root, stripBasePath(p)) : file;
+    let target = p ? path.join(root, stripBasePath(p.split("?")[0])) : file;
     if (p.endsWith("/")) target = path.join(target, "index.html");
     await fs.access(target);
     if (hash) {

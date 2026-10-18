@@ -562,7 +562,7 @@ li {
   gap: 18px;
 }
 .language-switch {
-  display: none;
+  display: flex;
   align-items: center;
   gap: 3px;
   font-style: normal !important;
