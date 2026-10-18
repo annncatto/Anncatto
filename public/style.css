@@ -740,3 +740,14 @@ li {
 .experiment-result {
   margin-top: 32px;
 }
+
+.unverified-note,
+.unverified-note a {
+  color: #68747a;
+}
+.unverified-status {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 20px;
+}
