@@ -32,14 +32,15 @@ await fs.copyFile(
   path.join(out, "assets/katex/LICENSE"),
 );
 const posts = JSON.parse(await fs.readFile("content/posts.json", "utf8"));
-function figure(id) {
+function figure(id, number) {
   const captions = {
-    information: ["1　概率与信息量", "独立抛公平硬币，比较连续正面事件的信息量。"],
-    entropy: ["2　交叉熵与分布匹配", "示意目标为软分布；实际单条底盘标签为 one-hot。数值以 bit 显示。"],
-    l1: ["3　L1 与预测误差", "示范值固定为 0；预测越接近示范，L1 越小。"],
-    gaussian: ["4　后验与先验", "固定后验 q：均值 1.4、标准差 0.7。实线为先验，虚线为后验。"],
-    network: ["5　条件潜变量", "实线：数据流；虚线：参与 KL 计算的分布。V 为图像特征的汇总。"],
-    temporal: ["6　时序融合", "每列对应同一执行时刻，蓝框选中对 t 的预测；下方为融合权重。"],
+    information: ["概率与信息量", "独立抛公平硬币，比较连续正面事件的信息量。"],
+    entropy: ["交叉熵与分布匹配", "示意目标为软分布；实际单条底盘标签为 one-hot。数值以 bit 显示。"],
+    l1: ["L1 的调整方向", "示范动作固定为 0，箭头表示减小预测误差的方向。"],
+    training: ["动作预测与反向传播", "实线表示前向计算，虚线表示 L1 和 CE 的梯度反传。"],
+    gaussian: ["后验与先验", "固定后验 q：均值 1.4、标准差 0.7。实线为先验，虚线为后验。"],
+    network: ["条件潜变量", "实线：数据流；虚线：参与 KL 计算的分布。V 为图像特征的汇总。"],
+    temporal: ["时序融合", "每列对应同一执行时刻，蓝框选中对 t 的预测；下方为融合权重。"],
   };
   const caption = captions[id];
   if (!caption) throw Error(`Unknown figure: ${id}`);
@@ -50,7 +51,9 @@ function figure(id) {
     const active = Object.entries(state).every(([key, value]) => defaults[id][key] === value);
     return `<button data-example="${i}" aria-pressed="${active}">${label}</button>`;
   }).join("");
-  return `<figure data-diagram="${id}"><div class="figure-heading"><span>图 ${caption[0]}</span><a href="/figures/${id}.svg" data-export download aria-label="导出图 ${caption[0]} 的 SVG">SVG</a></div><div class="controls figure-modes">${modes}${choices ? `<div class="examples" role="group" aria-label="${caption[0]}的情境">${choices}</div>` : ""}${id === "l1" ? '<p class="interaction-hint">也可直接点击曲线区域，改变预测值。</p>' : ""}</div><p class="figure-scroll-hint">横向滑动查看完整图表</p><div class="diagram-frame" tabindex="0" role="region" aria-label="图 ${caption[0]}"><div class="canvas-stage"><div class="svg-layer">${renderDiagram(id)}</div></div></div>${diagramReadout(id) ? `<p class="figure-readout" data-readout aria-live="polite">${diagramReadout(id)}</p>` : ""}<figcaption>${caption[1]}</figcaption></figure>`;
+  const title = `图 ${number}　${caption[0]}`;
+  const readout = diagramReadout(id);
+  return `<figure data-diagram="${id}"><div class="controls figure-modes">${modes}${choices ? `<div class="examples" role="group" aria-label="${caption[0]}的情境">${choices}</div>` : ""}${id === "l1" ? '<p class="interaction-hint">点击曲线可改变预测值。</p>' : ""}</div><p class="figure-scroll-hint">横向滑动查看完整图表</p><div class="diagram-frame" tabindex="0" role="region" aria-label="${title}"><div class="canvas-stage"><div class="svg-layer">${renderDiagram(id)}</div></div></div><figcaption><span class="figure-title">${title}</span>${readout ? `<span class="figure-readout" data-readout aria-live="polite">${readout}</span>` : ""}<span class="figure-description">${caption[1]}</span><a class="figure-export" href="/figures/${id}.svg" data-export download aria-label="导出${title}的 SVG">SVG</a></figcaption></figure>`;
 }
 
 function math(s) {
@@ -110,8 +113,9 @@ async function write(rel, text) {
   await fs.writeFile(dest, text);
 }
 for (const p of posts) {
+  let figureNumber = 0;
   const raw = await fs.readFile(path.join("content", p.source), "utf8"),
-    content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id)));
+    content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber)));
   const header = `<header class="article-header"><h1>${esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
   const toc = p.sections.length ? `<nav class="toc" aria-label="文章目录"><ol>${p.sections.map(([id, t], i) => `<li><a href="#${id}"><span class="toc-number">${i + 1}</span>${esc(t)}</a></li>`).join("")}</ol></nav>` : "";
   await write(

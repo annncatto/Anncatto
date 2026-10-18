@@ -8,7 +8,7 @@ import {
   discreteKL,
   losses,
 } from "./math.js";
-import { informationDiagram, temporalDiagram } from "./teaching.js";
+import { informationDiagram, temporalDiagram, trainingDiagram } from "./teaching.js";
 
 export const SIZE = { width: 800, height: 360 };
 export const PLOT = {
@@ -27,7 +27,8 @@ export type DiagramId =
   | "l1"
   | "gaussian"
   | "network"
-  | "temporal";
+  | "temporal"
+  | "training";
 export type State = {
   mode?: Mode;
   lossMode?: LossMode;
@@ -46,6 +47,7 @@ export const defaults: Record<DiagramId, State> = {
   gaussian: { mu: 0, sigma: 0.7 },
   network: { mode: "train" },
   temporal: { coefficient: 0.01 },
+  training: {},
 };
 const text = (
   x: number,
@@ -184,6 +186,13 @@ export function l1Diagram(mode: LossMode = "single", prediction = 1) {
   body += path(curve((x) => losses(x, targets).l1, -2, 2, 2), C.accent, 3, "", true);
   body += line(X(prediction, -2, 2), Y(current, 2), X(prediction, -2, 2), PLOT.bottom, C.muted, 1, "3 5");
   body += `<circle cx="${X(prediction, -2, 2)}" cy="${Y(current, 2)}" r="6" fill="${C.accent}" stroke="white" stroke-width="2"/>`;
+  if (mode === "single") {
+    body += `<defs><marker id="l1-direction" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="${C.target}"/></marker></defs>`;
+    for (const sign of [-1, 1]) {
+      body += `<path d="M${X(sign*1.3,-2,2)},${Y(1.3,2)-24} L${X(sign*0.6,-2,2)},${Y(0.6,2)-24}" fill="none" stroke="${C.target}" stroke-width="2.5" marker-end="url(#l1-direction)"/>`;
+      body += text(X(sign*1.05,-2,2), Y(1.05,2)-52, sign < 0 ? "预测增大" : "预测减小", C.ink, 17, "middle");
+    }
+  }
   body += text(752, 349, "动作预测值", C.muted, 16, "end");
   return svg("l1", "L1：预测与示范的距离", `蓝色曲线为 L1，绿色虚线标出示范值。当前预测 ${prediction.toFixed(2)}，损失 ${current.toFixed(2)}。`, body);
 }
@@ -232,6 +241,8 @@ export function renderDiagram(id: DiagramId, state: State = defaults[id]) {
       return networkDiagram(state.mode);
     case "temporal":
       return temporalDiagram(state.coefficient);
+    case "training":
+      return trainingDiagram();
   }
 }
 

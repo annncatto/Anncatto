@@ -34,44 +34,46 @@
 {{figure:entropy}}
 <p>语言自回归生成式模型也使用交叉熵。</p>
 
+通过这种方式，ACT学会了离散token采样下的移动模式
+
 <p>VLA模型的表现为什么会更好？预训练表示帮助模型识别移动中的视觉条件，flow matching 帮助表达整段动作的不同可能，网络容量与交互方式影响这些信息能否被充分利用。</p>
 
 <h2 id="losses">损失</h2>
-<p>从损失来看，机械臂预测连续的关节目标，底盘预测离散的速度类别，潜变量则用一个分布来表示。三部分对应：</p>
+<p>引入交叉熵损失：</p>
 <div class="formula">$$L=L_{\mathrm{L1}}+\lambda_{\mathrm{disc}}L_{\mathrm{CE}}+\beta L_{\mathrm{KL}}.$$</div>
 <p>L1 直接计算预测值与示范值的距离。对一个动作分量，示范为 $a$、预测为 $\hat a$：</p>
 <div class="formula">$$\ell_{\mathrm{L1}}=|\hat a-a|,\qquad \frac{\partial\ell_{\mathrm{L1}}}{\partial\hat a}=\operatorname{sign}(\hat a-a)\quad(\hat a\ne a).$$</div>
-<p>预测偏大，梯度推动它减小；预测偏小，就推动它增大。图中把示范值固定为 0，观察预测值靠近示范时，损失怎样下降。训练时会对参与回归的动作维度和有效时间步求平均。</p>
+<p>预测偏大，梯度推动它减小；预测偏小，就推动它增大。图中把示范值固定为 0，曲线上的箭头标出减小误差的方向。L1 只衡量动作是否接近示范，不规定网络应该依赖 state 还是图像。训练时会对参与回归的动作维度和有效时间步求平均。</p>
 {{figure:l1}}
 <p>KL 比较的是分布。训练时，潜变量编码器根据示范动作和观测给出后验 $q(z)$；推理时没有示范动作，使用先验 $p(z)$。KL 将两者联系起来：</p>
 <div class="formula">$$L_{\mathrm{KL}}=D_{\mathrm{KL}}(q\Vert p)=\mathbb E_{z\sim q}\left[\ln\frac{q(z)}{p(z)}\right].$$</div>
-<p>均值相同，分布也可能宽窄不同。下面固定后验，分别改变先验的均值和标准差；只有两者都匹配时，KL 才为零。</p>
-{{figure:gaussian}}
-<p>CE 则把正确动作类别的概率推高。例如，示范要求停止，模型分给“停止”的概率从 0.2 提高到 0.8，单步损失就从约 1.61 降到 0.22。不加类别权重时，它对 logits 的梯度为：</p>
+<p>CE 则把正确动作类别的概率推高。不加类别权重时，它对 logits 的梯度为：</p>
 <div class="formula">$$\frac{\partial\ell_{\mathrm{CE}}}{\partial u_k}=R_k-\mathbf1[k=y].$$</div>
 <p>L1 和 CE 的梯度通过动作主干向前面的网络传递。图像先变成视觉特征，state 和 z 分别经过投影，主干融合这些输入，再由动作头输出连续值与类别 logits。把主干输出记为 $h_\theta$。前向计算得到预测，反向传播根据预测误差更新参数：</p>
 <div class="formula">$$\begin{aligned}
 (I,s,z)&amp;\longrightarrow h_\theta\longrightarrow(\hat A,u)\longrightarrow L,\\
 \theta&amp;\leftarrow\theta-\eta\nabla_\theta L.
 \end{aligned}$$</div>
+{{figure:training}}
 <p>$\theta$ 表示参与训练的参数，$\eta$ 是学习率。L1 和 CE 的梯度经过动作头、主干，回到参与训练的视觉骨干和输入投影；采样使用重参数化时，也能沿 z 更新后验编码器。KL 直接调整后验的均值和方差。示范值始终固定，变化的是模型的参数、动作预测和概率分布。<code>argmax</code> 留到推理时才用于选取底盘类别。</p>
 
 <h2 id="vision">视觉特征</h2>
-<p>在 ACT 的主干网络中，state、image 的特征与潜变量 z 同时传入。损失下降了，训练后却变成了“上一帧走，下一帧继续走”，而不是看到什么停下来。此前依靠 vision-only 的表现反而更好。</p>
+<p>主干网络中state、image 的特征与潜变量 z 同时传入，连续的state表示比图像变化的特征更容易下降l1损失梯度。</p>
 <p>状态与后续动作高度相关，可能形成预测捷径；停止样本不足、视觉线索不可见或时间错位也可能产生类似表现。相邻关节目标往往变化很小，延续当前状态就能拟合一部分动作；识别停止位置，还需要从画面中提取与任务有关的变化。</p>
-<p>从图像特征提取来看，ACT 使用 ResNet-18。它来自 He 等人的<a href="https://arxiv.org/abs/1512.03385">残差网络</a>，通过 $F(x)+x$ 的连接，让网络学习对已有表示的修正。18 指按论文惯例统计的带权重层数。ACT 的<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/backbone.py#L78-L90">公开实现</a>用 ImageNet 预训练权重初始化，再随动作任务训练。</p>
+<p>ResNet-18来自 He 等人的<a href="https://arxiv.org/abs/1512.03385">残差网络</a>，通过 $F(x)+x$ 的连接，让网络学习对已有表示的修正。用 ImageNet 预训练权重处理图像特征。</p>
 <p>ResNet-18 规模较小，能以较低计算量提取空间特征，适合多相机输入和频繁推理。去掉图像分类头后，输出仍是一张特征图，物体在画面中的位置没有被直接压成一个类别。</p>
-<p><a href="https://arxiv.org/abs/2303.15343">SigLIP</a> 则用图文配对和 sigmoid 损失进行预训练，学习图像与文本的对应关系。图文语义有助于识别场景中的对象和条件，但底盘该在什么距离停下，还要由动作数据建立联系。图像特征、相机视角和停止前后的样本覆盖都会影响这条联系，不能只凭“继续走”就确定是 ResNet-18 的问题。</p>
 
 <h2 id="latent">潜空间</h2>
-<p>KL 散度是另一个特殊的损失。它由 Kullback 与 Leibler 在 1951 年提出，常用于比较概率模型，以及变分推断中的分布约束。在 ACT 中，它约束的正是 z 的分布。</p>
-<p>为什么还需要 z？同一个场景可能有不同的完成方式，比如从物体左侧或右侧绕过去。直接回归一个动作，可能得到两种示范之间的折中。L1 也不能保证选中其中一种：当 −1 和 +1 等概率出现时，[−1,1] 内的预测具有相同的期望 L1 损失。</p>
+<p>KL 散度是另一个特殊的损失。它由 Kullback 与 Leibler 在 1951 年提出，常用于比较概率模型，以及变分推断中的分布约束。</p>
+<p>为什么还需要潜变量z？同一个场景可能有不同的完成方式。直接回归一个动作，可能得到两种示范之间的折中。L1 也不能保证选中其中一种：当 −1 和 +1 等概率出现时，[−1,1] 内的预测具有相同的期望 L1 损失。</p>
 <p><a href="https://arxiv.org/abs/1312.6114">VAE</a> 让编码器输出潜变量分布，而不是一个确定的向量。编码器从样本得到 $\mu$ 和 $\sigma$，采样 z，解码器再重建样本。<a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> 加入观测条件：观测描述当前场景，z 可以表示场景之外的动作差异。</p>
 <p>ACT 的训练后验读取机器人状态 $s$ 和示范动作块 $A$，动作网络同时读取图像、状态和 z。采用对角高斯后验与标准正态先验：</p>
 <div class="formula">$$q_\phi(z\mid s,A)=\mathcal N(\mu_q,\operatorname{diag}\sigma_q^2),\qquad p(z)=\mathcal N(0,I).$$</div>
+<p>均值相同，分布也可能宽窄不同。下面固定后验，分别改变先验的均值和标准差；只有两者都匹配时，KL 才为零。</p>
+{{figure:gaussian}}
 <p>动作重建鼓励 z 携带有用的示范信息，KL 则限制后验偏离先验的程度，避免训练依赖推理时难以取得的编码。这给不同动作模式留下了表示空间，但不保证网络一定使用它。实际训练中，KL 损失很小：</p>
 <figure class="training-log"><img src="/assets/content/act-loss.webp" width="1367" height="76" loading="lazy" alt="训练日志：l1 为 0.0397，kl 显示 0.0000，ce 为 0.0088，kl_w 显示 0.0000。"><figcaption>来源：训练日志。kl 与 kl_w 保留四位小数，均显示为 0.0000。</figcaption></figure>
-<p>KL 很小说明后验与先验接近。固定先验时，这可能伴随潜变量被忽略：模型只靠观测就能降低重建损失，后验也不再需要通过 z 传递多少额外信息。日志中的 0.0000 还受到显示精度影响，不等于精确为零。</p>
+<p>KL 很小说明后验与先验接近。固定先验时，这可能伴随潜变量被忽略：模型只靠观测就能降低重建损失，后验也不再需要通过 z 传递多少额外信息。</p>
 <p>实际上，ACT 在推理时将 z 统一置为 0。<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L110-L114">推理分支</a>是：</p>
 <pre><code>latent_sample = torch.zeros([bs, self.latent_dim], dtype=torch.float32).to(qpos.device)
 latent_input = self.latent_out_proj(latent_sample)</code></pre>
@@ -104,7 +106,7 @@ latent_input = self.latent_out_proj(latent_sample)</code></pre>
 <p>按照论文的方法开启时序融合，系数设为 0.01，动作变得平滑，纠正偏差也更及时，但偶尔仍会静止。时序融合会把不同动作块中、对同一执行时刻 t 的预测放在一起，再加权平均：</p>
 <div class="formula">$$\bar a_t=\frac{\sum_{i=0}^{N-1}e^{-mi}\hat a_t^{(i)}}{\sum_{i=0}^{N-1}e^{-mi}},\qquad i=0\text{ 为最旧预测。}$$</div>
 {{figure:temporal}}
-<p>把系数调到 0.5 后，又出现了明显往返。按当前实现的编号顺序，正系数越大，越偏向旧预测。只有两个预测时，$m=0.5$ 的旧、新权重约为 62% 和 38%，并非各占一半。</p>
+<p>把系数调到 0.5 后，出现了明显动作反复。按当前实现的编号顺序，正系数越大，越偏向旧预测。只有两个预测时，$m=0.5$ 的旧、新权重约为 62% 和 38%，并非各占一半。</p>
 <p>两帧画面相似，也不意味着参与融合的动作一致：旧动作块在较早的观测下预测了更远的一步，新动作块则依据当前观测预测近处的一步。若旧预测仍朝原方向前进，新预测已经开始纠偏，融合就可能延迟这次纠正；持续往返的具体原因还需要结合预测动作、实际位置与推理耗时确认。</p>
 <p>底盘分类扩展对连续动作使用时序融合，离散速度取当前预测首步的类别。启用融合时，每步重新预测，<code>n_action_steps=1</code>。</p>
 <details><summary>潜变量与动作缓存</summary>
