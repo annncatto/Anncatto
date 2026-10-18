@@ -1,0 +1,11 @@
+[
+  {
+    "slug": "act-with-crossentropyloss",
+    "title": "ACT with CrossEntropyLoss",
+    "description": "从底盘离散速度出发，理解交叉熵、L1 与 KL，以及视觉输入、潜变量和时序融合对 ACT 控制行为的影响。",
+    "date": "2026-10-18",
+    "source": "ACT with CrossEntropyLoss.html",
+    "sourceCommit": "0db49e695147ddb7a48d11e3daf16d20114855dd",
+    "sections": []
+  }
+]
