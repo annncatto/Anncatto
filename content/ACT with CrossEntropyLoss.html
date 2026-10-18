@@ -1,8 +1,8 @@
 <p><a href="https://arxiv.org/html/2304.13705">ACT</a> （Action Chunking with Transformers）是任何人可以复现的第一个机器人模仿学习策略。</p>
 <p>Loss：</p>
 <div class="formula">$$L_{\mathrm{ACT}}=L_{\mathrm{L1}}+\beta L_{\mathrm{KL}}.$$</div>
-<p>L1 衡量动作预测的偏差，KL 约束潜变量后验与先验的差异。</p>
-<p>输入当前图像 $I_t$、机器人状态 $s_t$ 和潜变量 $z$，ACT 一次预测长度为 $K$ 的动作块：</p>
+<p>L1 衡量动作预测的偏差，KL约束潜变量后验与先验的差异。</p>
+<p>当前图像 $I_t$、机器人状态 $s_t$ 和潜变量 $z$进入主干网络，一次预测长度为$K$的动作块：</p>
 <div class="formula">$$\hat A_t=f_\theta(I_t,s_t,z),\qquad A_t=(a_t,\ldots,a_{t+K-1}).$$</div>
 
 <h2 id="information">信息如何表示</h2>
