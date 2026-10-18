@@ -52,7 +52,7 @@ fn stroke(point: vec2f, value: vec2f, width: f32) -> f32 {
   }
   let alpha1 = stroke(point, first, 1.5);
   let dash = select(0.0, 1.0, fract(local.x / 13.0) < 0.6153846);
-  let alpha2 = stroke(point, second, 1.5) * dash;
+  let alpha2 = stroke(point, second, 1.5) * dash * select(0.0, 1.0, params.domain.w < 0.5);
   let blue = params.primary.rgb;
   let ink = params.secondary.rgb;
   let alpha = alpha1 + alpha2 * (1.0 - alpha1);

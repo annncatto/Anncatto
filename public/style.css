@@ -4,7 +4,7 @@
   --accent: #237ab2;
   --line: #dce9e9;
   --soft: #f1f7f6;
-  --column: 720px;
+  --column: 680px;
   --gutter: 24px;
 }
 * {
@@ -18,7 +18,7 @@ body {
   color: var(--ink);
   background: #fff;
   font:
-    16px/28px "IBM Plex Sans",
+    16px/25px "IBM Plex Sans",
     "Noto Sans SC",
     -apple-system,
     BlinkMacSystemFont,
@@ -94,7 +94,7 @@ h1 {
 }
 h2 {
   font-size: 22px;
-  margin: 32px 0 12px;
+  margin: 28px 0 10px;
 }
 h3 {
   font-style: normal;
@@ -102,13 +102,13 @@ h3 {
   margin: 28px 0 12px;
 }
 p {
-  margin: 12px 0;
+  margin: 10px 0;
 }
 strong {
   font-weight: 600;
 }
 .article-header {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 .meta {
   font-size: 13px;
@@ -174,7 +174,7 @@ pre code {
   overflow-wrap: normal;
 }
 .formula {
-  margin: 18px 0;
+  margin: 14px 0;
   overflow: auto;
   padding: 4px 0;
 }
@@ -186,7 +186,7 @@ pre code {
 }
 figure {
   width: 100%;
-  margin: 22px 0;
+  margin: 18px 0;
   padding: 0;
 }
 .figure-heading {
@@ -253,8 +253,8 @@ button[aria-pressed="true"] {
   background: #edf7fc;
 }
 .modes button[aria-pressed="true"] {
-  color: #197552;
-  border-color: #abd9c8;
+  color: #416e5b;
+  border-color: #bedfd0;
   background: #eef9f3;
 }
 .interaction-hint {
@@ -275,7 +275,7 @@ figcaption {
 details {
   border-top: 1px solid var(--line);
   padding: 12px 0;
-  margin: 18px 0;
+  margin: 14px 0;
   font-size: 15px;
 }
 summary {
@@ -284,7 +284,7 @@ summary {
   font-weight: 500;
 }
 details p {
-  margin: 12px 0;
+  margin: 10px 0;
 }
 .table-scroll {
   width: 100%;
@@ -326,7 +326,7 @@ li {
 }
 .entries {
   list-style: none;
-  margin: 18px 0;
+  margin: 14px 0;
   padding: 0;
 }
 .entry {
@@ -362,7 +362,7 @@ li {
   }
   body {
     font-size: 16px;
-    line-height: 28px;
+    line-height: 25px;
   }
   .sitebar {
     min-height: 56px;
@@ -487,7 +487,7 @@ li {
 .training-log img {
   display: block;
   width: 100%;
-  min-width: 720px;
+  min-width: 680px;
   height: auto;
 }
 .training-log figcaption {
@@ -509,4 +509,15 @@ li {
   .figure-scroll-hint {
     display: none;
   }
+}
+
+.figure-readout {
+  margin: 2px 0 4px;
+  font-size: 14px;
+  line-height: 23px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+[data-diagram="network"] .canvas-stage {
+  min-width: 540px;
 }

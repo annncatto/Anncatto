@@ -1,4 +1,4 @@
-import { renderDiagram, defaults, examples, PLOT, SIZE, type DiagramId, type Mode, type LossMode } from "./diagrams.js";
+import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId, type Mode } from "./diagrams.js";
 import { clamp } from "./math.js";
 import { mountCurveRenderer, type CurveRenderer } from "./gpu.js";
 const states = structuredClone(defaults);
@@ -11,10 +11,10 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   let renderer: CurveRenderer | null = null;
   function update() {
     layer.innerHTML = renderDiagram(id, states[id]);
+    const readout = fig.querySelector("[data-readout]");
+    if (readout) readout.textContent = diagramReadout(id, states[id]);
     for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-mode]"))
       btn.setAttribute("aria-pressed", String(btn.dataset.mode === states[id].mode));
-    for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-loss-mode]"))
-      btn.setAttribute("aria-pressed", String(btn.dataset.lossMode === states[id].lossMode));
     for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-example]")) {
       const state = examples[id]![Number(btn.dataset.example)]!.state;
       btn.setAttribute("aria-pressed", String(Object.entries(state).every(([key, value]) => states[id][key as keyof typeof state] === value)));
@@ -24,11 +24,6 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-mode]"))
     btn.addEventListener("click", () => {
       states[id].mode = btn.dataset.mode as Mode;
-      update();
-    });
-  for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-loss-mode]"))
-    btn.addEventListener("click", () => {
-      states[id].lossMode = btn.dataset.lossMode as LossMode;
       update();
     });
   for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-example]"))

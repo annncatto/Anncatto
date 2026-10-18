@@ -94,7 +94,7 @@ export async function mountCurveRenderer(
         PLOT.height,
         kind === "gaussian" ? -5 : -2,
         kind === "gaussian" ? 10 : 4,
-        kind === "gaussian" ? 1 : 5,
+        kind === "gaussian" ? 1 : 2,
         kind === "gaussian" ? 0 : 1,
         state.mu ?? 0,
         state.sigma ?? 1,
