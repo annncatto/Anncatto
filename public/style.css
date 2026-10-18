@@ -706,3 +706,7 @@ li {
 @media print {
   .reading-sidebar { display: none; }
 }
+
+.experiment-result {
+  margin-top: 32px;
+}
