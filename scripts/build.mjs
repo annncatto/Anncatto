@@ -126,18 +126,38 @@ async function write(rel, text) {
   await fs.mkdir(path.dirname(dest), { recursive: true });
   await fs.writeFile(dest, text);
 }
+function readingMinutes(raw, language) {
+  const code = [...raw.matchAll(/<pre><code>([\s\S]*?)<\/code><\/pre>/g)];
+  const prose = [...raw.matchAll(new RegExp(`<p lang="${language}">([\\s\\S]*?)<\\/p>`, "g"))]
+    .map(match => match[1].replace(/\$[^$]*\$/g, " ").replace(/<[^>]*>/g, " ")).join(" ");
+  const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
+  const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
+  const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:/g)].length;
+  const codeLines = code.reduce((sum, match) => sum + match[1].split("\n").length, 0);
+  return Math.max(1, Math.ceil(words / 200 + characters / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
+}
+function readingSidebar(raw) {
+  const sections = [{ id: "article-top", en: "ACT", zh: "ACT" }];
+  for (const match of raw.matchAll(/<h2\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)) {
+    const title = language => (match[2].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[2]).replace(/<[^>]*>/g, "");
+    sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
+  }
+  const en = readingMinutes(raw, "en"), zh = readingMinutes(raw, "zh-CN");
+  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span></div><p class="reading-remaining" data-reading-remaining>About ${en} min left</p></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><ol>${sections.map((section,i) => `<li><a href="#${esc(section.id)}"${i === 0 ? ' aria-current="location"' : ""}>${bilingual(esc(section.en), esc(section.zh))}</a></li>`).join("")}</ol></nav></details></aside>`;
+}
 for (const p of posts) {
   let figureNumber = 0;
   const raw = await fs.readFile(path.join("content", p.source), "utf8"),
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber)));
   const header = `<header class="article-header"><h1>${esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const toc = p.sections.length ? `<nav class="toc" aria-label="文章目录"><ol>${p.sections.map(([id, t], i) => `<li><a href="#${id}"><span class="toc-number">${i + 1}</span>${esc(t)}</a></li>`).join("")}</ol></nav>` : "";
+  const sidebar = readingSidebar(raw);
   await write(
     `notes/${p.slug}/index.html`,
     shell(
       p.title,
       p.descriptionEn,
-      `<main id="main" class="container"><article>${header}${toc}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
+      `<main id="main" class="container article-layout">${sidebar}<article id="article-top" data-reading-article>${header}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
       true,
     ),
   );

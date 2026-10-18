@@ -583,3 +583,126 @@ li {
 @media print {
   .language-switch { display: none !important; }
 }
+
+/* Reading navigation stays outside the established text column. */
+.reading-sidebar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 0 20px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  font-size: 13px;
+  line-height: 21px;
+}
+.reading-summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.reading-meter {
+  height: 3px;
+  margin-top: 5px;
+  overflow: hidden;
+  background: var(--soft);
+  border-radius: 2px;
+}
+.reading-meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #91cdb6, var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.reading-remaining {
+  display: none;
+  color: var(--muted);
+  font-size: 12px;
+  margin: 5px 0 0;
+}
+.article-contents {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+}
+.article-contents summary {
+  padding: 2px 0;
+  color: var(--ink);
+  font-size: 13px;
+}
+.article-contents nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.contents-title { display: none; }
+.article-contents ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.article-contents li { margin: 0; }
+.article-contents a {
+  display: block;
+  border-left: 2px solid transparent;
+  padding: 5px 0 5px 12px;
+  text-decoration: none;
+  color: var(--muted);
+  line-height: 20px;
+}
+.article-contents a[aria-current="location"] {
+  border-left-color: var(--accent);
+  color: var(--accent);
+}
+[data-reading-article] h2 {
+  scroll-margin-top: 92px;
+}
+@media (min-width: 1180px) {
+  .reading-sidebar {
+    position: fixed;
+    top: 100px;
+    left: calc(50% - var(--column) / 2 - 224px);
+    display: block;
+    width: 180px;
+    max-height: calc(100vh - 124px);
+    overflow-y: auto;
+    border: 0;
+    padding: 0;
+    z-index: 1;
+  }
+  .reading-remaining { display: block; }
+  .article-contents { margin-top: 24px; }
+  .article-contents summary { display: none; }
+  .article-contents nav {
+    position: static;
+    border: 0;
+    padding: 0;
+    max-height: none;
+    overflow: visible;
+  }
+  .contents-title {
+    display: block;
+    margin: 0 0 9px;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.4px;
+  }
+}
+@media print {
+  .reading-sidebar { display: none; }
+}

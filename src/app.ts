@@ -1,3 +1,4 @@
+import { mountReadingNavigation } from "./reading.js";
 import { language, onLanguageChange } from "./language.js";
 import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId } from "./diagrams.js";
 import { clamp } from "./math.js";
@@ -49,3 +50,5 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
       .then((r) => { renderer = r; renderer?.draw(states[id]); })
       .catch((error) => console.warn("SVG fallback retained:", error));
 }
+
+mountReadingNavigation();
