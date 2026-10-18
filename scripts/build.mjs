@@ -5,6 +5,7 @@ import katex from "katex";
 import { basePath } from "./paths.mjs";
 import { renderDiagram, defaults, examples, diagramReadout } from "../.build/diagrams.js";
 import { translateLabel } from "../.build/i18n.js";
+import { pixelCatSVG } from "../.build/pixel-cat.js";
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -144,7 +145,7 @@ function readingSidebar(raw) {
     sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
   }
   const en = readingMinutes(raw, "en"), zh = readingMinutes(raw, "zh-CN");
-  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span></div><p class="reading-remaining" data-reading-remaining>About ${en} min left</p></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><ol>${sections.map((section,i) => `<li><a href="#${esc(section.id)}"${i === 0 ? ' aria-current="location"' : ""}>${bilingual(esc(section.en), esc(section.zh))}</a></li>`).join("")}</ol></nav></details></aside>`;
+  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><ol>${sections.map((section,i) => `<li><a href="#${esc(section.id)}"${i === 0 ? ' aria-current="location"' : ""}>${bilingual(esc(section.en), esc(section.zh))}</a></li>`).join("")}</ol></nav></details></aside>`;
 }
 for (const p of posts) {
   let figureNumber = 0;
@@ -186,6 +187,7 @@ await write(
 );
 for (const id of Object.keys(defaults))
   await write(`figures/${id}.svg`, renderDiagram(id));
+await write("figures/reading-cat.svg", pixelCatSVG());
 console.log(
   `Built ${posts.length} article(s), TypeScript modules, WGSL, ${Object.keys(defaults).length} SVG fallbacks and local KaTeX.`,
 );

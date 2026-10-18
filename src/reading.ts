@@ -7,27 +7,31 @@ export function mountReadingNavigation() {
   const meter = sidebar.querySelector<HTMLElement>(".reading-meter")!;
   const fill = sidebar.querySelector<HTMLElement>("[data-reading-fill]")!;
   const percent = sidebar.querySelector<HTMLElement>("[data-reading-percent]")!;
-  const remaining = sidebar.querySelector<HTMLElement>("[data-reading-remaining]")!;
+  const time = sidebar.querySelector<HTMLElement>("[data-reading-time]")!;
+  const cat = sidebar.querySelector<HTMLElement>("[data-reading-cat]")!;
   const contents = sidebar.querySelector<HTMLDetailsElement>(".article-contents")!;
   const navigation = sidebar.querySelector<HTMLElement>("nav")!;
   const desktop = matchMedia("(min-width: 1180px)");
   const sections = [...navigation.querySelectorAll<HTMLAnchorElement>("a[href^='#']")]
     .map(link => ({ link, target: document.getElementById(link.hash.slice(1))!, top: 0 }));
   let start = 0, end = 0, frame = 0;
+  let scrollStop: ReturnType<typeof setTimeout> | undefined;
 
   function update() {
     frame = 0;
     const progress = Math.max(0, Math.min(1, (scrollY - start) / Math.max(1, end - start)));
     const value = Math.round(progress * 100);
     const total = Number(language === "en" ? sidebar!.dataset.minutesEn : sidebar!.dataset.minutesZh);
-    const minutes = Math.ceil(total * (1 - progress));
+    const minutes = Math.max(1, Math.round(total * (1 - progress)));
     fill.style.transform = `scaleX(${progress})`;
+    cat.style.left = `${Math.max(0, Math.min(meter.clientWidth - cat.offsetWidth, progress * meter.clientWidth - cat.offsetWidth / 2))}px`;
     percent.textContent = `${value}%`;
     meter.setAttribute("aria-valuenow", String(value));
     meter.setAttribute("aria-label", language === "en" ? "Reading progress" : "阅读进度");
     meter.setAttribute("aria-valuetext", language === "en" ? `${value}% read` : `已阅读 ${value}%`);
-    remaining.textContent = progress >= 1 ? (language === "en" ? "Finished" : "已读完")
-      : language === "en" ? `About ${minutes} min left` : `剩余约 ${minutes} 分钟`;
+    time.textContent = progress >= 1 ? (language === "en" ? "Finished" : "已读完")
+      : progress > 0 ? (language === "en" ? `About ${minutes} min left` : `还剩约 ${minutes} 分钟`)
+      : language === "en" ? `${total} min read` : `预计 ${total} 分钟`;
     navigation.setAttribute("aria-label", language === "en" ? "Contents" : "文章目录");
     let current = sections[0];
     for (const section of sections) {
@@ -51,7 +55,12 @@ export function mountReadingNavigation() {
     if (!desktop.matches && (event.target as Element).closest("a")) contents.open = false;
   });
   desktop.addEventListener("change", setLayout);
-  addEventListener("scroll", schedule, { passive: true });
+  addEventListener("scroll", () => {
+    cat.classList.add("is-moving");
+    clearTimeout(scrollStop);
+    scrollStop = setTimeout(() => cat.classList.remove("is-moving"), 240);
+    schedule();
+  }, { passive: true });
   addEventListener("resize", measure);
   new ResizeObserver(measure).observe(article);
   onLanguageChange(measure);
