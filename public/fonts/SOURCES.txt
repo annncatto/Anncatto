@@ -1,0 +1,14 @@
+IBM Plex Sans — Regular, Medium, Medium Italic (unmodified WOFF2)
+Source: https://github.com/IBM/plex/tree/master/packages/plex-sans/fonts/complete/woff2
+License: IBM-Plex-LICENSE.txt (SIL OFL 1.1)
+
+Noto Sans SC — Regular, Medium (Sans 2.004; WOFF2 subsets)
+Source: https://github.com/notofonts/noto-cjk/tree/Sans2.004/Sans/SubsetOTF/SC
+License: Noto-Sans-SC-LICENSE.txt (SIL OFL 1.1)
+Subsets retain GB2312 characters and additional non-ASCII characters used in
+content/ and src/. Other characters use the CSS system-font fallback.
+Converted with fontTools subset; font naming and license records retained.
+
+Bitstream Vera Sans Mono — Regular (unmodified VeraMono.ttf, version 1.10)
+Source: https://download.gnome.org/sources/ttf-bitstream-vera/1.10/
+License: Bitstream-Vera-LICENSE.txt

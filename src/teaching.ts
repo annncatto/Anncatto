@@ -1,10 +1,5 @@
-const palette = {
-  blue: "#0067b1",
-  orange: "#ad4d00",
-  ink: "#242a30",
-  muted: "#52606d",
-  grid: "#dbe2e8",
-};
+import { C, FONT } from "./theme.js";
+const palette = { ...C, blue: C.accent, green: C.target };
 
 const escape = (value: string | number) =>
   String(value)
@@ -45,10 +40,10 @@ function frame(
   body: string,
   height: number,
 ): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 ${height}" role="img" aria-labelledby="${id}-title ${id}-desc" style="font-family:Arial,'Noto Sans CJK SC','Microsoft YaHei',sans-serif"><title id="${id}-title">${escape(title)}</title><desc id="${id}-desc">${escape(description)}</desc><rect width="800" height="${height}" fill="white"/>${body}</svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 ${height}" role="img" aria-labelledby="${id}-title ${id}-desc" style="font-family:${FONT}"><title id="${id}-title">${escape(title)}</title><desc id="${id}-desc">${escape(description)}</desc><rect width="800" height="${height}" fill="white"/>${body}</svg>`;
 }
 
-/** Self-information in bits; the slider denotes the true class probability. */
+/** Self-information in bits; the selected example denotes the true class probability. */
 export function informationDiagram(probability = 0.25): string {
   const p = Number.isFinite(probability)
     ? Math.max(0.02, Math.min(1, probability))
@@ -56,11 +51,11 @@ export function informationDiagram(probability = 0.25): string {
   const information = -Math.log2(p);
   const x = (value: number) => 76 + 650 * value;
   const y = (value: number) => 306 - 34 * value;
-  let body = label(28, 32, "概率越低，事件发生时的信息量越大", {
-    size: 23,
+  let body = label(28, 32, "一次正面的概率为 ½，连续 n 次为 (½)ⁿ", {
+    size: 18,
     weight: 600,
   });
-  body += label(28, 62, "I(p) = −log₂(p)；图中对数以 2 为底，单位为 bit。", {
+  body += label(28, 62, "I(p) = −log₂(p)", {
     color: palette.muted,
   });
   body += label(76, 88, "信息量 / bit", { color: palette.muted, size: 16 });
@@ -92,33 +87,24 @@ export function informationDiagram(probability = 0.25): string {
     return `${i ? "L" : "M"}${x(value).toFixed(2)},${y(-Math.log2(value)).toFixed(2)}`;
   }).join(" ");
   body += `<path d="${path}" fill="none" stroke="${palette.blue}" stroke-width="3"/>`;
-  for (const value of [0.25, 0.5]) {
-    const bits = -Math.log2(value);
-    body += `<circle cx="${x(value)}" cy="${y(bits)}" r="5" fill="white" stroke="${palette.blue}" stroke-width="2"/>`;
-    body += line(x(value), y(bits) - 9, x(value), y(bits) - 44, palette.blue);
-    body += label(x(value) + 9, y(bits) - 48, `p = ${value} → ${bits} bit`, {
-      color: palette.blue,
-      size: 17,
-    });
-  }
-  body += line(x(p), y(information), x(p), 306, palette.orange, 1.5);
-  body += `<circle cx="${x(p)}" cy="${y(information)}" r="7" fill="${palette.orange}" stroke="white" stroke-width="2"/>`;
+  body += line(x(p), y(information), x(p), 306, palette.green, 1.5);
+  body += `<circle cx="${x(p)}" cy="${y(information)}" r="7" fill="${palette.green}" stroke="white" stroke-width="2"/>`;
   body += label(
     28,
     381,
-    `● 当前概率 ${p.toFixed(2)} → 信息量 ${information.toFixed(2)} bit`,
-    { color: palette.orange, size: 20, weight: 600 },
+    `● 当前概率 ${Number(p.toFixed(5))} → 信息量 ${information.toFixed(2)} bit`,
+    { color: palette.green, size: 18, weight: 500 },
   );
   body += label(
     28,
     408,
-    "若 p 是正确类别的预测概率，p 越低，交叉熵损失越大。",
+    "概率每减半，信息量增加 1 bit。",
     { color: palette.muted, size: 17 },
   );
   return frame(
     "information",
     "概率与自信息",
-    `自信息为负的二进制对数。当前概率为 ${p.toFixed(2)}，信息量为 ${information.toFixed(2)} bit。概率 0.5 对应 1 bit，概率 0.25 对应 2 bit。`,
+    `自信息为负的二进制对数。当前概率为 ${Number(p.toFixed(5))}，信息量为 ${information.toFixed(2)} bit。概率 0.5 对应 1 bit，概率 0.25 对应 2 bit。`,
     body,
     420,
   );
@@ -133,11 +119,11 @@ export function temporalDiagram(coefficient = 0.01): string {
   const columns = ["t − 2", "t − 1", "t", "t + 1", "t + 2"];
   const sources = ["t − 2", "t − 1", "t"];
   const centers = [259, 367, 475, 583, 691];
-  let body = label(28, 32, "时间集成：融合对同一时刻 t 的三次预测", {
-    size: 23,
+  let body = label(28, 32, "三个动作块，同一个执行时刻 t", {
+    size: 18,
     weight: 600,
   });
-  body += label(28, 62, "每行是一次预测得到的动作块；此例每块包含 3 步。", {
+  body += label(28, 62, "每行是一个动作块，蓝框标出要融合的动作。", {
     color: palette.muted,
   });
   body += label(28, 94, "预测产生时刻", { size: 16, color: palette.muted });
@@ -175,14 +161,10 @@ export function temporalDiagram(coefficient = 0.01): string {
       );
     }
   }
-  body += label(28, 293, "只融合蓝框中的三项：它们都预测 t 时刻的动作。", {
-    size: 19,
+  body += label(28, 293, "蓝框内的三项 → 加权得到 t 时刻的动作", {
+    size: 18,
     color: palette.blue,
     weight: 600,
-  });
-  body += label(28, 319, "不是把 t − 2、t − 1、t 三个执行时刻的动作平均。", {
-    size: 17,
-    color: palette.muted,
   });
   const mLabel =
     (m < 0.001 && m > 0) || m >= 10000
@@ -190,18 +172,18 @@ export function temporalDiagram(coefficient = 0.01): string {
       : String(Number(m.toFixed(3)));
   body += label(
     28,
-    350,
-    `归一化权重 ∝ exp(−m × i)；m = ${mLabel}，i = 0 为最旧预测`,
+    322,
+    `权重 ∝ exp(−m × i)；m = ${mLabel}`,
     { size: 17 },
   );
   for (let row = 0; row < 3; row++) {
-    const top = 366 + 36 * row;
+    const top = 338 + 36 * row;
     body += label(28, top + 18, `${sources[row]} 产生的预测`, {
       size: 16,
-      color: row === 0 ? palette.orange : palette.ink,
+      color: row === 0 ? palette.green : palette.ink,
     });
-    body += `<rect x="230" y="${top}" width="430" height="23" rx="3" fill="#f0f3f5"/>`;
-    body += `<rect x="230" y="${top}" width="${(430 * weights[row]!).toFixed(3)}" height="23" rx="3" fill="${row === 0 ? palette.orange : palette.blue}"/>`;
+    body += `<rect x="230" y="${top}" width="430" height="23" rx="3" fill="#eff5f5"/>`;
+    body += `<rect x="230" y="${top}" width="${(430 * weights[row]!).toFixed(3)}" height="23" rx="3" fill="${row === 0 ? palette.green : palette.blue}"/>`;
     body += label(678, top + 18, `${(100 * weights[row]!).toFixed(1)}%`, {
       size: 17,
       weight: 600,
@@ -209,8 +191,8 @@ export function temporalDiagram(coefficient = 0.01): string {
   }
   body += label(
     28,
-    489,
-    "每条浅灰底表示 100%；m > 0 时旧预测权重更高，m = 0 时等权。",
+    461,
+    "浅色底条表示 100%；绿色为最旧预测。",
     { color: palette.muted, size: 16 },
   );
   return frame(
@@ -218,6 +200,6 @@ export function temporalDiagram(coefficient = 0.01): string {
     "ACT 时间集成的对齐与权重",
     `三次动作块预测来自 t 减 2、t 减 1 和 t。只抽取各块对执行时刻 t 的预测进行融合。系数为 ${mLabel}，由旧到新权重分别为 ${weights.map((value) => `${(value * 100).toFixed(1)}%`).join("、")}。`,
     body,
-    500,
+    472,
   );
 }

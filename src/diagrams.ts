@@ -1,3 +1,5 @@
+import { C, FONT } from "./theme.js";
+export { C } from "./theme.js";
 import {
   gaussian,
   gaussianKL,
@@ -16,13 +18,6 @@ export const PLOT = {
   bottom: 296,
   width: 688,
   height: 208,
-};
-export const C = {
-  ink: "#242a30",
-  muted: "#52606d",
-  grid: "#dde3e9",
-  accent: "#0067b1",
-  target: "#ad4d00",
 };
 export type Mode = "train" | "infer";
 export type LossMode = "single" | "bimodal";
@@ -46,9 +41,9 @@ export type State = {
 };
 export const defaults: Record<DiagramId, State> = {
   information: { probability: 0.25 },
-  entropy: { r0: 0.25, r1: 0.5 },
-  l1: { lossMode: "single", prediction: 0.5 },
-  gaussian: { mu: 0, sigma: 1 },
+  entropy: { r0: 1 / 3, r1: 0.5 },
+  l1: { lossMode: "single", prediction: 1 },
+  gaussian: { mu: 0, sigma: 0.7 },
   network: { mode: "train" },
   temporal: { coefficient: 0.01 },
 };
@@ -80,7 +75,7 @@ const svg = (
   body: string,
   height = SIZE.height,
 ) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 ${height}" role="img" aria-labelledby="${id}-title ${id}-desc" style="font-family:Arial,'Noto Sans CJK SC','Microsoft YaHei',sans-serif"><title id="${id}-title">${title}</title><desc id="${id}-desc">${description}</desc><rect width="800" height="${height}" fill="white"/>${body}</svg>`;
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 ${height}" role="img" aria-labelledby="${id}-title ${id}-desc" style="font-family:${FONT}"><title id="${id}-title">${title}</title><desc id="${id}-desc">${description}</desc><rect width="800" height="${height}" fill="white"/>${body}</svg>`;
 const X = (value: number, lo: number, hi: number) =>
   PLOT.left + ((value - lo) / (hi - lo)) * PLOT.width;
 const Y = (value: number, max: number) =>
@@ -107,8 +102,8 @@ function legend(x: number, label: string, color: string, dashed = false) {
 }
 export function gaussianDiagram(mu = 0, sigma = 1) {
   let body =
-    legend(64, "先验 p（可调）", C.accent) +
-    legend(424, "后验 q（固定）", C.target, true) +
+    legend(64, "先验 p（蓝实线）", C.accent) +
+    legend(424, "后验 q（绿虚线）", C.target, true) +
     axes(1, [0, 0.5, 1], "概率密度");
   for (const x of [-4, -2, 0, 2, 4])
     body += text(X(x, -5, 5), 324, x, C.muted, 16, "middle");
@@ -136,7 +131,7 @@ export function gaussianDiagram(mu = 0, sigma = 1) {
     1.5,
     "3 5",
   );
-  body += `<circle data-drag="gaussian" cx="${X(mu, -5, 5)}" cy="${Y(gaussian(mu, mu, sigma), 1)}" r="7" fill="${C.accent}" stroke="white" stroke-width="2"/>`;
+  body += `<circle cx="${X(mu, -5, 5)}" cy="${Y(gaussian(mu, mu, sigma), 1)}" r="7" fill="${C.accent}" stroke="white" stroke-width="2"/>`;
   body += text(
     64,
     377,
@@ -155,14 +150,14 @@ export function gaussianDiagram(mu = 0, sigma = 1) {
   body += text(
     64,
     407,
-    "固定 q：μq = 1.4，σq = 0.7；匹配两项参数后 KL = 0。",
+    "固定后验 q：μq = 1.4，σq = 0.7。",
     C.muted,
     16,
   );
   return svg(
     "gaussian",
     "KL 衡量后验与先验的失配",
-    "蓝色实线和圆点表示可调先验；橙色虚线表示固定后验。两者均值和标准差都相同时 KL 为零。",
+    "蓝色实线和圆点表示可调先验；绿色虚线表示固定后验。两者均值和标准差都相同时 KL 为零。",
     body,
   );
 }
@@ -170,8 +165,8 @@ export function entropyDiagram(r0 = 0.25, r1 = 0.5) {
   const p = [0.15, 0.7, 0.15],
     r = [r0, (1 - r0) * r1, (1 - r0) * (1 - r1)];
   let body =
-    text(64, 30, "橙色空心：目标 P", C.target, 18) +
-    text(424, 30, "蓝色实心：预测 R", C.accent, 18) +
+    text(64, 30, "目标 P · 绿空心", C.target, 18) +
+    text(424, 30, "预测 R · 蓝实心", C.accent, 18) +
     axes(1, [0, 0.5, 1], "类别概率");
   for (let i = 0; i < 3; i++) {
     const x = PLOT.left + (PLOT.width * (i + 0.5)) / 3;
@@ -179,7 +174,7 @@ export function entropyDiagram(r0 = 0.25, r1 = 0.5) {
       const left = x + (j ? 10 : -46),
         value = values[i],
         color = j ? C.accent : C.target;
-      body += `<rect x="${left}" y="${Y(value, 1)}" width="36" height="${value * PLOT.height}" fill="${j ? C.accent : "#fff5ec"}" stroke="${color}" stroke-width="2"/>`;
+      body += `<rect x="${left}" y="${Y(value, 1)}" width="36" height="${value * PLOT.height}" fill="${j ? C.accent : "#eff9f4"}" stroke="${color}" stroke-width="2"/>`;
       body += text(
         left + 18,
         Y(value, 1) - 10,
@@ -209,14 +204,14 @@ export function entropyDiagram(r0 = 0.25, r1 = 0.5) {
   body += text(
     64,
     407,
-    `目标熵固定为 ${entropy(p).toFixed(3)} bit；预测匹配目标时，额外代价为零。`,
+    `目标熵 H₂(P) = ${entropy(p).toFixed(3)} bit`,
     C.muted,
     16,
   );
   return svg(
     "entropy",
     "交叉熵等于目标熵加预测失配",
-    "每类左侧橙色空心柱为目标，右侧蓝色实心柱为预测。匹配目标后 KL 为零，交叉熵仍等于非零的目标熵。",
+    "每类左侧绿色空心柱为目标，右侧蓝色实心柱为预测。匹配目标后 KL 为零，交叉熵仍等于非零的目标熵。",
     body,
   );
 }
@@ -231,12 +226,12 @@ export function l1Diagram(mode: LossMode = "single", prediction = 0.5) {
       [0, 1, 2, 3, 4, 5],
       targets.length === 1
         ? "损失（目标 a = 0）"
-        : "平均损失（目标 a = −1 或 +1，各一半）",
+        : "平均损失（示范 −1、+1，各 50%）",
     );
   for (const x of [-2, -1, 0, 1, 2])
     body += text(X(x, -2, 2), 324, x, C.muted, 16, "middle");
   if (mode === "bimodal")
-    body += `<rect x="${X(-1, -2, 2)}" y="${Y(1, 5) - 7}" width="${X(1, -2, 2) - X(-1, -2, 2)}" height="14" fill="#dceefb"/>`;
+    body += `<rect x="${X(-1, -2, 2)}" y="${Y(1, 5) - 7}" width="${X(1, -2, 2) - X(-1, -2, 2)}" height="14" fill="#e5f3fb"/>`;
   body +=
     path(
       curve((x) => losses(x, targets).l1, -2, 2, 5),
@@ -279,8 +274,8 @@ export function l1Diagram(mode: LossMode = "single", prediction = 0.5) {
     64,
     407,
     mode === "single"
-      ? "移动预测值：L1 的非零误差梯度幅值为 1；平方 L2 为 2|â|。"
-      : "L1 在 [−1, +1] 都最优；平方 L2 选 0。回归并不保证选中某个模式。",
+      ? "目标为 0：两条曲线都在 0 处取得最小值。"
+      : "L1 在 [−1, +1] 都最优；平方 L2 只在 0 处最优。",
     C.muted,
     16,
   );
@@ -289,7 +284,7 @@ export function l1Diagram(mode: LossMode = "single", prediction = 0.5) {
     mode === "single"
       ? "单个目标下 L1 与平方 L2 如何惩罚误差"
       : "两种相反示范下回归为什么可能输出折中动作",
-    "蓝实线和圆点为 L1；橙虚线和方点为平方 L2。横轴短线是示范目标，竖虚线是当前预测，不是训练迭代次数。",
+    "蓝实线和圆点为 L1；绿虚线和方点为平方 L2。横轴短线是示范目标，竖虚线是当前预测，不是训练迭代次数。",
     body,
   );
 }
@@ -311,7 +306,7 @@ function box(
 export function networkDiagram(mode: Mode = "train") {
   let body = `<defs>${[
     ["blue", C.accent],
-    ["orange", C.target],
+    ["green", C.target],
     ["gray", C.muted],
   ]
     .map(
@@ -321,15 +316,15 @@ export function networkDiagram(mode: Mode = "train") {
     .join("")}</defs>`;
   const arrow = (
     d: string,
-    tone: "blue" | "orange" | "gray" = "gray",
+    tone: "blue" | "green" | "gray" = "gray",
     dash = false,
   ) =>
-    `<path d="${d}" fill="none" stroke="${tone === "blue" ? C.accent : tone === "orange" ? C.target : C.muted}" stroke-width="2" ${dash ? 'stroke-dasharray="6 5"' : ""} marker-end="url(#network-arrow-${tone})"/>`;
+    `<path d="${d}" fill="none" stroke="${tone === "blue" ? C.accent : tone === "green" ? C.target : C.muted}" stroke-width="2" ${dash ? 'stroke-dasharray="6 5"' : ""} marker-end="url(#network-arrow-${tone})"/>`;
   if (mode === "train") {
     body += text(
       32,
       28,
-      "训练：后验能看示范；先验不能。此图为 state=none。",
+      "训练 · 后验读取示范动作",
       C.ink,
       18,
     );
@@ -341,7 +336,7 @@ export function networkDiagram(mode: Mode = "train") {
       212,
       216,
       "图像条件先验 p",
-      "先汇总视觉，再预测 μ、σ",
+      "视觉汇总 → μp、σp",
       C.accent,
     );
     body += box(
@@ -360,28 +355,28 @@ export function networkDiagram(mode: Mode = "train") {
       476,
       480,
       "KL(q ‖ p)",
-      "两种分布是 KL 的输入；KL 不是动作信号",
+      "约束后验与先验的差异",
     );
-    body += box(552, 476, 216, "与示范比较", "连续值 → L1；logits → CE");
+    body += box(552, 476, 216, "与示范比较", "L1 + CE");
     body += arrow("M140 144V212", "blue");
     body += arrow("M248 112H272V244H296");
     body += arrow("M140 80V52H660V212");
     body += text(670, 183, "空间特征", C.muted, 16);
-    body += arrow("M404 144V212", "orange") + arrow("M404 276V344", "orange");
-    body += arrow("M512 376H536V244H552", "orange");
+    body += arrow("M404 144V212", "green") + arrow("M404 276V344", "green");
+    body += arrow("M512 376H536V244H552", "green");
     body += text(540, 308, "z", C.target, 17);
     body += arrow("M660 276V344") + arrow("M660 408V476");
     body += arrow("M140 276V476", "blue", true);
-    body += arrow("M296 262H264V448H404V476", "orange", true);
+    body += arrow("M296 262H264V448H404V476", "green", true);
     body += text(
       32,
       578,
-      "实线箭头：前向数据；虚线箭头：KL 的分布输入。反向梯度不在此图中混画。",
+      "实线：数据流向　　虚线：参与 KL 计算",
       C.muted,
       16,
     );
   } else {
-    body += text(32, 28, "推理：没有示范动作，也不计算后验 q。", C.ink, 18);
+    body += text(32, 28, "推理 · 从图像条件先验取得 z", C.ink, 18);
     body += box(32, 80, 216, "当前图像", "每次新预测重新读取");
     body += box(296, 80, 216, "图像特征", "完整空间 tokens");
     body += box(
@@ -404,7 +399,7 @@ export function networkDiagram(mode: Mode = "train") {
     body += text(
       32,
       578,
-      "sample + phase 复用已采样的 z；mean 随新图像重算。zero 则直接取 z = 0。",
+      "mean：取先验均值　　sample：从先验采样",
       C.muted,
       16,
     );
@@ -433,3 +428,31 @@ export function renderDiagram(id: DiagramId, state: State = defaults[id]) {
       return temporalDiagram(state.coefficient);
   }
 }
+
+export const examples: Partial<Record<DiagramId, { label: string; state: State }[]>> = {
+  information: [
+    { label: "一次正面", state: { probability: 0.5 } },
+    { label: "连续两次正面", state: { probability: 0.25 } },
+    { label: "连续五次正面", state: { probability: 1 / 32 } },
+  ],
+  entropy: [
+    { label: "三类均匀", state: { r0: 1 / 3, r1: 0.5 } },
+    { label: "偏向负向", state: { r0: 0.7, r1: 0.5 } },
+    { label: "匹配目标", state: { r0: 0.15, r1: 0.7 / 0.85 } },
+  ],
+  l1: [
+    { label: "预测 −1", state: { prediction: -1 } },
+    { label: "预测 0", state: { prediction: 0 } },
+    { label: "预测 +1", state: { prediction: 1 } },
+  ],
+  gaussian: [
+    { label: "均值不同", state: { mu: 0, sigma: 0.7 } },
+    { label: "宽度不同", state: { mu: 1.4, sigma: 1.4 } },
+    { label: "完全匹配", state: { mu: 1.4, sigma: 0.7 } },
+  ],
+  temporal: [
+    { label: "等权 · 0", state: { coefficient: 0 } },
+    { label: "轻微偏旧 · 0.01", state: { coefficient: 0.01 } },
+    { label: "明显偏旧 · 0.5", state: { coefficient: 0.5 } },
+  ],
+};
