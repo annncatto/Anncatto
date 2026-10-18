@@ -1,3 +1,4 @@
+import { localizeSVG, type Language } from "./i18n.js";
 import { C, FONT } from "./theme.js";
 export { C } from "./theme.js";
 import {
@@ -196,38 +197,28 @@ export function l1Diagram(mode: LossMode = "single", prediction = 1) {
   body += text(752, 349, "动作预测值", C.muted, 16, "end");
   return svg("l1", "L1：预测与示范的距离", `蓝色曲线为 L1，绿色虚线标出示范值。当前预测 ${prediction.toFixed(2)}，损失 ${current.toFixed(2)}。`, body);
 }
-export function networkDiagram(mode: Mode = "train") {
-  const colors = { blue: C.accent, green: C.target, gray: C.muted };
+export function networkDiagram(_mode: Mode = "train") {
+  const colors = { blue: C.accent, green: C.target };
   let body = `<defs>${Object.entries(colors).map(([name, color]) => `<marker id="network-arrow-${name}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="${color}"/></marker>`).join("")}</defs>`;
-  const node = (x: number, y: number, label: string, color = C.ink) =>
-    `<rect x="${x}" y="${y}" width="148" height="38" rx="4" fill="white" stroke="${color}" stroke-width="1.5"/>` + text(x + 74, y + 24, label, C.ink, 15, "middle");
-  const arrow = (d: string, color: keyof typeof colors = "gray", dash = false) =>
-    `<path d="${d}" fill="none" stroke="${colors[color]}" stroke-width="1.6" ${dash ? 'stroke-dasharray="5 4"' : ""} marker-end="url(#network-arrow-${color})"/>`;
-  if (mode === "train") {
-    body += node(24, 24, "图像特征") + node(236, 24, "示范动作 A", C.target);
-    body += node(24, 104, "先验 p(z | V)", C.accent) + node(236, 104, "后验 q(z | V, A)", C.target) + node(448, 104, "ACT 主干");
-    body += node(236, 184, "从后验采样 z", C.target) + node(448, 184, "动作预测");
-    body += node(24, 264, "KL(q ‖ p)") + node(448, 264, "L1 + CE");
-    body += arrow("M98 62V104", "blue");
-    body += arrow("M172 43H202V123H236");
-    body += arrow("M98 24V8H522V104");
-    body += arrow("M310 62V104", "green") + arrow("M310 142V184", "green");
-    body += arrow("M384 203H416V123H448", "green");
-    body += arrow("M522 142V184") + arrow("M522 222V264");
-    body += arrow("M384 43H610V283H596", "green");
-    body += arrow("M98 142V264", "blue", true);
-    body += arrow("M236 134H214V283H172", "green", true);
-  } else {
-    body += node(24, 24, "当前图像") + node(236, 24, "图像特征");
-    body += node(236, 104, "先验 p(z | V)", C.accent);
-    body += node(236, 184, "取均值或采样 z", C.accent) + node(448, 184, "ACT 主干");
-    body += node(448, 264, "动作输出");
-    body += arrow("M172 43H236") + arrow("M310 62V104", "blue") + arrow("M310 142V184", "blue");
-    body += arrow("M384 203H448", "blue") + arrow("M384 43H522V184") + arrow("M522 222V264");
-  }
-  return svg("network", "条件潜变量的训练与推理", "实线表示数据流，虚线表示参与 KL 计算的分布。图像保留空间特征输入 ACT，并汇总为 V 供先验和后验使用。", body, 318, 620);
+  const node = (x: number, y: number, width: number, label: string, color = C.grid) =>
+    `<rect x="${x}" y="${y}" width="${width}" height="40" rx="4" fill="white" stroke="${color}" stroke-width="1.5"/>` + text(x+width/2, y+26, label, C.ink, 16, "middle");
+  const arrow = (d: string, color: keyof typeof colors = "blue", dashed = false) =>
+    `<path d="${d}" fill="none" stroke="${colors[color]}" stroke-width="1.8" ${dashed ? 'stroke-dasharray="5 4"' : ''} marker-end="url(#network-arrow-${color})"/>`;
+  body += text(24,26,"TRAIN · image and demonstration",C.ink,18);
+  body += node(24,52,132,"Image + demo") + node(196,52,160,"Posterior q",C.target) + node(396,52,88,"z ∼ q",C.target) + node(524,52,116,"ACT(I, z)") + node(680,52,96,"Actions");
+  body += arrow("M156 72H196","green") + arrow("M356 72H396","green") + arrow("M484 72H524","green") + arrow("M640 72H680","green");
+  body += node(24,130,132,"Image") + node(196,130,160,"Prior p",C.accent) + node(396,130,88,"KL(q ‖ p)");
+  body += arrow("M156 150H196") + arrow("M356 150H396","blue",true);
+  body += arrow("M276 92V110H440V130","green",true);
+  body += text(524,147,"Match p to q",C.ink,16) + text(524,169,"for the same image",C.muted,15);
+  body += line(24,198,776,198);
+  body += text(24,232,"ROLLOUT · image only",C.ink,18);
+  body += node(24,258,132,"Image") + node(196,258,160,"Prior p",C.accent) + node(396,258,88,"z ∼ p",C.accent) + node(524,258,116,"ACT(I, z)") + node(680,258,96,"Actions");
+  body += arrow("M156 278H196") + arrow("M356 278H396") + arrow("M484 278H524") + arrow("M640 278H680");
+  body += text(440,324,"or use the prior mean",C.muted,15,"middle");
+  return svg("network", "Posterior in training, prior in rollout", "Top: image and demonstration produce posterior q; z sampled from q enters ACT with image features. KL matches the image-conditioned prior p to q. Bottom: only the image is available, so z comes from p. Both paths feed image features directly to ACT, represented by I in ACT(I,z).", body, 340);
 }
-export function renderDiagram(id: DiagramId, state: State = defaults[id]) {
+function rawDiagram(id: DiagramId, state: State = defaults[id]) {
   switch (id) {
     case "information":
       return informationDiagram(state.probability);
@@ -244,6 +235,10 @@ export function renderDiagram(id: DiagramId, state: State = defaults[id]) {
     case "training":
       return trainingDiagram();
   }
+}
+
+export function renderDiagram(id: DiagramId, state: State = defaults[id], language: Language = "en") {
+  return localizeSVG(rawDiagram(id, state), id, language);
 }
 
 export const examples: Partial<Record<DiagramId, { label: string; state: State }[]>> = {
@@ -274,7 +269,7 @@ export const examples: Partial<Record<DiagramId, { label: string; state: State }
   ],
 };
 
-export function diagramReadout(id: DiagramId, state: State = defaults[id]): string {
+function chineseReadout(id: DiagramId, state: State = defaults[id]): string {
   if (id === "information") {
     const p = state.probability ?? 0.25;
     return `概率 1/${Math.round(1 / p)} · 信息量 ${(-Math.log2(p)).toFixed(0)} bit`;
@@ -286,5 +281,21 @@ export function diagramReadout(id: DiagramId, state: State = defaults[id]): stri
   }
   if (id === "l1") return `预测 ${(state.prediction ?? 1).toFixed(2)} → 绝对误差 ${Math.abs(state.prediction ?? 1).toFixed(2)}`;
   if (id === "gaussian") return `先验均值 ${(state.mu ?? 0).toFixed(1)}，标准差 ${(state.sigma ?? 0.7).toFixed(1)} · KL ${gaussianKL(1.4,0.7,state.mu ?? 0,state.sigma ?? 0.7).toFixed(3)} nat`;
+  return "";
+}
+
+export function diagramReadout(id: DiagramId, state: State = defaults[id], language: Language = "en"): string {
+  if (language === "zh") return chineseReadout(id, state);
+  if (id === "information") {
+    const p = state.probability ?? 0.25;
+    return `Probability 1/${Math.round(1/p)} · Information ${(-Math.log2(p)).toFixed(0)} bit`;
+  }
+  if (id === "entropy") {
+    const p = [0.15,0.7,0.15], r0 = state.r0 ?? 1/3, r1 = state.r1 ?? 0.5;
+    const r = [r0,(1-r0)*r1,(1-r0)*(1-r1)];
+    return `Cross-entropy ${crossEntropy(p,r).toFixed(3)} = Entropy ${entropy(p).toFixed(3)} + KL ${discreteKL(p,r).toFixed(3)} (bit)`;
+  }
+  if (id === "l1") return `Prediction ${(state.prediction ?? 1).toFixed(2)} → Absolute error ${Math.abs(state.prediction ?? 1).toFixed(2)}`;
+  if (id === "gaussian") return `Prior mean ${(state.mu ?? 0).toFixed(1)}, std ${(state.sigma ?? 0.7).toFixed(1)} · KL ${gaussianKL(1.4,0.7,state.mu ?? 0,state.sigma ?? 0.7).toFixed(3)} nat`;
   return "";
 }

@@ -3,6 +3,7 @@ import path from "node:path";
 import katex from "katex";
 import { basePath } from "./paths.mjs";
 import { renderDiagram, defaults, examples, diagramReadout } from "../.build/diagrams.js";
+import { translateLabel } from "../.build/i18n.js";
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -32,28 +33,26 @@ await fs.copyFile(
   path.join(out, "assets/katex/LICENSE"),
 );
 const posts = JSON.parse(await fs.readFile("content/posts.json", "utf8"));
+const bilingual = (en, zh) => `<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
 function figure(id, number) {
   const captions = {
-    information: ["概率与信息量", "独立抛公平硬币，比较连续正面事件的信息量。"],
-    entropy: ["交叉熵与分布匹配", "示意目标为软分布；实际单条底盘标签为 one-hot。数值以 bit 显示。"],
-    l1: ["L1 的调整方向", "示范动作固定为 0，箭头表示减小预测误差的方向。"],
-    training: ["动作预测与反向传播", "实线表示前向计算，虚线表示 L1 和 CE 的梯度反传。"],
-    gaussian: ["后验与先验", "固定后验 q：均值 1.4、标准差 0.7。实线为先验，虚线为后验。"],
-    network: ["条件潜变量", "实线：数据流；虚线：参与 KL 计算的分布。V 为图像特征的汇总。"],
-    temporal: ["时序融合", "每列对应同一执行时刻，蓝框选中对 t 的预测；下方为融合权重。"],
+    information: ["Probability and information", "概率与信息量", "Independent fair-coin tosses: compare the information carried by consecutive heads.", "独立抛公平硬币，比较连续正面事件的信息量。"],
+    entropy: ["Cross-entropy and distribution matching", "交叉熵与分布匹配", "The target here is a soft distribution. Individual velocity labels are one-hot. Values are in bits.", "示意目标为软分布；实际单条底盘标签为 one-hot。数值以 bit 显示。"],
+    l1: ["L1 and the direction of improvement", "L1 的调整方向", "The demonstrated action is zero. Arrows show the direction that reduces prediction error.", "示范动作固定为 0，箭头表示减小预测误差的方向。"],
+    training: ["Action prediction and backpropagation", "动作预测与反向传播", "Solid: forward computation. Dashed: L1 and CE gradients flowing back through the network.", "实线表示前向计算，虚线表示 L1 和 CE 的梯度反传。"],
+    gaussian: ["Posterior and prior", "后验与先验", "Fixed posterior q: mean 1.4, standard deviation 0.7. Solid: prior. Dashed: posterior.", "固定后验 q：均值 1.4、标准差 0.7。实线为先验，虚线为后验。"],
+    network: ["Training and rollout", "训练与推理", "Training uses posterior q; rollout uses prior p. ACT(I, z) receives image features and z in both paths.", "训练从后验 q 采样，推理从先验 p 取值。ACT(I, z) 表示两条路径都使用图像特征和 z。"],
+    temporal: ["Temporal ensembling", "时序融合", "Each column is an execution time. The blue outline selects predictions for t; bars show their weights.", "每列对应同一执行时刻，蓝框选中对 t 的预测；下方为融合权重。"],
   };
-  const caption = captions[id];
-  if (!caption) throw Error(`Unknown figure: ${id}`);
-  const modes = id === "network"
-    ? '<div class="modes" role="group" aria-label="网络阶段"><button data-mode="train" aria-pressed="true">训练</button><button data-mode="infer" aria-pressed="false">推理</button></div>'
-    : "";
+  const c = captions[id];
+  if (!c) throw Error(`Unknown figure: ${id}`);
   const choices = (examples[id] || []).map(({ label, state }, i) => {
     const active = Object.entries(state).every(([key, value]) => defaults[id][key] === value);
-    return `<button data-example="${i}" aria-pressed="${active}">${label}</button>`;
+    return `<button data-example="${i}" aria-pressed="${active}">${bilingual(translateLabel(label,"en"),label)}</button>`;
   }).join("");
-  const title = `图 ${number}　${caption[0]}`;
+  const title = bilingual(`Figure ${number}. ${c[0]}`, `图 ${number}　${c[1]}`);
   const readout = diagramReadout(id);
-  return `<figure data-diagram="${id}"><div class="controls figure-modes">${modes}${choices ? `<div class="examples" role="group" aria-label="${caption[0]}的情境">${choices}</div>` : ""}${id === "l1" ? '<p class="interaction-hint">点击曲线可改变预测值。</p>' : ""}</div><p class="figure-scroll-hint">横向滑动查看完整图表</p><div class="diagram-frame" tabindex="0" role="region" aria-label="${title}"><div class="canvas-stage"><div class="svg-layer">${renderDiagram(id)}</div></div></div><figcaption><span class="figure-title">${title}</span>${readout ? `<span class="figure-readout" data-readout aria-live="polite">${readout}</span>` : ""}<span class="figure-description">${caption[1]}</span><a class="figure-export" href="/figures/${id}.svg" data-export download aria-label="导出${title}的 SVG">SVG</a></figcaption></figure>`;
+  return `<figure data-diagram="${id}"><div class="controls figure-modes">${choices ? `<div class="examples" role="group" aria-label="Examples">${choices}</div>` : ""}${id === "l1" ? `<p class="interaction-hint">${bilingual("Click the plot to change the prediction.","点击曲线可改变预测值。")}</p>` : ""}</div><p class="figure-scroll-hint">${bilingual("Scroll horizontally to see the full figure.","横向滑动查看完整图表")}</p><div class="diagram-frame" tabindex="0" role="region" aria-label="Figure ${number}"><div class="canvas-stage"><div class="svg-layer">${renderDiagram(id)}</div></div></div><figcaption><span class="figure-title">${title}</span>${readout ? `<span class="figure-readout" data-readout aria-live="polite">${readout}</span>` : ""}<span class="figure-description">${bilingual(c[2],c[3])}</span><a class="figure-export" href="/figures/${id}.svg" data-export download aria-label="Download Figure ${number} as SVG">SVG</a></figcaption></figure>`;
 }
 
 function math(s) {
@@ -87,7 +86,7 @@ function math(s) {
 }
 function shell(title, description, body, interactive = false) {
   return `<!doctype html>
-<html lang="zh-CN">
+<html lang="${interactive ? "en" : "zh-CN"}"${interactive ? ' data-language="en"' : ""}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -100,8 +99,8 @@ function shell(title, description, body, interactive = false) {
 ${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : ""}
 </head>
 <body>
-<a class="skip" href="#main">跳至正文</a>
-<header class="sitebar container"><nav aria-label="主导航"><a href="/">Anncatto</a></nav></header>
+<a class="skip" href="#main">${interactive ? bilingual("Skip to article", "跳至正文") : "跳至正文"}</a>
+<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${interactive ? '<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>' : ""}</header>
 ${body}
 </body>
 </html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`);
@@ -123,7 +122,7 @@ for (const p of posts) {
     shell(
       p.title,
       p.description,
-      `<main id="main" class="container"><article>${header}${toc}<noscript><p class="noscript-note">当前显示静态图。</p></noscript>${content}</article></main>`,
+      `<main id="main" class="container"><article>${header}${toc}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
       true,
     ),
   );

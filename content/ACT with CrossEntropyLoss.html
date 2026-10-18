@@ -1,120 +1,96 @@
-<p><a href="https://arxiv.org/html/2304.13705">ACT</a>（Action Chunking with Transformers）是任何人可以复现的第一个机器人模仿学习策略。</p>
-<p>Loss：</p>
+<div class="bilingual"><p lang="en"><a href="https://arxiv.org/html/2304.13705">ACT</a> (Action Chunking with Transformers) is a natural first policy to reproduce when getting started with robot imitation learning.</p><p lang="zh-CN"><a href="https://arxiv.org/html/2304.13705">ACT</a>（Action Chunking with Transformers）是任何人可以复现的第一个机器人模仿学习策略。</p></div>
+<div class="bilingual"><p lang="en">Its training loss combines action reconstruction with a constraint on the latent distribution:</p><p lang="zh-CN">它的损失由动作重建和潜变量分布约束组成：</p></div>
 <div class="formula">$$L_{\mathrm{ACT}}=L_{\mathrm{L1}}+\beta L_{\mathrm{KL}}.$$</div>
-<p>L1 衡量动作预测的偏差，KL约束潜变量后验与先验的差异。</p>
-<p>当前图像 $I_t$、机器人状态 $s_t$ 和潜变量 $z$进入主干网络，一次预测长度为$K$的动作块：</p>
-<div class="formula">$$\hat A_t=f_\theta(I_t,s_t,z),\qquad A_t=(a_t,\ldots,a_{t+K-1}).$$</div>
-
-<p><code>observation.state</code> 通常记录从臂关节编码器的绝对位置，<code>action</code> 记录主臂给出的目标关节位置。如果加上底盘移动的离散的速度值 <code>x.vel</code>、<code>y.vel</code> 和 <code>theta.vel</code>，很容易想到引入交叉熵。</p>
-<div class="table-scroll"><table><thead><tr><th>速度轴</th><th>负向</th><th>停止</th><th>正向</th></tr></thead><tbody>
-<tr><td>x.vel、y.vel</td><td>−0.15 m/s</td><td>0</td><td>0.15 m/s</td></tr>
-<tr><td>theta.vel</td><td>−45 deg/s</td><td>0</td><td>45 deg/s</td></tr>
-</tbody></table></div>
-<p>速度值可以表示为类别。以 <code>x.vel</code> 为例，−0.15、0、0.15 m/s 分别对应“负向”“停止”“正向”。某帧示范记录的速度为 0.15 m/s，这一帧的训练标签就是“正向”。</p>
-<p>ACT 根据观测提取特征，再通过分类头给三个类别各输出一个分数。分类头是接在主干之后的线性层，这些分数称为 logits，记作 $u_k$，其中 $k$ 是类别编号。softmax 将分数转换为总和为 1 的概率：</p>
-<div class="formula">$$R_k=\frac{e^{u_k}}{\sum_j e^{u_j}}.$$</div>
-<p>把示范类别的编号记为 $y$，$R_y$ 就是模型给这个类别的概率。交叉熵取它的负对数：</p>
-<div class="formula">$$\ell_{\mathrm{CE}}=-\ln R_y.$$</div>
-<p>示范要求“正向”时，模型给“正向”的概率越高，这一帧的损失就越小。训练使用的 <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">CrossEntropyLoss</a> 直接接收 logits，内部完成对应的 log-softmax 计算。</p>
-
-<h2 id="information">信息如何表示</h2>
-<p>香农信息论中的信息量定义为：</p>
-<div class="formula">$$I(p)=-\log_2 p,\qquad I(pq)=I(p)+I(q).$$</div>
-<p>抛一次公平硬币，正面朝上携带 1 bit 信息；连续两次正面朝上携带 2 bit。事件越少见，发生时的信息量越大。训练使用自然对数，单位是 nat，数值为 bit 的 $\ln 2$ 倍。</p>
+<div class="bilingual"><p lang="en">For the tabletop bimanual setup, demonstrations come from teleoperation. <code>observation.state</code> records follower joint positions; <code>action</code> records the target joint positions supplied by the leader. L1 measures prediction error, while KL constrains the latent posterior against its prior.</p><p lang="zh-CN">桌面双机械臂使用遥操数据，<code>observation.state</code> 记录从臂关节位置，<code>action</code> 记录主臂给出的目标关节位置。L1 衡量动作预测的偏差，KL 约束潜变量后验与先验的差异。</p></div>
+<div class="bilingual"><p lang="en">Adding a mobile base introduces another kind of action. Keyboard teleoperation gives a few fixed values for <code>x.vel</code>, <code>y.vel</code>, and <code>theta.vel</code>. These values can be represented as classes and trained with cross-entropy.</p><p lang="zh-CN">如果加上底盘移动，按键遥操采集到的是几档固定的速度值：<code>x.vel</code>、<code>y.vel</code> 和 <code>theta.vel</code>。把它们表示为类别，就可以引入交叉熵。</p></div>
+<div class="table-scroll"><table><thead><tr><th><span lang="en">Axis</span><span lang="zh-CN">速度轴</span></th><th><span lang="en">Negative</span><span lang="zh-CN">负向</span></th><th><span lang="en">Stop</span><span lang="zh-CN">停止</span></th><th><span lang="en">Positive</span><span lang="zh-CN">正向</span></th></tr></thead><tbody><tr><td>x.vel, y.vel</td><td>−0.15 m/s</td><td>0</td><td>0.15 m/s</td></tr><tr><td>theta.vel</td><td>−45 deg/s</td><td>0</td><td>45 deg/s</td></tr></tbody></table></div>
+<div class="bilingual"><p lang="en">For <code>x.vel</code>, a demonstrated speed of 0.15 m/s becomes the label “positive.” A linear classification head reads the ACT features and assigns a score to each class. These scores are logits, $u_k$; softmax converts them into probabilities $R_k$.</p><p lang="zh-CN">以 <code>x.vel</code> 为例，示范速度为 0.15 m/s 时，标签就是“正向”。接在 ACT 主干后的线性分类头给每个类别输出一个分数，称为 logit，记作 $u_k$；softmax 再把分数转换为概率 $R_k$。</p></div>
+<div class="formula">$$R_k=\frac{e^{u_k}}{\sum_j e^{u_j}},\qquad \ell_{\mathrm{CE}}=-\ln R_y.$$</div>
+<div class="bilingual"><p lang="en">$y$ is the demonstrated class. Giving it a higher probability lowers the loss. PyTorch’s <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">CrossEntropyLoss</a> accepts logits directly and computes log-softmax internally.</p><p lang="zh-CN">$y$ 是示范类别。模型给它的概率越高，损失越小。PyTorch 的 <a href="https://docs.pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html">CrossEntropyLoss</a> 直接接收 logits，内部计算 log-softmax。</p></div>
+<h2 id="information"><span lang="en">Representation</span><span lang="zh-CN">信息如何表示</span></h2>
+<div class="bilingual"><p lang="en">The negative logarithm has a meaning in <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">Shannon’s information theory</a>. Independent event probabilities multiply, while their information adds. The negative logarithm connects the two:</p><p lang="zh-CN">负对数在<a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">香农信息论</a>中对应信息量。独立事件的概率相乘，信息量相加，负对数把这两个关系联系起来：</p></div>
+<div class="formula">$$I(p)=-\log_2p,\qquad I(pq)=I(p)+I(q).$$</div>
+<div class="bilingual"><p lang="en">One head from a fair coin carries 1 bit of information; two consecutive heads carry 2 bits. Less likely outcomes carry more information. Training uses the natural logarithm and measures information in nats: multiply bits by $\ln 2$.</p><p lang="zh-CN">公平硬币一次正面携带 1 bit 信息，连续两次正面携带 2 bit。越少见的结果，信息量越大。训练使用自然对数，单位为 nat，数值等于 bit 乘以 $\ln 2$。</p></div>
 {{figure:information}}
-<p>对目标分布 $P$ 求平均，从单个事件的信息量得到熵。《A Mathematical Theory of Communication》定义熵为：</p>
-<div class="formula">$$H(P)=-\sum_kP_k\ln P_k.$$</div>
-<p>熵衡量随机变量的不确定性。均匀分布的熵最大，单条 one-hot 标签的熵为零。对两个分布 $P$ 和 $R$，KL 散度衡量它们的差异：</p>
-<div class="formula">$$D_{\mathrm{KL}}(P\Vert R)=\sum_kP_k\ln\frac{P_k}{R_k}.$$</div>
-<p>KL 散度非负，$D_{\mathrm{KL}}(P\Vert R)=0$ 当且仅当 $P=R$。
-用预测分布 $R$ 描述这些事件，得到交叉熵：</p>
-<div class="formula">$$H(P,R)=\underbrace{-\sum_kP_k\ln P_k}_{H(P)}+\underbrace{\sum_kP_k\ln\frac{P_k}{R_k}}_{D_{\mathrm{KL}}(P\Vert R)}.$$</div>
-<p>目标分布固定时，降低交叉熵就是减小预测与目标的失配。
-预测完全匹配后，交叉熵等于目标熵；单条 one-hot 标签的目标熵为零。</p>
+<div class="bilingual"><p lang="en">Averaging information over a target distribution $P$ gives its entropy. Evaluating the same outcomes using a predicted distribution $R$ gives cross-entropy:</p><p lang="zh-CN">对目标分布 $P$ 的信息量求平均，得到熵；用预测分布 $R$ 计算同一批结果的信息量，得到交叉熵：</p></div>
+<div class="formula">$$H(P)=-\sum_kP_k\ln P_k,\qquad H(P,R)=-\sum_kP_k\ln R_k.$$</div>
+<div class="bilingual"><p lang="en">Their difference is KL divergence. With a fixed target, reducing cross-entropy brings the prediction closer to that target. For a one-hot label, target entropy is zero and cross-entropy reduces to $-\ln R_y$.</p><p lang="zh-CN">两者的差就是 KL 散度。目标固定时，降低交叉熵会让预测分布接近目标分布。单条 one-hot 标签的目标熵为零，交叉熵就简化为 $-\ln R_y$。</p></div>
+<div class="formula">$$H(P,R)=H(P)+D_{\mathrm{KL}}(P\Vert R).$$</div>
 {{figure:entropy}}
-<p>语言自回归生成式模型也使用交叉熵。</p>
-
-通过这种方式，ACT学会了离散token采样下的移动模式
-
-<p>VLA模型的表现为什么会更好？预训练表示帮助模型识别移动中的视觉条件，flow matching 帮助表达整段动作的不同可能，网络容量与交互方式影响这些信息能否被充分利用。</p>
-
-<h2 id="losses">损失</h2>
-<p>引入交叉熵损失：</p>
+<div class="bilingual"><p lang="en">Autoregressive language models use cross-entropy to raise the probability of each demonstrated next token. For example, a training sequence can teach the model to continue “the robot should” with “stop.”</p><p lang="zh-CN">自回归语言模型也用交叉熵提高示范中下一个 token 的概率。例如，训练序列可以让模型在“机器人应该”之后更可能生成“停止”。</p></div>
+<div class="bilingual"><p lang="en">The <a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act">velocity classification extension</a> applies the same objective to movement choices. ACT predicts a class distribution at each step of the action chunk, then uses <code>argmax</code> to select a speed. This is parallel action classification, rather than autoregressive token sampling.</p><p lang="zh-CN"><a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act">底盘分类扩展</a>把同一种损失用于移动选择：ACT 为动作块中的每一步预测速度类别分布，推理时用 <code>argmax</code> 选取速度。因此，更准确地说，ACT 学会了离散速度的分类，而不是自回归的 token 采样。</p></div>
+<div class="bilingual"><p lang="en">Yet with the same task demonstrations, <a href="https://arxiv.org/html/2506.01844v1">SmolVLA</a> and <a href="https://www.pi.website/blog/pi05">π0.5</a> learned base motion more readily in these experiments. Pretrained representations help identify visual conditions during motion; flow matching helps represent different possible action sequences; model capacity and feature interactions determine how fully that information can be used.</p><p lang="zh-CN">但同样的任务数据给 <a href="https://arxiv.org/html/2506.01844v1">SmolVLA</a> 和 <a href="https://www.pi.website/blog/pi05">π0.5</a> 训练，实验中它们还是更容易学到路径移动。预训练表示帮助模型识别移动中的视觉条件，flow matching 帮助表达整段动作的不同可能，网络容量与交互方式影响这些信息能否被充分利用。</p></div>
+<h2 id="losses"><span lang="en">Learning</span><span lang="zh-CN">损失与训练</span></h2>
+<div class="bilingual"><p lang="en">From the loss perspective, the extended policy learns continuous joint targets, discrete base velocities, and a latent distribution together:</p><p lang="zh-CN">从损失来看，加入底盘分类后，连续关节目标、离散速度和潜变量分布一起训练：</p></div>
 <div class="formula">$$L=L_{\mathrm{L1}}+\lambda_{\mathrm{disc}}L_{\mathrm{CE}}+\beta L_{\mathrm{KL}}.$$</div>
-<p>L1 直接计算预测值与示范值的距离。对一个动作分量，示范为 $a$、预测为 $\hat a$：</p>
+<div class="bilingual"><p lang="en">L1 is the absolute difference between a demonstrated action component $a$ and its prediction $\hat a$. A prediction above the target is pushed down; one below it is pushed up. The regression loss averages these errors over the selected action dimensions and valid steps.</p><p lang="zh-CN">L1 是示范动作分量 $a$ 与预测值 $\hat a$ 的绝对差。预测偏大，梯度推动它减小；预测偏小，就推动它增大。回归损失对选定的动作维度和有效时间步求平均。</p></div>
 <div class="formula">$$\ell_{\mathrm{L1}}=|\hat a-a|,\qquad \frac{\partial\ell_{\mathrm{L1}}}{\partial\hat a}=\operatorname{sign}(\hat a-a)\quad(\hat a\ne a).$$</div>
-<p>预测偏大，梯度推动它减小；预测偏小，就推动它增大。图中把示范值固定为 0，曲线上的箭头标出减小误差的方向。L1 只衡量动作是否接近示范，不规定网络应该依赖 state 还是图像。训练时会对参与回归的动作维度和有效时间步求平均。</p>
 {{figure:l1}}
-<p>KL 比较的是分布。训练时，潜变量编码器根据示范动作和观测给出后验 $q(z)$；推理时没有示范动作，使用先验 $p(z)$。KL 将两者联系起来：</p>
-<div class="formula">$$L_{\mathrm{KL}}=D_{\mathrm{KL}}(q\Vert p)=\mathbb E_{z\sim q}\left[\ln\frac{q(z)}{p(z)}\right].$$</div>
-<p>CE 则把正确动作类别的概率推高。不加类别权重时，它对 logits 的梯度为：</p>
+<div class="bilingual"><p lang="en">KL compares distributions. The training posterior $q$ uses demonstrations to encode z; the prior $p$ must be available without them. Minimizing $D_{\mathrm{KL}}(q\Vert p)$ keeps the two distributions close.</p><p lang="zh-CN">KL 比较的是分布。训练后验 $q$ 利用示范动作编码 z，先验 $p$ 则不依赖示范动作。降低 $D_{\mathrm{KL}}(q\Vert p)$，使两种分布接近。</p></div>
+<div class="formula">$$L_{\mathrm{KL}}=\mathbb E_{z\sim q}\left[\ln\frac{q(z)}{p(z)}\right].$$</div>
+<div class="bilingual"><p lang="en">CE raises the probability of the demonstrated class. Without class weighting, its gradient with respect to logit $u_k$ is the predicted probability minus the target indicator:</p><p lang="zh-CN">CE 提高示范类别的概率。不加类别权重时，它对 logit $u_k$ 的梯度是预测概率减去目标指示值：</p></div>
 <div class="formula">$$\frac{\partial\ell_{\mathrm{CE}}}{\partial u_k}=R_k-\mathbf1[k=y].$$</div>
-<p>L1 和 CE 的梯度通过动作主干向前面的网络传递。图像先变成视觉特征，state 和 z 分别经过投影，主干融合这些输入，再由动作头输出连续值与类别 logits。把主干输出记为 $h_\theta$。前向计算得到预测，反向传播根据预测误差更新参数：</p>
-<div class="formula">$$\begin{aligned}
-(I,s,z)&amp;\longrightarrow h_\theta\longrightarrow(\hat A,u)\longrightarrow L,\\
-\theta&amp;\leftarrow\theta-\eta\nabla_\theta L.
-\end{aligned}$$</div>
+<div class="bilingual"><p lang="en">These losses act on one forward pass. Images become visual features; state and z are projected into tokens. ACT combines them and predicts an action chunk. The action heads produce joint targets and velocity logits, which are compared with the demonstrations.</p><p lang="zh-CN">这些损失来自同一次前向计算。图像变成视觉特征，state 和 z 经过投影，ACT 融合这些输入并预测一个动作块。动作头输出关节目标和速度 logits，再与示范比较。</p></div>
 {{figure:training}}
-<p>$\theta$ 表示参与训练的参数，$\eta$ 是学习率。L1 和 CE 的梯度经过动作头、主干，回到参与训练的视觉骨干和输入投影；采样使用重参数化时，也能沿 z 更新后验编码器。KL 直接调整后验的均值和方差。示范值始终固定，变化的是模型的参数、动作预测和概率分布。<code>argmax</code> 留到推理时才用于选取底盘类别。</p>
-
-<h2 id="vision">视觉特征</h2>
-<p>主干网络中state、image 的特征与潜变量 z 同时传入，连续的state表示比图像变化的特征更容易下降l1损失梯度。</p>
-<p>状态与后续动作高度相关，可能形成预测捷径；停止样本不足、视觉线索不可见或时间错位也可能产生类似表现。相邻关节目标往往变化很小，延续当前状态就能拟合一部分动作；识别停止位置，还需要从画面中提取与任务有关的变化。</p>
-<p>ResNet-18来自 He 等人的<a href="https://arxiv.org/abs/1512.03385">残差网络</a>，通过 $F(x)+x$ 的连接，让网络学习对已有表示的修正。用 ImageNet 预训练权重处理图像特征。</p>
-<p>ResNet-18 规模较小，能以较低计算量提取空间特征，适合多相机输入和频繁推理。去掉图像分类头后，输出仍是一张特征图，物体在画面中的位置没有被直接压成一个类别。</p>
-
-<h2 id="latent">潜空间</h2>
-<p>KL 散度是另一个特殊的损失。它由 Kullback 与 Leibler 在 1951 年提出，常用于比较概率模型，以及变分推断中的分布约束。</p>
-<p>为什么还需要潜变量z？同一个场景可能有不同的完成方式。直接回归一个动作，可能得到两种示范之间的折中。L1 也不能保证选中其中一种：当 −1 和 +1 等概率出现时，[−1,1] 内的预测具有相同的期望 L1 损失。</p>
-<p><a href="https://arxiv.org/abs/1312.6114">VAE</a> 让编码器输出潜变量分布，而不是一个确定的向量。编码器从样本得到 $\mu$ 和 $\sigma$，采样 z，解码器再重建样本。<a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> 加入观测条件：观测描述当前场景，z 可以表示场景之外的动作差异。</p>
-<p>ACT 的训练后验读取机器人状态 $s$ 和示范动作块 $A$，动作网络同时读取图像、状态和 z。采用对角高斯后验与标准正态先验：</p>
+<div class="bilingual"><p lang="en">Backpropagation carries L1 and CE gradients through the action heads and ACT backbone to the trainable input networks. Reparameterization also lets action gradients reach the posterior through z; KL acts directly on the distribution parameters. The demonstrations stay fixed while the network parameters are updated using these gradients.</p><p lang="zh-CN">反向传播将 L1 和 CE 的梯度沿动作头、ACT 主干传回可训练的输入网络。重参数化使动作梯度也能沿 z 到达后验；KL 直接作用于分布参数。示范保持不变，训练根据这些梯度更新网络参数。</p></div>
+<h2 id="vision"><span lang="en">Vision</span><span lang="zh-CN">视觉特征</span></h2>
+<div class="bilingual"><p lang="en">State, image features, and z enter the same backbone, but the loss does not tell it which input to rely on. When state strongly predicts the next action, continuing the previous movement can reduce L1 without learning the visual condition for stopping: moving in one frame, still moving in the next.</p><p lang="zh-CN">state、image 特征和 z 同时进入主干，但损失不规定网络应该依赖哪种输入。当状态与后续动作高度相关时，延续上一帧的动作就能降低 L1，模型可能学会“上一帧走，下一帧继续走”，却没有学会看到什么停下来。</p></div>
+<div class="bilingual"><p lang="en">That shortcut depends on the data. Too few stopping examples, an invisible stopping cue, or misaligned images and actions can produce similar behavior. More images help only if they add the missing visual and action conditions.</p><p lang="zh-CN">这种预测捷径与数据有关。停止样本不足、视觉线索不可见或时间错位也可能产生类似表现。补充图片要补上缺失的条件，例如接近目标、减速和停止前后的画面与动作。</p></div>
+<div class="bilingual"><p lang="en">ACT extracts visual features with ResNet-18, from He et al.’s <a href="https://arxiv.org/abs/1512.03385">residual networks</a>. A residual connection adds $F(x)$ to $x$, so a block learns a correction to its input. The <a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/backbone.py#L78-L90">ACT implementation</a> initializes the backbone with ImageNet weights and trains it with the action task.</p><p lang="zh-CN">ACT 使用 ResNet-18 提取图像特征。它来自 He 等人的<a href="https://arxiv.org/abs/1512.03385">残差网络</a>，通过 $F(x)+x$ 的连接学习对输入表示的修正。<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/backbone.py#L78-L90">ACT 实现</a>使用 ImageNet 预训练权重初始化，再随动作任务训练。</p></div>
+<div class="bilingual"><p lang="en">ResNet-18 is compact enough for multiple cameras and frequent inference. Removing its classification head leaves a spatial feature map, retaining where features occur in the image.</p><p lang="zh-CN">ResNet-18 规模较小，适合多相机和频繁推理。去掉分类头后，输出仍是空间特征图，保留特征在画面中的位置。</p></div>
+<div class="bilingual"><p lang="en"><a href="https://arxiv.org/abs/2303.15343">SigLIP</a> instead learns image–text correspondence through large-scale pretraining with a sigmoid loss. That gives visual features broader semantic supervision. A cue such as distance to a stopping point still needs to be connected to an action through task data.</p><p lang="zh-CN"><a href="https://arxiv.org/abs/2303.15343">SigLIP</a> 使用 sigmoid 损失进行大规模图文配对预训练，视觉特征获得了更广的语义监督。至于离目标多远应该停止，仍要通过任务数据把视觉条件与动作联系起来。</p></div>
+<h2 id="latent"><span lang="en">Latent Space</span><span lang="zh-CN">潜空间</span></h2>
+<div class="bilingual"><p lang="en">KL is a different kind of loss. <a href="https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full">Kullback and Leibler introduced it in 1951</a>; it is used to compare probability models and constrain approximate distributions in variational inference.</p><p lang="zh-CN">KL 散度是另一种损失。<a href="https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full">Kullback 与 Leibler 在 1951 年提出它</a>，它用于比较概率模型，也用于变分推断中的分布约束。</p></div>
+<div class="bilingual"><p lang="en">Why introduce a latent variable? The same scene can admit different actions. Regressing a single answer can land between demonstrations. L1 has this ambiguity too: if −1 and +1 are equally likely, every prediction in [−1,1] has the same expected L1 loss.</p><p lang="zh-CN">为什么还需要潜变量 z？同一个场景可能有不同的动作，直接回归一个结果，可能落在示范之间。L1 也有这种歧义：当 −1 和 +1 等概率出现时，[−1,1] 内的预测具有相同的期望 L1 损失。</p></div>
+<div class="bilingual"><p lang="en">A <a href="https://arxiv.org/abs/1312.6114">VAE</a> encoder produces a distribution with parameters such as $\mu$ and $\sigma$. A decoder reconstructs the sample from z drawn from that distribution. A <a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> adds a condition: observations describe the scene, while z can represent variation among actions for that scene.</p><p lang="zh-CN"><a href="https://arxiv.org/abs/1312.6114">VAE</a> 编码器输出由 $\mu$、$\sigma$ 等参数描述的分布，解码器根据从中采样的 z 重建样本。<a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> 加入条件：观测描述场景，z 可以表示同一场景下的动作差异。</p></div>
+<div class="bilingual"><p lang="en">In ACT, the posterior reads robot state $s$ and the demonstrated action chunk $A$. The action network reads images, state, and z. Reconstruction encourages useful action information in z; KL keeps the posterior close to a standard normal prior.</p><p lang="zh-CN">ACT 的后验读取机器人状态 $s$ 和示范动作块 $A$，动作网络读取图像、状态和 z。动作重建促使 z 携带有用的动作信息，KL 则使后验接近标准正态先验。</p></div>
 <div class="formula">$$q_\phi(z\mid s,A)=\mathcal N(\mu_q,\operatorname{diag}\sigma_q^2),\qquad p(z)=\mathcal N(0,I).$$</div>
-<p>均值相同，分布也可能宽窄不同。下面固定后验，分别改变先验的均值和标准差；只有两者都匹配时，KL 才为零。</p>
+<div class="bilingual"><p lang="en">The Gaussian example below holds the posterior fixed and changes the prior. Matching only the means is insufficient: their widths must match too for KL to reach zero.</p><p lang="zh-CN">下面的高斯示意图固定后验、改变先验。只匹配均值还不够，两者的宽度也相同时，KL 才为零。</p></div>
 {{figure:gaussian}}
-<p>动作重建鼓励 z 携带有用的示范信息，KL 则限制后验偏离先验的程度，避免训练依赖推理时难以取得的编码。这给不同动作模式留下了表示空间，但不保证网络一定使用它。实际训练中，KL 损失很小：</p>
-<figure class="training-log"><img src="/assets/content/act-loss.webp" width="1367" height="76" loading="lazy" alt="训练日志：l1 为 0.0397，kl 显示 0.0000，ce 为 0.0088，kl_w 显示 0.0000。"><figcaption>来源：训练日志。kl 与 kl_w 保留四位小数，均显示为 0.0000。</figcaption></figure>
-<p>KL 很小说明后验与先验接近。固定先验时，这可能伴随潜变量被忽略：模型只靠观测就能降低重建损失，后验也不再需要通过 z 传递多少额外信息。</p>
-<p>实际上，ACT 在推理时将 z 统一置为 0。<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L110-L114">推理分支</a>是：</p>
+<div class="bilingual"><p lang="en">In the experiment, however, KL became very small. With a fixed prior, that can accompany an ignored latent variable: the model reconstructs actions from observations, while the posterior passes little additional information through z.</p><p lang="zh-CN">但在实际训练中，KL 损失很小。固定先验时，这可能伴随潜变量被忽略：模型只靠观测就能降低重建损失，后验不再需要通过 z 传递多少额外信息。</p></div>
+<figure class="training-log"><img src="/assets/content/act-loss.webp" width="1367" height="76" loading="lazy" alt="Training log: l1 0.0397, kl 0.0000, ce 0.0088, kl_w 0.0000."><figcaption><span lang="en">Training log. KL is displayed to four decimal places.</span><span lang="zh-CN">训练日志，KL 保留四位小数。</span></figcaption></figure>
+<div class="bilingual"><p lang="en">The <a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L110-L114">inference implementation</a> fixes z at zero. Rollout does not sample different latent values:</p><p lang="zh-CN"><a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L110-L114">推理实现</a>将 z 统一置为 0，rollout 中不再采样不同的潜变量：</p></div>
 <pre><code>latent_sample = torch.zeros([bs, self.latent_dim], dtype=torch.float32).to(qpos.device)
 latent_input = self.latent_out_proj(latent_sample)</code></pre>
-<p>z 仍经过投影进入动作网络，只是每次都取先验均值，没有在 rollout 中采样不同的 z。对非线性动作网络，$f(\mathbb E[z])$ 通常也不等于 $\mathbb E[f(z)]$。</p>
-<p>另外，<a href="https://github.com/tonyzhaozh/act/issues/25">ACT issue #25</a> 指出了 Transformer decoder 的输出索引问题：该版本返回各层的中间输出，调用方却取 <code>[0]</code>，动作头因此只读取第一层的结果。后续 decoder 层虽然执行了计算，却没有接入这条动作损失路径。修改后，各层依次串联，动作头读取最后一层。</p>
-<p>还有图像。每台相机的画面经过同一个 ResNet-18，再经 1×1 投影、展平成空间 tokens；二维位置编码记录各 token 在本张图中的位置：</p>
+<div class="bilingual"><p lang="en">The <a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)">Transformer</a> decoder also has an output-indexing problem, reported in <a href="https://github.com/tonyzhaozh/act/issues/25">issue #25</a>. It returns intermediate outputs from all layers, but the <a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L129-L137">action prediction code</a> selects <code>[0]</code>. Only the first decoder layer supplies the action head; later layers do not contribute to this action loss.</p><p lang="zh-CN"><a href="https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)">Transformer</a> decoder 还有输出索引问题，见<a href="https://github.com/tonyzhaozh/act/issues/25">issue #25</a>。它返回各层中间结果，<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L129-L137">动作预测代码</a>却取了 <code>[0]</code>，动作头只使用第一层 decoder 的输出，后续层没有接入这条动作损失路径。</p></div>
+<pre><code>hs = self.transformer(src, None, self.query_embed.weight, pos,
+                      latent_input, proprio_input,
+                      self.additional_pos_embed.weight)[0]
+a_hat = self.action_head(hs)</code></pre>
+<div class="bilingual"><p lang="en">The <a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L118-L130">multi-camera path</a> uses the same ResNet-18 for each image. A 1×1 projection changes the feature channels; flattening then turns each spatial location into a token. An $H\times W$ image becomes roughly $(H/32)\times(W/32)$ tokens with the default ResNet-18 stride.</p><p lang="zh-CN">还有<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L118-L130">多相机图像的处理</a>。每张图经过同一个 ResNet-18，再用 1×1 投影调整特征通道，展平后每个空间位置成为一个 token。按默认 ResNet-18 的步幅，一张 $H\times W$ 图像约得到 $(H/32)\times(W/32)$ 个 tokens。</p></div>
 <div class="formula">$$I^{(c)}\longrightarrow F^{(c)}\in\mathbb R^{D\times H'\times W'}\longrightarrow T^{(c)}\in\mathbb R^{H'W'\times D}.$$</div>
-<p>公开代码拼接了各相机的特征与位置编码，却没有单独编码相机身份。不同画面仍可通过内容区分，但相同局部坐标的 token 没有明确的“来自哪台相机”标记。加入 camera embedding 后，空间位置和相机来源都能进入主干。</p>
-<p>把这些部分一起改掉，并基于之前 vision-only 的表现，将 CVAE 后验换成使用 ResNet-18 特征的 image-action 网络，左右抓取任务依旧失败了。</p>
-<p>为了在推理时使用这个 z，又增加了图像条件先验。后验在训练时看得到示范动作，先验则学习在只有图像时给出相应的潜变量分布。图像特征汇总为 $V$ 后：</p>
+<div class="bilingual"><p lang="en">The camera features are concatenated with per-image position encodings, but no camera identity. Tokens at the same local coordinates receive the same positional label across cameras. Position therefore says where a feature is within an image, but not whether it came from the left wrist, right wrist, or overhead camera.</p><p lang="zh-CN">各相机特征与各自的二维位置编码被拼接起来，却没有相机身份编码。不同相机中相同局部坐标的 token 使用相同的位置标记，因此位置编码只能说明特征在图像中的位置，不能说明它来自左腕、右腕还是顶部相机。</p></div>
+<div class="bilingual"><p lang="en">After fixing the decoder output and adding camera embeddings, the posterior was changed to a ResNet-18 image–action network, following the earlier success of vision-only control. The left/right grasping task still failed.</p><p lang="zh-CN">把 decoder 输出和相机编码一起改掉，并基于之前 vision-only 的表现，将后验换成使用 ResNet-18 的 image-action 网络，左右抓取任务依旧失败了。</p></div>
+<div class="bilingual"><p lang="en">To use z during rollout, a conditional prior was added. The posterior sees the image and demonstration during training; the prior sees only the image. KL trains the prior to match the posterior for that visual condition.</p><p lang="zh-CN">为了在 rollout 中使用 z，又加入了条件先验。训练后验看图像和示范动作，先验只看图像；KL 让先验在相同视觉条件下接近后验。</p></div>
 <div class="formula">$$q_\phi(z\mid V,A),\qquad p_\psi(z\mid V).$$</div>
-<p>训练从后验采样，让动作网络重建示范，同时用 KL 约束先验与后验；推理改从先验采样，或直接取先验均值。完整的空间图像特征仍进入 ACT 主干，视觉汇总只用于潜变量分布。</p>
+<div class="bilingual"><p lang="en">$V$ is pooled visual information for the latent networks. During training, z is sampled from the posterior; during rollout, it comes from the prior, either by sampling or by taking its mean. ACT receives the spatial image features in both cases.</p><p lang="zh-CN">V 是供潜变量网络使用的视觉汇总。训练时从后验采样 z，rollout 时改从先验采样，或取先验均值。两种情况下，ACT 都同时接收保留空间信息的图像特征。</p></div>
 {{figure:network}}
-<p>重参数化写成 $z=\mu_q+\sigma_q\odot\epsilon$，其中 $\epsilon\sim\mathcal N(0,I)$。动作损失能沿 z 回到后验，KL 同时更新后验和条件先验。此时 KL 很小，只表示同一条件下两种分布接近；它们仍然可以随图像一起变化。</p>
-<p>测试发现，固定图像、重新采样 z，预测动作仍没有明显变化。z 没有带来预期的动作多样性；换到未见场景后能否完成任务，则要由闭环测试判断。</p>
-<p>ACT 论文中的精细操作也有不同的数据来源。<a href="https://arxiv.org/html/2304.13705#S5">实验部分</a>包括 6 个真机任务和 2 个仿真任务；仿真任务分别使用脚本示范和人类遥操示范，真机任务使用真机遥操数据。<a href="https://tonyzhaozh.github.io/aloha/">项目页面</a>还将遥操展示与学习策略的演示分开展示。规范的仿真轨迹能让拟合更容易，但是否过拟合，要看未参与训练的初始条件和场景中的表现。</p>
-
-<h2 id="data">如何采集数据</h2>
-<p>模型能不能利用视觉，首先取决于数据是否给出了足够清楚的对应关系。移动之后什么时候停、抓偏后怎样修正，都要能从观测和动作中找到依据。</p>
-<ul>
-<li><strong>动作平稳。</strong> 减少无意抖动和不必要的长暂停，同时保留任务需要的停顿、接触与修正。移动任务要覆盖接近目标、减速、停止和停稳后的状态，避免大部分画面都只对应“继续走”。</li>
-<li><strong>相机可见。</strong> 停止依据、目标物体和操作接触点要出现在画面中。固定相机安装位置，检查曝光、运动模糊，以及图像、state、action 的时间对齐。重复采集看不到目标的画面，无法补足缺失的视觉条件。</li>
-<li><strong>覆盖变化。</strong> 改变起点、目标位置、移动方向和必要的场景条件，并采集偏离轨迹后的恢复动作。验证集按完整轨迹、采集批次或场景划分，避免将同一轨迹的相邻帧分到训练与验证两侧。</li>
-</ul>
-
-<h2 id="inference">如何推理</h2>
-<p>推理时可以一次预测并执行 100 步动作。训练时的 <code>chunk_size</code> 决定预测长度 $K$，<code>n_action_steps</code> 决定执行多少步后重新读取观测，记为 $n$。如果训练时 <code>chunk_size=30</code>，一次预测只有 30 步，就不能直接设置成执行 100 步。</p>
-<p>一次执行 100 步时，动作块之间有明显的间隔卡顿。把 n 调小，只使用由同一帧观测预测出的前一部分动作，卡顿仍然存在，有时会停住不动。</p>
-<p>更频繁重规划可能反复执行每个预测块的等待部分，也可能暴露推理延迟。n 变小提高了读取新观测的频率，却也缩短了每个动作块实际执行的部分，并不直接对应模型是否欠拟合。</p>
-<p>按照论文的方法开启时序融合，系数设为 0.01，动作变得平滑，纠正偏差也更及时，但偶尔仍会静止。时序融合会把不同动作块中、对同一执行时刻 t 的预测放在一起，再加权平均：</p>
-<div class="formula">$$\bar a_t=\frac{\sum_{i=0}^{N-1}e^{-mi}\hat a_t^{(i)}}{\sum_{i=0}^{N-1}e^{-mi}},\qquad i=0\text{ 为最旧预测。}$$</div>
+<div class="bilingual"><p lang="en">Reparameterization lets the action loss update the posterior through z. KL updates both posterior and conditional prior. A small KL now means they agree for the same image; both can still change with the image.</p><p lang="zh-CN">重参数化让动作损失沿 z 更新后验，KL 同时更新后验和条件先验。此时 KL 小，表示两者在同一图像条件下接近；换一张图像，两者仍可一起改变。</p></div>
+<div class="formula">$$z=\mu_q+\sigma_q\odot\epsilon,\qquad\epsilon\sim\mathcal N(0,I).$$</div>
+<div class="bilingual"><p lang="en">Resampling z for a fixed image produced little change in the predicted actions. The intended action diversity did not emerge. Generalization to new scenes is a separate test: does the policy still complete the task in closed loop?</p><p lang="zh-CN">测试中，固定图像、重新采样 z，预测动作没有明显变化，预期的动作多样性没有出现。换到新场景后能否完成任务，则要通过闭环执行检验。</p></div>
+<div class="bilingual"><p lang="en">ACT uses both real and simulated demonstrations. Its <a href="https://arxiv.org/html/2304.13705#S5">experiments</a> include six real-world tasks and two simulated tasks, with real teleoperation for the former and scripted or human demonstrations for the latter. The <a href="https://tonyzhaozh.github.io/aloha/">project page</a> separates teleoperation demos from learned policies. Smooth simulated trajectories alone do not establish overfitting; performance on held-out initial conditions is what tests it.</p><p lang="zh-CN">ACT 的精细操作 demo 使用了真机与仿真数据。<a href="https://arxiv.org/html/2304.13705#S5">论文实验</a>包括 6 个真机任务和 2 个仿真任务，前者使用真机遥操数据，后者使用脚本或人类示范。<a href="https://tonyzhaozh.github.io/aloha/">项目页面</a>也区分遥操展示和学习策略。仿真轨迹规范本身不等于过拟合，是否过拟合要看未参与训练的初始条件下的表现。</p></div>
+<h2 id="data"><span lang="en">Data</span><span lang="zh-CN">采集数据</span></h2>
+<ul class="bilingual-list"><li>
+<div class="bilingual"><p lang="en"><strong>Smooth actions.</strong> Reduce accidental jitter and unnecessary pauses, while keeping useful stops, contact, and corrections. For movement, record approaching, slowing, stopping, and remaining stopped.</p><p lang="zh-CN"><strong>动作平稳。</strong> 减少无意抖动和不必要的长暂停，保留任务需要的停顿、接触和修正。移动数据要覆盖接近目标、减速、停止和停稳。</p></div>
+</li><li>
+<div class="bilingual"><p lang="en"><strong>Useful views.</strong> Keep the stopping cue and contact point visible. Check camera placement, motion blur, exposure, and synchronization between images, state, and actions.</p><p lang="zh-CN"><strong>相机可见。</strong> 停止依据和操作接触点要出现在画面中。检查相机位置、运动模糊、曝光，以及图像、state 和 action 的时间对齐。</p></div>
+</li><li>
+<div class="bilingual"><p lang="en"><strong>Varied conditions.</strong> Change starting positions, goals, and movement directions; include recovery demonstrations. Split training and validation by complete trajectory or scene, rather than neighboring frames.</p><p lang="zh-CN"><strong>覆盖变化。</strong> 改变起点、目标位置和移动方向，采集偏离轨迹后的恢复动作。训练与验证按完整轨迹或场景划分，避免拆分同一轨迹的相邻帧。</p></div>
+</li></ul>
+<h2 id="inference"><span lang="en">Execution</span><span lang="zh-CN">推理执行</span></h2>
+<div class="bilingual"><p lang="en"><code>chunk_size</code> sets the predicted horizon $K$ during training. <code>n_action_steps</code>, written $n$, sets how many actions execute before reading a new observation. A model trained with $K=30$ cannot produce a 100-step chunk simply by setting $n=100$.</p><p lang="zh-CN">训练时的 <code>chunk_size</code> 决定预测长度 $K$，<code>n_action_steps</code> 记为 $n$，决定执行多少步后重新读取观测。训练时 $K=30$ 的模型，不能仅靠设置 $n=100$ 就预测出 100 步动作。</p></div>
+<div class="bilingual"><p lang="en">Executing 100 steps at a time showed pauses between chunks. Reducing n used only the beginning of each prediction, but sometimes made the pauses more obvious or left the robot still. Frequent replanning can repeatedly execute an initial waiting segment, or expose inference latency.</p><p lang="zh-CN">一次执行 100 步时，动作块之间出现明显卡顿。把 n 调小，只执行每个预测块的前一部分，卡顿有时更明显，甚至停住不动。更频繁重规划可能反复执行预测块开头的等待部分，也可能暴露推理延迟。</p></div>
+<div class="bilingual"><p lang="en">Temporal ensembling with coefficient 0.01 made motion smoother and corrections quicker, though occasional stops remained. It combines predictions from different chunks for the same execution time t, with i = 0 denoting the oldest prediction:</p><p lang="zh-CN">开启时序融合，系数设为 0.01，动作变得平滑，纠正偏差也更及时，但偶尔仍会静止。它把不同动作块中对应同一执行时刻 t 的预测加权平均，i = 0 表示最旧预测：</p></div>
+<div class="formula">$$\bar a_t=\frac{\sum_{i=0}^{N-1}e^{-mi}\hat a_t^{(i)}}{\sum_{i=0}^{N-1}e^{-mi}},\qquad i=0,\ldots,N-1.$$</div>
 {{figure:temporal}}
-<p>把系数调到 0.5 后，出现了明显动作反复。按当前实现的编号顺序，正系数越大，越偏向旧预测。只有两个预测时，$m=0.5$ 的旧、新权重约为 62% 和 38%，并非各占一半。</p>
-<p>两帧画面相似，也不意味着参与融合的动作一致：旧动作块在较早的观测下预测了更远的一步，新动作块则依据当前观测预测近处的一步。若旧预测仍朝原方向前进，新预测已经开始纠偏，融合就可能延迟这次纠正；持续往返的具体原因还需要结合预测动作、实际位置与推理耗时确认。</p>
-<p>底盘分类扩展对连续动作使用时序融合，离散速度取当前预测首步的类别。启用融合时，每步重新预测，<code>n_action_steps=1</code>。</p>
-<details><summary>潜变量与动作缓存</summary>
-<p><code>sample + phase</code> 会复用已采样的 z。<code>reset()</code> 或 <code>refresh_latent()</code> 清空 z 和未执行的预测，下一次网络调用才重新采样。不开启时序融合时，动作队列未耗尽就不会重新调用网络；开启融合后，旧预测也会参与最终动作。</p>
-<p>比较 z 的影响时，直接比较同一观测下重新前向得到的连续动作和类别 logits。类别概率改变后，<code>argmax</code> 仍可能选中同一类别。每个 chunk 重新 sample 的配置还会清空旧融合状态，避免混合不同随机样本的动作。</p>
+<div class="bilingual"><p lang="en">At 0.5, repeated back-and-forth motion appeared. In this implementation, larger positive coefficients favor older predictions. With two predictions, 0.5 gives about 62% to the older one and 38% to the newer one.</p><p lang="zh-CN">系数调到 0.5 后，出现了明显的动作反复。按当前实现的顺序，正系数越大，越偏向旧预测。只有两个预测时，0.5 对应的旧、新权重约为 62% 和 38%。</p></div>
+<div class="bilingual"><p lang="en">Similar images can still produce conflicting predictions for t: an old chunk predicts further into the future, while a new chunk responds to the current observation. Averaging an old forward command with a new correction can delay that correction; opposing velocity predictions can also cancel.</p><p lang="zh-CN">画面相似，对 t 的预测仍可能冲突：旧动作块预测的是更远的一步，新动作块则根据当前观测纠偏。旧的前进指令与新的纠偏指令混合，可能拖延纠正；方向相反的速度预测也可能相互抵消。</p></div>
+<div class="bilingual"><p lang="en">The <a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act">base classification extension</a> ensembles continuous actions and takes the first current prediction for each discrete velocity. Ensembling requires a new prediction at every step, so <code>n_action_steps=1</code>.</p><p lang="zh-CN"><a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act">底盘分类扩展</a>对连续动作进行时序融合，离散速度取当前预测首步的类别。融合时每步重新预测，<code>n_action_steps=1</code>。</p></div>
+<details><summary><span lang="en">Latent and action caches</span><span lang="zh-CN">潜变量与动作缓存</span></summary>
+<div class="bilingual"><p lang="en"><code>sample + phase</code> reuses a sampled z. <code>reset()</code> or <code>refresh_latent()</code> clears the latent and pending predictions. Without temporal ensembling, a nonempty action queue also skips a new network call.</p><p lang="zh-CN"><code>sample + phase</code> 会复用已采样的 z。<code>reset()</code> 或 <code>refresh_latent()</code> 清空潜变量和未执行的预测。不开启时序融合时，动作队列未耗尽也不会重新调用网络。</p></div>
+<div class="bilingual"><p lang="en">To compare different z values, run fresh forward passes on the same observation and compare continuous actions and logits. <code>argmax</code> can hide probability changes that leave the winning class unchanged. Sampling at every chunk also clears previous ensemble state in this implementation.</p><p lang="zh-CN">比较不同 z 时，对同一观测重新前向，直接比较连续动作和 logits。类别概率变化但最大项不变时，<code>argmax</code> 会隐藏这种差异。当前实现每个 chunk 重新采样时，也会清空旧融合状态。</p></div>
 </details>
-
-<details><summary>参考资料</summary>
+<details><summary><span lang="en">References</span><span lang="zh-CN">参考资料</span></summary>
 <ol class="sources">
 <li>Zhao et al.（2023）· <a href="https://arxiv.org/html/2304.13705">Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</a></li>
 <li>Shannon（1948）· <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">A Mathematical Theory of Communication</a></li>
@@ -126,5 +102,5 @@ latent_input = self.latent_out_proj(latent_sample)</code></pre>
 <li>Shukor et al.（2025）· <a href="https://arxiv.org/html/2506.01844v1">SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics</a></li>
 <li>Physical Intelligence（2025）· <a href="https://www.pi.website/blog/pi05">π0.5: A VLA with Open-World Generalization</a></li>
 </ol>
-<p class="source-code">代码：<a href="https://github.com/tonyzhaozh/act/tree/742c753c0d4a5d87076c8f69e5628c79a8cc5488">ACT · 742c753</a>；<a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act">底盘分类与条件先验 · 0db49e6</a></p>
+<p class="source-code"><span lang="en">Code: </span><span lang="zh-CN">代码：</span><a href="https://github.com/tonyzhaozh/act/tree/742c753c0d4a5d87076c8f69e5628c79a8cc5488">ACT · 742c753</a>；<a href="https://github.com/AlohaMini/Alohamini_software/tree/0db49e695147ddb7a48d11e3daf16d20114855dd/src/alohamini/policies/am_act"><span lang="en">Velocity classification and conditional prior · 0db49e6</span><span lang="zh-CN">底盘分类与条件先验 · 0db49e6</span></a></p>
 </details>

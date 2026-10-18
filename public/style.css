@@ -505,7 +505,7 @@ li {
   color: var(--ink);
 }
 [data-diagram="network"] .canvas-stage {
-  min-width: 540px;
+  min-width: 680px;
 }
 
 .figure-title,
@@ -528,4 +528,58 @@ li {
   top: 0;
   color: var(--muted);
   font-size: 11px;
+}
+
+.bilingual {
+  margin: 16px 0;
+}
+.bilingual > p {
+  margin: 0;
+}
+.bilingual > p + p {
+  margin-top: 0;
+}
+.bilingual [lang="en"] {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  hyphens: auto;
+}
+.bilingual-list .bilingual {
+  margin: 12px 0;
+}
+.training-log figcaption > span {
+  display: block;
+}
+
+[data-language="en"] [lang="zh-CN"],
+[data-language="zh"] [lang="en"] {
+  display: none !important;
+}
+.sitebar {
+  justify-content: flex-start;
+  gap: 18px;
+}
+.language-switch {
+  display: none;
+  align-items: center;
+  gap: 3px;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+}
+.js .language-switch {
+  display: flex;
+}
+.language-switch button {
+  padding: 2px 8px;
+  border-color: transparent;
+  font-size: 12px;
+}
+.language-switch button[aria-pressed="true"] {
+  border-color: var(--line);
+}
+@media print {
+  .language-switch { display: none !important; }
 }

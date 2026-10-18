@@ -1,8 +1,25 @@
-import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId, type Mode } from "./diagrams.js";
+import { type Language } from "./i18n.js";
+import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId } from "./diagrams.js";
 import { clamp } from "./math.js";
 import { mountCurveRenderer, type CurveRenderer } from "./gpu.js";
 const states = structuredClone(defaults);
 document.documentElement.classList.add("js");
+let language: Language = "en";
+try { if (localStorage.getItem("article-language") === "zh") language = "zh"; } catch {}
+const redraw = new Set<() => void>();
+function setLanguage(next: Language) {
+  language = next;
+  document.documentElement.dataset.language = language;
+  document.documentElement.lang = language === "en" ? "en" : "zh-CN";
+  for (const button of document.querySelectorAll<HTMLElement>("[data-language-choice]"))
+    button.setAttribute("aria-pressed", String(button.dataset.languageChoice === language));
+  try { localStorage.setItem("article-language", language); } catch {}
+  redraw.forEach(update => update());
+}
+for (const button of document.querySelectorAll<HTMLElement>("[data-language-choice]"))
+  button.addEventListener("click", () => setLanguage(button.dataset.languageChoice as Language));
+setLanguage(language);
+
 for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   const id = fig.dataset.diagram as DiagramId;
   const frame = fig.querySelector<HTMLElement>(".diagram-frame")!;
@@ -10,22 +27,15 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   const layer = fig.querySelector<HTMLElement>(".svg-layer")!;
   let renderer: CurveRenderer | null = null;
   function update() {
-    layer.innerHTML = renderDiagram(id, states[id]);
+    layer.innerHTML = renderDiagram(id, states[id], language);
     const readout = fig.querySelector("[data-readout]");
-    if (readout) readout.textContent = diagramReadout(id, states[id]);
-    for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-mode]"))
-      btn.setAttribute("aria-pressed", String(btn.dataset.mode === states[id].mode));
+    if (readout) readout.textContent = diagramReadout(id, states[id], language);
     for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-example]")) {
       const state = examples[id]![Number(btn.dataset.example)]!.state;
       btn.setAttribute("aria-pressed", String(Object.entries(state).every(([key, value]) => states[id][key as keyof typeof state] === value)));
     }
     renderer?.draw(states[id]);
   }
-  for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-mode]"))
-    btn.addEventListener("click", () => {
-      states[id].mode = btn.dataset.mode as Mode;
-      update();
-    });
   for (const btn of fig.querySelectorAll<HTMLButtonElement>("[data-example]"))
     btn.addEventListener("click", () => {
       Object.assign(states[id], examples[id]![Number(btn.dataset.example)]!.state);
@@ -42,13 +52,14 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
   });
   fig.querySelector("[data-export]")?.addEventListener("click", (event) => {
     event.preventDefault();
-    const blob = new Blob([renderDiagram(id, states[id])], { type: "image/svg+xml;charset=utf-8" });
+    const blob = new Blob([renderDiagram(id, states[id], language)], { type: "image/svg+xml;charset=utf-8" });
     const url = URL.createObjectURL(blob), a = document.createElement("a");
     a.href = url;
     a.download = `${id}.svg`;
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   });
+  redraw.add(update);
   update();
   if (id === "gaussian" || id === "l1")
     void mountCurveRenderer(surface, id, states[id])
