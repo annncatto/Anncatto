@@ -6,6 +6,7 @@ import { basePath } from "./paths.mjs";
 import { renderDiagram, defaults, examples, diagramReadout } from "../.build/diagrams.js";
 import { translateLabel } from "../.build/i18n.js";
 import { pixelCatSVG } from "../.build/pixel-cat.js";
+import { fallbackDie } from "../.build/hero/d20.js";
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -20,11 +21,21 @@ await fs.cp("content/images", path.join(out, "assets/content"), {
   recursive: true,
 });
 await fs.cp(".build", path.join(out, "assets"), { recursive: true });
-const moduleNames = (await fs.readdir(".build")).filter(name => name.endsWith(".js")).sort();
+async function filesUnder(root, directory = "") {
+  const files = [];
+  for (const entry of await fs.readdir(path.join(root, directory), { withFileTypes: true })) {
+    const name = path.join(directory, entry.name);
+    files.push(...(entry.isDirectory() ? await filesUnder(root, name) : [name]));
+  }
+  return files.sort();
+}
+const moduleNames = (await filesUnder(".build")).filter(name => name.endsWith(".js"));
 const versionHash = createHash("sha256");
 for (const name of moduleNames) versionHash.update(await fs.readFile(path.join(".build", name)));
 versionHash.update(await fs.readFile("public/style.css"));
 versionHash.update(await fs.readFile("public/fonts.css"));
+for (const name of await filesUnder("public/shaders")) versionHash.update(await fs.readFile(path.join("public/shaders", name)));
+versionHash.update(await fs.readFile("public/textures/blue-noise.png"));
 const assetVersion = versionHash.digest("hex").slice(0, 12);
 for (const name of moduleNames) {
   const source = await fs.readFile(path.join(".build", name), "utf8");
@@ -99,7 +110,7 @@ function math(s) {
       ),
     );
 }
-function shell(title, description, body, interactive = false) {
+function shell(title, description, body, interactive = false, home = false) {
   return `<!doctype html>
 <html lang="en" data-language="en">
 <head>
@@ -111,11 +122,11 @@ function shell(title, description, body, interactive = false) {
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/style.css">
-${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
+${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : home ? '<script type="module" src="/assets/hero/index.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
 </head>
 <body>
 <a class="skip" href="#main">${bilingual("Skip to content", "跳至正文")}</a>
-<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${'<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
+<header class="sitebar container${home ? ' homebar' : ''}">${home ? '<h1 class="home-name">Anncatto</h1>' : '<nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>'}${'<nav class="language-switch" aria-label="Language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
 ${body}
 </body>
 </html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`)
@@ -174,7 +185,9 @@ await write(
   shell(
     "Articles",
     "AI and robotics articles by Anncatto.",
-    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul></main>`,
+    `<main id="main" class="home"><section class="home-hero" data-dice data-renderer="static" aria-label="Twenty-sided die"><button class="hero-trigger" data-dice-trigger disabled aria-label="Roll a twenty-sided die" aria-describedby="dice-hint"><span data-dice-fallback>${fallbackDie()}</span><canvas aria-hidden="true"></canvas></button><div class="hero-footer container"><span id="dice-hint" data-dice-hint>${bilingual("Click to roll","点击投掷")}</span><output data-dice-result aria-live="polite" aria-atomic="true"></output></div></section><section class="container home-articles" aria-labelledby="article-index"><h2 id="article-index">${bilingual("Articles","文章")}</h2><ul class="entries">${listing}</ul></section></main>`,
+    false,
+    true,
   ),
 );
 await write(
