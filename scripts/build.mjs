@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import katex from "katex";
+import { basePath } from "./paths.mjs";
 import { renderDiagram, defaults } from "../.build/diagrams.js";
 const out = path.resolve("dist");
 const esc = (s) =>
@@ -148,7 +149,7 @@ ${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><scri
 <header class="sitebar container"><nav aria-label="主导航"><a href="/">Anncatto</a></nav></header>
 ${body}
 </body>
-</html>`;
+</html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`);
 }
 
 async function write(rel, text) {

@@ -1,6 +1,7 @@
 import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
+import { basePath, stripBasePath } from "./paths.mjs";
 
 const root = path.resolve("dist");
 const port = Number(process.env.PORT || 5173);
@@ -9,6 +10,7 @@ const types = {
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",
   ".svg": "image/svg+xml",
+  ".webp": "image/webp",
   ".wgsl": "text/plain; charset=utf-8",
   ".woff2": "font/woff2",
   ".woff": "font/woff",
@@ -32,7 +34,12 @@ const server = createServer(async (req, res) => {
     const pathname = decodeURIComponent(
       new URL(req.url, "http://localhost").pathname,
     );
-    let file = path.resolve(root, "." + pathname);
+    if (basePath && pathname === basePath) {
+      res.writeHead(301, { Location: `${basePath}/` });
+      res.end();
+      return;
+    }
+    let file = path.resolve(root, "." + stripBasePath(pathname));
     if (file !== root && !file.startsWith(root + path.sep)) {
       res.writeHead(403);
       res.end();
@@ -59,5 +66,5 @@ server.on("error", (error) => {
   process.exit(1);
 });
 server.listen(port, "127.0.0.1", () => {
-  console.log(`Local: http://127.0.0.1:${port}`);
+  console.log(`Local: http://127.0.0.1:${port}${basePath}/`);
 });
