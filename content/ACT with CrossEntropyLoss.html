@@ -46,6 +46,16 @@
 <div class="bilingual"><p lang="en">A <a href="https://arxiv.org/abs/1312.6114">VAE</a> encoder produces a distribution with parameters such as $\mu$ and $\sigma$. A decoder reconstructs the sample from z drawn from that distribution. A <a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> adds a condition: observations describe the scene, while z can represent variation among actions for that scene.</p><p lang="zh-CN"><a href="https://arxiv.org/abs/1312.6114">VAE</a> 编码器输出由 $\mu$、$\sigma$ 等参数描述的分布，解码器根据从中采样的 z 重建样本。<a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/8d55a249e6baa5c06772297520da2051-Paper.pdf">CVAE</a> 加入条件：观测描述场景，z 可以表示同一场景下的动作差异。</p></div>
 <div class="bilingual"><p lang="en">In ACT, the posterior reads robot state $s$ and the demonstrated action chunk $A$. The action network reads images, state, and z. Reconstruction encourages useful action information in z; KL keeps the posterior close to a standard normal prior.</p><p lang="zh-CN">ACT 的后验读取机器人状态 $s$ 和示范动作块 $A$，动作网络读取图像、状态和 z。动作重建促使 z 携带有用的动作信息，KL 则使后验接近标准正态先验。</p></div>
 <div class="formula">$$q_\phi(z\mid s,A)=\mathcal N(\mu_q,\operatorname{diag}\sigma_q^2),\qquad p(z)=\mathcal N(0,I).$$</div>
+<figure class="paper-figure paper-figure-wide" id="act-architecture">
+<p class="figure-scroll-hint"><span lang="en">Scroll horizontally or open the full-size figure.</span><span lang="zh-CN">横向滑动或点击查看大图。</span></p>
+<div class="paper-image-frame" tabindex="0" role="region" aria-labelledby="act-architecture-caption">
+<a class="paper-image" href="/assets/content/act-architecture.svg" target="_blank" rel="noopener">
+<img lang="en" src="/assets/content/act-architecture.svg" width="665" height="190" loading="lazy" decoding="async" alt="ACT architecture: the CVAE encoder maps joints and demonstrated actions to z; the policy combines camera features, joints, and z to predict an action chunk. Open the full-size figure.">
+<img lang="zh-CN" src="/assets/content/act-architecture.svg" width="665" height="190" loading="lazy" decoding="async" alt="ACT 架构：CVAE 编码器将关节状态和示范动作编码为 z，策略融合多相机特征、关节状态与 z，预测动作块。点击查看大图。">
+</a>
+</div>
+<figcaption><span class="figure-title" id="act-architecture-caption"><span lang="en">ACT architecture</span><span lang="zh-CN">ACT 架构</span></span><span class="figure-description"><span lang="en">Left: CVAE encoder. Right: action prediction network.</span><span lang="zh-CN">左：CVAE 编码器；右：动作预测网络。</span></span><span class="figure-source"><span lang="en">Source: <a href="https://arxiv.org/html/2304.13705v1#S3.F3">Zhao et al. (2023), Fig. 3</a>.</span><span lang="zh-CN">来源：<a href="https://arxiv.org/html/2304.13705v1#S3.F3">Zhao 等（2023），图 3</a>。</span></span></figcaption>
+</figure>
 <div class="bilingual"><p lang="en">The green dashed curve is the fixed posterior; the blue solid curve is the adjustable prior. The mean determines the center and the standard deviation determines the width. When both parameters match, the Gaussian curves coincide and KL is zero.</p><p lang="zh-CN">绿色虚线是固定的后验，蓝色实线是可调的先验。均值决定曲线中心的位置，标准差决定曲线的宽窄；这两个参数都相同时，两条高斯曲线重合，KL 为 0。</p></div>
 {{figure:gaussian}}
 <div class="bilingual"><p lang="en">In the experiment, however, KL became very small. With a fixed prior, that can accompany an ignored latent variable: the model reconstructs actions from observations, while the posterior passes little additional information through z.</p><p lang="zh-CN">但在实际训练中，KL 损失很小。固定先验时，这可能伴随潜变量被忽略：模型只靠观测就能降低重建损失，后验不再需要通过 z 传递多少额外信息。</p></div>
@@ -58,6 +68,13 @@ latent_input = self.latent_out_proj(latent_sample)</code></pre>
                       latent_input, proprio_input,
                       self.additional_pos_embed.weight)[0]
 a_hat = self.action_head(hs)</code></pre>
+<figure class="paper-figure paper-figure-transformer" id="transformer-architecture">
+<a class="paper-image" href="/assets/content/transformer-architecture.png" target="_blank" rel="noopener">
+<img lang="en" src="/assets/content/transformer-architecture.png" width="1520" height="2239" loading="lazy" decoding="async" alt="Transformer architecture: encoder on the left and autoregressive decoder on the right, connected by cross-attention. Open the full-size figure.">
+<img lang="zh-CN" src="/assets/content/transformer-architecture.png" width="1520" height="2239" loading="lazy" decoding="async" alt="Transformer 架构：左侧为编码器，右侧为自回归解码器，通过交叉注意力连接。点击查看大图。">
+</a>
+<figcaption><span class="figure-title"><span lang="en">Transformer architecture</span><span lang="zh-CN">Transformer 架构</span></span><span class="figure-description"><span lang="en">Encoder (left) and autoregressive decoder (right).</span><span lang="zh-CN">左：编码器；右：自回归解码器。</span></span><span class="figure-source"><span lang="en">Source: <a href="https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf#page=3">Vaswani et al. (2017), Fig. 1</a>.</span><span lang="zh-CN">来源：<a href="https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf#page=3">Vaswani 等（2017），图 1</a>。</span></span></figcaption>
+</figure>
 <div class="bilingual"><p lang="en">The <a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L118-L130">multi-camera path</a> also lacks camera identity embeddings. Tokens at the same local coordinates receive the same positional label across cameras, so the position encoding cannot identify which camera a feature comes from.</p><p lang="zh-CN">以及<a href="https://github.com/tonyzhaozh/act/blob/742c753c0d4a5d87076c8f69e5628c79a8cc5488/detr/models/detr_vae.py#L118-L130">多相机图像的处理</a>：没有单独的相机身份编码，不同相机中相同局部坐标的 token 使用相同的位置标记，位置编码无法说明特征来自哪台相机。</p></div>
 <div class="bilingual"><p lang="en">Each image passes through the same ResNet-18, followed by a 1×1 projection to change the feature channels. Camera feature maps and their per-image position encodings are concatenated along the width, then flattened into tokens. Each token represents one spatial location in an image. With the default ResNet-18 stride, an $H\times W$ image produces roughly $(H/32)\times(W/32)$ tokens.</p><p lang="zh-CN">每张图先经过同一个 ResNet-18，再用 1×1 投影调整特征通道。各相机的特征图与各自的二维位置编码沿宽度拼接，随后展平成 tokens，每个 token 对应图像中的一个空间位置。按默认 ResNet-18 的步幅，一张 $H\times W$ 图像约得到 $(H/32)\times(W/32)$ 个 tokens。</p></div>
 <div class="formula">$$I^{(c)}\longrightarrow F^{(c)}\in\mathbb R^{D\times H'\times W'}\longrightarrow T^{(c)}\in\mathbb R^{H'W'\times D}.$$</div>
@@ -96,6 +113,7 @@ a_hat = self.action_head(hs)</code></pre>
 <details><summary><span lang="en">References</span><span lang="zh-CN">参考资料</span></summary>
 <ol class="sources">
 <li>Zhao et al.(2023)· <a href="https://arxiv.org/html/2304.13705">Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware</a></li>
+<li>Vaswani et al.(2017)· <a href="https://papers.neurips.cc/paper/7181-attention-is-all-you-need.pdf">Attention Is All You Need</a></li>
 <li>Shannon(1948)· <a href="https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf">A Mathematical Theory of Communication</a></li>
 <li>Kullback &amp; Leibler(1951)· <a href="https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full">On Information and Sufficiency</a></li>
 <li>Kingma &amp; Welling(2014)· <a href="https://arxiv.org/abs/1312.6114">Auto-Encoding Variational Bayes</a></li>

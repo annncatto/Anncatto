@@ -479,6 +479,37 @@ li {
   text-align: center;
   min-width: 0;
 }
+.paper-figure .paper-image {
+  display: block;
+  width: 100%;
+  margin-inline: auto;
+  cursor: zoom-in;
+}
+.paper-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.paper-image-frame {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.paper-figure-wide .paper-image {
+  min-width: 640px;
+}
+.paper-figure-transformer .paper-image {
+  max-width: 420px;
+}
+.paper-figure .figure-source {
+  display: block;
+}
+.paper-figure .figure-source a {
+  color: inherit;
+  text-decoration-color: #c1c7c9;
+}
+.paper-figure .figure-source a:hover {
+  color: var(--accent);
+}
 
 .figure-scroll-hint {
   display: none;
