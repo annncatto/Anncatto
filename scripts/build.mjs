@@ -6,6 +6,7 @@ import { basePath } from "./paths.mjs";
 import { renderDiagram, defaults, examples, diagramReadout } from "../.build/diagrams.js";
 import { translateLabel } from "../.build/i18n.js";
 import { pixelCatSVG } from "../.build/pixel-cat.js";
+import { renderPi07Figure } from "../.build/pi07-diagrams.js";
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -134,12 +135,17 @@ function readingMinutes(raw, language) {
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
-  const figures = [...raw.matchAll(/\{\{figure:/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|<figure\b/g)].length;
+  const tableText = [...raw.matchAll(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`, "g"))]
+    .filter(match => raw.lastIndexOf("<table", match.index) > raw.lastIndexOf("</table>", match.index))
+    .map(match => match[1].replace(/<[^>]*>/g, " ")).join(" ");
+  const tableWords = (tableText.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
+  const tableCharacters = (tableText.match(/[\u3400-\u9fff]/g) || []).length;
   const codeLines = code.reduce((sum, match) => sum + match[1].split("\n").length, 0);
-  return Math.max(1, Math.ceil(words / 200 + characters / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
+  return Math.max(1, Math.ceil((words + tableWords) / 200 + (characters + tableCharacters) / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
 }
-function readingSidebar(raw) {
-  const sections = [{ id: "article-top", en: "ACT", zh: "ACT" }];
+function readingSidebar(raw, title) {
+  const sections = [{ id: "article-top", en: title, zh: title }];
   for (const match of raw.matchAll(/<h2\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)) {
     const title = language => (match[2].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[2]).replace(/<[^>]*>/g, "");
     sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
@@ -150,9 +156,10 @@ function readingSidebar(raw) {
 for (const p of posts) {
   let figureNumber = 0;
   const raw = await fs.readFile(path.join("content", p.source), "utf8"),
-    content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber)));
+    content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
+      .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id)));
   const header = `<header class="article-header"><h1>${esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const sidebar = readingSidebar(raw);
+  const sidebar = readingSidebar(raw, p.title);
   await write(
     `notes/${p.slug}/index.html`,
     shell(

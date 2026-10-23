@@ -1,5 +1,14 @@
 [
   {
+    "slug": "pi0-7",
+    "title": "pi0.7",
+    "description": "从条件化数据到视觉子目标，梳理 π0.7 的架构、流匹配、记忆与训练方法，以及泛化实验和经验学习。",
+    "descriptionEn": "A close reading of π0.7: context conditioning, visual subgoals, flow matching, memory, training, and learning from experience.",
+    "date": "2026-10-23",
+    "source": "pi0.7.html",
+    "sections": []
+  },
+  {
     "slug": "act-with-crossentropyloss",
     "title": "ACT with CrossEntropyLoss",
     "description": "从底盘离散速度出发，理解交叉熵、L1 与 KL，以及视觉输入、潜变量和时序融合对 ACT 控制行为的影响。",

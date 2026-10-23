@@ -1,4 +1,5 @@
 import { mountReadingNavigation } from "./reading.js";
+import { mountPi07Explainers } from "./pi07.js";
 import { language, onLanguageChange } from "./language.js";
 import { renderDiagram, defaults, examples, diagramReadout, PLOT, SIZE, type DiagramId } from "./diagrams.js";
 import { clamp } from "./math.js";
@@ -52,3 +53,4 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
 }
 
 mountReadingNavigation();
+mountPi07Explainers();

@@ -588,6 +588,127 @@ li {
 [data-language="zh"] [lang="en"] {
   display: none !important;
 }
+.pi07-article .source-quote {
+  margin: 18px 0;
+  padding: 10px 16px;
+  border-left: 2px solid #a8c8c3;
+  background: #f7faf9;
+  font-size: 14px;
+  line-height: 23px;
+}
+.pi07-article .source-quote p {
+  margin: 0;
+}
+.pi07-article .source-quote p + p {
+  margin-top: 8px;
+}
+.pi07-article .source-quote [lang="en"] {
+  font-family: "IBM Plex Sans", sans-serif;
+  hyphens: auto;
+}
+[data-language="zh"] .pi07-article .source-quote > [lang="en"] {
+  display: block !important;
+}
+[data-language="zh"] .pi07-article .source-caption .figure-description > [lang="en"] {
+  display: block !important;
+}
+.pi07-article .source-caption .figure-description > [lang="zh-CN"] {
+  display: block;
+  margin-top: 4px;
+}
+.pi07-article .source-quote cite {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+.pi07-article .source-quote cite a {
+  color: inherit;
+}
+.pi07-article .article-table {
+  width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  margin: 18px 0;
+}
+.pi07-article .article-table table {
+  min-width: 600px;
+}
+.pi07-article .paper-figure-compact .paper-image {
+  max-width: 440px;
+}
+.pi07-article .manuscript-points {
+  margin: 12px 0 22px;
+  line-height: 1.7;
+}
+.pi07-article .manuscript-points li {
+  font: inherit;
+  margin: 4px 0;
+  letter-spacing: 0;
+}
+.pi07-article .source-equation {
+  margin: 16px 0;
+}
+.pi07-article .source-equation .scope {
+  text-align: center;
+  font-size: 12px;
+}
+.pi07-controls {
+  display: none;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.js .pi07-controls {
+  display: flex;
+}
+.pi07-mode,
+.pi07-query {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.pi07-query {
+  margin-left: auto;
+}
+.pi07-controls button {
+  font-size: 13px;
+  padding: 4px 9px;
+}
+.pi07-controls button[aria-pressed="true"] {
+  background: #e3f0fa;
+  border-color: #9bc2d7;
+  color: var(--ink);
+}
+.pi07-diagram-frame {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+.pi07-diagram-frame svg {
+  display: block;
+  width: 100%;
+  min-width: 540px;
+  height: auto;
+}
+[data-pi07-explainer="tokens"] .pi07-diagram-frame svg,
+[data-pi07-explainer="latent"] .pi07-diagram-frame svg {
+  min-width: 0;
+  max-width: 440px;
+  margin-inline: auto;
+}
+.pi07-article .pi07-message {
+  min-height: 44px;
+  margin: 8px 0;
+  font-size: 14px;
+  line-height: 22px;
+}
+.pi07-explainer .figure-source {
+  display: block;
+}
+.pi07-explainer .figure-source a {
+  color: inherit;
+}
 .sitebar {
   justify-content: flex-start;
   gap: 18px;
