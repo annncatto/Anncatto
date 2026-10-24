@@ -12,6 +12,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@mujoco/mujoco": "3.17.0",
     "katex": "0.16.22",
     "three": "^0.186.1"
   },

@@ -12,11 +12,15 @@ for(const figure of document.querySelectorAll<HTMLElement>('[data-lightweight-fi
 }
 for (const figure of document.querySelectorAll<HTMLElement>('[data-course-figure="topology"]')) {
   const picture=figure.querySelector<HTMLImageElement>('[data-topology-image]')!;
+  const play=figure.querySelector<HTMLButtonElement>('[data-topology-play]')!;
+  const assetBase=picture.src.slice(0,picture.src.lastIndexOf('/')+1);let step=0,playing=false;
+  const update=()=>{play.setAttribute('aria-pressed',String(playing));play.textContent=language==='en'?(playing?'Pause evolution':'Play evolution'):(playing?'暂停演化':'播放演化');};
   figure.addEventListener('click',event=>{
-    const button=(event.target as Element).closest<HTMLButtonElement>('[data-topology-step]');
-    if(!button)return;
-    const step=button.dataset.topologyStep!;
-    picture.src=picture.src.replace(/topology-\d+\.png$/,`topology-${step.padStart(2,'0')}.png`);
-    figure.querySelectorAll<HTMLButtonElement>('[data-topology-step]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+    const target=event.target as Element;
+    if(target.closest('[data-topology-play]')){playing=!playing;picture.src=assetBase+(playing?'topology-evolution.gif':`topology-${String(step).padStart(2,'0')}.png`);update();return;}
+    const button=target.closest<HTMLButtonElement>('[data-topology-step]');if(!button)return;
+    playing=false;step=Number(button.dataset.topologyStep);picture.src=assetBase+`topology-${String(step).padStart(2,'0')}.png`;
+    figure.querySelectorAll<HTMLButtonElement>('[data-topology-step]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));update();
   });
+  onLanguageChange(update);update();
 }

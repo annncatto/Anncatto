@@ -12,6 +12,7 @@ import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
 import { build as bundle } from 'esbuild';
 await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
+await bundle({entryPoints:['src/concept-worker.ts'],outfile:'.build/concept-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}]});
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -26,6 +27,8 @@ await fs.cp("content/images", path.join(out, "assets/content"), {
   recursive: true,
 });
 await fs.cp(".build", path.join(out, "assets"), { recursive: true });
+await fs.mkdir(path.join(out,'assets/vendor/mujoco'),{recursive:true});
+for(const name of ['mujoco.js','mujoco.wasm'])await fs.copyFile(path.join('node_modules/@mujoco/mujoco',name),path.join(out,'assets/vendor/mujoco',name));
 const moduleNames = (await fs.readdir(".build")).filter(name => name.endsWith(".js")).sort();
 const versionHash = createHash("sha256");
 for (const name of moduleNames) versionHash.update(await fs.readFile(path.join(".build", name)));
@@ -201,7 +204,7 @@ await write(
     `<main id="main" class="container"><h1>${bilingual("Page not found","页面不存在")}</h1><p><a href="/">${bilingual("Back to articles","返回文章列表")}</a></p></main>`,
   ),
 );
-await write('labs/lightweight-robot/index.html',shell('Robot Structure Studio','Explore geometry, mass, inertia and stiffness in a parametric robot.',await fs.readFile('content/lightweight-lab.html','utf8'),true,'lightweight-lab'));
+await write('labs/lightweight-robot/index.html',shell('Lightweight Concept Design','Parametric robot assemblies, material and section sizing, manufacturing and contact dynamics.',await fs.readFile('content/lightweight-lab.html','utf8'),true,'lightweight-lab'));
 for (const id of Object.keys(defaults))
   await write(`figures/${id}.svg`, renderDiagram(id));
 await write("figures/reading-cat.svg", pixelCatSVG());

@@ -1,63 +1,57 @@
-# Lightweight article and independent robot studio
+# Lightweight structural design
 
-The bilingual article is assembled from `content/lightweight/` through `scripts/content.mjs`; `content/轻量化结构设计.html` lists its ten modules. It follows the course's general teaching sequence. Extensions and robot research appear at the end. The Three.js studio remains a separate static application at `/labs/lightweight-robot/`; it is not embedded in the article.
+The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
 
-## Source coverage
-
-User outline: `/home/anncatto/obsidian_me/blog/轻量化结构设计.md`. Course sources: `/home/anncatto/obsidian_me/选修/轻量化结构设计技术/`. [The source coverage inventory](lightweight-source-coverage.md) maps all 47 embedded screenshots from 13 notes to article anchors, records corrections, and documents the original figures and faithful redraws. The JSON companion records hashes for later note updates. Source notes remain in Obsidian and are not edited.
-
-| Module | Scope |
+| Module | Content |
 | --- | --- |
-| 01 | Overview; material/structure/process routes; cost A/B tradeoff; checking framework; requirements-to-delivery and virtual–physical feedback |
-| 02 | Material families; basic/engineering/process properties; composition and processing; alloy tempers; fibre, matrix and laminate |
-| 03 | Modulus versus stiffness/compliance; stress/strain; strength; bending; stability and vibration; fatigue, fracture, impact and thermal performance |
-| 04 | Requirement-based tie/beam/plate/tube indices; official Ashby charts; typical material ranges; complete introductory index/cost tables |
-| 05 | Shape factors; equal-area sections; load paths; utilization; ribs; sandwiches; thin plies; DSS and double-double; fibre–metal laminates |
-| 06 | Machining/casting/forming; composite processes; RTM chain; infusion; ultrasonic impregnation; connections; tolerances and inspection |
-| 07 | Passive and active integration; vibration/noise; morphing; structural energy storage/Ragone; knockdowns; CAI; fatigue tests and guided-wave monitoring |
-| 08 | Concept/scheme/detail; numerical modeling; multibody loads and structural checks; course SIMP formulation; computed iterations; validation |
-| 09 | Explicit extensions: fixed-diameter/fixed-wall tube exercise; belts/linkages/screws; composite joint research; all course case comparisons |
-| 10 | Robot-specific dynamics, mass distribution, actuators, reduction, contact; condition-aware payload ratios; legs, arms, humanoids and teleoperation cases |
+| 01 | Introduction, complete material/cost comparison, cost–mass tradeoff, material properties and four verification/design diagrams |
+| 02 | Classical methods: materials, structural performance, design concepts and manufacturing |
+| 03 | Integrated methods: active and passive functions, structural energy storage |
+| 04 | Concept design, load analysis, accuracy requirements and robot/manipulator research |
+| 05 | Dynamics, mass distribution, reflected inertia, backdrivability, stiffness, contact energy |
+| 06 | Axial/beam/plate/torsion indices, stress and curvature, official Ashby charts, material tables, fatigue and thermal properties |
+| 07 | Shape factors, thin-wall manufacture and the fixed-diameter/fixed-wall tube exercise |
+| 08 | Thin-wall efficiency, direct load paths and fully stressed design |
+| 09 | SIMP, computed simply supported beam evolution and component validation |
 
-## Figures and mathematical scope
+[Source coverage](lightweight-source-coverage.md) maps 47 embedded figures from 13 Obsidian notes to article anchors. The JSON companion records source hashes. Obsidian files are read-only inputs.
 
-`src/lightweight-course.ts` renders compact bilingual conceptual diagrams. `src/lightweight-diagrams.ts` renders six button-controlled equation plots. Official-source figures are credited directly below each image; original labels, copyright notices and mathematical fonts are preserved. Formula scope follows the notes and their necessary derivations; the former full 2R/FE/fracture/thermal/IK expansion is removed from the article.
+`src/lightweight-frameworks.ts` renders the relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
 
-The SIMP images are actual independently computed Q4 plane-stress solutions, not an interpolated illustration. To regenerate, use Python with NumPy, SciPy and Matplotlib:
+Regenerate the SIMP PNG stages, animated GIF and convergence history with Python, NumPy, SciPy, Matplotlib and Pillow:
 
 ```sh
 python scripts/figures/lightweight-topology.py
 ```
 
-It writes four PNG stages and a JSON convergence history. The model fixes the supports, centre load, 0.4 volume fraction, p=3 and filter radius; automated checks cover volume, equilibrium residual and final compliance. The article distinguishes these results from the course screenshot's separate model.
+The model uses 120 × 36 Q4 plane-stress elements, a central top load, lower-left pin, lower-right vertical roller, material fraction 0.4, penalty 3 and sensitivity-filter radius 2.2. Tests check volume, free-DOF equilibrium residual and compliance reduction. Playback starts only on request.
 
-## Reference project
+## Independent concept-design application
 
-Draft was inspected at commit `3b03e144735098ef94b938e85756806f45628f83` from https://github.com/davidhnguyen2000/draft. Its editor uses a Python websocket server, Viser and MuJoCo. The studio borrows the visual organization, not the generator or fitted motor laws. It uses an independently written two-link educational model; it does not claim Draft's packing/feasibility checks or simulated locomotion.
+`/labs/lightweight-robot/` is a static application independent of the article. Three.js renders the assembly; official single-thread MuJoCo WASM supplies rigid-body/contact dynamics in a worker. Hosting requires JavaScript and WASM MIME types; it requires no application server or cross-origin isolation headers.
 
-## Model contract
+- `concept-model.ts`: canonical joint tree, connected components, mass/COM/full inertia tensors, spatial IK, selected-member sizing, URDF/MJCF/JSON.
+- `concept-drawing.ts`: orthographic engineering SVG and DXF.
+- `concept-scene.ts`: mesh geometry, part selection, TCP manipulation and GLB/PNG.
+- `concept-physics.ts`: 500 Hz dynamics, 50 Hz PD plus gravity compensation and residual-policy environment.
+- `concept-rl.ts`: Gaussian residual policy, GAE, clipped PPO and Adam. Policy files are tied to a design fingerprint.
+- `concept-worker.ts`: simulation, training, policy import and snapshots without blocking the interface.
 
-- Total mass sums the stated body/accessory budget and all identical limbs.
-- Each limb contains two ideal uniform hollow/solid members, two motor packages and an end piece. Proximal drive adds 0.16 kg per limb as a distributed transmission allowance.
-- The distal motor housing belongs to the first member when at the joint, and to the body when proximal.
-- The 2R mass matrix includes these masses and a diagonal idealized `N² Jm` allowance; rotor inertia is fixed at `2.5e-5 kg m²`.
-- Bending, stress and frequency are individual-member screening calculations, separate from the rigid-body robot motion. The frequency uses a tip-mass approximation, not a whole-robot eigenanalysis.
-- Material values are rounded teaching values. CFRP represents an effective laminate, not fibre-direction strength certification.
-- Animation is kinematic. The stationary-body treadmill cycle uses continuous position/velocity at stance/swing transitions and 2R inverse kinematics. The arm target is draggable in a plane, with radial projection for unreachable targets and a reach envelope. There is no contact solver, balance controller or online FEA.
-- URDF masses sum to the analytical model. Links use member-plus-point-mass inertias; the body uses a uniform-box budget approximation. Continuous joints omit unknown motor ratings and travel; negative Y axes preserve the planar angle sign in Z-up coordinates.
-- The local D20 branch remains separate. This new article/studio is developed on `draft/lightweight-structure`.
+Default assemblies have 12 quadruped joints, 23 humanoid joints, or six arm axes plus one gripper-opening coordinate. Joint activation, axes, member dimensions, properties, payload and manufacturing parameters are editable. Material sizing screens the selected member against stress and displacement limits at a fixed outer section; it is an analytical sizing calculation, separate from the rigid-body contact solve. Manufacturing checks include minimum wall, stock usage, access ratio and material/process compatibility. These checks are not full finite-element or manufacturing-process simulations.
 
-## Development and verification
+URDF/MJCF exports share the canonical assembly mass and inertia. The physics controller has verified standing/pose-holding defaults. PPO uses measured rewards and state transitions. Locomotion depends on the design and controller; the current velocity-tracking controller and short trained walking policy have not passed a sustained-walking evaluation. Training plots must not be interpreted as proof of successful locomotion.
+
+Draft was reviewed at `3b03e144735098ef94b938e85756806f45628f83`: https://github.com/davidhnguyen2000/draft. Its Python/Viser generator is not a dependency. The application uses an independent canonical assembly model and browser physics.
+
+## Build and verification
 
 ```sh
 BASE_PATH=/Anncatto npm run build
 npm test
 BASE_PATH=/Anncatto npm run check
-BASE_PATH=/Anncatto PORT=5180 npm run preview
+BASE_PATH=/Anncatto PORT=5181 npm run preview
 ```
 
-Preview `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article has ten bilingual modules, six interactive equation plots and a selectable four-stage topology example. The studio runs independently. Keep `$$` delimiters intact during chapter expansion: replacement strings interpret dollar sequences, so the assembler uses a replacement callback.
+Preview paths are `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article tests check assembly order, source anchors, metadata exclusion, scientific plots and the SIMP solve. Concept tests compare canonical mass/FK against MuJoCo, verify standing, IK, sizing and PPO serialization/updates. Browser checks cover both languages, mobile widths, SVG label collisions, playback, controls, exports and one-screen application layout.
 
-The mechanics tests cover exact tube sections, cantilever response, positive-definite limb inertia, motor-placement effects, reduction scaling, URDF mass/inertia consistency, both inverse-kinematic branches, unreachable targets, gait continuity and chapter assembly. Browser verification covers leg motion/pause, arm dragging, controls, all four exports, equation-plot choices, topology stages, original image loading, both languages, desktop/mobile overflow, SVG label collisions and network/runtime errors.
-
-Three.js is bundled only for the studio. Its MIT notice is distributed at `assets/licenses/three-LICENSE.txt`. The article’s scientific diagrams remain vector graphics; the robot viewport uses WebGL meshes, environment lighting and shadow maps.
+Three.js MIT and MuJoCo Apache 2.0 notices are distributed under `assets/licenses/`. `main` publishes GitHub Pages; draft work remains on `draft/lightweight-structure`, and D20 work stays on `local/d20-homepage`.

@@ -1,66 +1,146 @@
 import {language,onLanguageChange} from './language.js';
-import {createRobotScene} from './lightweight-scene.js';
-import {initialDesign,materials,evaluateDesign,presets,exportConfiguration,exportURDF,type Design,type RobotType} from './lightweight-mechanics.js';
-const root=document.querySelector<HTMLElement>('[data-structure-studio]');
-if(root) {
-  const $=<T extends HTMLElement>(s:string)=>root.querySelector<T>(s)!;
-  const form=$<HTMLFormElement>('[data-design-form]'),view=$('[data-robot-view]');
-  let design={...initialDesign},reference={...initialDesign},animating=false,mode='geometry',scene:ReturnType<typeof createRobotScene>|undefined;
-  const tr=(en:string,zh:string)=>language==='en'?en:zh;
-  const f=(n:number,d=2)=>Number.isFinite(n)?n.toFixed(d):'∞';
-  const names:Record<RobotType,[string,string]>={quadruped:['Quadruped','四足机器人'],biped:['Biped','双足机器人'],arm:['Two-link arm','二连杆机械臂']};
-  const massColors=['#a6b7bf','#83bbce','#2b7ba2','#455d69','#b8dec9'];
-  const scales:Record<string,number>={l1:1000,l2:1000,width:1000,height:1000,wall:1000,q1:180/Math.PI,q2:180/Math.PI};
-  function setFields(){
-    const material=$<HTMLSelectElement>('select[name=material]');
-    material.innerHTML=Object.entries(materials).map(([key,m])=>`<option value="${key}">${language==='en'?m.en:m.zh}</option>`).join('');
-    for(const e of form.elements)if(e instanceof HTMLInputElement||e instanceof HTMLSelectElement){const key=e.name as keyof Design;if(key in design)e.value=String(typeof design[key]==='number'?Number(((design[key] as number)*(scales[key]||1)).toFixed(2)):design[key]);}
-    const labels=[['section',['Box tube','Circular tube','Solid rectangle'],['矩形闭口管','圆管','实心矩形']],['remote',['At the joint','At the limb root'],['关节处','肢体根部']]] as const;
-    for(const [name,en,zh] of labels){const s=$<HTMLSelectElement>(`select[name=${name}]`);[...s.options].forEach((o,i)=>o.textContent=(language==='en'?en:zh)[i]!);}
-    for(const b of root!.querySelectorAll<HTMLButtonElement>('[data-robot]'))b.setAttribute('aria-pressed',String(b.dataset.robot===design.robot));
-    $('[data-workspace]').hidden=design.robot!=='arm';
-    $<HTMLInputElement>('input[name=width]').disabled=design.section==='tube';$<HTMLInputElement>('input[name=wall]').disabled=design.section==='solid';
+import {materials,type Material,type SectionType} from './lightweight-mechanics.js';
+import {initialConcept,copyDesign,generateRobot,evaluateConcept,fk,inverseArm,exportMJCF,exportConceptURDF,exportConceptJSON,sizeCandidates,property,type ConceptDesign,type RobotModel,type V3,type Joint,qa,qm} from './concept-model.js';
+import {drawingSVG,exportDXF} from './concept-drawing.js';
+import {createConceptScene} from './concept-scene.js';
+import type {PhysicsSnapshot} from './concept-physics.js';
+import type {PolicyFile} from './concept-rl.js';
+const root=document.querySelector<HTMLElement>('[data-concept-app]');
+if(root){
+ const $=<T extends HTMLElement>(s:string)=>root.querySelector<T>(s)!;
+ const tr=(en:string,zh:string)=>language==='en'?en:zh,fmt=(n:number,p=2)=>Number.isFinite(n)?n.toFixed(p):'—',pct=(n:number)=>`${n>0?'+':''}${fmt(n,1)}%`;
+ let design=copyDesign(initialConcept),q:Record<string,number>,model:RobotModel,selected='fl_pitch',scope='all',tab='architecture',metricTab='efficiency',group='',sheet='assembly',scene:ReturnType<typeof createConceptScene>|undefined,ik=false,worker:Worker|undefined,engineReady=false,running=false,training=false,reference:RobotModel,policy:PolicyFile|undefined,snapshot:PhysicsSnapshot|undefined,history:{d:ConceptDesign;q:Record<string,number>}[]=[],future:typeof history=[],trainHistory:{steps:number;reward:number}[]=[],updates=40,lastPoseMetrics=0;
+ try{const stored=JSON.parse(localStorage.getItem('anncatto.concept.v2')||'null');if(stored){const candidate={...copyDesign(initialConcept),...stored};generateRobot(candidate);design=candidate;}}catch{}
+ model=generateRobot(design);q={...model.home};selected=model.nodes.find(n=>n.member)!.id;reference=generateRobot(copyDesign(design));
+ const tabs=[['architecture','Layout','构型'],['material','Material','材料'],['section','Section','截面'],['manufacturing','Process','制造'],['joints','Joints','关节'],['loads','Load case','工况'],['control','Control / PPO','控制 / PPO']] as const;
+ const metricTabs=[['efficiency','Efficiency','效率'],['checks','Member','构件'],['system','System','整机'],['process','Process','工艺']] as const;
+ const scale:Record<string,number>={l1:1000,l2:1000,width:1000,height:1000,wall:1000,bodyLength:1000,bodyWidth:1000,bodyHeight:1000,minWall:1000,stockAllowance:1000,allowDeflection:1000,memberLength:1000};
+ const input=(name:string,en:string,zh:string,value:number,unit='',step=.1,min=0,max?:number)=>`<label class="concept-field"><span>${tr(en,zh)}</span><div><input name="${name}" type="number" step="${step}" min="${min}" ${max!==undefined?`max="${max}"`:''} value="${Number(value.toFixed(5))}" aria-label="${tr(en,zh)}"><small>${unit}</small></div></label>`;
+ const numeric=(key:keyof ConceptDesign,en:string,zh:string,unit='',step=.1,min=.001,max?:number)=>input(key,en,zh,Number(design[key])*(scale[key]||1),unit,step,min,max);
+ const options=(name:string,en:string,zh:string,values:[string,string,string][],current:string)=>`<label class="concept-field concept-wide"><span>${tr(en,zh)}</span><select name="${name}">${values.map(([key,a,b])=>`<option value="${key}" ${key===current?'selected':''}>${tr(a,b)}</option>`).join('')}</select></label>`;
+ const check=(name:string,en:string,zh:string,yes:boolean)=>`<label class="concept-checkbox"><input name="${name}" type="checkbox" ${yes?'checked':''}>${tr(en,zh)}</label>`;
+ const section=()=>model.nodes.find(n=>n.id===selected)?.member??model.nodes.find(n=>n.member)!.member!;
+ function remember(){history.push({d:copyDesign(design),q:{...q}});if(history.length>40)history.shift();future=[];}
+ function stop(){worker?.postMessage({type:'stop'});running=false;training=false;root!.dataset.running='false';}
+ function rebuild(reset=false){const prior=q;model=generateRobot(design);q={...model.home,...Object.fromEntries(Object.entries(prior).filter(([id])=>id in model.home))};if(!model.nodes.some(n=>n.id===selected&&n.member))selected=model.nodes.find(n=>n.member)!.id;policy=undefined;trainHistory=[];snapshot=undefined;stop();scene?.build(model,reset);scene?.pose(q);scene?.select(selected);if(ik&&design.robot==='arm')scene?.target(fk(model,q).tool!.p);else scene?.hideTarget();engineReady=false;worker?.postMessage({type:'model',design,q,task:$<HTMLSelectElement>('[data-task]').value});localStorage.setItem('anncatto.concept.v2',JSON.stringify(design));render();}
+ function render(){
+  $('[data-design-tabs]').innerHTML=tabs.map(([id,en,zh])=>`<button type="button" data-tab="${id}" aria-pressed="${tab===id}">${tr(en,zh)}</button>`).join('');
+  $('[data-metric-tabs]').innerHTML=metricTabs.map(([id,en,zh])=>`<button type="button" data-metric="${id}" aria-pressed="${metricTab===id}">${tr(en,zh)}</button>`).join('');
+  for(const b of root!.querySelectorAll<HTMLButtonElement>('[data-architecture]'))b.setAttribute('aria-pressed',String(b.dataset.architecture===design.robot));
+  $('[data-dof]').textContent=`${model.active.length} DOF`;
+  $('[data-selection]').textContent=selected;
+  const part=$<HTMLSelectElement>('[data-part]');part.innerHTML=model.nodes.filter(n=>n.member).map(n=>`<option value="${n.id}" ${selected===n.id?'selected':''}>${n.id} · ${n.label[language==='en'?0:1]}</option>`).join('');
+  const sc=$<HTMLSelectElement>('[data-scope]');sc.innerHTML=`<option value="all">${tr('All members','全部构件')}</option><option value="part">${tr('Selected member','所选构件')}</option>`;sc.value=scope;
+  $('[data-model-label]').textContent=tr(design.robot==='quadruped'?'Quadruped':design.robot==='biped'?'Humanoid':'6R arm + parallel gripper',design.robot==='quadruped'?'四足装配':design.robot==='biped'?'人形装配':'6R 机械臂 + 平行夹爪');
+  $('[data-ik]').hidden=design.robot!=='arm';$('[data-ik]').setAttribute('aria-pressed',String(ik));
+  const task=$<HTMLSelectElement>('[data-task]'),taskValue=task.value||'stand';task.innerHTML=`<option value="stand">${tr(design.robot==='arm'?'Hold pose':'Stand',design.robot==='arm'?'定姿':'站立')}</option>${design.robot==='arm'?'':`<option value="walk">${tr('Track velocity','速度跟踪')}</option>`}`;task.value=design.robot==='arm'?'stand':taskValue;
+  $<HTMLSelectElement>('[data-export]').options[0]!.text=tr('Export','导出');$<HTMLSelectElement>('[data-controller]').options[1]!.text=tr('PPO residual','PPO 残差');
+  renderForm();renderMetrics();draw();status();
+ }
+ function renderForm(){const m=section(),a=evaluateConcept(model,q,selected);let body='';
+  if(tab==='architecture'){
+   body=`<h2>${tr('Geometry','几何布置')}</h2><div class="concept-field-grid">`;
+   if(design.robot==='arm')body+=design.armLengths.map((v,i)=>input(`arm:${i}`,['Upper arm','Forearm','Wrist'][i]!,['上臂','前臂','腕段'][i]!,v*1000,'mm',1,45,1500)).join('');else body+=numeric('l1','Thigh length','大腿长度','mm',1,80,1500)+numeric('l2','Shank length','小腿长度','mm',1,80,1500);
+   body+=numeric('bodyLength','Body length','机身长度','mm',1,80,1500)+numeric('bodyWidth','Hip spacing','髋部间距','mm',1,100,1000)+numeric('bodyHeight','Body depth','机身厚度','mm',1,50,700)+numeric('bodyMass','Body mass budget','机身质量预算','kg',.1,.2,100)+'</div>';
+   if(design.robot!=='arm'){const names=design.robot==='quadruped'?['fl','fr','rl','rr']:['left','right'];body+=`<h2>${tr('Joint configuration','关节配置')}</h2>`+check('hipYaw','Hip yaw','髋偏航',!!(design.joints[`${names[0]}_yaw`]?.active??design.robot==='biped'))+check('ankle','Ankle pitch','踝俯仰',design.robot==='biped'?(design.joints.left_ankle?.active??true):!!design.joints.fl_ankle?.active);}
+   body+=`<div class="concept-topology-list">${[...new Set(model.nodes.filter(n=>n.joint).map(n=>n.group))].map(g=>`<button type="button" data-group="${g}">${g}<b>${model.active.filter(j=>j.group===g).length}</b></button>`).join('')}</div>`;
+  }else if(tab==='material'){
+   const key=scope==='part'?m.material:design.material,p=scope==='part'?m.prop:{...property(design.material),...design.properties};
+   body='<h2>'+tr('Material condition','材料状态')+'</h2>'+options('material','Grade / laminate','牌号 / 铺层',Object.entries(materials).map(([k,m])=>[k,m.en,m.zh]),key)+`<div class="concept-field-grid">`+input('prop:rho','Density ρ','密度 ρ',p.rho,'kg/m³',10,100,30000)+input('prop:E','Modulus E','弹性模量 E',p.E/1e9,'GPa',1,.01,1000)+input('prop:G','Shear G','剪切模量 G',p.G/1e9,'GPa',1,.01,500)+input('prop:strength','Yield / limit σ','屈服 / 限制强度 σ',p.strength/1e6,'MPa',5,1,5000)+input('prop:nu','Poisson ν','泊松比 ν',p.nu,'',.01,-.99,.49)+'</div>';
+   body+=`<p class="concept-property-context">${key==='carbon'?tr('E and strength follow the selected laminate and loading direction.','E 与强度对应所选铺层及加载方向。'):tr('Specify grade, product form and temper for the design.','设计值需对应牌号、产品形态与热处理状态。')}</p><button type="button" data-property-reset>${tr('Restore grade values','恢复牌号参数')}</button>`;
+  }else if(tab==='section'){
+   body='<h2>'+tr('Cross-section','截面设计')+'</h2>'+options('section','Section','截面形式',[['box','Closed rectangular tube','矩形闭口管'],['tube','Circular tube','圆管'],['solid','Solid rectangle','实心矩形']],scope==='part'?m.section:design.section)+'<div class="concept-field-grid">';
+   for(const [k,en,zh] of [['width','Width b','宽度 b'],['height','Height h / D','高度 h / 外径 D'],['wall','Wall t','壁厚 t']] as const)body+=input(k,en,zh,(scope==='part'?m[k]:design[k])*1000,'mm',.1,.2,180);
+   if(scope==='part')body+=input('memberLength','Axis spacing L','轴间距 L',m.length*1000,'mm',1,80,1500);
+   body+=`</div><div class="concept-section-profile">${sectionProfile(m)}</div><div class="concept-mini-table"><span>A</span><b>${fmt(a.section.area*1e6,1)} mm²</b><span>I</span><b>${fmt(a.section.I*1e12,0)} mm⁴</b><span>${tr('Cut length','下料长度')}</span><b>${fmt(a.cutLength*1000,1)} mm</b></div>`;
+  }else if(tab==='manufacturing'){
+   body='<h2>'+tr('Manufacturing route','制造路线')+'</h2>'+options('process','Route','工艺',[['tube','Tube stock + end machining','型材下料 + 端部加工'],['cnc','Machining from solid','实体毛坯切削'],['cast','Near-net casting','近净铸造'],['additive','Additive manufacturing','增材制造'],['laminate','Composite forming','复合材料成形']],design.process)+`<div class="concept-field-grid">`+numeric('minWall','Minimum wall','工艺最小壁厚','mm',.1,.2,10)+numeric('stockAllowance','Stock allowance','毛坯余量','mm',.1,0,30)+numeric('processYield','Material yield','材料利用率','',.01,.1,1)+numeric('maxToolReach','Allowed L / opening','允许长径比','',.5,1,30)+'</div>';
+   body+=`<div class="concept-process-result">${processChecks(a).map(([ok,text])=>`<p class="${ok?'ok':'warn'}">${ok?'✓':'!'} ${text}</p>`).join('')}</div>`;
+  }else if(tab==='joints'){
+   const groups=[...new Set(model.active.map(j=>j.group))];if(!groups.includes(group))group=groups[0]!;
+   body=options('group','Chain','关节链',groups.map(g=>[g,g,g]),group)+`<div class="concept-joint-head"><span>${tr('Joint / active','关节 / 启用')}</span><span>${tr('Axis','轴')}</span><span>q</span></div><div class="concept-joints">`;
+   for(const n of model.nodes.filter(n=>n.joint&&n.group===group)){const j=n.joint!;body+=`<div class="concept-joint-row"><label><input name="enable:${j.id}" type="checkbox" ${j.active?'checked':''}><span title="${j.label[language==='en'?0:1]}">${j.id.replace(`${group}_`,'')}</span></label><select name="axis:${j.id}" aria-label="${j.id} axis">${['X','Y','Z'].map((v,i)=>`<option ${Math.abs(j.axis[i]!)>.9?'selected':''}>${v}</option>`).join('')}</select><input name="q:${j.id}" type="number" value="${fmt((q[j.id]??j.home)*(j.kind==='slide'?1000:180/Math.PI),1)}" step="${j.kind==='slide'?1:5}" min="${j.min*(j.kind==='slide'?1000:180/Math.PI)}" max="${j.max*(j.kind==='slide'?1000:180/Math.PI)}" ${j.active?'':'disabled'} aria-label="${j.id}"></div>`;}
+   body+='</div><div class="concept-field-grid">'+numeric('motorMass','Joint module mass','关节模组质量','kg',.05,.05,8)+numeric('motorTorque','Rated output torque','额定输出力矩','N·m',1,1,600)+numeric('ratio','Gear ratio N','减速比 N','',1,1,200)+numeric('rotorInertia','Rotor inertia Jm','转子惯量 Jm','kg·m²',.00001,.000001,.1)+'</div>'+check('remote','Relocate knee / elbow drive by belt','同步带远置膝 / 肘驱动',design.remote);
+  }else if(tab==='loads'){
+   body='<h2>'+tr('Member load case','构件工况')+'</h2><div class="concept-field-grid">'+numeric('tipForce','Transverse end force','横向端部载荷','N',5,0,3000)+numeric('allowDeflection','Displacement limit','允许挠度','mm',.1,.01,50)+numeric('safety','Strength factor','强度系数','',.1,1,5)+numeric('payload','Workpiece / carried load','工件 / 携带负载','kg',.1,0,30)+numeric('toolMass','End effector mass','末端组件质量','kg',.05,.05,8)+'</div>';
+   if(design.robot==='arm')body+=`<div class="concept-tool-presets">${[.25,.45,1.2].map(n=>`<button type="button" data-tool-mass="${n}">${n} kg</button>`).join('')}</div>`;
+   body+=`<button type="button" class="concept-primary" data-size>${tr('Size selected wall across materials','固定外形，比较材料与壁厚')}</button><div data-candidates></div>`;
+  }else{
+   body='<h2>'+tr('Dynamics & policy','动力学与策略')+'</h2><div class="concept-field-grid">'+numeric('speed','Target forward speed','目标前进速度','m/s',.05,0,1)+input('updates','PPO updates','PPO 更新轮数',updates,'',1,1,1000)+'</div><div class="concept-controller-spec"><span>MuJoCo 3.17 · 500 Hz</span><span>PD · 50 Hz · '+tr('gravity compensation','重力补偿')+'</span><span>PPO · Gaussian residual · GAE</span></div>';
+   body+=`<div class="concept-rl-buttons"><button type="button" data-train class="concept-primary">${tr('Train current design','训练当前设计')}</button><button type="button" data-stop-training>${tr('Stop','停止')}</button></div><div class="concept-training-status" data-training-status>${policy?`${policy.steps.toLocaleString()} ${tr('samples','采样步')}`:tr('Policy: untrained','策略：未训练')}</div><div data-learning-plot class="concept-learning-plot"></div><div class="concept-reward-formula">r = r<sub>upright</sub> + r<sub>tracking</sub> + r<sub>task</sub> − λτ²</div>`;
+   if(design.robot==='arm')body+=`<h2>TCP</h2><div class="concept-field-grid">${fk(model,q).tool!.p.map((n,i)=>input(`target:${i}`,['X','Y','Z'][i]!,['X','Y','Z'][i]!,n*1000,'mm',5,-1500,1500)).join('')}</div>`;
   }
-  function metrics(pose=design){
-    const a=evaluateDesign(pose),b=evaluateDesign({...reference,robot:design.robot});
-    const difference=(v:number,r:number)=>`${v>=r?'+':''}${f(100*(v/r-1),1)}%`;
-    const entries=[
-      [tr('Total robot mass','整机质量'),f(a.totalMass),'kg',difference(a.totalMass,b.totalMass)],
-      [tr('Limb root inertia · M₁₁','单肢根部惯量 · M₁₁'),f(a.M11,4),'kg·m²',difference(a.M11,b.M11)],
-      [tr('Member tip deflection','单杆末端挠度'),f(a.deflection*1000,3),'mm',tr('linear cantilever','线性悬臂梁')],
-      [tr('Member bending stress','单杆弯曲应力'),f(a.stress/1e6,1),'MPa',`${tr('reference / stress','参考强度 / 应力')} ${f(a.strengthReserve,1)}`],
-      [tr('Member frequency estimate','单杆频率估计'),f(a.frequency,1),'Hz',tr('with assumed tip mass','包含假定端部质量')],
-      [tr('Reflected rotor inertia','转子反射惯量'),f(a.reflected,5),'kg·m²',`N²Jₘ · ${design.ratio}:1`],
-      [tr('Member bending stiffness','单杆弯曲刚度'),f(a.stiffness/1000,1),'N/mm',tr('F / bending deflection','载荷 / 弯曲挠度')],
-      [tr('Member torsional stiffness','单杆抗扭刚度'),f(materials[design.material].G*a.section.J/Math.max(design.l1,design.l2),1),'N·m/rad',tr('GJ / L','GJ / L')],
-    ];
-    $('[data-metrics]').innerHTML=entries.map(([label,value,unit,delta])=>`<div class="studio-metric"><span>${label}</span><strong>${value}<small>${unit}</small></strong><em>${delta}</em></div>`).join('');
-    const labels=language==='en'?['Body + accessories','Members','Actuators','End pieces','Remote transmission']:['机身与附件','结构杆件','驱动模组','端部件','远程传动'];
-    $('[data-mass-stack]').innerHTML=a.massBreakdown.map((m,i)=>`<span style="width:${100*m/a.totalMass}%;background:${massColors[i]}" title="${labels[i]} ${f(m)} kg"></span>`).join('');
-    $('[data-mass-legend]').innerHTML=a.massBreakdown.map((m,i)=>m>0?`<li><i style="background:${massColors[i]}"></i>${labels[i]}<b>${f(m)} kg</b></li>`:'').join('');
-    $('[data-report]').textContent=tr(`Static joint torques under the vertical end load: ${f(Math.abs(a.torque1),1)} / ${f(Math.abs(a.torque2),1)} N·m. These are load demands, not rated motor outputs.`,`竖直末端载荷下的静态关节力矩：${f(Math.abs(a.torque1),1)} / ${f(Math.abs(a.torque2),1)} N·m，表示载荷需求。`);
-    $('[data-pose-readout]').textContent=`q₁ ${f(pose.q1*180/Math.PI,1)}° · q₂ ${f(pose.q2*180/Math.PI,1)}°`;
-    $('[data-model-name]').textContent=names[design.robot][language==='en'?0:1];
-  }
-  function note(){
-    $('[data-view-note]').textContent=mode==='deflection'?tr(`Blue curve: the longer member treated as a cantilever; deformation ×${view.dataset.deformationScale||'150'}.`,`蓝色曲线：较长杆件的悬臂梁挠曲，变形放大 ${view.dataset.deformationScale||'150'} 倍。`):mode==='inertia'?tr('Markers show geometric member centres. Move the motor to see its spatial distribution change.','圆点标出杆件几何中心；切换电机位置，比较运动质量的空间分配。'):tr('Hollow members, joint modules and transmission use the same dimensions as the calculations.','空心杆件、关节模组与传动位置使用计算中的同一组尺寸参数。');
-    $('[data-animate]').textContent=design.robot==='arm'?tr(animating?'Pause motion':'Animate joints',animating?'暂停运动':'关节运动'):tr(animating?'Pause gait':'Start gait',animating?'暂停步态':'开启步态');
-    $('[data-motion-note]').textContent=design.robot==='arm'?tr('Drag the green end target in its motion plane. Unreachable targets project to the reach boundary; joint limits and obstacles are omitted.','拖动绿色末端目标，在运动平面内逆解。不可达目标投影到可达边界；未加入关节限位与障碍物。'):tr('A stationary-body treadmill cycle: stance moves backward and swing lifts forward. This illustrates geometry, without contact or balance dynamics.','原地步态循环：支撑段向后、摆动段抬起向前，用于展示机构几何。');
-    if(design.robot==='arm'&&view.dataset.ikReachable==='false')$('[data-motion-note]').textContent+=tr(` Target outside reach by ${f(Number(view.dataset.ikError)*1000,1)} mm.`,`目标超出可达范围 ${f(Number(view.dataset.ikError)*1000,1)} mm。`);
-  }
-  function update(reset=false){try{evaluateDesign(design);scene?.update(design,reset);metrics();note();$('[data-input-error]').textContent='';}catch(e){$('[data-input-error]').textContent=tr('Check the section and numeric dimensions.','请检查截面尺寸；壁厚应小于最小外尺寸的一半。');}}
-  try{scene=createRobotScene(view,(q1,q2,manual)=>{if(manual){design={...design,q1,q2};animating=false;$('[data-animate]').setAttribute('aria-pressed','false');setFields();note();}metrics({...design,q1,q2});});}catch(e){const status=$('[data-render-status]');status.hidden=false;status.textContent=tr('3D rendering could not start. Enable browser graphics acceleration and reload.','三维渲染未能启动，请启用浏览器图形加速后刷新。');}
-  form.addEventListener('change',event=>{const e=event.target;if(!(e instanceof HTMLInputElement||e instanceof HTMLSelectElement))return;const key=e.name as keyof Design;
-    const value=key==='remote'?e.value==='true':typeof design[key]==='number'?Number(e.value)/(scales[key]||1):e.value;
-    const previous=design;design={...design,[key]:value};try{evaluateDesign(design);setFields();update();}catch{design=previous;$('[data-input-error]').textContent=tr('Enter a positive dimension and a valid wall thickness.','请输入有效尺寸，壁厚应小于最小外尺寸的一半。');}});
-  for(const b of root.querySelectorAll<HTMLButtonElement>('[data-robot]'))b.addEventListener('click',()=>{design.robot=b.dataset.robot as RobotType;design.q1=design.robot==='arm'?.9:-1.05;design.q2=design.robot==='arm'?-1.3:-.95;setFields();update(true);});
-  for(const b of root.querySelectorAll<HTMLButtonElement>('[data-preset]'))b.addEventListener('click',()=>{const robot=design.robot;design={...design,...presets[b.dataset.preset!]!,robot};if(robot==='arm'){design.q1=.9;design.q2=-1.3;}setFields();update(true);});
-  for(const b of root.querySelectorAll<HTMLButtonElement>('[data-view]'))b.addEventListener('click',()=>{mode=b.dataset.view!;scene?.mode(mode as 'geometry'|'inertia'|'deflection');for(const x of root!.querySelectorAll<HTMLButtonElement>('[data-view]'))x.setAttribute('aria-pressed',String(x===b));note();});
-  $('[data-camera]').addEventListener('click',()=>scene?.resetCamera());
-  $('[data-reference]').addEventListener('click',()=>{const [q1,q2]=(view.dataset.jointPose||`${design.q1},${design.q2}`).split(',').map(Number);reference={...design,q1:q1!,q2:q2!};metrics(reference);});
-  $('[data-animate]').addEventListener('click',()=>{animating=!animating;scene?.play(animating);$('[data-animate]').setAttribute('aria-pressed',String(animating));if(!animating){const [q1,q2]=(view.dataset.jointPose||`${design.q1},${design.q2}`).split(',').map(Number);metrics({...design,q1:q1!,q2:q2!});}note();});
-  $('[data-workspace]').addEventListener('click',()=>{const b=$('[data-workspace]'),enabled=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(enabled));scene?.workspace(enabled);});
-  function download(data:string|ArrayBuffer,type:string,name:string){const url=URL.createObjectURL(new Blob([data],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-  for(const b of root.querySelectorAll<HTMLButtonElement>('[data-download]'))b.addEventListener('click',async()=>{const type=b.dataset.download;if(type==='png'){if(!scene)return;const a=document.createElement('a');a.href=scene.capture();a.download='robot-structure.png';a.click();}else if(type==='glb'){if(scene)download(await scene.exportGLB(),'model/gltf-binary','robot-structure.glb');}else download(type==='urdf'?exportURDF(design):exportConfiguration(design),type==='urdf'?'application/xml':'application/json',`robot-structure.${type}`);});
-  onLanguageChange(()=>{setFields();metrics();note();});setFields();update(true);
+  $('[data-concept-form]').innerHTML=body;renderLearning();
+ }
+ function sectionProfile(m:ReturnType<typeof section>){const w=m.section==='tube'?m.height:m.width,h=m.height,t=m.wall,sc=105/Math.max(w,h),x=75-w*sc/2,y=65-h*sc/2;return`<svg viewBox="0 0 150 130" role="img" aria-label="Cross section">${m.section==='tube'?`<circle cx="75" cy="65" r="${(h-t)*sc/2}" stroke="#7eb2c6" stroke-width="${t*sc}" fill="none"/>`:`<path d="M${x} ${y}h${w*sc}v${h*sc}h${-w*sc}Z${m.section==='solid'?'':`M${x+t*sc} ${y+t*sc}v${(h-2*t)*sc}h${(w-2*t)*sc}v${-(h-2*t)*sc}Z`}" fill="#9dc7d4" fill-rule="evenodd" stroke="#5b8ca2" stroke-width=".7"/>`}</svg>`;}
+ function processChecks(a:ReturnType<typeof evaluateConcept>):[boolean,string][]{const m=section(),opening=Math.max(.001,Math.min(m.width,m.height)-2*m.wall),reach=a.cutLength/opening;return[[a.minWallOK,tr(`Wall ${fmt(m.wall*1000,1)} ≥ ${fmt(design.minWall*1000,1)} mm`,`壁厚 ${fmt(m.wall*1000,1)} ≥ ${fmt(design.minWall*1000,1)} mm`)],[design.process!=='cnc'||m.section==='solid'||reach<=design.maxToolReach,tr(`Cavity access L / opening ${fmt(reach,1)} / ${design.maxToolReach}`,`内腔可达性 L / 开口 ${fmt(reach,1)} / ${design.maxToolReach}`)],[m.material!=='carbon'||['tube','laminate'].includes(design.process),tr('Material / process compatibility','材料与工艺匹配')]];}
+ function renderMetrics(){const a=evaluateConcept(model,q,selected),baseline=evaluateConcept(reference,reference.home,reference.nodes.some(n=>n.id===selected&&n.member)?selected:undefined),m=section(),p=m.prop;let rows:[string,string,string,string][]=[];
+  if(metricTab==='efficiency')rows=[
+   [tr('Specific modulus','比模量'),fmt(p.E/p.rho/1e6,2),'MN·m/kg','E / ρ'],[tr('Specific strength','比强度'),fmt(p.strength/p.rho/1e3,1),'kN·m/kg','σ / ρ'],[tr('Beam index / reference','梁指数 / 对照'),fmt(a.beamIndex/baseline.beamIndex,3),'×','√E / ρ'],[tr('Section shape factor','截面形状因子'),fmt(a.phi,2),'','φ = 12I / A²'],[tr('Material + shape / ref.','材料 × 形状 / 对照'),fmt(a.shapeIndex/baseline.shapeIndex,3),'×','√(φE) / ρ'],[tr('Member mass change','构件质量变化'),pct((a.partMass/baseline.partMass-1)*100),'','m = ρAL'],[tr('Stock / net member','毛坯 / 净杆件'),fmt(a.buyToFly,2),'×','BTF = mstock / mnet']];
+  else if(metricTab==='checks')rows=[[tr('Clear span','计算跨距'),fmt(a.cutLength*1000,1),'mm','L = Laxis − 2e'],[tr('Bending stress','弯曲正应力'),fmt(a.stress/1e6,1),'MPa','σ = FLc / I'],[tr('Strength utilization','强度利用率'),fmt(a.utilization*100,1),'%','ησ = nσ / σlim'],[tr('Tip deflection','端部挠度'),fmt(a.deflection*1000,3),'mm','δ = FL³ / 3EI'],[tr('Displacement utilization','变形利用率'),fmt(a.deflectionUse*100,1),'%','ηδ = δ / δmax'],[tr('Euler load · fixed/free','欧拉载荷 · 固支自由'),fmt(a.buckling,0),'N','Pcr = π²EImin / (2L)²'],[tr('Torsional rigidity','抗扭刚度'),fmt(p.G*a.section.J/a.cutLength,1),'N·m/rad','kθ = GJ / L']];
+  else if(metricTab==='system')rows=[[tr('Payload / total mass','负载 / 整机质量'),fmt(a.payloadRatio,3),'','(mtool + mpayload) / m'],[tr('COM · X / Y / Z','质心 X / Y / Z'),a.com.map(v=>fmt(v*1000,0)).join(' / '),'mm','rC = Σ mi ri / Σ mi'],[tr('Actuator mass share','执行器质量占比'),fmt(a.motors/a.mass*100,1),'%','Σ mmotor / m'],[tr('Link mass share','结构杆件质量占比'),fmt(a.structural/a.mass*100,1),'%','Σ mlink / m'],[tr('Peak static motor use','最大静态关节利用率'),fmt(a.maxTorque*100,1),'%','max |τg| / τrated'],[tr('Rotor reflection','转子反射惯量'),fmt(a.reflected,5),'kg·m²','Jref = N²Jm'],[tr('Measured mechanical COT','实测机械运输成本'),snapshot?.cot!==null&&snapshot?.cot!==undefined?fmt(snapshot.cot,2):'—','','∫|τq̇|dt / (mg Δx)']];
+  else rows=[[tr('Net structural stock','净杆件质量'),fmt(a.structural,3),'kg','mnet = Σ ρAi Li'],[tr('Required feedstock','所需毛坯 / 原料'),fmt(a.stock,3),'kg',design.process==='cnc'?'mstock = ρVblank':'mstock = mnet / yield'],[tr('Stock / net','原料质量比'),fmt(a.buyToFly,2),'×','mstock / mnet'],[tr('Axis-to-axis length','轴间距'),fmt(m.length*1000,1),'mm','Laxis'],[tr('Cut length','下料长度'),fmt(m.cutLength*1000,1),'mm','Lcut = Laxis − 2e'],[tr('Wall / process minimum','壁厚 / 工艺下限'),fmt(m.wall/design.minWall,2),'×','t / tmin'],[tr('Material yield setting','设定材料利用率'),fmt(design.processYield*100,0),'%','mnet / minput']];
+  $('[data-reference-label]').textContent=tr('vs reference','相对对照');
+  $('[data-concept-metrics]').innerHTML=`<div class="concept-total"><span>${tr('Assembly mass','装配总质量')}</span><strong>${fmt(a.mass,2)}<small> kg</small></strong><em>${pct(100*(a.mass/reference.mass-1))}</em></div><div class="concept-metric-list">${rows.map(([label,value,unit,formula])=>`<div class="concept-metric-row"><span>${label}</span><b>${value}<small>${unit}</small></b><i>${formula}</i></div>`).join('')}</div>`;
+  const all=model.nodes.flatMap(n=>n.components),labels=[['member','Members','杆件'],['motor','Actuators','驱动'],['body','Body','机身'],['rest','Interfaces + end pieces','接口及端部']];const colors=['#94b7c7','#48798e','#ccd7dc','#b8d7c8'];
+  const masses=labels.map(([role])=>all.filter(c=>role==='rest'?!['member','motor','body'].includes(c.role):c.role===role).reduce((s,c)=>s+c.mass,0));
+  $('[data-budget]').innerHTML=`<div class="concept-mass-stack">${masses.map((v,i)=>`<i style="width:${100*v/a.mass}%;background:${colors[i]}"></i>`).join('')}</div>${labels.map(([,en,zh],i)=>`<div><span><i style="background:${colors[i]}"></i>${tr(en!,zh!)}</span><b>${fmt(masses[i]!,2)} kg</b></div>`).join('')}`;
+  $('[data-checks]').innerHTML=[[a.utilization<=1,tr('Strength','强度')],[a.deflectionUse<=1,tr('Displacement','变形')],[a.minWallOK,tr('Wall','壁厚')]].map(([yes,label])=>`<span class="${yes?'ok':'warn'}">${yes?'✓':'!'} ${label}</span>`).join('');
+ }
+ function draw(){if(!model)return;$('[data-drawing]').innerHTML=drawingSVG(model,q,selected,language,sheet==='part');}
+ function status(){const el=$('[data-engine-status]');el.textContent=engineReady?'':tr('Loading contact dynamics…','正在加载接触动力学…');el.hidden=engineReady;$('[data-simulation-state]').textContent=training?tr('PPO training','PPO 训练中'):running?tr('Dynamics','动力学运行'):tr('Assembly','装配');$<HTMLButtonElement>('[data-run]').disabled=!engineReady||training;}
+ function renderLearning(){const plot=root!.querySelector<HTMLElement>('[data-learning-plot]');if(!plot)return;const rows=trainHistory.length?trainHistory:policy?.history||[];if(!rows.length){plot.innerHTML='';return;}const values=rows.map(v=>v.reward),lo=Math.min(...values)-.1,hi=Math.max(...values)+.1;plot.innerHTML=`<svg viewBox="0 0 260 115" role="img" aria-label="Mean reward per PPO update"><path d="M22 8V92H250" stroke="#cfdbdf" fill="none"/><path d="${values.map((v,i)=>`${i?'L':'M'}${22+225*i/Math.max(1,values.length-1)} ${92-80*(v-lo)/(hi-lo)}`).join(' ')}" stroke="#3187a6" fill="none" stroke-width="1.5"/><text x="22" y="109" font-size="10" fill="#7f939d">${tr('Mean reward / update','每轮平均奖励')}</text><text x="248" y="109" font-size="10" text-anchor="end" fill="#7f939d">${rows.at(-1)!.steps}</text></svg>`;}
+ async function exportFile(type:string){let value:string|ArrayBuffer='',mime='text/plain',ext=type.toLowerCase();if(type==='MJCF'){value=exportMJCF(model);ext='xml';}else if(type==='URDF')value=exportConceptURDF(model);else if(type==='SVG'){value=drawingSVG(model,q,selected,language,sheet==='part');mime='image/svg+xml';}else if(type==='DXF')value=exportDXF(model,q);else if(type==='JSON'){value=exportConceptJSON(model);mime='application/json';}else if(type==='POLICY'){if(!policy){$('[data-design-status]').textContent=tr('Train or import a policy first.','请先训练或导入策略。');return;}value=JSON.stringify(policy);ext='ppo.json';}else if(type==='GLB'){value=await scene!.exportGLB();mime='model/gltf-binary';}else if(type==='PNG'){const a=document.createElement('a');a.href=scene!.capture();a.download='lightweight-concept.png';a.click();return;}const url=URL.createObjectURL(new Blob([value],{type:mime})),a=document.createElement('a');a.href=url;a.download=`lightweight-concept.${ext}`;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+ try{scene=createConceptScene($('[data-concept-view]'),id=>{const n=model.nodes.find(n=>n.id===id);if(!n)return;if(n.member){selected=n.id;scene?.select(selected);render();}else if(n.joint){group=n.group;tab='joints';scene?.select(id);render();}},target=>{stop();const result=inverseArm(model,q,target);q=result.q;scene?.pose(q);$('[data-tcp]').textContent=`TCP Δ ${fmt(result.error*1000,2)} mm`;renderMetrics();draw();});}catch(e){$('[data-engine-status]').textContent=String(e);}
+ try{worker=new Worker(new URL('./concept-worker.js',import.meta.url),{type:'module'});worker.onmessage=e=>{const {type,data}=e.data;if(type==='ready'){if(data.fingerprint!==model.fingerprint)return;engineReady=true;status();}
+  else if(type==='snapshot'){if(data.fingerprint!==model.fingerprint)return;snapshot=data;if(running||training){scene?.physical(data.poses);q={...q,...data.q};}const now=performance.now();$('[data-runtime]').textContent=`${fmt(data.time,1)} s · ${fmt(data.speed,2)} m/s · ${fmt(data.tilt*180/Math.PI,1)}° · ${data.contacts} ${tr('contacts','接触')}`;if(now-lastPoseMetrics>200){lastPoseMetrics=now;renderMetrics();}}
+  else if(type==='training'){trainHistory.push(data);const el=root!.querySelector('[data-training-status]');if(el)el.textContent=`${data.steps.toLocaleString()} ${tr('samples','步')} · r ${fmt(data.reward,3)}`;renderLearning();}
+  else if(type==='policy'){policy=data;renderLearning();}
+  else if(type==='trained'){training=false;running=false;status();}
+  else if(type==='stopped'){running=false;status();$('[data-design-status]').textContent=tr('Fallen · revise balance or controller.','已倾倒 · 检查平衡与控制参数。');}
+  else if(type==='error'){stop();$('[data-design-status]').textContent=data;status();}};worker.onerror=e=>{$('[data-design-status]').textContent=e.message;};}catch(e){$('[data-design-status]').textContent=String(e);}
+ root.addEventListener('click',async e=>{const b=(e.target as Element).closest<HTMLButtonElement>('button');if(!b)return;
+  try{
+   if(b.dataset.tab){tab=b.dataset.tab;render();}else if(b.dataset.metric){metricTab=b.dataset.metric;renderMetrics();$('[data-metric-tabs]').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));}
+   else if(b.dataset.architecture){remember();design.robot=b.dataset.architecture as ConceptDesign['robot'];design.parts={};design.joints={};design.bodyLength=design.robot==='quadruped'?.46:.22;design.bodyWidth=design.robot==='biped'?.22:.23;design.bodyMass=design.robot==='arm'?3:5;design.payload=0;design.remote=false;q={};group='';ik=false;reference=generateRobot(copyDesign(design));rebuild(true);}
+   else if(b.dataset.group){group=b.dataset.group;tab='joints';renderForm();}
+   else if(b.dataset.projection)scene?.view(b.dataset.projection);
+   else if(b.hasAttribute('data-fit'))scene?.fit();
+   else if(b.hasAttribute('data-reference')){reference=generateRobot(copyDesign(design));renderMetrics();}
+   else if(b.hasAttribute('data-undo')||b.hasAttribute('data-redo')){const undo=b.hasAttribute('data-undo'),list=undo?history:future,dest=undo?future:history,item=list.pop();if(item){dest.push({d:copyDesign(design),q:{...q}});design=item.d;q=item.q;rebuild(true);}}
+   else if(b.hasAttribute('data-reset')){remember();design=copyDesign(initialConcept);q={};ik=false;rebuild(true);}
+   else if(b.hasAttribute('data-property-reset')){remember();if(scope==='part')design.parts[selected]={...design.parts[selected],properties:{}};else design.properties={};rebuild();}
+   else if(b.dataset.toolMass){remember();design.toolMass=Number(b.dataset.toolMass);rebuild();}
+   else if(b.hasAttribute('data-size')){const target=$('[data-candidates]');target.textContent=tr('Sizing…','正在比较…');await new Promise(r=>setTimeout(r,0));const candidates=sizeCandidates(model,selected);target.innerHTML=`<table><thead><tr><th>${tr('Material','材料')}</th><th>t / mm</th><th>g</th><th></th></tr></thead><tbody>${candidates.map((c,i)=>`<tr><td>${materials[c.material][language==='en'?'en':'zh'].split(' · ')[0]}</td><td>${c.analysis?fmt(c.analysis.part.member!.wall*1000,1):'—'}</td><td>${c.analysis?fmt(c.analysis.partMass*1000,0):'—'}</td><td>${c.design?`<button type="button" data-candidate="${i}">↗</button>`:tr('infeasible','不可行')}</td></tr>`).join('')}</tbody></table>`;target.querySelectorAll<HTMLButtonElement>('[data-candidate]').forEach(btn=>btn.addEventListener('click',()=>{remember();design=candidates[Number(btn.dataset.candidate)]!.design!;scope='part';rebuild();}));}
+   else if(b.hasAttribute('data-run')){if(!engineReady)return;const learned=$<HTMLSelectElement>('[data-controller]').value==='ppo';if(learned&&!policy){tab='control';renderForm();$('[data-design-status]').textContent=tr('Train or import the current design’s policy.','请训练或导入当前结构的策略。');return;}running=true;worker?.postMessage({type:'run',play:true,learned,task:$<HTMLSelectElement>('[data-task]').value,q});status();}
+   else if(b.hasAttribute('data-pause')||b.hasAttribute('data-stop-training')){stop();status();}
+   else if(b.hasAttribute('data-home')){stop();q={...model.home};snapshot=undefined;scene?.pose(q);draw();render();}
+   else if(b.hasAttribute('data-train')){if(!engineReady)return;training=true;running=false;trainHistory=[];worker?.postMessage({type:'train',updates,task:$<HTMLSelectElement>('[data-task]').value});status();}
+   else if(b.hasAttribute('data-ik')){stop();ik=!ik;if(ik){tab='control';scene?.target(fk(model,q).tool!.p);}else scene?.hideTarget();render();}
+   else if(b.dataset.sheet){sheet=b.dataset.sheet;draw();}
+   else if(b.hasAttribute('data-import'))$<HTMLInputElement>('[data-file]').click();
+   else if(b.dataset.mobile){root!.dataset.mobile=b.dataset.mobile;}
+  }catch(error){$('[data-design-status]').textContent=error instanceof Error?error.message:String(error);}
+ });
+ $('[data-concept-form]').addEventListener('submit',e=>e.preventDefault());
+ $('[data-concept-form]').addEventListener('change',e=>{const el=e.target;if(!(el instanceof HTMLInputElement||el instanceof HTMLSelectElement))return;const name=el.name;if(!name)return;const previous=copyDesign(design),oldQ={...q};try{
+  if(name==='updates'){updates=Number(el.value);return;}if(name==='group'){group=el.value;renderForm();return;}
+  if(name.startsWith('q:')){stop();const id=name.slice(2),j=model.nodes.find(n=>n.id===id)!.joint!;q[id]=Number(el.value)/(j.kind==='slide'?1000:180/Math.PI);scene?.pose(q);renderMetrics();draw();return;}
+  if(name.startsWith('target:')){stop();const target=fk(model,q).tool!.p;target[Number(name.slice(7))]=Number(el.value)/1000;const result=inverseArm(model,q,target);q=result.q;scene?.pose(q);scene?.target(target);ik=true;$('[data-tcp]').textContent=`TCP Δ ${fmt(result.error*1000,2)} mm`;renderMetrics();draw();return;}
+  remember();if(name.startsWith('prop:')){const key=name.slice(5),value=Number(el.value)*(key==='E'||key==='G'?1e9:key==='strength'?1e6:1);if(scope==='part')design.parts[selected]={...design.parts[selected],properties:{...design.parts[selected]?.properties,[key]:value}};else design.properties={...design.properties,[key]:value};}
+  else if(name.startsWith('arm:'))design.armLengths[Number(name.slice(4))]=Number(el.value)/1000;
+  else if(name.startsWith('enable:'))design.joints[name.slice(7)]={...design.joints[name.slice(7)],active:(el as HTMLInputElement).checked};
+  else if(name.startsWith('axis:')){const axis:V3=[0,0,0];axis[['X','Y','Z'].indexOf(el.value)]=1;design.joints[name.slice(5)]={...design.joints[name.slice(5)],axis};}
+  else if(name==='hipYaw'||name==='ankle'){const names=design.robot==='quadruped'?['fl','fr','rl','rr']:['left','right'];for(const prefix of names)design.joints[`${prefix}_${name==='hipYaw'?'yaw':'ankle'}`]={active:(el as HTMLInputElement).checked};}
+  else if(name==='material'){if(scope==='part')design.parts[selected]={...design.parts[selected],material:el.value as Material,properties:{}};else{design.material=el.value as Material;design.properties={};}}
+  else if(name==='section'&&scope==='part')design.parts[selected]={...design.parts[selected],section:el.value as SectionType};
+  else if(scope==='part'&&['width','height','wall','memberLength'].includes(name))design.parts[selected]={...design.parts[selected],[name==='memberLength'?'length':name]:Number(el.value)/1000};
+  else{const key=name as keyof ConceptDesign;(design as unknown as Record<string,unknown>)[key]=el instanceof HTMLInputElement&&el.type==='checkbox'?el.checked:typeof design[key]==='number'?Number(el.value)/(scale[key]||1):el.value;}
+  generateRobot(design);rebuild();$('[data-design-status]').textContent='';
+ }catch(error){design=previous;q=oldQ;$('[data-design-status]').textContent=error instanceof Error?error.message:String(error);}});
+ $('[data-part]').addEventListener('change',()=>{selected=$<HTMLSelectElement>('[data-part]').value;scene?.select(selected);render();});$('[data-scope]').addEventListener('change',()=>{scope=$<HTMLSelectElement>('[data-scope]').value;renderForm();});
+ $('[data-axes]').addEventListener('change',()=>scene?.axes($<HTMLInputElement>('[data-axes]').checked));$('[data-wire]').addEventListener('change',()=>scene?.wire($<HTMLInputElement>('[data-wire]').checked));
+ $('[data-export]').addEventListener('change',async()=>{const e=$<HTMLSelectElement>('[data-export]');try{await exportFile(e.value);}catch(error){$('[data-design-status]').textContent=String(error);}e.value='';});
+ $('[data-file]').addEventListener('change',async()=>{const e=$<HTMLInputElement>('[data-file]'),file=e.files?.[0];if(!file)return;try{const data=JSON.parse(await file.text());if(data.schema==='anncatto.ppo.v1'){if(data.fingerprint!==model.fingerprint)throw Error(tr('Policy belongs to a different design.','策略对应另一套结构参数。'));worker?.postMessage({type:'policy',policy:data});policy=data;}else if(data.schema==='anncatto.concept.v2'){generateRobot(data.design);remember();design=data.design;q={};rebuild(true);}else throw Error(tr('Unrecognized file format.','未识别的文件格式。'));}catch(error){$('[data-design-status]').textContent=String(error);}e.value='';});
+ onLanguageChange(render);rebuild(true);
 }

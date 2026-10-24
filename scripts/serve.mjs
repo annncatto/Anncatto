@@ -6,6 +6,8 @@ import { basePath, stripBasePath } from "./paths.mjs";
 const root = path.resolve("dist");
 const port = Number(process.env.PORT || 5173);
 const types = {
+  ".wasm": "application/wasm",
+  ".json": "application/json",
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
   ".js": "text/javascript; charset=utf-8",

@@ -1,4 +1,5 @@
 import {FONT} from './theme.js';
+import {frameworkDrawing} from './lightweight-frameworks.js';
 const bi=(en:string,zh:string)=>`<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
 const card=(en:string,zh:string,detailEn:string,detailZh:string)=>`<div class="course-card"><strong>${bi(en,zh)}</strong><p>${bi(detailEn,detailZh)}</p></div>`;
 const arrow='<span class="course-arrow" aria-hidden="true">→</span>';
@@ -8,16 +9,16 @@ function plot(id:string,height:number,en:string,zh:string,draw:(l:'en'|'zh')=>st
  return `<svg viewBox="0 0 680 ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${en}" style="font-family:${FONT}"><title>${en}</title><defs><marker id="course-${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#648795"/></marker></defs><g lang="en">${draw('en')}</g><g lang="zh-CN">${draw('zh')}</g></svg>`;
 }
 const label=(x:number,y:number,en:string,zh:string,l:'en'|'zh',size=14,anchor='middle')=>`<text x="${x}" y="${y}" font-size="${size}" text-anchor="${anchor}" fill="#3e5d6a">${l==='en'?en:zh}</text>`;
-export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload'] as const;
+export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload','indexbars','forcepaths'] as const;
 export type CourseFigure=typeof courseFigures[number];
 export function renderCourseFigure(id:CourseFigure){
- let body='',title=['',''],desc=['Redrawn from the course diagram; relationships are schematic.','依据课程思路图重绘，表示概念关系。'];
+ let body='',title=['',''],desc=['',''];
  const c=card;
  if(id==='framework'){
-  title=['Routes to a lighter structure','轻量化设计的两条路线'];
+  title=['Lightweight design framework','轻量化设计技术框架'];
   body=note('Same required performance · lower complete assembly mass','相同功能要求 · 更低的完整装配质量')+`<div class="course-branches"><section><h4>${bi('Lighter components','零件更轻')}</h4>${c('Material','材料','Choose properties for the load and dimensions.','按载荷与尺寸自由度选材。')}${c('Structure','结构','Place material along efficient load paths.','沿高效传力路径分配材料。')}${c('Manufacturing','制造','Produce thin, integrated, repeatable geometry.','实现薄壁、集成与稳定成形。')}</section><section><h4>${bi('Fewer components','零件更少')}</h4>${c('Passive integration','被动功能集成','Share support, protection, routing and heat flow.','共用承载、防护、走线与导热。')}${c('Active integration','主动功能集成','Combine structure with sensing, actuation or storage.','将结构与感知、驱动或储能结合。')}</section></div>`+note('Compare stiffness, strength, life, dynamics, environment and cost.','按刚度、强度、寿命、动力学、环境与成本共同评价。');
  }else if(id==='cost'){
-  title=['Cost and structural mass','成本与结构质量'];desc=['Qualitative tradeoff; no measured optimum or numerical scale is asserted.','定性权衡示意，不表示实测最优点或数值比例。'];
+  title=['Cost and structural mass','成本与结构质量'];desc=['',''];
   body=plot(id,350,...title as [string,string],l=>{
    let b='<path d="M70 35V245H625" fill="none" stroke="#7a959e" stroke-width="1.5"/>';
    b+='<path d="M95 45 C135 200 230 226 355 227 C465 228 540 215 615 135" fill="none" stroke="#2b7fa4" stroke-width="3"/>';
@@ -80,8 +81,8 @@ export function renderCourseFigure(id:CourseFigure){
    b+=label(265,220,'Reflected component','反射分量',l,13)+label(325,352,'Stiffener–skin bond','桁条—蒙皮胶接',l,13);return b;
   });
  }else if(id==='topology'){
-  title=['Material redistribution under fixed supports and load','固定支承和载荷下的材料重分配'];desc=['Computed SIMP example: 120 × 36 plane-stress elements, p = 3, material fraction 0.4.','SIMP 计算示例：120 × 36 平面应力单元，p = 3，材料体积分数 0.4。'];
-  body=`<div class="course-topology-controls" role="group" aria-label="Optimization iteration">${[0,15,40,80].map((n,i)=>`<button type="button" data-topology-step="${n}" aria-pressed="${i===0}">${bi(`Iteration ${n}`,`迭代 ${n}`)}</button>`).join('')}</div><img data-topology-image src="/assets/content/lightweight/topology-00.png" width="1800" height="700" loading="lazy" alt="Simply supported beam density distribution, central downward load, pin and roller supports">`;
+  title=['Material redistribution under fixed supports and load','固定支承和载荷下的材料重分配'];desc=['120 × 36 plane-stress elements · p = 3 · material fraction 0.4.','120 × 36 平面应力单元 · p = 3 · 材料体积分数 0.4。'];
+  body=`<div class="course-topology-controls" role="group" aria-label="Optimization iteration">${[0,15,40,80].map((n,i)=>`<button type="button" data-topology-step="${n}" aria-pressed="${i===0}">${bi(`Iteration ${n}`,`迭代 ${n}`)}</button>`).join('')}<button type="button" data-topology-play aria-pressed="false">${bi('Play evolution','播放演化')}</button></div><img data-topology-image src="/assets/content/lightweight/topology-00.png" width="1800" height="700" loading="lazy" alt="Simply supported beam density distribution, central downward load, pin and roller supports">`;
  }else if(id==='placement'){
   title=['Moving an actuator toward the supporting joint','将执行器移向支承关节'];desc=['The offset mass contribution changes with mr²; the new transmission must also be included.','偏置质量的惯量贡献随 mr² 改变，新增传动也需计入。'];
   body=plot(id,330,...title as [string,string],l=>{
@@ -108,6 +109,7 @@ export function renderCourseFigure(id:CourseFigure){
  }else if(id==='transmission'){
   title=['Three ways to transmit a proximal actuator’s motion','三种近端驱动传递方式'];
   body=`<div class="course-triple">${c('Belt or cable','同步带或绳索','Low moving mass; tension, stretch and routing matter.','运动质量低；关注张紧、伸长与走线。')}${c('Rigid linkage','刚性连杆','Geometry sets a varying transmission ratio.','几何决定随姿态变化的传动比。')}${c('Screw and rocker','丝杆与摇杆','Rotary → linear → joint motion.','旋转 → 直线 → 关节运动。')}</div>`;
- }else throw Error(`Unknown course figure: ${id}`);
+ }else if(id==='indexbars'){title=['Material indices under different dimensional freedoms','不同尺寸自由度下的材料指数'];body=frameworkDrawing(id)!;}else if(id==='forcepaths'){title=['Bending and triangulated load paths','弯曲与三角化传力路径'];body=frameworkDrawing(id)!;}else throw Error(`Unknown course figure: ${id}`);
+ body=(frameworkDrawing(id)??body).replace(`<title>${id}</title>`,`<title>${title[0]}</title>`);
  return `<figure class="course-figure" data-course-figure="${id}">${body}<figcaption><span class="figure-title">${bi(title[0]!,title[1]!)}</span><span class="figure-description">${bi(desc[0]!,desc[1]!)}</span></figcaption></figure>`;
 }

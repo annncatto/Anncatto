@@ -1,5 +1,5 @@
 {
-  "checked": "2026-10-24",
+  "checked": "2026-10-25",
   "scope": "Screenshots embedded in the 13 user-selected course notes; original Obsidian files remain unchanged.",
   "notes": [
     {
@@ -60,7 +60,7 @@
       "note": "材料",
       "attachment": "材料-1792835643907.webp",
       "sha256": "ec3475b5fe3f791baf847380c7b2e9af86e851b8f0b08c198d062b47b1348f21",
-      "anchor": "material-selection",
+      "anchor": "lightweight-indices",
       "topic": "Ashby logarithmic axes, guide-line slopes and material families",
       "treatment": "Official Ansys chart; interactive minimum-mass comparison"
     },
@@ -84,7 +84,7 @@
       "note": "系统轻量化设计",
       "attachment": "系统轻量化设计-1792816303302.webp",
       "sha256": "8bceb348097e4dda3a83cd6b088f67df036e71c3303a65e50f1010d04b85fe3c",
-      "anchor": "sandwich-laminates",
+      "anchor": "classical-materials",
       "topic": "FML, GLARE, galvanic isolation, EPDM and foil-specific results",
       "treatment": "DLR original FML photo; case quantities in extended questions"
     },
@@ -92,7 +92,7 @@
       "note": "系统轻量化设计",
       "attachment": "系统轻量化设计-1792816377153.webp",
       "sha256": "a16a7115e19d1cc0d535e97468752ff42299e832c9ecd75a9396033c45da929b",
-      "anchor": "sandwich-laminates",
+      "anchor": "classical-materials",
       "topic": "Boehmite toughening, thermal/flame fillers, fatigue and thin plies",
       "treatment": "NTPT original thin-ply comparison; case quantities retained"
     },
@@ -100,7 +100,7 @@
       "note": "系统轻量化设计",
       "attachment": "系统轻量化设计-1792816398594.webp",
       "sha256": "acf9491d709bcce9fbc01f37cf3c491af1574f38618332669da753a4475a8fe7",
-      "anchor": "uncertainty-monitoring",
+      "anchor": "classical-performance",
       "topic": "KDF product, CAI impact location and resonance fatigue test",
       "treatment": "Symbolic course formula and explanation; test quantities retained"
     },
@@ -108,7 +108,7 @@
       "note": "系统轻量化设计",
       "attachment": "系统轻量化设计-1792816451411.webp",
       "sha256": "c491da8d263cf55194c46579d86fec58f84783c1b92fa2975036e7decea14ba6",
-      "anchor": "uncertainty-monitoring",
+      "anchor": "classical-performance",
       "topic": "Guided waves, intact/debonded stiffener, monitoring mass benefit",
       "treatment": "Wave-path principle redraw; UCSD primary research link; ≥5% example"
     },
@@ -140,7 +140,7 @@
       "note": "惯量",
       "attachment": "惯量-1792827696102.webp",
       "sha256": "06669144ce23c0831414c7fe3476af3b9a53e96ad4b9073053fb1dbdf36a17ed",
-      "anchor": "robot-survey",
+      "anchor": "inertia-mass",
       "topic": "Inertia, mass spiral, reflection, stiffness/control and contact learning objectives",
       "treatment": "Covered by final robot mechanics and case sections"
     },
@@ -188,7 +188,7 @@
       "note": "惯量",
       "attachment": "惯量-1792831436337.webp",
       "sha256": "bea7eee444f6be2c7a20bcc45a6ab3dfda60a7443ec9bf500c4cd1b85aa0b04f",
-      "anchor": "stability-dynamics",
+      "anchor": "stiffness-bandwidth",
       "topic": "Frequency scaling, stiffness and control",
       "treatment": "Course frequency formula and mechanical/control explanation"
     },
@@ -252,7 +252,7 @@
       "note": "导论",
       "attachment": "导论-1791522170248.webp",
       "sha256": "3e3727d992c10f3680bafbfb75eecf978a379527ca2a156df4066b84b632018a",
-      "anchor": "course-material-table",
+      "anchor": "development-trends",
       "topic": "Introductory material index and relative cost table",
       "treatment": "All eight rows and original index/cost values rebuilt as two tables"
     },
@@ -268,7 +268,7 @@
       "note": "导论",
       "attachment": "导论-1791522543518.webp",
       "sha256": "2326828d7060332e2704d9ec03fe6021de44b45b88614d54f5f77bffd27a9bef",
-      "anchor": "processing-properties",
+      "anchor": "materials",
       "topic": "Basic, engineering and process properties; materials relationships",
       "treatment": "Full three-group explanation; composition/process/property/service map"
     },
@@ -276,7 +276,7 @@
       "note": "导论",
       "attachment": "导论-1791522548955.webp",
       "sha256": "2326828d7060332e2704d9ec03fe6021de44b45b88614d54f5f77bffd27a9bef",
-      "anchor": "processing-properties",
+      "anchor": "materials",
       "topic": "Duplicate materials-foundation slide",
       "treatment": "Consolidated with previous screenshot; no duplicated prose"
     },
@@ -284,7 +284,7 @@
       "note": "导论",
       "attachment": "导论-1791522565341.webp",
       "sha256": "1d240267f55bd75f7168a305581fe2865ad9e07e5b91c8761c00a0d99f4f5835",
-      "anchor": "design-verification",
+      "anchor": "introduction",
       "topic": "Capacity, stiffness, residual strength, life, crack growth and reliability",
       "treatment": "Rebuilt verification diagram with all four input groups"
     },
@@ -292,7 +292,7 @@
       "note": "导论",
       "attachment": "导论-1791522586749.webp",
       "sha256": "082fc94d77bb7a32616dd9a7e94b8c0289300a7bbf5d0808e4eb6ddea8157df4",
-      "anchor": "design-verification",
+      "anchor": "introduction",
       "topic": "Requirements, concept, design, production, prototype, test and delivery",
       "treatment": "Design workflow redraw, full sequence and feedback in prose"
     },
@@ -308,7 +308,7 @@
       "note": "导论",
       "attachment": "导论-1791522795672.webp",
       "sha256": "6ae0db891aab718bd3cdfac11727c2954a6b7f09deb6d4df331d75c06af6fbc0",
-      "anchor": "design-verification",
+      "anchor": "introduction",
       "topic": "FE model, test scheme, sensors/strain gauges and model calibration",
       "treatment": "Virtual–physical loop and verification workflow"
     },
@@ -324,7 +324,7 @@
       "note": "形状",
       "attachment": "形状-1792841143256.webp",
       "sha256": "d884215cab5bcbf792db9ae12fa20bcd61c18627fab5d2510b3ba03f38754799",
-      "anchor": "structural-design",
+      "anchor": "shape",
       "topic": "Three routes through materials, structure and manufacturing",
       "treatment": "Intro framework and structural/manufacturing sequence"
     },
@@ -332,7 +332,7 @@
       "note": "概念设计",
       "attachment": "新概念设计-1792816533711.webp",
       "sha256": "32fb85d1d1bc3f0b0e43eeb77500af9faaa7e39b2eb427c7a0e9c88965c756c5",
-      "anchor": "sandwich-laminates",
+      "anchor": "classical-materials",
       "topic": "Composite-oriented concept, frame/beam/wing, DSS and double-double",
       "treatment": "Core concepts and primary links; all numerical examples retained at end"
     },
@@ -356,7 +356,7 @@
       "note": "概念设计",
       "attachment": "新概念设计-1792816738002.webp",
       "sha256": "f4c29e5526caecad77511921f6de82c9493178312dc32d4dac22bc6b3ff297ed",
-      "anchor": "payload-comparison",
+      "anchor": "robot-survey",
       "topic": "Six-arm payload/self-mass chart",
       "treatment": "Redrawn with official model-specific values and explicit load conditions"
     },
@@ -372,7 +372,7 @@
       "note": "概念设计",
       "attachment": "新概念设计-1792817498754.webp",
       "sha256": "e5b0652dc7863aca929d3b44549f0c0fd4e1a7fde0fc62a11b8c2e59dcee2f78",
-      "anchor": "structural-energy",
+      "anchor": "active-functions",
       "topic": "Ragone chart, LATP/CNT storage, 11.59 mF/cm³ and system savings",
       "treatment": "CC BY original Ragone figure; material concept and all case numbers"
     },
@@ -380,7 +380,7 @@
       "note": "结构效率",
       "attachment": "结构效率-1792839977340.webp",
       "sha256": "5a8ec906c9cec7bb8dadd2d12bddf47f978bc11f864f47922a04548ee3aa26f7",
-      "anchor": "structural-design",
+      "anchor": "shape",
       "topic": "Efficient thin sections, direct load paths and utilization",
       "treatment": "Three-principle diagram with sections, load paths and full-stress explanation"
     },
@@ -404,7 +404,7 @@
       "note": "优化目标",
       "attachment": "优化目标-1792821563838.webp",
       "sha256": "cb401c29cf29274dddd6e8880504b74f7de97c2030bebca77a11c36fb8218c01",
-      "anchor": "design-routes",
+      "anchor": "functional-integration",
       "topic": "Traditional versus passive/active integration technical framework",
       "treatment": "Rebuilt framework and functional integration chapter"
     },
@@ -412,7 +412,7 @@
       "note": "优化目标",
       "attachment": "优化目标-1792830799356.webp",
       "sha256": "19564757e71d30cc5e659f46d84a0e2321b6bea70d67563317f9898db11ecf82",
-      "anchor": "design-levels",
+      "anchor": "concept-design",
       "topic": "Concept, scheme, detail and validation decisions",
       "treatment": "Design-stage diagram; no early robot-only framing"
     },
@@ -428,7 +428,7 @@
       "note": "优化目标",
       "attachment": "优化目标-1792827004785.webp",
       "sha256": "179a0318b1842305126932df1c7904aea940cca45703d9bd0e5cf91fbc2fe36d",
-      "anchor": "introduction",
+      "anchor": "concept-design",
       "topic": "Mass cost, distal inertia, constrained design, two routes and early decisions",
       "treatment": "Intro general principles; robot-specific consequences at end"
     }

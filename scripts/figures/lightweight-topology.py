@@ -5,6 +5,8 @@ optimality-criteria volume update. Unitless E=1, load=1, thickness=1.
 """
 from pathlib import Path
 import json
+from PIL import Image
+import io
 import numpy as np
 from scipy.sparse import coo_matrix
 from scipy.sparse.linalg import spsolve
@@ -33,16 +35,21 @@ for ix in range(nx):
     v=max(0,rmin-np.hypot(ix-jx,iy-jy))
     if v:rr.append(e);cc.append(jx*ny+jy);vv.append(v)
 H=coo_matrix((vv,(rr,cc)),shape=(nx*ny,nx*ny)).tocsr();Hs=np.asarray(H.sum(1)).ravel()
-x=np.full(nx*ny,volume);history=[];saved={};out=Path('content/images/lightweight');out.mkdir(exist_ok=True)
+x=np.full(nx*ny,volume);history=[];saved={};frames=[];out=Path('content/images/lightweight');out.mkdir(exist_ok=True)
 for iteration in range(81):
  E=x**penal
  K=coo_matrix((np.einsum('i,j->ij',E,ke.ravel()).ravel(),(iK,jK)),shape=(nd,nd)).tocsc();u=np.zeros(nd);u[free]=spsolve(K[free,:][:,free],f[free])
  ce=np.einsum('ei,ij,ej->e',u[dofs],ke,u[dofs]);compliance=float(E@ce);residual=float(np.linalg.norm((K@u-f)[free]));history.append({'iteration':iteration,'compliance':compliance,'volume':float(x.mean()),'free_residual':residual})
- if iteration in [0,15,40,80]:
+ if iteration % 2 == 0 or iteration in [0,15,40,80]:
   saved[iteration]=x.copy();fig,ax=plt.subplots(figsize=(9,3.5),dpi=200);ax.imshow(x.reshape(nx,ny).T,cmap='Blues',origin='lower',vmin=0,vmax=1,extent=[0,nx,0,ny],interpolation='nearest')
   ax.annotate('F',xy=(nx/2,ny),xytext=(nx/2,ny+9),ha='center',fontsize=13,color='#245f7e',arrowprops={'arrowstyle':'-|>','color':'#245f7e','lw':1.7})
   ax.plot([0,nx],[0,0],'^',ms=10,color='#6bb493',clip_on=False);ax.plot([nx-.8,nx+.8],[-2,-2],'o',ms=2,color='#6bb493',clip_on=False)
-  ax.set_xlim(-4,nx+4);ax.set_ylim(-5,ny+13);ax.axis('off');fig.tight_layout(pad=.3);fig.savefig(out/f'topology-{iteration:02}.png',facecolor='white');plt.close(fig)
+  ax.set_xlim(-4,nx+4);ax.set_ylim(-5,ny+13);ax.axis('off');fig.tight_layout(pad=.3);
+  if iteration in [0,15,40,80]:fig.savefig(out/f'topology-{iteration:02}.png',facecolor='white')
+  if iteration%2==0:
+   ax.text(2,ny+8,f'SIMP · iteration {iteration} · volume 40%',fontsize=10,color='#245f7e')
+   buf=io.BytesIO();fig.savefig(buf,format='png',facecolor='white');buf.seek(0);im=Image.open(buf).convert('RGB');im.thumbnail((900,350));frames.append(im.copy())
+  plt.close(fig)
  if iteration==80:break
  dc=-penal*x**(penal-1)*ce;dc=np.asarray(H@(x*dc))/Hs/np.maximum(.001,x)
  lo,hi=0.,1e9
@@ -57,3 +64,5 @@ assert max(h['free_residual'] for h in history)<1e-7
 assert abs(x.mean()-volume)<1e-4
 Path('content/images/lightweight/topology-results.json').write_text(json.dumps({'mesh':[nx,ny],'volume_fraction':volume,'penalty':penal,'filter_radius':rmin,'history':history},indent=2)+'\n')
 print(json.dumps({'initial':history[0],'final':history[-1]}))
+
+frames[0].save(out/'topology-evolution.gif',save_all=True,append_images=frames[1:],duration=[600]+[140]*(len(frames)-2)+[1800],loop=0,optimize=True)

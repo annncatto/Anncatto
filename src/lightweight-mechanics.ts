@@ -1,10 +1,10 @@
 /** SI units throughout. A screening model for a two-link limb, not a full robot solver. */
 export const materials = {
   aluminium: { en: 'Aluminium · 6061-T6', zh: '铝合金 · 6061-T6', rho: 2700, E: 69e9, G: 26e9, strength: 240e6, color: '#b4c9cf' },
-  magnesium: { en: 'Magnesium · AZ31B example', zh: '镁合金 · AZ31B 示例', rho: 1780, E: 45e9, G: 17e9, strength: 160e6, color: '#b2c5b8' },
+  magnesium: { en: 'Magnesium · AZ31B', zh: '镁合金 · AZ31B', rho: 1780, E: 45e9, G: 17e9, strength: 160e6, color: '#b2c5b8' },
   steel: { en: 'Steel · S355', zh: '结构钢 · S355', rho: 7850, E: 210e9, G: 81e9, strength: 355e6, color: '#84959e' },
   titanium: { en: 'Titanium · Ti-6Al-4V', zh: '钛合金 · Ti-6Al-4V', rho: 4430, E: 114e9, G: 44e9, strength: 830e6, color: '#b0adb8' },
-  carbon: { en: 'CFRP · laminate example', zh: 'CFRP · 层合板示例', rho: 1600, E: 60e9, G: 20e9, strength: 300e6, color: '#36464e' },
+  carbon: { en: 'CFRP · quasi-isotropic laminate', zh: 'CFRP · 准各向同性层合板', rho: 1600, E: 60e9, G: 20e9, strength: 300e6, color: '#36464e' },
 } as const;
 export type Material = keyof typeof materials;
 export type RobotType = 'quadruped' | 'biped' | 'arm';

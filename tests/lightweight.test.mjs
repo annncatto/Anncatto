@@ -57,7 +57,7 @@ test('material-index comparisons and scientific plots stay finite in both langua
  const al=materials.aluminium,st=materials.steel;
  close(relativeMaterialIndex(al.E,al.rho,1),1);assert.ok(relativeMaterialIndex(st.E,st.rho,.5)<1);
  close(1/relativeMaterialIndex(st.E,st.rho,.5),1.6691646480035358,.002);
- for(const [id,n] of [['indices',3],['beam',2],['section',4],['reflection',5],['kinetic',3],['simp',2]])for(let choice=0;choice<n;choice++)for(const lang of ['en','zh']){
+ for(const [id,n] of [['indices',3],['beam',3],['section',4],['reflection',5],['kinetic',3],['simp',2]])for(let choice=0;choice<n;choice++)for(const lang of ['en','zh']){
   const s=lightweightDiagram(id,choice,lang);assert.match(s,/<title/);assert.match(s,/role="img"/);assert.doesNotMatch(s,/NaN|undefined|Infinity/);
  }
  assert.match(lightweightMessage('beam',1,'en'),/3\/8/);
@@ -66,19 +66,23 @@ test('material-index comparisons and scientific plots stay finite in both langua
 
 test('course chapter sequence preserves source scope and excludes the independent studio',async()=>{
  const source=await readArticleSource('轻量化结构设计.html');
- assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','materials','mechanical-performance','material-selection','structural-design','manufacturing','functional-integration','optimization','extended-questions','robot-survey']);
+ assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','classical-methods','functional-integration','concept-design','inertia-mass','lightweight-indices','shape','structural-efficiency','optimization']);
  assert.ok(source.includes('<div class="formula">$$'));
  assert.equal((source.match(/\$\$/g)||[]).length%2,0);
  assert.doesNotMatch(source,/<iframe|data-studio|labs\/lightweight-robot|workbench|K_I|Paris law|14-bit|14 位|\\mathbb C/);
- for(const topic of ['research, development','crack growth','Reliability','T651','double-double','MAAXIMUS','40%','RTM','11.59','0.9 kg/m²','0.054'])assert.ok(source.includes(topic),topic);
+ for(const topic of ['crack growth','reliability','T651','double-double','MAAXIMUS','40%','RTM','11.59','0.9 kg/m²','0.054'])assert.ok(source.includes(topic),topic);
  for(const asset of ['ashby-modulus-ansys.webp','ashby-strength-ansys.webp','thin-ply-ntpt.webp','dlr-fibre-metal-laminate.webp','ragone-greenhalgh.webp'])assert.ok(source.includes(asset),asset);
- assert.doesNotMatch(source,/\{\{chapter:/);
+ assert.doesNotMatch(source,/\{\{chapter:|课程提到|课程中的|课件中的|依据课程|提示词/);
+ const inventory=JSON.parse(await readFile('docs/lightweight-source-coverage.json','utf8'));
+ const ids=new Set([...source.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
+ for(const item of inventory.attachments)assert.ok(ids.has(item.anchor),item.attachment);
+ const gif=await readFile('content/images/lightweight/topology-evolution.gif');assert.equal(gif.subarray(0,6).toString(),'GIF89a');
  await assert.rejects(readArticleSource('../package.json'));
 });
 
 test('course graphics preserve bilingual labels and defined source relationships',()=>{
  for(const id of courseFigures){const figure=renderCourseFigure(id);assert.match(figure,/<figcaption>/);assert.match(figure,/lang="en"/);assert.match(figure,/lang="zh-CN"/);assert.doesNotMatch(figure,/NaN|undefined|Infinity/);}
- for(const term of ['Remaining strength','remaining strength','crack growth','Reliability'])assert.ok(renderCourseFigure('verification').toLowerCase().includes(term.toLowerCase()));
+ for(const term of ['Residual-strength verification','crack-growth behavior','Structural reliability'])assert.ok(renderCourseFigure('verification').toLowerCase().includes(term.toLowerCase()));
  assert.match(renderCourseFigure('cost'),/>A</);assert.match(renderCourseFigure('cost'),/>B</);
 });
 
