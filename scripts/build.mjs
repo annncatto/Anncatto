@@ -7,6 +7,10 @@ import { renderDiagram, defaults, examples, diagramReadout } from "../.build/dia
 import { translateLabel } from "../.build/i18n.js";
 import { pixelCatSVG } from "../.build/pixel-cat.js";
 import { renderPi07Figure } from "../.build/pi07-diagrams.js";
+import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
+import { readArticleSource } from './content.mjs';
+import { build as bundle } from 'esbuild';
+await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
 const out = path.resolve("dist");
 const esc = (s) =>
   s
@@ -100,7 +104,7 @@ function math(s) {
       ),
     );
 }
-function shell(title, description, body, interactive = false) {
+function shell(title, description, body, interactive = false, module = '') {
   return `<!doctype html>
 <html lang="en" data-language="en">
 <head>
@@ -113,6 +117,7 @@ function shell(title, description, body, interactive = false) {
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/style.css">
 ${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
+${module ? `<script type="module" src="/assets/${module}.js"></script>` : ''}
 </head>
 <body>
 <a class="skip" href="#main">${bilingual("Skip to content", "跳至正文")}</a>
@@ -135,7 +140,7 @@ function readingMinutes(raw, language) {
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
-  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|<figure\b/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|<figure\b/g)].length;
   const tableText = [...raw.matchAll(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`, "g"))]
     .filter(match => raw.lastIndexOf("<table", match.index) > raw.lastIndexOf("</table>", match.index))
     .map(match => match[1].replace(/<[^>]*>/g, " ")).join(" ");
@@ -144,8 +149,8 @@ function readingMinutes(raw, language) {
   const codeLines = code.reduce((sum, match) => sum + match[1].split("\n").length, 0);
   return Math.max(1, Math.ceil((words + tableWords) / 200 + (characters + tableCharacters) / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
 }
-function readingSidebar(raw, title) {
-  const sections = [{ id: "article-top", en: title, zh: title }];
+function readingSidebar(raw, title, titleEn=title) {
+  const sections = [{ id: "article-top", en: titleEn, zh: title }];
   for (const match of raw.matchAll(/<h2\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)) {
     const title = language => (match[2].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[2]).replace(/<[^>]*>/g, "");
     sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
@@ -155,11 +160,12 @@ function readingSidebar(raw, title) {
 }
 for (const p of posts) {
   let figureNumber = 0;
-  const raw = await fs.readFile(path.join("content", p.source), "utf8"),
+  const raw = await readArticleSource(p.source),
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
-      .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id)));
-  const header = `<header class="article-header"><h1>${esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const sidebar = readingSidebar(raw, p.title);
+      .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id))
+      .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id)));
+  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
+  const sidebar = readingSidebar(raw, p.title, p.titleEn);
   await write(
     `notes/${p.slug}/index.html`,
     shell(
@@ -167,13 +173,14 @@ for (const p of posts) {
       p.descriptionEn,
       `<main id="main" class="container article-layout">${sidebar}<article id="article-top" data-reading-article>${header}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
       true,
+      p.module || '',
     ),
   );
 }
 const listing = posts
   .map(
     (p) =>
-      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
+      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
   )
   .join("");
 await write(
@@ -192,6 +199,7 @@ await write(
     `<main id="main" class="container"><h1>${bilingual("Page not found","页面不存在")}</h1><p><a href="/">${bilingual("Back to articles","返回文章列表")}</a></p></main>`,
   ),
 );
+await write('labs/lightweight-robot/index.html',shell('Robot Structure Studio','Explore geometry, mass, inertia and stiffness in a parametric robot.',await fs.readFile('content/lightweight-lab.html','utf8'),true,'lightweight-lab'));
 for (const id of Object.keys(defaults))
   await write(`figures/${id}.svg`, renderDiagram(id));
 await write("figures/reading-cat.svg", pixelCatSVG());

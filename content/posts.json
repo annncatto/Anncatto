@@ -1,5 +1,16 @@
 [
   {
+    "slug": "lightweight-structural-design",
+    "title": "轻量化结构设计",
+    "titleEn": "Lightweight Structural Design",
+    "description": "从机器人质量与惯量到刚度、材料、传动、制造与系统集成，推导轻量化设计方法，并在三维实验室中比较方案。",
+    "descriptionEn": "Robot mass, inertia, stiffness, materials, transmission, manufacturing and integration, with derivations and an interactive three-dimensional design studio.",
+    "date": "2026-10-24",
+    "source": "轻量化结构设计.html",
+    "module": "lightweight-article",
+    "sections": []
+  },
+  {
     "slug": "pi0-7",
     "title": "pi0.7",
     "description": "从条件化数据到视觉子目标，梳理 π0.7 的架构、流匹配、记忆与训练方法，以及泛化实验和经验学习。",

@@ -12,13 +12,16 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "katex": "0.16.22"
+    "katex": "0.16.22",
+    "three": "^0.186.1"
   },
   "engines": {
     "node": ">=22"
   },
   "devDependencies": {
-    "typescript": "7.0.2",
-    "@webgpu/types": "0.1.74"
+    "@types/three": "^0.186.0",
+    "@webgpu/types": "0.1.74",
+    "esbuild": "^0.28.2",
+    "typescript": "7.0.2"
   }
 }

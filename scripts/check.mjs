@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { stripBasePath } from "./paths.mjs";
+import { readArticleSource } from './content.mjs';
 const root = path.resolve("dist");
 async function walk(p) {
   const a = [];
@@ -14,7 +15,7 @@ const files = await walk(root);
 let count = 0;
 for (const file of files.filter((f) => f.endsWith(".html"))) {
   const html = await fs.readFile(file, "utf8");
-  if (/\{\{figure:|\{\{pi07:|katex-error/.test(html))
+  if (/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{chapter:|katex-error/.test(html))
     throw Error(`Unrendered content in ${file}`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
   if (new Set(ids).size !== ids.length) throw Error(`Duplicate IDs: ${file}`);
@@ -35,7 +36,7 @@ for (const file of files.filter((f) => f.endsWith(".html"))) {
 }
 const posts = JSON.parse(await fs.readFile("content/posts.json", "utf8"));
 for (const post of posts) {
-  const source = await fs.readFile(path.join("content", post.source), "utf8");
+  const source = await readArticleSource(post.source);
   const article = await fs.readFile(
     path.join(root, "notes", post.slug, "index.html"),
     "utf8",

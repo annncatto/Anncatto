@@ -2,7 +2,7 @@ import { type Language } from "./i18n.js";
 export let language: Language = "en";
 const listeners = new Set<() => void>();
 try { if (localStorage.getItem("article-language") === "zh") language = "zh"; } catch {}
-function setLanguage(next: Language) {
+export function setLanguage(next: Language) {
   language = next;
   document.documentElement.dataset.language = language;
   document.documentElement.lang = language === "en" ? "en" : "zh-CN";
