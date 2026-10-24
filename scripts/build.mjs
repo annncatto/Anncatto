@@ -7,6 +7,7 @@ import { renderDiagram, defaults, examples, diagramReadout } from "../.build/dia
 import { translateLabel } from "../.build/i18n.js";
 import { pixelCatSVG } from "../.build/pixel-cat.js";
 import { renderPi07Figure } from "../.build/pi07-diagrams.js";
+import { renderCourseFigure } from '../.build/lightweight-course.js';
 import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
 import { build as bundle } from 'esbuild';
@@ -140,7 +141,7 @@ function readingMinutes(raw, language) {
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
-  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|<figure\b/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|<figure\b/g)].length;
   const tableText = [...raw.matchAll(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`, "g"))]
     .filter(match => raw.lastIndexOf("<table", match.index) > raw.lastIndexOf("</table>", match.index))
     .map(match => match[1].replace(/<[^>]*>/g, " ")).join(" ");
@@ -163,7 +164,8 @@ for (const p of posts) {
   const raw = await readArticleSource(p.source),
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
       .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id))
-      .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id)));
+      .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id))
+      .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id)));
   const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
   const sidebar = readingSidebar(raw, p.title, p.titleEn);
   await write(

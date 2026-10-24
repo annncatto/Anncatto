@@ -1,0 +1,497 @@
+{
+  "mesh": [
+    120,
+    36
+  ],
+  "volume_fraction": 0.4,
+  "penalty": 3,
+  "filter_radius": 2.2,
+  "history": [
+    {
+      "iteration": 0,
+      "compliance": 276.09102069920675,
+      "volume": 0.39999999999999997,
+      "free_residual": 5.434025737805118e-13
+    },
+    {
+      "iteration": 1,
+      "compliance": 156.74795196247032,
+      "volume": 0.39999900266351573,
+      "free_residual": 6.972627081479393e-13
+    },
+    {
+      "iteration": 2,
+      "compliance": 111.48152404967288,
+      "volume": 0.3999973142318139,
+      "free_residual": 6.250527641347878e-13
+    },
+    {
+      "iteration": 3,
+      "compliance": 86.15231585763487,
+      "volume": 0.4000014929206085,
+      "free_residual": 7.442766455740028e-13
+    },
+    {
+      "iteration": 4,
+      "compliance": 75.62302377310874,
+      "volume": 0.40000119529805067,
+      "free_residual": 6.47709714900962e-13
+    },
+    {
+      "iteration": 5,
+      "compliance": 67.7336800816848,
+      "volume": 0.40000101665343946,
+      "free_residual": 6.558930274955367e-13
+    },
+    {
+      "iteration": 6,
+      "compliance": 61.943530243424824,
+      "volume": 0.39999832575031763,
+      "free_residual": 6.090693007829062e-13
+    },
+    {
+      "iteration": 7,
+      "compliance": 57.0859066544986,
+      "volume": 0.4000007374194208,
+      "free_residual": 6.645598381233515e-13
+    },
+    {
+      "iteration": 8,
+      "compliance": 53.72571162215045,
+      "volume": 0.39999951721415355,
+      "free_residual": 6.317765957020522e-13
+    },
+    {
+      "iteration": 9,
+      "compliance": 51.33646994464723,
+      "volume": 0.3999997577606876,
+      "free_residual": 6.378670629746576e-13
+    },
+    {
+      "iteration": 10,
+      "compliance": 49.178474083703755,
+      "volume": 0.39999938794895135,
+      "free_residual": 6.33186248714985e-13
+    },
+    {
+      "iteration": 11,
+      "compliance": 46.65821196203913,
+      "volume": 0.39999890545066413,
+      "free_residual": 6.026091246103645e-13
+    },
+    {
+      "iteration": 12,
+      "compliance": 43.9176873403598,
+      "volume": 0.39999960462195067,
+      "free_residual": 6.123867025368192e-13
+    },
+    {
+      "iteration": 13,
+      "compliance": 41.42626225406454,
+      "volume": 0.4000006522876667,
+      "free_residual": 6.089498214810004e-13
+    },
+    {
+      "iteration": 14,
+      "compliance": 39.55710001761694,
+      "volume": 0.39999915883619913,
+      "free_residual": 6.059702344359644e-13
+    },
+    {
+      "iteration": 15,
+      "compliance": 38.36586067286314,
+      "volume": 0.40000087323536815,
+      "free_residual": 5.942150969098427e-13
+    },
+    {
+      "iteration": 16,
+      "compliance": 37.70601528063375,
+      "volume": 0.4000005528943093,
+      "free_residual": 6.115231028198435e-13
+    },
+    {
+      "iteration": 17,
+      "compliance": 37.246230355080556,
+      "volume": 0.39999917308744143,
+      "free_residual": 6.020549247335263e-13
+    },
+    {
+      "iteration": 18,
+      "compliance": 36.93577301424014,
+      "volume": 0.3999996514176074,
+      "free_residual": 6.008916582088602e-13
+    },
+    {
+      "iteration": 19,
+      "compliance": 36.79362215958241,
+      "volume": 0.39999985064496657,
+      "free_residual": 6.090229890204894e-13
+    },
+    {
+      "iteration": 20,
+      "compliance": 36.71401752443462,
+      "volume": 0.3999993687339937,
+      "free_residual": 5.830244030343421e-13
+    },
+    {
+      "iteration": 21,
+      "compliance": 36.64943449555653,
+      "volume": 0.40000020602559305,
+      "free_residual": 6.085558199898524e-13
+    },
+    {
+      "iteration": 22,
+      "compliance": 36.60937819382963,
+      "volume": 0.40000065180944444,
+      "free_residual": 5.949451277839684e-13
+    },
+    {
+      "iteration": 23,
+      "compliance": 36.57416290201121,
+      "volume": 0.40000044187288875,
+      "free_residual": 5.972884399891483e-13
+    },
+    {
+      "iteration": 24,
+      "compliance": 36.5409061897717,
+      "volume": 0.4000004957941408,
+      "free_residual": 5.970728428324553e-13
+    },
+    {
+      "iteration": 25,
+      "compliance": 36.51478762051728,
+      "volume": 0.3999999255660794,
+      "free_residual": 6.013470418081315e-13
+    },
+    {
+      "iteration": 26,
+      "compliance": 36.48550376095285,
+      "volume": 0.39999996856214426,
+      "free_residual": 6.028610108195704e-13
+    },
+    {
+      "iteration": 27,
+      "compliance": 36.44961551950027,
+      "volume": 0.39999992200400675,
+      "free_residual": 5.998758640837759e-13
+    },
+    {
+      "iteration": 28,
+      "compliance": 36.41341852633953,
+      "volume": 0.40000054278823144,
+      "free_residual": 5.867301595275972e-13
+    },
+    {
+      "iteration": 29,
+      "compliance": 36.37400946230164,
+      "volume": 0.39999949712698873,
+      "free_residual": 6.135972679171354e-13
+    },
+    {
+      "iteration": 30,
+      "compliance": 36.326549597365755,
+      "volume": 0.4000005053536194,
+      "free_residual": 5.996436851002452e-13
+    },
+    {
+      "iteration": 31,
+      "compliance": 36.26828839911843,
+      "volume": 0.39999973229021907,
+      "free_residual": 6.141341467011062e-13
+    },
+    {
+      "iteration": 32,
+      "compliance": 36.20267206135234,
+      "volume": 0.3999996005415545,
+      "free_residual": 5.891400307310984e-13
+    },
+    {
+      "iteration": 33,
+      "compliance": 36.155214846503114,
+      "volume": 0.39999971276987534,
+      "free_residual": 6.129261602885086e-13
+    },
+    {
+      "iteration": 34,
+      "compliance": 36.14071901727364,
+      "volume": 0.4000003601109472,
+      "free_residual": 6.001865636376765e-13
+    },
+    {
+      "iteration": 35,
+      "compliance": 36.13878263447633,
+      "volume": 0.39999955356746714,
+      "free_residual": 5.89122685960617e-13
+    },
+    {
+      "iteration": 36,
+      "compliance": 36.135518545071506,
+      "volume": 0.4000006078797145,
+      "free_residual": 6.102777427719116e-13
+    },
+    {
+      "iteration": 37,
+      "compliance": 36.131661580679555,
+      "volume": 0.40000046650916365,
+      "free_residual": 6.129384850991938e-13
+    },
+    {
+      "iteration": 38,
+      "compliance": 36.12790731675628,
+      "volume": 0.3999994422541036,
+      "free_residual": 5.953623377067197e-13
+    },
+    {
+      "iteration": 39,
+      "compliance": 36.123613126877245,
+      "volume": 0.40000018008900196,
+      "free_residual": 5.952798549677483e-13
+    },
+    {
+      "iteration": 40,
+      "compliance": 36.119210918999855,
+      "volume": 0.3999998149272533,
+      "free_residual": 6.006952154834179e-13
+    },
+    {
+      "iteration": 41,
+      "compliance": 36.114900105504034,
+      "volume": 0.39999969773564925,
+      "free_residual": 5.931532641042165e-13
+    },
+    {
+      "iteration": 42,
+      "compliance": 36.11116106699938,
+      "volume": 0.40000051438798967,
+      "free_residual": 6.065765031733285e-13
+    },
+    {
+      "iteration": 43,
+      "compliance": 36.10766132184459,
+      "volume": 0.3999996709173056,
+      "free_residual": 6.267736934715724e-13
+    },
+    {
+      "iteration": 44,
+      "compliance": 36.10395168465324,
+      "volume": 0.399999592253802,
+      "free_residual": 6.094871305733422e-13
+    },
+    {
+      "iteration": 45,
+      "compliance": 36.10008538338026,
+      "volume": 0.39999955459586184,
+      "free_residual": 6.017544005856889e-13
+    },
+    {
+      "iteration": 46,
+      "compliance": 36.09659682957091,
+      "volume": 0.3999993527553337,
+      "free_residual": 6.072655785235066e-13
+    },
+    {
+      "iteration": 47,
+      "compliance": 36.092747790672334,
+      "volume": 0.40000060050213104,
+      "free_residual": 6.057475875075694e-13
+    },
+    {
+      "iteration": 48,
+      "compliance": 36.08952607404436,
+      "volume": 0.4000004348351638,
+      "free_residual": 6.130631473412727e-13
+    },
+    {
+      "iteration": 49,
+      "compliance": 36.086807510664265,
+      "volume": 0.40000017132298704,
+      "free_residual": 6.102966073430989e-13
+    },
+    {
+      "iteration": 50,
+      "compliance": 36.0845956704556,
+      "volume": 0.39999934523039005,
+      "free_residual": 6.104959541277532e-13
+    },
+    {
+      "iteration": 51,
+      "compliance": 36.08211322140159,
+      "volume": 0.4000002912780656,
+      "free_residual": 5.865542086594242e-13
+    },
+    {
+      "iteration": 52,
+      "compliance": 36.07974236839479,
+      "volume": 0.400000093770887,
+      "free_residual": 6.031125483868998e-13
+    },
+    {
+      "iteration": 53,
+      "compliance": 36.077333703142685,
+      "volume": 0.3999995533060864,
+      "free_residual": 5.935892509674937e-13
+    },
+    {
+      "iteration": 54,
+      "compliance": 36.074729711403876,
+      "volume": 0.39999931176425596,
+      "free_residual": 5.968005533144139e-13
+    },
+    {
+      "iteration": 55,
+      "compliance": 36.07202419206657,
+      "volume": 0.39999940960414654,
+      "free_residual": 5.964931768692607e-13
+    },
+    {
+      "iteration": 56,
+      "compliance": 36.069166009684785,
+      "volume": 0.3999998373172435,
+      "free_residual": 6.009617948361855e-13
+    },
+    {
+      "iteration": 57,
+      "compliance": 36.06630704825861,
+      "volume": 0.39999965803299176,
+      "free_residual": 6.139792181745744e-13
+    },
+    {
+      "iteration": 58,
+      "compliance": 36.063410082110614,
+      "volume": 0.3999993269643593,
+      "free_residual": 5.914297580462687e-13
+    },
+    {
+      "iteration": 59,
+      "compliance": 36.06037009777215,
+      "volume": 0.39999934039346585,
+      "free_residual": 5.97065887503417e-13
+    },
+    {
+      "iteration": 60,
+      "compliance": 36.05732635075676,
+      "volume": 0.39999974074261796,
+      "free_residual": 6.061322837416248e-13
+    },
+    {
+      "iteration": 61,
+      "compliance": 36.054156809530426,
+      "volume": 0.4000004404398092,
+      "free_residual": 5.827141207478547e-13
+    },
+    {
+      "iteration": 62,
+      "compliance": 36.050914073705904,
+      "volume": 0.400000409481648,
+      "free_residual": 5.968731937573181e-13
+    },
+    {
+      "iteration": 63,
+      "compliance": 36.04798776489966,
+      "volume": 0.3999998296518094,
+      "free_residual": 6.068662161749682e-13
+    },
+    {
+      "iteration": 64,
+      "compliance": 36.04518772026967,
+      "volume": 0.39999938107919986,
+      "free_residual": 6.253704397005138e-13
+    },
+    {
+      "iteration": 65,
+      "compliance": 36.04285838947346,
+      "volume": 0.39999990485439674,
+      "free_residual": 6.091319169527088e-13
+    },
+    {
+      "iteration": 66,
+      "compliance": 36.0405378487551,
+      "volume": 0.39999960768196047,
+      "free_residual": 6.055151676937555e-13
+    },
+    {
+      "iteration": 67,
+      "compliance": 36.03830905423328,
+      "volume": 0.4000002914712434,
+      "free_residual": 5.965888479170346e-13
+    },
+    {
+      "iteration": 68,
+      "compliance": 36.03644082712094,
+      "volume": 0.3999997273082749,
+      "free_residual": 6.009009669855014e-13
+    },
+    {
+      "iteration": 69,
+      "compliance": 36.03499467673352,
+      "volume": 0.39999998672016335,
+      "free_residual": 5.783858833587172e-13
+    },
+    {
+      "iteration": 70,
+      "compliance": 36.03373246847,
+      "volume": 0.39999944638789525,
+      "free_residual": 5.930080776136898e-13
+    },
+    {
+      "iteration": 71,
+      "compliance": 36.03238666282695,
+      "volume": 0.4000002776500801,
+      "free_residual": 6.041654290481462e-13
+    },
+    {
+      "iteration": 72,
+      "compliance": 36.0311251628689,
+      "volume": 0.40000029945202015,
+      "free_residual": 5.985395172482382e-13
+    },
+    {
+      "iteration": 73,
+      "compliance": 36.02996476230292,
+      "volume": 0.3999993369722848,
+      "free_residual": 6.041935246177247e-13
+    },
+    {
+      "iteration": 74,
+      "compliance": 36.028684401719076,
+      "volume": 0.4000000260780566,
+      "free_residual": 5.939067583000948e-13
+    },
+    {
+      "iteration": 75,
+      "compliance": 36.027504901215664,
+      "volume": 0.39999994738154204,
+      "free_residual": 5.839416248027891e-13
+    },
+    {
+      "iteration": 76,
+      "compliance": 36.02630719952308,
+      "volume": 0.4000006846101358,
+      "free_residual": 6.194667375375543e-13
+    },
+    {
+      "iteration": 77,
+      "compliance": 36.02533920337513,
+      "volume": 0.40000015691195556,
+      "free_residual": 6.130740265636804e-13
+    },
+    {
+      "iteration": 78,
+      "compliance": 36.0246599051806,
+      "volume": 0.39999974732736626,
+      "free_residual": 6.046159026204721e-13
+    },
+    {
+      "iteration": 79,
+      "compliance": 36.02381796068046,
+      "volume": 0.39999992434444315,
+      "free_residual": 6.043761823086248e-13
+    },
+    {
+      "iteration": 80,
+      "compliance": 36.02310493866041,
+      "volume": 0.3999994170610632,
+      "free_residual": 6.203594664039952e-13
+    }
+  ]
+}

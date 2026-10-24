@@ -3,7 +3,9 @@ import {readArticleSource} from '../scripts/content.mjs';
 import assert from 'node:assert/strict';
 import {initialDesign,sectionProperties,evaluateDesign,cantileverCurve,exportURDF,exportConfiguration,presets,materials} from '../.build/lightweight-mechanics.js';
 import {inverse2R,forward2R,footCycle} from '../.build/lightweight-kinematics.js';
-import {relativeMaterialIndex,lightweightDiagram} from '../.build/lightweight-diagrams.js';
+import {relativeMaterialIndex,lightweightDiagram,lightweightMessage} from '../.build/lightweight-diagrams.js';
+import {courseFigures,renderCourseFigure} from '../.build/lightweight-course.js';
+import {readFile} from 'node:fs/promises';
 const close=(a,b,tol=1e-8)=>assert.ok(Math.abs(a-b)<=tol*Math.max(1,Math.abs(a),Math.abs(b)),`${a} != ${b}`);
 test('closed tube section and cantilever equations preserve SI units',()=>{
  const s=sectionProperties({...initialDesign,width:.04,height:.06,wall:.002});
@@ -55,16 +57,35 @@ test('material-index comparisons and scientific plots stay finite in both langua
  const al=materials.aluminium,st=materials.steel;
  close(relativeMaterialIndex(al.E,al.rho,1),1);assert.ok(relativeMaterialIndex(st.E,st.rho,.5)<1);
  close(1/relativeMaterialIndex(st.E,st.rho,.5),1.6691646480035358,.002);
- for(const [id,n] of [['ashby',3],['strength',3],['beam',2],['section',4],['reflection',5],['simp',2]])for(let choice=0;choice<n;choice++)for(const lang of ['en','zh']){
+ for(const [id,n] of [['indices',3],['beam',2],['section',4],['reflection',5],['kinetic',3],['simp',2]])for(let choice=0;choice<n;choice++)for(const lang of ['en','zh']){
   const s=lightweightDiagram(id,choice,lang);assert.match(s,/<title/);assert.match(s,/role="img"/);assert.doesNotMatch(s,/NaN|undefined|Infinity/);
  }
+ assert.match(lightweightMessage('beam',1,'en'),/3\/8/);
+ assert.match(lightweightMessage('kinetic',2,'en'),/11.25 J/);
 });
 
-test('chapter assembly preserves display-math delimiters and all modules',async()=>{
+test('course chapter sequence preserves source scope and excludes the independent studio',async()=>{
  const source=await readArticleSource('轻量化结构设计.html');
- assert.equal((source.match(/<h2 id=/g)||[]).length,11);
+ assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','materials','mechanical-performance','material-selection','structural-design','manufacturing','functional-integration','optimization','extended-questions','robot-survey']);
  assert.ok(source.includes('<div class="formula">$$'));
- assert.ok((source.match(/\$\$/g)||[]).length>80);
+ assert.equal((source.match(/\$\$/g)||[]).length%2,0);
+ assert.doesNotMatch(source,/<iframe|data-studio|labs\/lightweight-robot|workbench|K_I|Paris law|14-bit|14 位|\\mathbb C/);
+ for(const topic of ['research, development','crack growth','Reliability','T651','double-double','MAAXIMUS','40%','RTM','11.59','0.9 kg/m²','0.054'])assert.ok(source.includes(topic),topic);
+ for(const asset of ['ashby-modulus-ansys.webp','ashby-strength-ansys.webp','thin-ply-ntpt.webp','dlr-fibre-metal-laminate.webp','ragone-greenhalgh.webp'])assert.ok(source.includes(asset),asset);
  assert.doesNotMatch(source,/\{\{chapter:/);
  await assert.rejects(readArticleSource('../package.json'));
+});
+
+test('course graphics preserve bilingual labels and defined source relationships',()=>{
+ for(const id of courseFigures){const figure=renderCourseFigure(id);assert.match(figure,/<figcaption>/);assert.match(figure,/lang="en"/);assert.match(figure,/lang="zh-CN"/);assert.doesNotMatch(figure,/NaN|undefined|Infinity/);}
+ for(const term of ['Remaining strength','remaining strength','crack growth','Reliability'])assert.ok(renderCourseFigure('verification').toLowerCase().includes(term.toLowerCase()));
+ assert.match(renderCourseFigure('cost'),/>A</);assert.match(renderCourseFigure('cost'),/>B</);
+});
+
+test('published topology stages come from the recorded constrained solve',async()=>{
+ const solve=JSON.parse(await readFile(new URL('../content/images/lightweight/topology-results.json',import.meta.url),'utf8'));
+ assert.deepEqual(solve.mesh,[120,36]);assert.equal(solve.penalty,3);
+ assert.equal(solve.history.length,81);assert.ok(solve.history.at(-1).compliance<solve.history[0].compliance*.2);
+ for(const h of solve.history){assert.ok(Math.abs(h.volume-.4)<1e-4);assert.ok(h.free_residual<1e-7);assert.ok(Number.isFinite(h.compliance));}
+ for(const step of [0,15,40,80]){const buffer=await readFile(new URL(`../content/images/lightweight/topology-${String(step).padStart(2,'0')}.png`,import.meta.url));assert.equal(buffer.readUInt32BE(16),1800);assert.equal(buffer.readUInt32BE(20),700);}
 });

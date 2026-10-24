@@ -1,24 +1,35 @@
-# Lightweight article and robot studio
+# Lightweight article and independent robot studio
 
-The article is assembled from reviewed bilingual chapters in `content/lightweight/` through `scripts/content.mjs`. `content/轻量化结构设计.html` is the chapter index. The studio is a static browser application at `/labs/lightweight-robot/`; Three.js is bundled locally, and all analytical calculations use SI units in `src/lightweight-mechanics.ts`.
+The bilingual article is assembled from `content/lightweight/` through `scripts/content.mjs`; `content/轻量化结构设计.html` lists its ten modules. It follows the course's general teaching sequence. Extensions and robot research appear at the end. The Three.js studio remains a separate static application at `/labs/lightweight-robot/`; it is not embedded in the article.
 
 ## Source coverage
 
-User-selected outline: `/home/anncatto/obsidian_me/blog/轻量化结构设计.md`. Course sources: `/home/anncatto/obsidian_me/选修/轻量化结构设计技术/`. The 46 local attachments referenced by the course notes were inspected, including the added cantilever, material-index, section-shape, structural-efficiency and upper-arm selection figures. The added materials, manufacturing/fatigue/thermal, geometry, structural-efficiency and material-selection notes are incorporated; the topology note’s SIMP formulation is covered in Chapter 10. Source notes remain in Obsidian.
+User outline: `/home/anncatto/obsidian_me/blog/轻量化结构设计.md`. Course sources: `/home/anncatto/obsidian_me/选修/轻量化结构设计技术/`. [The source coverage inventory](lightweight-source-coverage.md) maps all 47 embedded screenshots from 13 notes to article anchors, records corrections, and documents the original figures and faithful redraws. The JSON companion records hashes for later note updates. Source notes remain in Obsidian and are not edited.
 
-| Chapter | Scope |
+| Module | Scope |
 | --- | --- |
-| 01 | Constrained design; component and system mass; mass spiral |
-| 02 | Kinetic energy, inertia tensor, parallel axes, mass matrix, 2R limb, effective contact mass |
-| 03 | Elasticity/compliance, beams, plates, torsion, buckling, flexible modes and control |
-| 04 | Axial/beam/plate and fixed-diameter/fixed-wall tube indices; strength indices; Ashby charts; composites |
-| 05 | Section shape, equal-strength members, sandwich/lattice, size/shape/topology |
-| 06 | Rotor/stator, reduction/reflected inertia, QDD, belts, linkages, screws and proximal drive |
-| 07 | Thin-wall machining, alloy tempers, joints/inserts, tolerances, fatigue, fracture, impact energy, thermal paths, DFMA |
-| 08 | Passive/active integration, structural batteries, vibration/noise, morphing, SHM/knockdowns |
-| 09 | Source-checked robot cases: MIT/DLR/LOLA, Figure/TianGong, Galaxea/OpenArm and cable SCARA |
-| 10 | Load cases, multibody/FE models, SIMP, numerical optimization, uncertainty and tests |
-| 11 | Studio model, planar IK, gait/reach demonstrations, interpretation, exports and reading links |
+| 01 | Overview; material/structure/process routes; cost A/B tradeoff; checking framework; requirements-to-delivery and virtual–physical feedback |
+| 02 | Material families; basic/engineering/process properties; composition and processing; alloy tempers; fibre, matrix and laminate |
+| 03 | Modulus versus stiffness/compliance; stress/strain; strength; bending; stability and vibration; fatigue, fracture, impact and thermal performance |
+| 04 | Requirement-based tie/beam/plate/tube indices; official Ashby charts; typical material ranges; complete introductory index/cost tables |
+| 05 | Shape factors; equal-area sections; load paths; utilization; ribs; sandwiches; thin plies; DSS and double-double; fibre–metal laminates |
+| 06 | Machining/casting/forming; composite processes; RTM chain; infusion; ultrasonic impregnation; connections; tolerances and inspection |
+| 07 | Passive and active integration; vibration/noise; morphing; structural energy storage/Ragone; knockdowns; CAI; fatigue tests and guided-wave monitoring |
+| 08 | Concept/scheme/detail; numerical modeling; multibody loads and structural checks; course SIMP formulation; computed iterations; validation |
+| 09 | Explicit extensions: fixed-diameter/fixed-wall tube exercise; belts/linkages/screws; composite joint research; all course case comparisons |
+| 10 | Robot-specific dynamics, mass distribution, actuators, reduction, contact; condition-aware payload ratios; legs, arms, humanoids and teleoperation cases |
+
+## Figures and mathematical scope
+
+`src/lightweight-course.ts` renders compact bilingual conceptual diagrams. `src/lightweight-diagrams.ts` renders six button-controlled equation plots. Official-source figures are credited directly below each image; original labels, copyright notices and mathematical fonts are preserved. Formula scope follows the notes and their necessary derivations; the former full 2R/FE/fracture/thermal/IK expansion is removed from the article.
+
+The SIMP images are actual independently computed Q4 plane-stress solutions, not an interpolated illustration. To regenerate, use Python with NumPy, SciPy and Matplotlib:
+
+```sh
+python scripts/figures/lightweight-topology.py
+```
+
+It writes four PNG stages and a JSON convergence history. The model fixes the supports, centre load, 0.4 volume fraction, p=3 and filter radius; automated checks cover volume, equilibrium residual and final compliance. The article distinguishes these results from the course screenshot's separate model.
 
 ## Reference project
 
@@ -45,8 +56,8 @@ BASE_PATH=/Anncatto npm run check
 BASE_PATH=/Anncatto PORT=5180 npm run preview
 ```
 
-Preview `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article has 11 bilingual modules and six interactive scientific figures. Language changes propagate to the embedded studio. Keep `$$` delimiters intact during chapter expansion: replacement strings interpret dollar sequences, so the assembler uses a replacement callback.
+Preview `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article has ten bilingual modules, six interactive equation plots and a selectable four-stage topology example. The studio runs independently. Keep `$$` delimiters intact during chapter expansion: replacement strings interpret dollar sequences, so the assembler uses a replacement callback.
 
-The mechanics tests cover exact tube sections, cantilever response, positive-definite limb inertia, motor-placement effects, reduction scaling, URDF mass/inertia consistency, both inverse-kinematic branches, unreachable targets, gait continuity and chapter assembly. Browser verification covers leg motion/pause, arm dragging, controls, all four exports, diagram choices, both languages, iframe resizing, desktop/mobile overflow and network/runtime errors.
+The mechanics tests cover exact tube sections, cantilever response, positive-definite limb inertia, motor-placement effects, reduction scaling, URDF mass/inertia consistency, both inverse-kinematic branches, unreachable targets, gait continuity and chapter assembly. Browser verification covers leg motion/pause, arm dragging, controls, all four exports, equation-plot choices, topology stages, original image loading, both languages, desktop/mobile overflow, SVG label collisions and network/runtime errors.
 
 Three.js is bundled only for the studio. Its MIT notice is distributed at `assets/licenses/three-LICENSE.txt`. The article’s scientific diagrams remain vector graphics; the robot viewport uses WebGL meshes, environment lighting and shadow maps.

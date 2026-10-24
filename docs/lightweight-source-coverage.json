@@ -1,0 +1,436 @@
+{
+  "checked": "2026-10-24",
+  "scope": "Screenshots embedded in the 13 user-selected course notes; original Obsidian files remain unchanged.",
+  "notes": [
+    {
+      "file": "优化目标.md",
+      "sha256": "fe832b01470c1d8f6d7f5b28af902835e3f498fa7464296dc57095243c7a17a7"
+    },
+    {
+      "file": "导论.md",
+      "sha256": "268e85c8b72476e2b2beacdb791090be266392f5314606fe1a448ab1650e18b0"
+    },
+    {
+      "file": "形状.md",
+      "sha256": "df45abe758a345bc5579c8f58a192336a1e88c257b8b125d509180300032a298"
+    },
+    {
+      "file": "惯量.md",
+      "sha256": "7d6d7d17cbb99bdd85c72ac5d3c35fc27b81c63b2e5bb8a8474805e390d6cb10"
+    },
+    {
+      "file": "拓扑优化.md",
+      "sha256": "8672a6eb7d1072eb00e69531d66097b39045dc11fb8abd6ea45b57cb03b27af9"
+    },
+    {
+      "file": "材料.md",
+      "sha256": "b1654caf184d9d3040a81f9492b48f2446f910559bd509c42b3158944d977b9e"
+    },
+    {
+      "file": "概念设计.md",
+      "sha256": "bd11aeb69fbcfff12f2af38bbdd7a55210d9e961bc75e51d6cd391a4d6daa2ed"
+    },
+    {
+      "file": "疲劳和热和制造.md",
+      "sha256": "a813c7aaf92517e0a5fd08a4613a260a78d090d95e8834c8344cb93ad19eb696"
+    },
+    {
+      "file": "系统轻量化设计.md",
+      "sha256": "13b8bcc5f4b1122ec0ea8798284fa3c929a95d82bf9fff0305c960e1613b689f"
+    },
+    {
+      "file": "结构效率.md",
+      "sha256": "a749cdf59f34cc4ef5a0fb43a9d463fec9fd63fb314c8ac24c92b23d6f95e94c"
+    },
+    {
+      "file": "膝盖关节电机移到髋部的思考.md",
+      "sha256": "9da3b89d1b635b8917557cff40a0df433a0e2bc1dd7841e1f69b258304aa24b6"
+    },
+    {
+      "file": "轻量化机器人结构调研.md",
+      "sha256": "a6077c6eff7697f4e5e24c0833ef174f6b648de57fb42a92e39798687c636f7c"
+    },
+    {
+      "file": "选材.md",
+      "sha256": "8b6fe9682401a66078333356d52952b79e7bef670b647ccf78efe958bffec6d0"
+    }
+  ],
+  "attachments": [
+    {
+      "note": "材料",
+      "attachment": "材料-1792835643907.webp",
+      "sha256": "ec3475b5fe3f791baf847380c7b2e9af86e851b8f0b08c198d062b47b1348f21",
+      "anchor": "material-selection",
+      "topic": "Ashby logarithmic axes, guide-line slopes and material families",
+      "treatment": "Official Ansys chart; interactive minimum-mass comparison"
+    },
+    {
+      "note": "材料",
+      "attachment": "材料-1792836605170.webp",
+      "sha256": "6f0e0ba8c7e2511fa75cfdfec140ebfe2ce6026ee61820606d14c202275a4ab0",
+      "anchor": "bending",
+      "topic": "Axial and bending stress, cantilever load and neutral axis",
+      "treatment": "Derived equations; redrawn beam with selectable load distribution"
+    },
+    {
+      "note": "材料",
+      "attachment": "材料-1792838704580.webp",
+      "sha256": "330e70ee159ec091430b58ad5f0b0b6d7492dce709a60a2443376a651b889d4c",
+      "anchor": "ashby-charts",
+      "topic": "Strength–density material chart",
+      "treatment": "Official Ansys strength chart"
+    },
+    {
+      "note": "系统轻量化设计",
+      "attachment": "系统轻量化设计-1792816303302.webp",
+      "sha256": "8bceb348097e4dda3a83cd6b088f67df036e71c3303a65e50f1010d04b85fe3c",
+      "anchor": "sandwich-laminates",
+      "topic": "FML, GLARE, galvanic isolation, EPDM and foil-specific results",
+      "treatment": "DLR original FML photo; case quantities in extended questions"
+    },
+    {
+      "note": "系统轻量化设计",
+      "attachment": "系统轻量化设计-1792816377153.webp",
+      "sha256": "a16a7115e19d1cc0d535e97468752ff42299e832c9ecd75a9396033c45da929b",
+      "anchor": "sandwich-laminates",
+      "topic": "Boehmite toughening, thermal/flame fillers, fatigue and thin plies",
+      "treatment": "NTPT original thin-ply comparison; case quantities retained"
+    },
+    {
+      "note": "系统轻量化设计",
+      "attachment": "系统轻量化设计-1792816398594.webp",
+      "sha256": "acf9491d709bcce9fbc01f37cf3c491af1574f38618332669da753a4475a8fe7",
+      "anchor": "uncertainty-monitoring",
+      "topic": "KDF product, CAI impact location and resonance fatigue test",
+      "treatment": "Symbolic course formula and explanation; test quantities retained"
+    },
+    {
+      "note": "系统轻量化设计",
+      "attachment": "系统轻量化设计-1792816451411.webp",
+      "sha256": "c491da8d263cf55194c46579d86fec58f84783c1b92fa2975036e7decea14ba6",
+      "anchor": "uncertainty-monitoring",
+      "topic": "Guided waves, intact/debonded stiffener, monitoring mass benefit",
+      "treatment": "Wave-path principle redraw; UCSD primary research link; ≥5% example"
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1792841287924.webp",
+      "sha256": "c26aaf1bd6ec9ef96084f42b71eb0c522719fde990bbf54d8c2c1bdf1d26ae1a",
+      "anchor": "topology",
+      "topic": "SIMP variables, compliance, equilibrium and volume constraint",
+      "treatment": "Course formulation; interactive interpolation curve"
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1792841466208.webp",
+      "sha256": "c0cdb53f1c5dc8dcbe14202807a316620e7b010f20831165800d43000ab14a67",
+      "anchor": "topology",
+      "topic": "Simply supported beam, centre load, 40% volume, iteration example",
+      "treatment": "Independently solved 120×36 SIMP stages; course 44/244.1 distinguished"
+    },
+    {
+      "note": "轻量化机器人结构调研",
+      "attachment": "轻量化机器人结构调研-1792837666843.webp",
+      "sha256": "7c6529eb2e919724ef6fc14f41332e04c31f5a079b6c95dba9e9703cd1bfb593",
+      "anchor": "teleoperation-arms",
+      "topic": "Galaxea teleoperation leader/follower context",
+      "treatment": "Source-checked A1X/LEMO, OpenArm, Unitree and ALOHA comparison"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792827696102.webp",
+      "sha256": "06669144ce23c0831414c7fe3476af3b9a53e96ad4b9073053fb1dbdf36a17ed",
+      "anchor": "robot-survey",
+      "topic": "Inertia, mass spiral, reflection, stiffness/control and contact learning objectives",
+      "treatment": "Covered by final robot mechanics and case sections"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792828313270.webp",
+      "sha256": "330ac27a8c904dff34649dd6175c4c12c1c614c2691dbc341470136100f72ba3",
+      "anchor": "robot-inertia",
+      "topic": "Rigid-body dynamics and mass distribution",
+      "treatment": "Course dynamics equation, terms and wrench sign convention"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792828394089.webp",
+      "sha256": "b76c5702ab9d36b0189f424169b719c2e17e32aad9e0ab3b8244b676bcadb1f7",
+      "anchor": "robot-inertia",
+      "topic": "Mass spiral and upstream resizing",
+      "treatment": "Redrawn feedback sequence"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792828914954.webp",
+      "sha256": "8fc8f4b3a8ac7687a5f7cdfa545e02ea7009a48ab1fd78bc0dbba3e33deacc93",
+      "anchor": "robot-inertia",
+      "topic": "Parallel axes and proximal knee motor example",
+      "treatment": "Course formula; placement redraw; offset contribution and stated totals"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792829628590.webp",
+      "sha256": "119637a470f362318d279b612ba3e842da6c2fedbae28307af5ecfa6344a2070",
+      "anchor": "robot-joints",
+      "topic": "Reflected rotor inertia and ratio comparison",
+      "treatment": "Course formula and interactive 6/10/30/50/100 ratio plot"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792831187271.webp",
+      "sha256": "ba694c8297c10972bfc4c5f867801fa9e153a6c29b1ac79c0e800d471e7cdb6d",
+      "anchor": "robot-joints",
+      "topic": "Proprioceptive actuator, QDD and backdrivability",
+      "treatment": "Actuator concepts, current-based torque estimation, source-checked Mini Cheetah"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792831436337.webp",
+      "sha256": "bea7eee444f6be2c7a20bcc45a6ab3dfda60a7443ec9bf500c4cd1b85aa0b04f",
+      "anchor": "stability-dynamics",
+      "topic": "Frequency scaling, stiffness and control",
+      "treatment": "Course frequency formula and mechanical/control explanation"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792831691950.webp",
+      "sha256": "b7c488d64e11d2e3023072cd5a91659608744a43a2336f83918d542c35077009",
+      "anchor": "elasticity",
+      "topic": "F=kx, stress–strain and axial extension",
+      "treatment": "Contextual axial derivation and qualitative tensile curve"
+    },
+    {
+      "note": "惯量",
+      "attachment": "Pasted image 20261024175931.png",
+      "sha256": "16cb06f1797756fcf5c224960c0a486178e81674cd1a4df68bc3ae3083c32717",
+      "anchor": "robot-contact",
+      "topic": "Effective mass and quadratic kinetic energy",
+      "treatment": "Course formula; interactive 2/5/10 kg energy curves"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792832706447.webp",
+      "sha256": "8b4708d184e26527402aa43c87341d97d44485aa83f402a48d97fd7ba0579c18",
+      "anchor": "robot-contact",
+      "topic": "ISO/TS 15066 power/force limiting and body-region criteria",
+      "treatment": "Brief explanation linked to official ISO source, without numerical limits"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792833582535.webp",
+      "sha256": "8f8346bc2960e4b7ef64f700e1b7d0a01ad687d47bed8ab317dba983a1617e94",
+      "anchor": "stiffness-indices",
+      "topic": "Derivation of the axial-stiffness material index",
+      "treatment": "Requirement/free-variable/mass/material-term flow and derivation"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792834190357.webp",
+      "sha256": "a49317f7213b49130f7776f732b563ca76fdb91cc46cd5e98007fe0e1797678d",
+      "anchor": "strength-indices",
+      "topic": "Tie, beam, plate and thin-tube stiffness/strength indices",
+      "treatment": "Rebuilt table with geometric freedoms and corresponding derivations"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792834665240.webp",
+      "sha256": "9ba376e9479644871116b76b265a52f111389e2ce6bfe3cffe2179ab392ca992",
+      "anchor": "typical-material-values",
+      "topic": "Steel, Al, Mg, Ti, quasi-isotropic/UD CFRP and nylon data",
+      "treatment": "Rebuilt eight-row property and index table"
+    },
+    {
+      "note": "惯量",
+      "attachment": "惯量-1792837965280.webp",
+      "sha256": "caa073540b8a8fd4dbf7b403e45775f0ed2f7707a32816082262d8d1f7c32a25",
+      "anchor": "ashby-charts",
+      "topic": "Metal specific-modulus similarity; beam ranking; QI/UD contrast",
+      "treatment": "Interactive six-material minimum-mass comparison; parameter table"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522170248.webp",
+      "sha256": "3e3727d992c10f3680bafbfb75eecf978a379527ca2a156df4066b84b632018a",
+      "anchor": "course-material-table",
+      "topic": "Introductory material index and relative cost table",
+      "treatment": "All eight rows and original index/cost values rebuilt as two tables"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522326766.webp",
+      "sha256": "09d98d75d3fbb4d4b74abd405b8b54e3a0224a4c0f0ff2c6e9c6152fe077099d",
+      "anchor": "cost-performance",
+      "topic": "Cost–mass curve, A/B, cost per kilogram and cost categories",
+      "treatment": "Curve redrawn with A/B and marginal tradeoff; life-cycle prose"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522543518.webp",
+      "sha256": "2326828d7060332e2704d9ec03fe6021de44b45b88614d54f5f77bffd27a9bef",
+      "anchor": "processing-properties",
+      "topic": "Basic, engineering and process properties; materials relationships",
+      "treatment": "Full three-group explanation; composition/process/property/service map"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522548955.webp",
+      "sha256": "2326828d7060332e2704d9ec03fe6021de44b45b88614d54f5f77bffd27a9bef",
+      "anchor": "processing-properties",
+      "topic": "Duplicate materials-foundation slide",
+      "treatment": "Consolidated with previous screenshot; no duplicated prose"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522565341.webp",
+      "sha256": "1d240267f55bd75f7168a305581fe2865ad9e07e5b91c8761c00a0d99f4f5835",
+      "anchor": "design-verification",
+      "topic": "Capacity, stiffness, residual strength, life, crack growth and reliability",
+      "treatment": "Rebuilt verification diagram with all four input groups"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522586749.webp",
+      "sha256": "082fc94d77bb7a32616dd9a7e94b8c0289300a7bbf5d0808e4eb6ddea8157df4",
+      "anchor": "design-verification",
+      "topic": "Requirements, concept, design, production, prototype, test and delivery",
+      "treatment": "Design workflow redraw, full sequence and feedback in prose"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522618279.webp",
+      "sha256": "3c3b34e49816d0ee4b1ca387b98861b602335cd313c205a41e0bc55fbcccccda",
+      "anchor": "optimization",
+      "topic": "Real problem, mathematical model, algorithm and interpretation loop",
+      "treatment": "Dedicated modeling diagram and optimization explanation"
+    },
+    {
+      "note": "导论",
+      "attachment": "导论-1791522795672.webp",
+      "sha256": "6ae0db891aab718bd3cdfac11727c2954a6b7f09deb6d4df331d75c06af6fbc0",
+      "anchor": "design-verification",
+      "topic": "FE model, test scheme, sensors/strain gauges and model calibration",
+      "treatment": "Virtual–physical loop and verification workflow"
+    },
+    {
+      "note": "形状",
+      "attachment": "形状-1792839582565.webp",
+      "sha256": "f242b878aece2c77b7bee1b91430374e293ee00ee21d242fa6522abec82e375e",
+      "anchor": "section-efficiency",
+      "topic": "Equal-mass square/circle/tubes, section and mass-inertia distinction",
+      "treatment": "Interactive equal-area section comparison; exact tube factors"
+    },
+    {
+      "note": "形状",
+      "attachment": "形状-1792841143256.webp",
+      "sha256": "d884215cab5bcbf792db9ae12fa20bcd61c18627fab5d2510b3ba03f38754799",
+      "anchor": "structural-design",
+      "topic": "Three routes through materials, structure and manufacturing",
+      "treatment": "Intro framework and structural/manufacturing sequence"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792816533711.webp",
+      "sha256": "32fb85d1d1bc3f0b0e43eeb77500af9faaa7e39b2eb427c7a0e9c88965c756c5",
+      "anchor": "sandwich-laminates",
+      "topic": "Composite-oriented concept, frame/beam/wing, DSS and double-double",
+      "treatment": "Core concepts and primary links; all numerical examples retained at end"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792816608513.webp",
+      "sha256": "43014301be1f9e1668c37ce83b486f9877ef4fb7c2b76bab824573ee0d500029",
+      "anchor": "introduction",
+      "topic": "Six course modules and their common design method",
+      "treatment": "All thematic modules retained; robot topics moved to final chapter"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792816629928.webp",
+      "sha256": "7aa233be6e84bfa4d0c2f6adc8287bf28fa1228de4525dfaa3099869beaf18a6",
+      "anchor": "introduction",
+      "topic": "Definition, objectives, traditional versus integrated methods",
+      "treatment": "Concept definition and two-route framework"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792816738002.webp",
+      "sha256": "f4c29e5526caecad77511921f6de82c9493178312dc32d4dac22bc6b3ff297ed",
+      "anchor": "payload-comparison",
+      "topic": "Six-arm payload/self-mass chart",
+      "treatment": "Redrawn with official model-specific values and explicit load conditions"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792817119590.webp",
+      "sha256": "f2d02637e924b0a9bd93203094f6f5594c556ccbb54e40cdc72897c4cc40238f",
+      "anchor": "manufacturing",
+      "topic": "RTM chain, isothermal process, vacuum channels, ultrasound and 65% fibre fraction",
+      "treatment": "Full process description and RTM chain; cost/cycle examples retained"
+    },
+    {
+      "note": "概念设计",
+      "attachment": "新概念设计-1792817498754.webp",
+      "sha256": "e5b0652dc7863aca929d3b44549f0c0fd4e1a7fde0fc62a11b8c2e59dcee2f78",
+      "anchor": "structural-energy",
+      "topic": "Ragone chart, LATP/CNT storage, 11.59 mF/cm³ and system savings",
+      "treatment": "CC BY original Ragone figure; material concept and all case numbers"
+    },
+    {
+      "note": "结构效率",
+      "attachment": "结构效率-1792839977340.webp",
+      "sha256": "5a8ec906c9cec7bb8dadd2d12bddf47f978bc11f864f47922a04548ee3aa26f7",
+      "anchor": "structural-design",
+      "topic": "Efficient thin sections, direct load paths and utilization",
+      "treatment": "Three-principle diagram with sections, load paths and full-stress explanation"
+    },
+    {
+      "note": "选材",
+      "attachment": "选材-1792840873549.webp",
+      "sha256": "7679d841f27807db310a23c833131805dc4633f1dd80dba69a31f8d685d52847",
+      "anchor": "tube-selection-example",
+      "topic": "Upper-arm material exercise: 0.35 m tube, fixed diameter/wall",
+      "treatment": "Worked two-case table and conditions in extended questions"
+    },
+    {
+      "note": "优化目标",
+      "attachment": "优化目标-1792820006181.webp",
+      "sha256": "20c732f9ddbc21c55e4c49676b71fe25a6901c9f15c4de60b45aa3ec6df2bb4a",
+      "anchor": "introduction",
+      "topic": "Minimum mass constrained by stiffness, strength, dynamics, contact and cost",
+      "treatment": "Introduction objective and verification; robot contact in final chapter"
+    },
+    {
+      "note": "优化目标",
+      "attachment": "优化目标-1792821563838.webp",
+      "sha256": "cb401c29cf29274dddd6e8880504b74f7de97c2030bebca77a11c36fb8218c01",
+      "anchor": "design-routes",
+      "topic": "Traditional versus passive/active integration technical framework",
+      "treatment": "Rebuilt framework and functional integration chapter"
+    },
+    {
+      "note": "优化目标",
+      "attachment": "优化目标-1792830799356.webp",
+      "sha256": "19564757e71d30cc5e659f46d84a0e2321b6bea70d67563317f9898db11ecf82",
+      "anchor": "design-levels",
+      "topic": "Concept, scheme, detail and validation decisions",
+      "treatment": "Design-stage diagram; no early robot-only framing"
+    },
+    {
+      "note": "优化目标",
+      "attachment": "优化目标-1792830762221.webp",
+      "sha256": "b904fd71e8beb71ec6db18683535e95f20c448864244eb469492408ab96c7b0e",
+      "anchor": "robot-survey",
+      "topic": "Mini Cheetah, Cassie, LWR III mechanism examples",
+      "treatment": "Primary-source case comparison; corrected Cassie all-pelvis-motor claim"
+    },
+    {
+      "note": "优化目标",
+      "attachment": "优化目标-1792827004785.webp",
+      "sha256": "179a0318b1842305126932df1c7904aea940cca45703d9bd0e5cf91fbc2fe36d",
+      "anchor": "introduction",
+      "topic": "Mass cost, distal inertia, constrained design, two routes and early decisions",
+      "treatment": "Intro general principles; robot-specific consequences at end"
+    }
+  ]
+}

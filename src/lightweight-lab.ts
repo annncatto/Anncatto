@@ -1,4 +1,4 @@
-import {language,onLanguageChange,setLanguage} from './language.js';
+import {language,onLanguageChange} from './language.js';
 import {createRobotScene} from './lightweight-scene.js';
 import {initialDesign,materials,evaluateDesign,presets,exportConfiguration,exportURDF,type Design,type RobotType} from './lightweight-mechanics.js';
 const root=document.querySelector<HTMLElement>('[data-structure-studio]');
@@ -62,11 +62,5 @@ if(root) {
   $('[data-workspace]').addEventListener('click',()=>{const b=$('[data-workspace]'),enabled=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',String(enabled));scene?.workspace(enabled);});
   function download(data:string|ArrayBuffer,type:string,name:string){const url=URL.createObjectURL(new Blob([data],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
   for(const b of root.querySelectorAll<HTMLButtonElement>('[data-download]'))b.addEventListener('click',async()=>{const type=b.dataset.download;if(type==='png'){if(!scene)return;const a=document.createElement('a');a.href=scene.capture();a.download='robot-structure.png';a.click();}else if(type==='glb'){if(scene)download(await scene.exportGLB(),'model/gltf-binary','robot-structure.glb');}else download(type==='urdf'?exportURDF(design):exportConfiguration(design),type==='urdf'?'application/xml':'application/json',`robot-structure.${type}`);});
-  if(new URLSearchParams(location.search).has('embed')){
-    document.body.classList.add('studio-embedded');
-    new ResizeObserver(()=>parent.postMessage({type:'anncatto:studio-height',height:document.documentElement.scrollHeight},location.origin)).observe(root);
-    $('.studio-article-link').setAttribute('target','_top');
-    addEventListener('message',event=>{if(event.origin===location.origin && event.source===parent && event.data?.type==='anncatto:language' && ['en','zh'].includes(event.data.language))setLanguage(event.data.language);});
-  }
   onLanguageChange(()=>{setFields();metrics();note();});setFields();update(true);
 }

@@ -1,7 +1,7 @@
 import {FONT} from './theme.js';
 import {materials} from './lightweight-mechanics.js';
 import type {Language} from './i18n.js';
-export type LightFigure='ashby'|'strength'|'beam'|'reflection'|'simp'|'section';
+export type LightFigure='indices'|'beam'|'reflection'|'simp'|'section'|'kinetic';
 const bi=(en:string,zh:string)=>`<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
 const tr=(en:string,zh:string,l:Language)=>l==='en'?en:zh;
 const text=(x:number,y:number,t:string,size=14,anchor='middle',color='#536d79')=>`<text x="${x}" y="${y}" font-size="${size}" text-anchor="${anchor}" fill="${color}">${t}</text>`;
@@ -11,28 +11,21 @@ export const indexPowers=[1,.5,1/3] as const;
 export function relativeMaterialIndex(E:number,rho:number,power:number){return (E/materials.aluminium.E)**power/(rho/materials.aluminium.rho);}
 export function lightweightMessage(id:LightFigure,choice=0,language:Language='en'){
   if(id==='section') {const phi=[1,3/Math.PI,3*(5+1/20)/Math.PI,3*(10+1/40)/Math.PI][choice]!;return tr(`At equal area and modulus, the selected section has ${phi.toFixed(2)} × the square’s bending stiffness. Its curvature under the same moment is ${(1/phi).toFixed(3)} × the reference.`,`截面积与模量相同时，所选截面的抗弯刚度为实心方形的 ${phi.toFixed(2)} 倍，相同弯矩下的曲率为参考值的 ${(1/phi).toFixed(3)} 倍。`,language);}
-  if(id==='strength')return tr(`Strength index exponent: ${[1,2/3,.5][choice]!.toFixed(3)}. Compare metal yield strengths with one consistent geometric freedom.`,`强度指数幂次：${[1,2/3,.5][choice]!.toFixed(3)}。按相同的几何自由度比较金属屈服强度。`,language);
-  if(id==='beam')return choice===0?tr('A transverse tip load gives δ = FL³/(3EI). Bending moment is largest at the clamp.','横向末端集中力对应 δ = FL³/(3EI)，固支端弯矩最大。',language):tr('With the same total force distributed uniformly, δ = FL³/(8EI), or 3/8 of the tip-load displacement.','相同总力均匀分布时，δ = FL³/(8EI)，为末端集中力挠度的 3/8。',language);
-  if(id==='ashby') {const p=indexPowers[choice]!,best=Object.entries(materials).map(([name,m])=>({name,...m,value:relativeMaterialIndex(m.E,m.rho,p)})).sort((a,b)=>b.value-a.value)[0]!;
-    return tr(`Constant-index slope: ${(1/p).toFixed(0)}. Highest index among these five reference materials: ${best.en}, ${best.value.toFixed(2)} × aluminium.`,`等指数线斜率为 ${(1/p).toFixed(0)}。五种参考材料中指数最高：${best.zh}，为铝合金的 ${best.value.toFixed(2)} 倍。`,language);}
+  if(id==='indices')return tr(`Geometric freedom: ${['tie area','similar beam section','plate thickness'][choice]}. Bars show minimum mass relative to aluminium for the same specified stiffness.`,`几何自由度：${['拉杆面积','梁截面相似缩放','板厚'][choice]}。柱条比较相同规定刚度下，以铝为基准的最小质量。`,language);
+  if(id==='beam')return tr(choice===0?'A tip force produces FL³/(3EI) tip displacement.':'Distributing the same total force uniformly produces FL³/(8EI) tip displacement, or 3/8 of the tip-load result.',choice===0?'末端集中力对应的端部位移为 FL³/(3EI)。':'将相同总力均布，端部位移为 FL³/(8EI)，即末端集中力工况的 3/8。',language);
+  if(id==='kinetic'){const m=[2,5,10][choice]!;return tr(`At 1.5 m/s, an effective mass of ${m} kg corresponds to ${(m*1.5**2/2).toFixed(2)} J. Doubling speed quadruples energy for a fixed effective mass.`,`速度为 1.5 m/s、等效质量为 ${m} kg 时，相应动能为 ${(m*1.5**2/2).toFixed(2)} J。等效质量不变，速度加倍，动能变为四倍。`,language);}
   if(id==='reflection'){const N=[6,10,30,50,100][choice]!;return tr(`At ${N}:1, N²Jₘ = ${(N*N*.0001).toFixed(4)} kg·m² for Jₘ = 10⁻⁴ kg·m². Only the reduction is varied.`,`转子惯量固定为 10⁻⁴ kg·m²，减速比 ${N}:1 时，N²Jₘ = ${(N*N*.0001).toFixed(4)} kg·m²。只改变减速比。`,language);}
   const p=[1,3][choice]!;return tr(`At relative density 0.5, the normalized stiffness contribution is 0.5^${p} = ${(.5**p).toFixed(3)} (neglecting the small minimum modulus).`,`相对密度为 0.5 时，归一化刚度贡献为 0.5^${p} = ${(.5**p).toFixed(3)}，忽略很小的最小模量。`,language);
 }
 export function lightweightDiagram(id:LightFigure,choice=0,l:Language='en'){
   let b='';
-  if(id==='ashby'||id==='strength') {
-    const strength=id==='strength',base=strength?240:69,powers=strength?[1,2/3,.5]:indexPowers;
-    const X=(rho:number)=>80+Math.log10(rho/.8)/Math.log10(10/.8)*530;
-    const Y=(E:number)=>strength?327-Math.log10(E/100)/Math.log10(1000/100)*275:327-Math.log10(E/.5)/Math.log10(300/.5)*275;
-    b=`<defs><clipPath id="lw-${id}-clip"><rect x="80" y="52" width="530" height="275"/></clipPath></defs>`;
-    for(const v of [1,2,5,10]) {const x=X(v);b+=line(x,52,x,327)+text(x,349,String(v));}
-    for(const v of strength?[100,200,500,1000]:[1,10,100]){const y=Y(v);b+=line(80,y,610,y)+text(66,y+5,String(v),13,'end');}
-    const a=powers[choice]!;let path='';for(let i=0;i<=100;i++){const rho=.8*(10/.8)**(i/100),E=base*(rho/2.7)**(1/a);path+=`${i?'L':'M'}${X(rho).toFixed(1)},${Y(E).toFixed(1)} `;}
-    b+=`<path d="${path}" clip-path="url(#lw-${id}-clip)" stroke="#73b598" stroke-width="2" stroke-dasharray="6 4" fill="none"/>`;
-    const labels={aluminium:['Al 6061-T6',0,-18],steel:['Steel',-12,-15],titanium:['Ti-6Al-4V',8,24],carbon:['CFRP',-25,-18],magnesium:['Mg AZ31B',25,24]} as const;
-    for(const [key,m] of Object.entries(materials)){if(strength&&key==='carbon')continue;const [label,dx,dy]=labels[key as keyof typeof labels];const x=X(m.rho/1000),y=Y(strength?m.strength/1e6:m.E/1e9);b+=`<circle cx="${x}" cy="${y}" r="7" fill="${key==='carbon'?'#7bbda3':'#327da9'}" stroke="white" stroke-width="2"/>`+text(x+dx,y+dy,label,13);}
-    b+=text(345,384,tr('Density ρ · Mg/m³ (log scale)','密度 ρ · Mg/m³（对数）',l))+text(80,25,strength?tr('Yield strength · MPa (log scale)','屈服强度 · MPa（对数）',l):tr('Young’s modulus E · GPa (log scale)','杨氏模量 E · GPa（对数）',l),14,'start');
-    b+=text(608,25,`${strength?'σ': 'E'}${choice===0?'':strength?(choice===1?'²ᐟ³':'¹ᐟ²'):(choice===1?'¹ᐟ²':'¹ᐟ³')}/ρ`,15,'end','#2d8a65');
+  if(id==='indices') {
+    const samples=[{en:'Al 6061',zh:'铝 6061',E:69e9,rho:2700},{en:'Mg AZ91',zh:'镁 AZ91',E:45e9,rho:1810},{en:'Steel',zh:'钢',E:210e9,rho:7850},{en:'Ti-6Al-4V',zh:'Ti-6Al-4V',E:114e9,rho:4430},{en:'CFRP · QI',zh:'CFRP · 准各向同性',E:60e9,rho:1550},{en:'CFRP · UD',zh:'CFRP · 单向',E:140e9,rho:1550}];
+    const p=indexPowers[choice]!,values=samples.map(m=>1/relativeMaterialIndex(m.E,m.rho,p));
+    const X=(v:number)=>165+v*215;
+    for(const v of [0,.5,1,1.5,2])b+=line(X(v),50,X(v),320)+text(X(v),345,String(v),13);
+    samples.forEach((m,i)=>{const y=58+i*43,v=values[i]!;b+=`<rect x="165" y="${y}" width="${215*v}" height="25" rx="2" fill="${i===0?'#347fa2':'#b1d9c5'}"/>`+text(150,y+18,l==='en'?m.en:m.zh,13,'end')+text(X(v)+10,y+18,v.toFixed(2),13,'start');});
+    b+=text(165,25,tr('Mass needed at equal specified stiffness','满足相同规定刚度所需质量',l),14,'start')+text(370,384,tr('Relative mass · aluminium = 1','相对质量 · 铝合金 = 1',l));
   } else if(id==='section') {
     const A=1000,scale=1.65,cy=175;
     const factors=[1,3/Math.PI,3*(5+1/20)/Math.PI,3*(10+1/40)/Math.PI];
@@ -55,6 +48,11 @@ export function lightweightDiagram(id:LightFigure,choice=0,l:Language='en'){
     b+=text(370,55,choice===0?tr('Tip force F','末端集中力 F',l):tr('Uniform pressure · same total F','均布载荷 · 相同总力 F',l),16);
     b+=line(90,275,580,275,'#688896')+line(90,266,90,284,'#688896')+line(580,266,580,284,'#688896')+text(335,298,'L',15);
     b+=text(350,345,tr('Dashed curve: enlarged bending displacement','虚线：放大后的弯曲位移',l),14);
+  } else if(id==='kinetic') {
+    for(const v of [0,.5,1,1.5]){const x=85+v/1.5*475;b+=line(x,56,x,326)+text(x,350,String(v),13);}
+    for(const e of [0,3,6,9,12]){const y=326-e/12*270;b+=line(85,y,560,y)+text(71,y+5,String(e),13,'end');}
+    [2,5,10].forEach((m,i)=>{let path='';for(let j=0;j<=60;j++){const v=j/60*1.5;path+=`${j?'L':'M'}${85+v/1.5*475},${326-m*v*v/2/12*270} `;}const active=i===choice;b+=`<path d="${path}" fill="none" stroke="${active?'#237ab2':'#8fb6a9'}" stroke-width="${active?3:1.6}" stroke-dasharray="${active?'none':i===0?'3 4':'7 4'}"/>`+text(575,326-m*1.5**2/2/12*270+5,`${m} kg`,14,'start');});
+    b+=text(85,25,tr('Kinetic energy · J','动能 · J',l),14,'start')+text(340,384,tr('Contact speed · m/s','接触速度 · m/s',l));
   } else if(id==='reflection') {
     for(const v of [0,.25,.5,.75,1]) {const y=326-v*270;b+=line(80,y,625,y)+text(66,y+5,String(v),13,'end');}
     [6,10,30,50,100].forEach((N,i)=>{const x=104+i*105,value=N*N*.0001,h=value*270;b+=`<rect x="${x}" y="${326-h}" width="64" height="${Math.max(1,h)}" rx="2" fill="${i===choice?'#297da7':'#b8dccb'}"/>`+text(x+32,Math.max(45,315-h),value.toFixed(value<.01?4:2),13)+text(x+32,350,`${N}:1`,14);});
@@ -67,8 +65,8 @@ export function lightweightDiagram(id:LightFigure,choice=0,l:Language='en'){
   return svg(id,b,lightweightMessage(id,choice,l));
 }
 export function renderLightweightFigure(id:LightFigure){
-  const labels=id==='section'?[['Square','方形'],['Circle','圆形'],['r/t = 5','r/t = 5'],['r/t = 10','r/t = 10']]:id==='ashby'?[['Tie · E/ρ','拉杆 · E/ρ'],['Beam · E¹ᐟ²/ρ','梁 · E¹ᐟ²/ρ'],['Plate · E¹ᐟ³/ρ','板 · E¹ᐟ³/ρ']]:id==='strength'?[['Tie · σ/ρ','拉杆 · σ/ρ'],['Beam · σ²ᐟ³/ρ','梁 · σ²ᐟ³/ρ'],['Plate · σ¹ᐟ²/ρ','板 · σ¹ᐟ²/ρ']]:id==='beam'?[['Tip load','末端集中力'],['Distributed load','均布载荷']]:id==='reflection'?[6,10,30,50,100].map(n=>[`${n}:1`,`${n}:1`]):[['p = 1','p = 1'],['p = 3','p = 3']];
-  const titles=id==='section'?['Section shape at equal mass','等质量截面形状']:id==='ashby'?['Material indices on logarithmic axes','对数坐标中的材料指数']:id==='strength'?['Strength and density','强度与密度']:id==='beam'?['Cantilever loading','悬臂梁载荷']:id==='reflection'?['Reduction and reflected inertia','减速比与反射惯量']:['SIMP stiffness interpolation','SIMP 刚度插值'];
-  const desc=id==='section'?['Mean radius r; wall thickness t. Values use the exact annulus second moment.','r 为平均半径，t 为壁厚；数值按圆环精确二次矩计算。']:id==='ashby'||id==='strength'?['Representative teaching values; the dashed line passes through aluminium.','采用教学代表值；虚线经过铝合金参考点。']:id==='beam'?['The support, load location and load distribution define the bending problem.','支承、载荷位置与载荷分布共同确定弯曲工况。']:id==='reflection'?['The values follow N²Jₘ for one fixed rotor.','固定同一转子，按 N²Jₘ 计算。']:['An interpolation law used inside an optimization model; the curve is not a solved structure.','这是优化模型中的插值关系，曲线本身不代表已求解的结构。'];
+  const labels=id==='section'?[['Square','方形'],['Circle','圆形'],['r/t = 5','r/t = 5'],['r/t = 10','r/t = 10']]:id==='indices'?[['Tie · E/ρ','拉杆 · E/ρ'],['Beam · E¹ᐟ²/ρ','梁 · E¹ᐟ²/ρ'],['Plate · E¹ᐟ³/ρ','板 · E¹ᐟ³/ρ']]:id==='beam'?[['Tip load','末端集中力'],['Distributed load','均布载荷']]:id==='reflection'?[6,10,30,50,100].map(n=>[`${n}:1`,`${n}:1`]):id==='kinetic'?[2,5,10].map(m=>[`${m} kg`,`${m} kg`]):[['p = 1','p = 1'],['p = 3','p = 3']];
+  const titles=id==='section'?['Section shape at equal mass','等质量截面形状']:id==='indices'?['Geometry changes a material ranking','几何约束改变材料排序']:id==='beam'?['Cantilever loading','悬臂梁载荷']:id==='reflection'?['Reduction and reflected inertia','减速比与反射惯量']:id==='kinetic'?['Mass, speed and contact energy','质量、速度与接触动能']:['SIMP stiffness interpolation','SIMP 刚度插值'];
+  const desc=id==='section'?['Mean radius r; wall thickness t. Values use the exact annulus second moment.','r 为平均半径，t 为壁厚；数值按圆环精确二次矩计算。']:id==='indices'?['Rounded properties; QI = quasi-isotropic, UD = unidirectional CFRP. These bars illustrate the index.','采用取整示例参数；QI 为准各向同性，UD 为单向 CFRP。柱条用于解释指数。']:id==='beam'?['The support, load location and load distribution define the bending problem.','支承、载荷位置与载荷分布共同确定弯曲工况。']:id==='reflection'?['The values follow N²Jₘ for one fixed rotor.','固定同一转子，按 N²Jₘ 计算。']:id==='kinetic'?['Energy follows ½mv² for the stated effective masses. Force and pressure also require contact conditions.','曲线按给定等效质量和 ½mv² 计算；接触力与压强还需要接触条件。']:['An interpolation law used inside an optimization model; the curve is not a solved structure.','这是优化模型中的插值关系，曲线本身不代表已求解的结构。'];
   return `<figure class="lightweight-figure" data-lightweight-figure="${id}"><div class="lw-chart-controls" role="group" aria-label="Chart parameters">${labels.map((v,i)=>`<button type="button" data-lw-choice="${i}" aria-pressed="${i===0}">${bi(v[0]!,v[1]!)}</button>`).join('')}</div><div class="lw-chart-frame" data-lw-plot>${lightweightDiagram(id)}</div><figcaption><span class="figure-title">${bi(...titles as [string,string])}</span><p class="lw-chart-message" data-lw-message aria-live="polite">${bi(lightweightMessage(id,0,'en'),lightweightMessage(id,0,'zh'))}</p><span class="figure-description">${bi(...desc as [string,string])}</span></figcaption></figure>`;
 }
