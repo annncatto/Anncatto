@@ -5,6 +5,7 @@ optimality-criteria volume update. Unitless E=1, load=1, thickness=1.
 """
 from pathlib import Path
 import json
+import base64
 from PIL import Image
 import io
 import numpy as np
@@ -35,11 +36,18 @@ for ix in range(nx):
     v=max(0,rmin-np.hypot(ix-jx,iy-jy))
     if v:rr.append(e);cc.append(jx*ny+jy);vv.append(v)
 H=coo_matrix((vv,(rr,cc)),shape=(nx*ny,nx*ny)).tocsr();Hs=np.asarray(H.sum(1)).ravel()
-x=np.full(nx*ny,volume);history=[];saved={};frames=[];out=Path('content/images/lightweight');out.mkdir(exist_ok=True)
+x=np.full(nx*ny,volume);history=[];saved={};frames=[];fields=[];previous=None;out=Path('content/images/lightweight');out.mkdir(exist_ok=True)
 for iteration in range(81):
  E=x**penal
  K=coo_matrix((np.einsum('i,j->ij',E,ke.ravel()).ravel(),(iK,jK)),shape=(nd,nd)).tocsc();u=np.zeros(nd);u[free]=spsolve(K[free,:][:,free],f[free])
  ce=np.einsum('ei,ij,ej->e',u[dofs],ke,u[dofs]);compliance=float(E@ce);residual=float(np.linalg.norm((K@u-f)[free]));history.append({'iteration':iteration,'compliance':compliance,'volume':float(x.mean()),'free_residual':residual})
+ raw_benefit=penal*x**(penal-1)*ce
+ benefit=np.asarray(H@(x*raw_benefit))/Hs/np.maximum(.001,x)
+ scale=float(np.quantile(benefit,.99))
+ encode=lambda a:base64.b64encode(np.rint(np.clip(a,0,1)*255).astype(np.uint8).tobytes()).decode('ascii')
+ change=0. if previous is None else float(np.max(np.abs(x-previous)))
+ fields.append({**history[-1],'density':encode(x),'benefit':encode(benefit/max(scale,1e-30)),'benefit_p99':scale,'density_change':change,'grey_fraction':float(np.mean((x>.05)&(x<.95)))})
+ previous=x.copy()
  if iteration % 2 == 0 or iteration in [0,15,40,80]:
   saved[iteration]=x.copy();fig,ax=plt.subplots(figsize=(9,3.5),dpi=200);ax.imshow(x.reshape(nx,ny).T,cmap='Blues',origin='lower',vmin=0,vmax=1,extent=[0,nx,0,ny],interpolation='nearest')
   ax.annotate('F',xy=(nx/2,ny),xytext=(nx/2,ny+9),ha='center',fontsize=13,color='#245f7e',arrowprops={'arrowstyle':'-|>','color':'#245f7e','lw':1.7})
@@ -51,7 +59,7 @@ for iteration in range(81):
    buf=io.BytesIO();fig.savefig(buf,format='png',facecolor='white');buf.seek(0);im=Image.open(buf).convert('RGB');im.thumbnail((900,350));frames.append(im.copy())
   plt.close(fig)
  if iteration==80:break
- dc=-penal*x**(penal-1)*ce;dc=np.asarray(H@(x*dc))/Hs/np.maximum(.001,x)
+ dc=-benefit
  lo,hi=0.,1e9
  for _ in range(100):
   mid=(lo+hi)/2;candidate=np.clip(x*np.sqrt(np.maximum(0,-dc/mid)),np.maximum(.001,x-.2),np.minimum(1,x+.2))
@@ -66,3 +74,5 @@ Path('content/images/lightweight/topology-results.json').write_text(json.dumps({
 print(json.dumps({'initial':history[0],'final':history[-1]}))
 
 frames[0].save(out/'topology-evolution.gif',save_all=True,append_images=frames[1:],duration=[600]+[140]*(len(frames)-2)+[1800],loop=0,optimize=True)
+
+(out/'topology-evolution.json').write_text(json.dumps({'schema':'anncatto.simp.v1','mesh':[nx,ny],'encoding':'uint8-base64-x-major-y-up','penalty':penal,'volume_fraction':volume,'filter_radius':rmin,'frames':fields},separators=(',',':'))+'\n')

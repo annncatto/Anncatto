@@ -18,13 +18,21 @@ The bilingual article is assembled from nine files in `content/lightweight/`. `c
 
 `src/lightweight-frameworks.ts` renders the relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
 
-Regenerate the SIMP PNG stages, animated GIF and convergence history with Python, NumPy, SciPy, Matplotlib and Pillow:
+Regenerate the SIMP PNG stages, animated GIF, convergence history and interactive fields with Python, NumPy, SciPy, Matplotlib and Pillow:
 
 ```sh
 python scripts/figures/lightweight-topology.py
 ```
 
-The model uses 120 × 36 Q4 plane-stress elements, a central top load, lower-left pin, lower-right vertical roller, material fraction 0.4, penalty 3 and sensitivity-filter radius 2.2. Tests check volume, free-DOF equilibrium residual and compliance reduction. Playback starts only on request.
+The model uses 120 × 36 Q4 plane-stress elements, a central top load, lower-left pin, lower-right vertical roller, material fraction 0.4, penalty 3 and sensitivity-filter radius 2.2. `topology-evolution.json` stores all 81 solved states, including filtered sensitivity, compliance, volume, equilibrium residual and maximum density update. Fields are quantized to unsigned bytes for display; numerical metrics retain their solve precision. `src/topology-figures.ts` renders density/sensitivity and convergence plots, and `src/lightweight-topology.ts` connects them to playback and iteration selection. Playback starts only on request. Tests check every frame's field size, volume and free-DOF equilibrium residual.
+
+The qualitative cost diagram uses the cost function and its analytical derivative in `src/lightweight-cost.ts`. The same function determines the curve, its minimum A and the tangent at B. B minimizes cost plus a linear operating-mass value; its tangent is not positioned independently.
+
+## Shared article navigation
+
+`scripts/build.mjs` adds the Home footer to every article. `src/article-navigation.ts`, mounted by the shared `src/app.ts`, provides its short departure animation and the in-page figure viewer. Reduced-motion settings bypass the delay. Figure captions receive an enlarge button; raster pictures and static course diagrams also open on click. Interactive plots retain their own click behavior.
+
+The viewer uses a native dialog with an independently scrolling body and persistent Close button. Escape and backdrop clicks dismiss it, restore page overflow and return focus without moving the reading position. Its title follows the selected language. Styles are shared in `public/style.css`; the article source contains no navigation markup.
 
 ## Independent concept-design application
 

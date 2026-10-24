@@ -1,3 +1,4 @@
+import {mountArticleNavigation} from './article-navigation.js';
 import { mountReadingNavigation } from "./reading.js";
 import { mountPi07Explainers } from "./pi07.js";
 import { language, onLanguageChange } from "./language.js";
@@ -54,3 +55,5 @@ for (const fig of document.querySelectorAll<HTMLElement>("[data-diagram]")) {
 
 mountReadingNavigation();
 mountPi07Explainers();
+
+mountArticleNavigation();

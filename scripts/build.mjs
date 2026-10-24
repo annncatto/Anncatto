@@ -139,8 +139,8 @@ async function write(rel, text) {
 }
 function readingMinutes(raw, language) {
   const code = [...raw.matchAll(/<pre><code>([\s\S]*?)<\/code><\/pre>/g)];
-  const prose = [...raw.matchAll(new RegExp(`<p lang="${language}">([\\s\\S]*?)<\\/p>`, "g"))]
-    .map(match => match[1].replace(/\$[^$]*\$/g, " ").replace(/<[^>]*>/g, " ")).join(" ");
+  const prose = [...raw.matchAll(new RegExp('<(p|ul|ol) lang="' + language + '">([\\s\\S]*?)</\\1>', 'g'))]
+    .map(match => match[2].replace(/\$[^$]*\$/g, ' ').replace(/<[^>]*>/g, ' ')).join(' ');
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
@@ -176,7 +176,7 @@ for (const p of posts) {
     shell(
       p.title,
       p.descriptionEn,
-      `<main id="main" class="container article-layout">${sidebar}<article id="article-top" data-reading-article>${header}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}</article></main>`,
+      `<main id="main" class="container article-layout">${sidebar}<article id="article-top" data-reading-article>${header}<noscript><p class="noscript-note">Static figures are shown.</p></noscript>${content}<footer class="article-end"><a class="article-home" data-article-home href="/"><svg viewBox="0 0 40 24" width="40" height="24" aria-hidden="true"><path d="M36 12H5M15 3L5 12l10 9"/></svg><span>${bilingual("Home", "首页")}</span></a></footer></article></main>`,
       true,
       p.module || '',
     ),

@@ -1,4 +1,5 @@
 import {FONT} from './theme.js';
+import {designCost,valueTangent,costMinimumMass,valueAdjustedMass} from './lightweight-cost.js';
 type Lang='en'|'zh';
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;');
 const text=(x:number,y:number,lines:string[],size=17,anchor='middle')=>`<text x="${x}" y="${y}" text-anchor="${anchor}" font-size="${size}" fill="#344954">${lines.map((s,i)=>`<tspan x="${x}" dy="${i?size*1.55:0}">${esc(s)}</tspan>`).join('')}</text>`;
@@ -25,19 +26,21 @@ export function frameworkDrawing(id:string):string|undefined{
   return s+path(id,'M885 795H896V82H885');
  };
  }else if(id==='cost'){
- height=620;draw=l=>{
-  let s=path(id,'M80 35V510H875',false)+path(id,'M105 520H870')+path(id,'M160 540H80')+path(id,'M785 540H875');
-  s+='<path d="M125 65C145 200 195 274 325 309C390 329 467 337 510 338C630 338 720 308 810 276" fill="none" stroke="#3f738c" stroke-width="3"/>';
-  s+=path(id,'M325 120V507',false,true)+path(id,'M510 120V507',false,true)+path(id,'M80 338H865',false,true)+path(id,'M165 240L510 338',false,true);
-  s+='<circle cx="325" cy="309" r="5" fill="#3f738c"/><circle cx="510" cy="338" r="5" fill="#3f738c"/>';
-  s+=text(326,290,['B'],20)+text(515,319,['A'],20);
-  s+=text(80,25,choose(l,['Cost'],['成本']),17)+text(42,90,choose(l,['Research','Development','Material','Tooling','Production','Maintenance'],['研究','开发','材料','模具','生产','维修']),14);
-  s+=text(205,66,choose(l,['Extreme lightweighting'],['极端轻量化']),16)+path(id,'M220 80L145 136',false);
-  s+=text(690,380,choose(l,['Excess mass'],['重载化']),16)+path(id,'M680 365L735 302',false);
-  s+=text(600,52,choose(l,['Shape / functional lightweighting','Material lightweighting','Manufacturing lightweighting','Affordability','Sustainability'],['形状与功能轻量化','材料轻量化','制造轻量化','可支付性轻量化','可持续性轻量化']),15,'start');
-  s+=text(178,568,choose(l,['More lightweighting ←'],['← 轻量化度']),16)+text(805,568,choose(l,['Mass →'],['质量 →']),16);
-  s+=text(412,375,choose(l,['← Optimize'],['← 优化']),16)+text(795,375,choose(l,['Optimize ←'],['优化 ←']),16);
-  s+=text(330,416,choose(l,['Lightweight materials','Lightweight design'],['轻量化材料','轻量化设计']),15)+text(735,416,choose(l,['Geometry / construction','Design · loads · objectives'],['造型／构造','设计 · 载荷 · 目标']),15);
+ height=545;draw=l=>{
+  const X=(m:number)=>110+700*m,Y=(c:number)=>400-80*c,A={x:X(costMinimumMass),y:Y(designCost(costMinimumMass))},B={x:X(valueAdjustedMass),y:Y(designCost(valueAdjustedMass))};
+  let s=path(id,'M95 425V28')+path(id,'M95 425H850');
+  let curve='';for(let i=0;i<=98;i++){const m=.02+i/100;curve+=`${i?'L':'M'}${X(m).toFixed(2)} ${Y(designCost(m)).toFixed(2)} `;}
+  s+=`<path data-cost-curve d="${curve}" fill="none" stroke="#3f738c" stroke-width="3"/>`;
+  s+=path(id,`M${X(.16)} ${Y(valueTangent(.16))}L${X(.62)} ${Y(valueTangent(.62))}`,false,true);
+  for(const [name,p] of [['A',A],['B',B]] as const){s+=path(id,`M${p.x} ${p.y+6}V425`,false,true)+`<circle data-cost-point="${name}" cx="${p.x}" cy="${p.y}" r="5" fill="#3f738c"/>`+text(p.x-13,p.y-13,[name],20);}
+  s+=text(95,20,choose(l,['Cost'],['成本']),18)+text(830,455,choose(l,['Structural mass m →'],['结构质量 m →']),17,'end');
+  s+=text(B.x,451,['mB'],15)+text(A.x,451,['mA'],15);
+  s+=text(152,54,choose(l,['Extreme lightweighting'],['极限减重']),16,'start')+path(id,`M220 66L${X(.09)} ${Y(designCost(.09))}`,false);
+  s+=text(530,80,choose(l,['Design and manufacturing cost C(m)'],['设计、制造等成本 C(m)']),17,'start');
+  s+=text(530,110,choose(l,['A: minimum of C(m)'],['A：C(m) 的最低点']),16,'start');
+  s+=text(530,140,choose(l,['B: includes the value of lower mass'],['B：进一步计入减重价值']),16,'start');
+  s+=text(170,245,choose(l,['Tangent at B','Slope set by the value per unit mass'],['B 点切线','斜率对应单位质量的等价成本']),15,'start');
+  s+=text(450,505,choose(l,['Reducing mass ←     A and B lie on the same design-cost curve'],['← 质量减小     A、B 均位于同一条设计成本曲线上']),16);
   return s;
  };
  }else if(id==='indexbars'){

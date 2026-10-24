@@ -1074,3 +1074,39 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 @media(max-height:750px) and (min-width:901px){.concept-metric-row{min-height:35px;padding:3px 0;}.concept-metric-row>span{font-size:10px;}.concept-total strong{font-size:22px;line-height:29px;}.concept-budget{padding-top:8px;line-height:17px;}.concept-tabs{margin-bottom:5px;}.concept-scope{margin-bottom:5px;}.concept-drawing{height:145px;}.concept-field-grid{gap:6px;}.concept-design h2{margin:3px 0 6px;}}
 @media(max-width:1100px) and (min-width:901px){.concept-layout{grid-template-columns:235px 210px minmax(0,1fr);}.concept-header{gap:8px;}.concept-file-actions{gap:3px;}.concept-header button{font-size:10px;padding:0 5px;}.concept-view-toolbar{gap:5px;}.concept-runtime{display:none;}.concept-metric-row>span{font-size:10px;}.concept-metric-row>b{font-size:12px;}}
 @media(max-width:900px){.concept-app{margin:0 8px 5px;}.concept-header{height:auto;min-height:66px;flex-wrap:wrap;gap:5px 10px;padding-bottom:7px;}.concept-header h1{font-size:15px;}.concept-file-actions{flex-basis:100%;margin:0;}.concept-header .concept-file-actions button{font-size:10px;}.concept-layout{display:block;}.concept-workspace{height:100%;}.concept-design,.concept-analysis{display:none;height:100%;border:0;max-width:550px;margin:auto;}.concept-app[data-mobile=design] .concept-design{display:flex;}.concept-app[data-mobile=analysis] .concept-analysis{display:flex;}.concept-app[data-mobile=design] .concept-workspace,.concept-app[data-mobile=analysis] .concept-workspace{display:none;}.concept-tabs{grid-template-columns:repeat(4,1fr);}.concept-tabs button:last-child{grid-column:auto;}.concept-mobile-tabs{display:flex;justify-content:center;gap:12px;padding-top:5px;height:34px;flex-shrink:0;}.concept-mobile-tabs button{min-width:72px;}.concept-viewport{min-height:160px;}.concept-view-toolbar{flex-wrap:wrap;gap:4px;padding:4px 6px;}.concept-view-toolbar label{font-size:10px;}.concept-view-toolbar button{padding:0 5px;}.concept-view-buttons{gap:2px;}.concept-runtime{display:none;}.concept-transport{gap:3px;padding:4px;flex-wrap:wrap;}.concept-transport select{width:100px;}.concept-transport button{font-size:10px;padding:0 5px;}.concept-drawing{height:145px;}.concept-metric-list{display:grid;grid-template-columns:1fr 1fr;gap:0 15px;}.concept-total{padding:0 0 8px;}.concept-budget{padding-top:10px;margin-top:15px;}.concept-field-grid{gap:8px 15px;}.concept-field{font-size:12px;}.concept-design-status{padding-bottom:4px;}}
+
+/* Article figures remain dismissible even when their content scrolls. */
+.figure-enlarge {display:none;border:0;background:none;color:#8a9ba1;font:inherit;font-size:12px;cursor:pointer;padding:4px 0;margin-left:12px;white-space:nowrap;}
+.js .figure-enlarge {display:inline-block;}
+.figure-enlarge:hover,.figure-enlarge:focus-visible {color:var(--accent);}
+.figure-viewer {width:min(1400px,calc(100vw - 32px));height:calc(100dvh - 32px);max-width:none;max-height:none;padding:0;border:1px solid #d9e2e5;border-radius:8px;color:var(--ink);background:white;box-shadow:0 15px 70px #243b4340;}
+.figure-viewer[open] {display:grid;grid-template-rows:auto minmax(0,1fr);}
+.figure-viewer::backdrop {background:#24353b9c;}
+.figure-viewer-bar {display:flex;align-items:center;justify-content:space-between;gap:24px;padding:12px 18px;border-bottom:1px solid #e4eaed;}
+.figure-viewer-bar>span {font-size:14px;line-height:1.5;min-width:0;}
+.figure-viewer-close {flex-shrink:0;border:1px solid #dce4e7;border-radius:4px;background:#fff;color:#435a65;padding:6px 13px;font:inherit;font-size:14px;cursor:pointer;}
+.figure-viewer-content {overflow:auto;min-height:0;padding:24px;overscroll-behavior:contain;}
+.figure-viewer-content>img {display:block;max-width:100%;width:auto;height:auto;margin:auto;}
+.figure-viewer-content>svg {display:block;width:100%;height:auto;min-width:640px;max-width:none;margin:auto;}
+.lightweight-article blockquote {margin:22px 0;padding:13px 20px;border-left:3px solid #b9cbd1;background:#f7f9f9;color:var(--ink);}
+.lightweight-article blockquote p {margin:6px 0;}
+.lightweight-article ul {padding-left:23px;margin:14px 0 22px;}
+.lightweight-article li {padding-left:2px;margin:7px 0;}
+.lightweight-article h4 {font-size:17px;font-weight:500;line-height:1.6;margin:25px 0 10px;}
+.article-end {border-top:1px solid #e4e9eb;margin-top:58px;padding:25px 0 12px;}
+.article-home {display:inline-flex;align-items:center;gap:13px;color:#87969e;text-decoration:none;font-size:16px;line-height:28px;}
+.article-home svg {stroke:#b0bcc3;stroke-width:1.7;fill:none;transition:transform .18s ease,stroke .18s ease;}
+.article-home:hover svg,.article-home:focus-visible svg {transform:translateX(-5px);stroke:#6f8f9d;}
+.article-home[data-leaving] svg {transform:translateX(-13px);opacity:.3;transition:transform .17s ease,opacity .17s ease;}
+@media(max-width:600px){.figure-viewer{width:calc(100vw - 12px);height:calc(100dvh - 12px);}.figure-viewer-bar{padding:10px 12px;gap:12px;}.figure-viewer-content{padding:15px;}.article-end{margin-top:40px;}}
+@media(prefers-reduced-motion:reduce){.article-home svg{transition:none;}}
+.topology-fields {display:flex;gap:6px;margin:16px 0 12px;}
+.topology-fields button {font:inherit;font-size:12px;color:#627e8a;background:white;border:1px solid #d7e3e7;border-radius:4px;padding:4px 9px;cursor:pointer;}
+.topology-fields button[aria-pressed=true] {background:#edf4f5;color:#345d70;border-color:#a9c5ce;}
+.topology-metrics {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;border-block:1px solid #e1e9ec;padding:12px 0;}
+.topology-metrics>span {font-size:11px;color:#71858e;line-height:1.6;}
+.topology-metrics b {display:block;font-size:18px;font-weight:400;font-variant-numeric:tabular-nums;color:#345868;}
+[data-topology-range] {display:block;width:100%;accent-color:#679aa9;margin:0 0 18px;}
+.topology-status {font-size:12px!important;line-height:1.7!important;color:#758a94;margin:8px 0!important;}
+.course-figure>img[hidden] {display:none;}
+@media(max-width:480px){.topology-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}.topology-metrics b{font-size:17px;}}

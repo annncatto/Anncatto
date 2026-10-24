@@ -126,7 +126,7 @@
       "sha256": "c0cdb53f1c5dc8dcbe14202807a316620e7b010f20831165800d43000ab14a67",
       "anchor": "topology",
       "topic": "Simply supported beam, centre load, 40% volume, iteration example",
-      "treatment": "Independently solved 120×36 SIMP stages; course 44/244.1 distinguished"
+      "treatment": "Independent 120×36 SIMP solve; all 81 density/sensitivity states, compliance history and update explanation; course 44/244.1 distinguished"
     },
     {
       "note": "轻量化机器人结构调研",
@@ -254,7 +254,7 @@
       "sha256": "3e3727d992c10f3680bafbfb75eecf978a379527ca2a156df4066b84b632018a",
       "anchor": "development-trends",
       "topic": "Introductory material index and relative cost table",
-      "treatment": "All eight rows and original index/cost values rebuilt as two tables"
+      "treatment": "All eight rows and original index/cost values rebuilt as two tables; steel microstructure, light-alloy section space and fibre orientation explained"
     },
     {
       "note": "导论",
@@ -262,7 +262,7 @@
       "sha256": "09d98d75d3fbb4d4b74abd405b8b54e3a0224a4c0f0ff2c6e9c6152fe077099d",
       "anchor": "cost-performance",
       "topic": "Cost–mass curve, A/B, cost per kilogram and cost categories",
-      "treatment": "Curve redrawn with A/B and marginal tradeoff; life-cycle prose"
+      "treatment": "One qualitative cost function determines the curve, minimum A and tangent B; mass-value objective explained"
     },
     {
       "note": "导论",
