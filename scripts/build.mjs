@@ -193,7 +193,7 @@ await write(
   shell(
     "Articles",
     "AI and robotics articles by Anncatto.",
-    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul></main>`,
+    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul><section class="home-tools" aria-labelledby="tools-heading"><h2 id="tools-heading">${bilingual("Interactive tools","交互工具")}</h2><ul class="entries"><li class="entry"><h3><a href="/labs/lightweight-robot/">${bilingual("Lightweight Concept Design","轻量化概念设计")} <span class="home-tool-arrow" aria-hidden="true">↗</span></a></h3><p>${bilingual("Adjust materials, sections and joint layouts for quadrupeds, humanoids and arms. Compare mass and stiffness, inspect the 3D assembly and export engineering models.","调整四足、人形与机械臂的材料、截面和关节布置，比较质量与刚度，查看三维装配并导出工程模型。")}</p></li></ul></section></main>`,
   ),
 );
 await write(

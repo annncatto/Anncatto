@@ -339,6 +339,11 @@ li {
   color: var(--muted);
   margin-top: 8px;
 }
+.home-tools { margin-top: 32px; }
+.home-tools > h2 { font-size: 22px; margin-bottom: 12px; }
+.home-tools .entry h3 { font-size: 21px; margin: 0; }
+.home-tools .entry h3 a { text-decoration: none; }
+.home-tool-arrow { font-size: 18px; font-weight: 400; color: #94a6af; }
 .noscript-note {
   font-size: 13px;
   color: var(--muted);

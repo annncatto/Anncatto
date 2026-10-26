@@ -36,7 +36,7 @@ The viewer uses a native dialog with an independently scrolling body and persist
 
 ## Independent concept-design application
 
-`/labs/lightweight-robot/` is a static application independent of the article. Three.js renders the assembly; official single-thread MuJoCo WASM supplies rigid-body/contact dynamics in a worker. Hosting requires JavaScript and WASM MIME types; it requires no application server or cross-origin isolation headers.
+`/labs/lightweight-robot/` is a static application independent of the article, linked from the homepage's bilingual Interactive tools section. Three.js renders the assembly; official single-thread MuJoCo WASM supplies rigid-body/contact dynamics in a worker. Hosting requires JavaScript and WASM MIME types; it requires no application server or cross-origin isolation headers.
 
 - `concept-model.ts`: canonical joint tree, connected components, mass/COM/full inertia tensors, spatial IK, selected-member sizing, URDF/MJCF/JSON.
 - `concept-drawing.ts`: orthographic engineering SVG and DXF.
