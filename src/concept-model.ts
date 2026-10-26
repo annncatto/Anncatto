@@ -29,6 +29,9 @@ export interface ConceptDesign{
  toolMass:number;payload:number;tool:'gripper'|'suction'|'hand'|'plate';remote:boolean;
  minWall:number;stockAllowance:number;processYield:number;maxToolReach:number;allowDeflection:number;safety:number;tipForce:number;speed:number;
  properties:Partial<Property>;parts:Record<string,PartOverride>;joints:Record<string,JointOverride>;
+ jointDistances?:Record<string,number>;
+ motorRadius?:number;motorLength?:number;
+ footMass?:number;
 }
 export const initialConcept:ConceptDesign={robot:'quadruped',material:'aluminium',section:'box',process:'tube',l1:.30,l2:.31,armLengths:[.30,.27,.11],width:.034,height:.045,wall:.002,bodyLength:.46,bodyWidth:.23,bodyHeight:.12,bodyMass:5,motorMass:.45,motorTorque:24,ratio:9,rotorInertia:2.5e-5,toolMass:.45,payload:0,tool:'gripper',remote:false,minWall:.0012,stockAllowance:.003,processYield:.85,maxToolReach:8,allowDeflection:.001,safety:1.5,tipForce:60,speed:.25,properties:{},parts:{},joints:{}};
 export function copyDesign(d:ConceptDesign):ConceptDesign{return JSON.parse(JSON.stringify(d));}
@@ -39,7 +42,8 @@ export function validateConcept(d:ConceptDesign){
  for(const key of ['toolMass','payload','tipForce','speed','stockAllowance','processYield','maxToolReach'] as const)if(!Number.isFinite(d[key])||d[key]<0)throw Error(`Invalid ${key}`);
  for(const L of d.armLengths)if(L<.045||L>2||!Number.isFinite(L))throw Error('Invalid arm length');
  if(d.l1<.08||d.l2<.08||d.l1>1.5||d.l2>1.5)throw Error('Invalid link length');
- for(const p of [d,...Object.values(d.parts).map(p=>({...d,...p}))])if(p.section!=='solid'&&2*p.wall>=Math.min(p.width,p.height))throw Error('Invalid wall thickness');
+ for(const value of [d.motorRadius,d.motorLength,d.footMass])if(value!==undefined&&(!Number.isFinite(value)||value<=0))throw Error('Invalid component specification');
+ for(const p of [d,...Object.values(d.parts).map(p=>({...d,...p}))])if(p.section!=='solid'&&2*p.wall>=(p.section==='tube'?p.height:Math.min(p.width,p.height)))throw Error('Invalid wall thickness');
  if(d.processYield<=0||d.processYield>1||d.maxToolReach<=0)throw Error('Invalid process parameters');
  for(const part of [{},...Object.values(d.parts)]){const mat=part.material??d.material;if(!(mat in materials))throw Error('Invalid part material');const p={...property(mat),...d.properties,...part.properties};if(![p.rho,p.E,p.G,p.strength,p.nu].every(Number.isFinite)||p.rho<=0||p.E<=0||p.G<=0||p.strength<=0||p.nu<=-1||p.nu>=.5)throw Error('Invalid material properties');for(const key of ['length','width','height','wall'] as const)if(part[key]!==undefined&&(!Number.isFinite(part[key])||part[key]!<=0))throw Error('Invalid part dimension');}
  for(const j of Object.values(d.joints)){if(j.axis&&(!j.axis.every(Number.isFinite)||norm(j.axis)<1e-8))throw Error('Invalid joint axis');if(j.min!==undefined&&!Number.isFinite(j.min)||j.max!==undefined&&!Number.isFinite(j.max)||j.min!==undefined&&j.max!==undefined&&j.min>=j.max)throw Error('Invalid joint limits');}
@@ -70,6 +74,7 @@ export function massProperties(components:Component[]){
 export function generateRobot(d:ConceptDesign):RobotModel{
  validateConcept(d);const nodes:Node[]=[],home:Record<string,number>={},tips:string[]=[];const material=d.material;
  const create=(id:string,parent:Node|null,offset:V3,label:[string,string],group:string,joint?:Omit<Joint,'id'|'group'|'active'>)=>{
+  const distance=d.jointDistances?.[id];if(distance!==undefined){if(!Number.isFinite(distance)||distance<.045||distance>1)throw Error('Invalid joint spacing');offset=mul(unit(offset),distance);}
   let j:Joint|undefined;if(joint){const o=d.joints[id]||{};j={...joint,...o,id,group,active:o.active??true};j.axis=unit(j.axis);if(j.min>=j.max)throw Error('Invalid joint travel');j.home=clamp(j.home,j.min,j.max);home[id]=j.home;}
   if(parent&&norm(offset)>.008&&!parent.member)parent.components.push(connector([0,0,0],offset));
   const n:Node={id,parent:parent?.id||null,offset,joint:j,components:[],label,group,mass:0,com:[0,0,0],inertia:[1,1,1,0,0,0]};nodes.push(n);return n;
@@ -78,13 +83,13 @@ export function generateRobot(d:ConceptDesign):RobotModel{
  root.components.push(box([0,0,d.robot==='arm'?.055:d.robot==='biped'?.03:0],d.robot==='arm'?[.22,.22,.11]:[d.bodyLength,d.bodyWidth,d.bodyHeight],d.robot==='biped'?d.bodyMass*.35:d.bodyMass));
  const hinge=(id:string,parent:Node,offset:V3,axis:V3,label:[string,string],group:string,q=0,min=-1.3,max=1.3,motorScale=1)=>{
   const n=create(id,parent,offset,label,group,{label,axis,min,max,home:q,kind:'hinge',motorScale});
-  const on=n.joint!.active,ms=d.motorMass*motorScale,r=.033*Math.cbrt(motorScale),depth=.045*Math.cbrt(motorScale),side=mul(axis,depth*.52);
-  parent.components.push(cylinder(add(offset,side),axis,r,depth,on?ms*.85:ms*.15));n.components.push(cylinder([0,0,0],axis,r*.76,.012,on?ms*.15:ms*.08,'collar'));
+  const on=n.joint!.active,ms=d.motorMass*motorScale,r=(d.motorRadius??.033)*Math.cbrt(motorScale),depth=(d.motorLength??.045)*Math.cbrt(motorScale),mirror=Math.abs(axis[1])>.9&&/^(fr|rr|right)/.test(group)?-1:1,side=mul(axis,depth*.52*mirror);
+  parent.components.push(cylinder(add(n.offset,side),axis,r,depth,on?ms*.85:ms*.15));n.components.push(cylinder([0,0,0],axis,r*.76,.012,on?ms*.15:ms*.08,'collar'));
   return n;
  };
  const member=(n:Node,v:V3)=>{
   const o=d.parts[n.id]||{},L=o.length??norm(v),vec=mul(unit(v),L),mat=o.material??material,p={...property(mat),...(mat===material?d.properties:{}),...o.properties};
-  const section={section:o.section??d.section,width:o.width??d.width,height:o.height??d.height,wall:o.wall??d.wall};const s=sectionProperties(section),end=.026,cutLength=Math.max(.01,L-2*end);
+  const section={section:o.section??d.section,width:o.width??d.width,height:o.height??d.height,wall:o.wall??d.wall};const s=sectionProperties(section),end=Math.max(.041,(d.motorRadius??.033)*Math.cbrt(1.3)+.005),cutLength=Math.max(.01,L-2*end);
   n.member={vector:vec,length:L,cutLength,material:mat,...section,prop:p};
   n.components.push({role:'member',shape:'member',p:mul(vec,.5),q:alignZ(vec),size:[section.width,section.height,cutLength],mass:p.rho*s.area*cutLength,material:mat,section,span:vec,collision:true});
   n.components.push(connector([0,0,0],mul(unit(vec),end+.008),.019));n.components.push(connector(mul(unit(vec),L-end-.008),mul(unit(vec),end+.008),.019));
@@ -92,38 +97,38 @@ export function generateRobot(d:ConceptDesign):RobotModel{
  };
  const remote=(n:Node,child:Node)=>{
   if(!d.remote||!n.member||child.joint?.kind!=='hinge'||!child.joint.active)return;
-  const target=n.components.find(c=>c.role==='motor'&&norm(sub(c.p,add(child.offset,mul(Y,.045*.52))))<.03);
-  if(target)target.p=sub(target.p,child.offset);
-  const L=n.member.length,r=.027,plane=d.width/2+.033;
-  n.components.push({role:'belt',shape:'belt',p:add(mul(n.member.vector,.5),[0,plane,0]),q:alignZ(mul(n.member.vector,-1)),size:[r,.008,L],mass:(2*L+2*Math.PI*r)*.065,material:'steel',collision:false});
-  for(const pos of [[0,0,0],n.member.vector] as V3[]){n.components.push(cylinder(add(pos,[0,plane,0]),Y,r,.012,.022,'collar'));n.components.push(cylinder(add(pos,[0,plane/2,0]),Y,.008,plane,.012,'collar'));}
+  const target=n.components.filter(c=>c.role==='motor').sort((a,b)=>norm(sub(a.p,child.offset))-norm(sub(b.p,child.offset)))[0];
+  const side=/^(fr|rr|right)/.test(n.group)?-1:1,near=mul(unit(n.member.vector),Math.min(Math.max(.12,(d.motorRadius??.033)*2+.02),n.member.length*.45)),plane=(d.robot==='biped'?-side:side)*(n.member.width/2+(target?.size[1]??.045)/2+.0355),span=sub(n.member.vector,near),L=norm(span),r=.027;
+  if(target)target.p=add(near,[0,plane,0]);
+  n.components.push({role:'belt',shape:'belt',p:add(add(near,mul(span,.5)),[0,plane,0]),q:alignZ(mul(span,-1)),size:[r,.008,L],mass:(2*L+2*Math.PI*r)*.065,material:'steel',collision:false});
+  for(const pos of [near,n.member.vector]){n.components.push(cylinder(add(pos,[0,plane,0]),Y,r,.012,.022,'collar'));n.components.push(cylinder(add(pos,[0,plane/2,0]),Y,.008,Math.abs(plane),.012,'collar'));}
  };
  if(d.robot!=='arm'){
-  if(d.payload>0)root.components.push(box([0,0,d.bodyHeight/2+.045],[.12,.12,.09],d.payload,'payload'));
+  if(d.payload>0&&d.robot==='quadruped')root.components.push(box([0,0,d.bodyHeight/2+.045],[.12,.12,.09],d.payload,'payload'));
   const legs=d.robot==='quadruped'?['fl','fr','rl','rr']:['left','right'];
   for(const [i,prefix] of legs.entries()){
-   const side=i%2===0?1:-1,x=d.robot==='quadruped'?(i<2?d.bodyLength*.38:-d.bodyLength*.38):0,group=prefix;
+   const side=i%2===0?1:-1,x=d.robot==='quadruped'?(i<2?d.bodyLength*.38:-d.bodyLength*.38):0,group=prefix,hipY=side*(d.bodyWidth*.5+(d.motorRadius??.033)+.01);
    let p=root;
-   if(d.joints[`${prefix}_yaw`]?.active??d.robot==='biped')p=hinge(`${prefix}_yaw`,p,[x,side*d.bodyWidth*.5,0],Z,['Hip yaw','髋偏航'],group,0,-.8,.8);
-   const roll=hinge(`${prefix}_roll`,p,p===root?[x,side*d.bodyWidth*.5,0]:[0,0,-.065],X,['Hip roll','髋侧摆'],group,0,-.7,.7);
+   if(d.joints[`${prefix}_yaw`]?.active??d.robot==='biped')p=hinge(`${prefix}_yaw`,p,[x,hipY,0],Z,['Hip yaw','髋偏航'],group,0,-.8,.8);
+   const roll=hinge(`${prefix}_roll`,p,p===root?[x,hipY,0]:[0,0,-.065],X,['Hip roll','髋侧摆'],group,0,-.7,.7);
    const upper=hinge(`${prefix}_pitch`,roll,[0,side*.065,0],Y,['Hip pitch','髋俯仰'],group,-.48,-1.6,1.1);
    const v=member(upper,[0,0,-d.l1]);const knee=hinge(`${prefix}_knee`,upper,v,Y,['Knee','膝关节'],group,.96,-.1,2.4);
    const lower=member(knee,[0,0,-d.l2]);remote(upper,knee);
    let ankle:Node;
    if(d.robot==='biped'||d.joints[`${prefix}_ankle`]?.active){ankle=hinge(`${prefix}_ankle`,knee,lower,Y,['Ankle pitch','踝俯仰'],group,-.48,-1,1,.7);
-    if(d.robot==='biped'){ankle=hinge(`${prefix}_ankle_roll`,ankle,[0,0,-.04],X,['Ankle roll','踝侧摆'],group,0,-.55,.55,.6);ankle.components.push(box([.025,0,-.025],[.18,.085,.05],.25,'foot'));}
-    else ankle.components.push(sphere([0,0,-.025],.025,.08));
-   }else{ankle=create(`${prefix}_foot`,knee,lower,['Foot','足端'],group);ankle.components.push(sphere([0,0,0],.027,.08));}
+    if(d.robot==='biped'){ankle=hinge(`${prefix}_ankle_roll`,ankle,[0,0,-.095],X,['Ankle roll','踝侧摆'],group,0,-.55,.55,.6);ankle.components.push(box([.025,0,-.025],[.18,.085,.05],d.footMass??.25,'foot'));}
+    else ankle.components.push(sphere([0,0,-.07],.025,d.footMass??.08));
+   }else{ankle=create(`${prefix}_foot`,knee,lower,['Foot','足端'],group);ankle.components.push(sphere([0,0,0],.027,d.footMass??.08));}
    ankle.tip='foot';tips.push(ankle.id);
   }
   if(d.robot==='biped'){
    const waist=hinge('waist',root,[0,0,d.bodyHeight/2+.04],Z,['Waist yaw','腰偏航'],'torso',0,-.8,.8);
-   const torso=create('torso',waist,[0,0,.15],['Torso','躯干'],'torso');torso.components.push(box([0,0,0],[.19,d.bodyWidth*.94,.26],d.bodyMass*.65));
-   const neck=hinge('neck_yaw',torso,[0,0,.19],Z,['Neck yaw','颈偏航'],'torso',0,-1,1,.25),head=hinge('neck_pitch',neck,[.035,0,.045],Y,['Neck pitch','颈俯仰'],'torso',0,-.6,.6,.25);head.components.push(box([0,0,.045],[.09,.10,.09],.3));
+   const torso=create('torso',waist,[0,0,.19],['Torso','躯干'],'torso');torso.components.push(box([0,0,0],[.19,d.bodyWidth*.94,.26],d.bodyMass*.65));if(d.payload>0)torso.components.push(box([-.17,0,0],[.12,.12,.09],d.payload,'payload'));
+   const neck=hinge('neck_yaw',torso,[0,0,.19],Z,['Neck yaw','颈偏航'],'torso',0,-1,1,.25),head=hinge('neck_pitch',neck,[.055,0,.045],Y,['Neck pitch','颈俯仰'],'torso',0,-.6,.6,.25);head.components.push(box([0,0,.045],[.09,.10,.09],.3));
    for(const [side,prefix] of [[1,'left_arm'],[-1,'right_arm']] as const){
-    const shoulder=hinge(`${prefix}_pitch`,torso,[0,side*(d.bodyWidth*.5+.04),.08],Y,['Shoulder pitch','肩俯仰'],prefix,.12,-2.4,2.4,.55);
-    const roll=hinge(`${prefix}_roll`,shoulder,[0,side*.055,0],X,['Shoulder roll','肩侧摆'],prefix,-side*.12,-1.5,1.5,.5);
-    const yaw=hinge(`${prefix}_yaw`,roll,[0,0,-.055],Z,['Shoulder yaw','肩偏航'],prefix,0,-1.5,1.5,.4);
+    const shoulder=hinge(`${prefix}_pitch`,torso,[0,side*(d.bodyWidth*.5+.09),.08],Y,['Shoulder pitch','肩俯仰'],prefix,.12,-2.4,2.4,.55);
+    const roll=hinge(`${prefix}_roll`,shoulder,[0,side*.075,0],X,['Shoulder roll','肩侧摆'],prefix,side*.16,-1.5,1.5,.5);
+    const yaw=hinge(`${prefix}_yaw`,roll,[0,0,-.085],Z,['Shoulder yaw','肩偏航'],prefix,0,-1.5,1.5,.4);
     const v=member(yaw,[0,0,-d.l1*.7]),elbow=hinge(`${prefix}_elbow`,yaw,v,Y,['Elbow','肘关节'],prefix,-.35,-2.3,.2,.35);const vv=member(elbow,[0,0,-d.l2*.65]);
     const hand=create(`${prefix}_hand`,elbow,vv,['Hand','手部'],prefix);hand.components.push(box([0,0,-.025],[.045,.035,.065],.16,'tool'));
    }
@@ -139,7 +144,7 @@ export function generateRobot(d:ConceptDesign):RobotModel{
   const finger=create('gripper',tool,[0,0,.035],['Gripper opening','夹爪开合'],'tool',{label:['Gripper opening','夹爪开合'],axis:X,min:.005,max:.045,home:.025,kind:'slide',motorScale:.15});
   finger.components.push(box([0,0,.035],[.014,.025,.07],Math.max(.005,d.toolMass*.175),'tool'));
   const other=create('gripper_mirror',tool,[0,0,.035],['Opposed finger','对指'],'tool');other.components.push(box([0,0,.035],[.014,.025,.07],Math.max(.005,d.toolMass*.175),'tool'));
-  const payload=create('payload',tool,[0,0,.115],['Payload','工件'],'tool');if(d.payload>0)payload.components.push(box([0,0,0],[.065,.065,.065],d.payload,'payload'));else payload.components.push(box([0,0,0],[.001,.001,.001],.000001,'payload'));
+  const payload=create('payload',tool,[0,0,.115],['Payload','工件'],'tool');if(d.payload>0)payload.components.push(box([0,0,0],[.035,.035,.045],d.payload,'payload'));else payload.components.push(box([0,0,0],[.001,.001,.001],.000001,'payload'));
   tool.tip='tool';tips.push(tool.id);
  }
  for(const n of nodes){if(!n.components.length)n.components.push(cylinder([0,0,0],Z,.009,.012,.006,'collar'));Object.assign(n,massProperties(n.components));}
@@ -162,6 +167,15 @@ export function inverseArm(model:RobotModel,q0:Record<string,number>,target:V3,t
  }return{q,error:norm(sub(target,fk(model,q)[tip]!.p))};
 }
 export function linearSolve(A:number[][],b:number[]){const m=A.map((r,i)=>[...r,b[i]!]),n=b.length;for(let i=0;i<n;i++){let p=i;for(let j=i+1;j<n;j++)if(Math.abs(m[j]![i]!)>Math.abs(m[p]![i]!))p=j;[m[i],m[p]]=[m[p]!,m[i]!];const s=m[i]![i]!;if(Math.abs(s)<1e-14)throw Error('Singular system');for(let k=i;k<=n;k++)m[i]![k]!/=s;for(let j=0;j<n;j++)if(j!==i){const f=m[j]![i]!;for(let k=i;k<=n;k++)m[j]![k]!-=f*m[i]![k]!;}}return m.map(r=>r[n]!);}
+export function subtree(model:RobotModel,id:string){const ids=new Set([id]);for(const n of model.nodes)if(n.parent&&ids.has(n.parent))ids.add(n.id);return model.nodes.filter(n=>ids.has(n.id));}
+/** Rigid-body inertia about a world axis, including each body's COM tensor. */
+export function inertiaAbout(nodes:Node[],poses:Record<string,Transform>,origin:V3,axis:V3){
+ const a=unit(axis);return nodes.reduce((sum,n)=>{const pose=poses[n.id]!,local=rotate(inverseQ(pose.q),a),r=sub(add(pose.p,rotate(pose.q,n.com)),origin),I=n.inertia;
+  const central=I[0]*local[0]**2+I[1]*local[1]**2+I[2]*local[2]**2+2*(I[3]*local[0]*local[1]+I[4]*local[0]*local[2]+I[5]*local[1]*local[2]);
+  return sum+central+n.mass*(dot(r,r)-dot(r,a)**2);
+ },0);
+}
+export function jointInertia(model:RobotModel,id:string,q=model.home){const node=model.nodes.find(n=>n.id===id);if(!node?.joint)throw Error('Unknown joint');const poses=fk(model,q),pose=poses[id]!;return inertiaAbout(subtree(model,id),poses,pose.p,rotate(pose.q,node.joint.axis));}
 export function evaluateConcept(model:RobotModel,q=model.home,partId?:string){
  const d=model.design,poses=fk(model,q),com=mul(model.nodes.reduce((s,n)=>add(s,mul(add(poses[n.id]!.p,rotate(poses[n.id]!.q,n.com)),n.mass)),[0,0,0] as V3),1/model.mass);
  const node=model.nodes.find(n=>n.id===partId&&n.member)??model.nodes.find(n=>n.member)!;const mem=node.member!,s=sectionProperties(mem),p=mem.prop,L=mem.cutLength,F=d.tipForce+(d.robot==='arm'?d.toolMass+d.payload:0)*9.80665;
@@ -172,7 +186,7 @@ export function evaluateConcept(model:RobotModel,q=model.home,partId?:string){
  const torques=model.nodes.filter(n=>n.joint?.active&&n.joint.kind==='hinge').map(n=>{const parent=poses[n.parent!]!,origin=add(parent.p,rotate(parent.q,n.offset)),axis=rotate(parent.q,n.joint!.axis);let torque=0;
   const descendants=new Set([n.id]);for(const c of model.nodes)if(c.parent&&descendants.has(c.parent))descendants.add(c.id);
   for(const c of model.nodes)if(descendants.has(c.id)){const world=add(poses[c.id]!.p,rotate(poses[c.id]!.q,c.com));torque+=dot(axis,cross(sub(world,origin),[0,0,-c.mass*9.80665]));}return{id:n.id,torque,utilization:Math.abs(torque)/(d.motorTorque*n.joint!.motorScale)};});
- const rootInertia=model.nodes.reduce((s,n)=>{const r=sub(add(poses[n.id]!.p,rotate(poses[n.id]!.q,n.com)),poses.base!.p);return s+n.mass*(r[0]**2+r[2]**2);},0);
+ const rootInertia=inertiaAbout(model.nodes,poses,poses.base!.p,[0,1,0]);
  return{mass:model.mass,com,rootInertia,part:node,section:s,material:p,structural,motors,stock,buyToFly:stock/structural,phi:12*s.I/s.area**2,specificE:p.E/p.rho,specificStrength:p.strength/p.rho,beamIndex:Math.sqrt(p.E)/p.rho,shapeIndex:Math.sqrt(12*s.I/s.area**2*p.E)/p.rho,stress,deflection,buckling,utilization:stress*d.safety/p.strength,deflectionUse:deflection/d.allowDeflection,minWallOK:mem.section==='solid'||mem.wall>=d.minWall,torques,maxTorque:Math.max(...torques.map(t=>t.utilization)),payloadRatio:(d.payload+(d.robot==='arm'?d.toolMass:0))/model.mass,reflected:d.ratio**2*d.rotorInertia,partMass:node.components.reduce((a,c)=>a+(c.role==='member'?c.mass:0),0),cutLength:L};
 }
 export function sizeCandidates(model:RobotModel,partId:string){
@@ -188,12 +202,12 @@ export function sizeCandidates(model:RobotModel,partId:string){
 
 const fmt=(x:number)=>Number(x.toPrecision(10));const xyz=(a:number[])=>a.map(fmt).join(' ');const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;');
 export function exportMJCF(model:RobotModel){
- const d=model.design,gripperActive=model.active.some(j=>j.id==='gripper'),body=(n:Node):string=>{const j=n.joint,i=n.inertia;const joint=j?.active?`<joint name="${n.id}" type="${j.kind}" axis="${xyz(j.axis)}" range="${xyz([j.min,j.max])}" damping="${j.kind==='slide'?2:.08}" armature="${j.kind==='slide'?.001:d.ratio**2*d.rotorInertia}"/>`:'';
+ const d=model.design,gripperActive=model.active.some(j=>j.id==='gripper'),body=(n:Node):string=>{const j=n.joint,i=n.inertia;const joint=j?.active?`<joint name="${n.id}" type="${j.kind}" axis="${xyz(j.axis)}" ref="${fmt(j.home)}" range="${xyz([j.min,j.max])}" damping="${j.kind==='slide'?2:.08}" armature="${j.kind==='slide'?.001:d.ratio**2*d.rotorInertia}"/>`:'';
   const inertial=`<inertial pos="${xyz(n.com)}" mass="${fmt(n.mass)}" fullinertia="${xyz(i)}"/>`;
   const geoms=n.components.filter(c=>c.collision).map((c,k)=>{let size=c.size,shape=c.shape;if(shape==='member'){size=[c.section!.section==='tube'?c.section!.height/2:c.section!.width/2,c.section!.height/2,c.size[2]/2];shape='box';}else if(shape==='box')size=mul(size,.5);return `<geom name="${n.id}_g${k}" type="${shape}" pos="${xyz(c.p)}" quat="${xyz(c.q)}" size="${xyz(shape==='sphere'?[size[0]]:shape==='cylinder'?[size[0],size[1]/2]:size)}" friction=".9 .01 .001" rgba=".4 .6 .7 1"/>`;}).join('');
-  const mirror=n.id==='gripper_mirror'&&gripperActive?'<joint name="finger_mirror" type="slide" axis="-1 0 0" range=".005 .045" damping="2"/>':'';
+  const mirror=n.id==='gripper_mirror'&&gripperActive?`<joint name="finger_mirror" type="slide" axis="-1 0 0" ref="${fmt(model.home.gripper!)}" range=".005 .045" damping="2"/>`:'';
   const root=n.parent?'':d.robot==='arm'?'':'<freejoint name="floating_base"/>';
-  const fixedQ=j&&!j.active&&j.kind==='hinge'?qa(j.axis,j.home):[1,0,0,0],fixedPos=j&&!j.active&&j.kind==='slide'?add(n.offset,mul(j.axis,j.home)):n.id==='gripper_mirror'&&!gripperActive?add(n.offset,[-model.home.gripper!,0,0]):n.offset;
+  const fixedQ=j&&j.kind==='hinge'?qa(j.axis,j.home):[1,0,0,0],fixedPos=j&&j.kind==='slide'?add(n.offset,mul(j.axis,j.home)):n.id==='gripper_mirror'?add(n.offset,[-model.home.gripper!,0,0]):n.offset;
   return `<body name="${n.id}" pos="${xyz(n.parent?fixedPos:[0,0,model.height])}" quat="${xyz(fixedQ)}">${root}${joint}${mirror}${inertial}${geoms}${model.nodes.filter(c=>c.parent===n.id).map(body).join('')}</body>`;
  };
  const actuators=model.active.map(j=>`<motor name="act_${j.id}" joint="${j.id}" gear="1" ctrllimited="true" ctrlrange="${j.kind==='slide'?'-40 40':xyz([-d.motorTorque*j.motorScale,d.motorTorque*j.motorScale])}"/>`).join('');
