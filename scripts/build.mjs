@@ -204,7 +204,7 @@ await write(
     `<main id="main" class="container"><h1>${bilingual("Page not found","页面不存在")}</h1><p><a href="/">${bilingual("Back to articles","返回文章列表")}</a></p></main>`,
   ),
 );
-await write('labs/lightweight-robot/index.html',shell('Lightweight Concept Design','Compare robot mass distribution, structural stiffness, reflected inertia and drive requirements.',math(await fs.readFile('content/lightweight-lab.html','utf8')),true,'lightweight-lab'));
+await write('labs/lightweight-robot/index.html',shell('Lightweight Concept Design','Parametric robot assemblies, material and section sizing, manufacturing and contact dynamics.',await fs.readFile('content/lightweight-lab.html','utf8'),true,'lightweight-lab'));
 for (const id of Object.keys(defaults))
   await write(`figures/${id}.svg`, renderDiagram(id));
 await write("figures/reading-cat.svg", pixelCatSVG());

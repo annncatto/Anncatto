@@ -36,26 +36,20 @@ The viewer uses a native dialog with an independently scrolling body and persist
 
 ## Independent concept-design application
 
-`/labs/lightweight-robot/` is linked from the homepage's bilingual Interactive tools section. The workbench prioritizes design variables and comparable calculations over individual joint posing. Its first section has an outcome strip, structure/material inputs, a central motion view and drive/load inputs. Equations, substitutions, screening judgments and a member/transmission schematic follow below. The interface is scrollable; it no longer compresses every control and drawing into one viewport.
+`/labs/lightweight-robot/` is a static application independent of the article, linked from the homepage's bilingual Interactive tools section. Three.js renders the assembly; official single-thread MuJoCo WASM supplies rigid-body/contact dynamics in a worker. Hosting requires JavaScript and WASM MIME types; it requires no application server or cross-origin isolation headers.
 
-- `concept-model.ts`: canonical joint tree, explicit member and joint spacing, actuator envelopes, physical mass/COM/full inertia tensors, FK/IK and URDF/MJCF/JSON.
-- `design-analysis.ts`: full driven-subtree joint inertia, reflected rotor inertia, actual section bending axis, member and transmission compliance, Rayleigh frequency estimate, torque sizing and friction-based backdrive threshold.
-- `design-motion.ts`: slow reference gait and manipulator path; analytical leg IK, planted-foot constraints, flat humanoid soles, COM transfer and signed support-polygon margins.
-- `design-packing.ts`: conservative OBB envelope intersections. Adjacent structural attachment interfaces are excluded; separate actuator packages are always checked.
-- `concept-scene.ts`: Three.js assembly, ground motion, COM/support overlay and GLB/PNG export.
-- `lightweight-lab.ts`: design input, shared-load comparisons, numerical interpretation and model interchange.
+- `concept-model.ts`: canonical joint tree, connected components, mass/COM/full inertia tensors, spatial IK, selected-member sizing, URDF/MJCF/JSON.
+- `concept-drawing.ts`: orthographic engineering SVG and DXF.
+- `concept-scene.ts`: mesh geometry, part selection, TCP manipulation and GLB/PNG.
+- `concept-physics.ts`: 500 Hz dynamics, 50 Hz PD plus gravity compensation and residual-policy environment.
+- `concept-rl.ts`: Gaussian residual policy, GAE, clipped PPO and Adam. Policy files are tied to a design fingerprint.
+- `concept-worker.ts`: simulation, training, policy import and snapshots without blocking the interface.
 
-The workbench compares a saved structural/drive reference under the current payload, verification force, acceleration, error limit and target bandwidth. Reference pose calculations remain fixed while the motion preview plays. Arm labels use Manipulator / 机械臂; gripper travel is separate from the displayed number of rotary axes. Lengths can be set globally or for individual members; additional non-member joint spacings are editable. Foot or tool mass has its own input and a warm role colour. Motor package dimensions and mass are independent stated inputs, with joint-size class factors retained in the model.
+Default assemblies have 12 quadruped joints, 23 humanoid joints, or six arm axes plus one gripper-opening coordinate. Joint activation, axes, member dimensions, properties, payload and manufacturing parameters are editable. Material sizing screens the selected member against stress and displacement limits at a fixed outer section; it is an analytical sizing calculation, separate from the rigid-body contact solve. Manufacturing checks include minimum wall, stock usage, access ratio and material/process compatibility. These checks are not full finite-element or manufacturing-process simulations.
 
-The modal screen uses the physical bending axis, rigid end fixtures, a flexible member and an output-side rotational spring. The normalized static deflection shape is used in a Rayleigh estimate; downstream components are lumped at the end. The bandwidth result is the ratio of estimated resonance to the user's target, with an editable screening interval. It is not an identified closed-loop bandwidth. Torque sizing adds magnitudes of the specified inertia, gravity, transverse load and friction terms; it omits Coriolis coupling and contact-force distribution. The reverse-drive threshold assumes compensated gravity and entered friction/efficiency. It is not a safety rating.
+URDF/MJCF exports share the canonical assembly mass and inertia. The physics controller has verified standing/pose-holding defaults. PPO uses measured rewards and state transitions. Locomotion depends on the design and controller; the current velocity-tracking controller and short trained walking policy have not passed a sustained-walking evaluation. Training plots must not be interpreted as proof of successful locomotion.
 
-Motion shown in the workbench is a kinematic reference, not a trained locomotion policy or a dynamic-stability result. Default motion tests sample full cycles, confirm planted-foot invariance in ground coordinates, verify flat soles and non-negative foot heights, and check COM projection margins. The interface samples 32 frames when checking a changed design's conservative envelopes and reach. The tests sweep 96 frames in both motor placements for all three defaults. Parameter choices that lose reach, support margin or envelope clearance produce warnings.
-
-MJCF uses joint reference values and matching body transforms so its default state reproduces the reference pose. JSON exports carry the same analysis and conditions as the interface. The previous engineering-drawing pane and CAD-style SVG/DXF actions are absent from the new interface; model exchange remains available as JSON, URDF, MJCF and GLB, with PNG capture.
-
-The existing MuJoCo worker and PPO modules remain available in source for physics experiments and the standing/FK validation tests. They are not invoked by the current kinematic preview. Previous walking controllers and short trained policies did not pass sustained-walking evaluation. An intermediate-model probe replacing the old gait with the new reference also fell within 0.7 s under the unchanged PD controller; it is not presented as successful dynamics.
-
-Draft was reviewed at `3b03e144735098ef94b938e85756806f45628f83`: https://github.com/davidhnguyen2000/draft. The model organization follows its explicit tree, end-clearance and actuator-packing approach. Its generator, empirical trend data and meshes are not runtime dependencies.
+Draft was reviewed at `3b03e144735098ef94b938e85756806f45628f83`: https://github.com/davidhnguyen2000/draft. Its Python/Viser generator is not a dependency. The application uses an independent canonical assembly model and browser physics.
 
 ## Build and verification
 
@@ -66,6 +60,6 @@ BASE_PATH=/Anncatto npm run check
 BASE_PATH=/Anncatto PORT=5181 npm run preview
 ```
 
-Preview paths are `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article tests check assembly order, source anchors, metadata exclusion, scientific plots and the SIMP solve. Concept tests compare canonical mass/FK against MuJoCo, verify default export poses, standing, IK, sizing and PPO serialization/updates. Workbench tests verify tensor rotation, parallel-axis terms, gear scaling, section axes, the uniform-beam Rayleigh limit, mass relocation, custom lengths, motion constraints and envelope sweeps. Browser checks cover both languages, responsive layout, linked calculations, references, custom dimensions, motion playback and exports.
+Preview paths are `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article tests check assembly order, source anchors, metadata exclusion, scientific plots and the SIMP solve. Concept tests compare canonical mass/FK against MuJoCo, verify standing, IK, sizing and PPO serialization/updates. Browser checks cover both languages, mobile widths, SVG label collisions, playback, controls, exports and one-screen application layout.
 
-Three.js MIT and MuJoCo Apache 2.0 notices are distributed under `assets/licenses/`. `main` publishes GitHub Pages; article draft work remains on `draft/lightweight-structure` and workbench revisions on `draft/lightweight-design-workbench`, and D20 work stays on `local/d20-homepage`.
+Three.js MIT and MuJoCo Apache 2.0 notices are distributed under `assets/licenses/`. `main` publishes GitHub Pages; draft work remains on `draft/lightweight-structure`, and D20 work stays on `local/d20-homepage`.
