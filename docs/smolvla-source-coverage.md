@@ -96,3 +96,53 @@ languages at mobile/tablet/desktop widths. Check disclosures, nested TOC, hidden
 headings, numerical controls, video/poster loading, viewer dismissal, no viewport
 or SVG text overflow, and the empty homepage tools section. Verify the published
 article after a successful Pages deployment.
+
+## Stopping follow-up
+
+- Removed the normalized-zero hypothetical row and its numerical examples from
+  the normalization section. Stopping is defined in raw coordinates (zero), with
+  its corresponding normalized target -0.439387.
+- Original per-frame recording was unavailable. Local reports and the supplied
+  training host were checked; the user chose analysis from archived figures.
+  Figure windows are approximate: 6–10 s after forward motion, 24–30 s after
+  turning, 76–80 s while the raised right arm transfers the toy. The contact
+  sheet supports the last visual phase. No per-window mean, zero-frame fraction,
+  displacement integral, or raw network output is invented.
+- Global target statistics come from the archived 2,936-frame summary. Lateral
+  targets are exactly zero in every frame; lateral feedback fluctuates in the
+  archived plot. Forward median 0.0002041124 and P95 0.0020334935 describe
+  postprocessing targets, not recorded normalized model outputs.
+- `smolvla-stopping.py` reproduces those statistics and calls AlohaMini's actual
+  CPU Processor under BF16 autocast. FP32 stop round trip: 5.5879354e-9;
+  pre-rounding the stop label to BF16: -3.6302954e-6; both restored outputs FP32.
+  This isolates the inverse-operation residual; it does not evaluate reduced
+  precision throughout the network or determine a training cause.
+- Paper motivations added: CA/SA complementary conditioning/action dependencies,
+  qualitative smoothness observation (§3.1), frozen-VLM expert training protocol
+  (§4.7), synchronous lags and environmental responsiveness (§3.3/§4.6).
+- Flow training and action sampling have explicit definitions. The intuitive
+  training/inference comparison was answered only in chat as requested.
+- Flow-node text centered, disclosure hint text removed; explanatory hyperlinks
+  attached to the relevant terms instead of standalone paragraph-end labels.
+
+## Experiment organization and command jitter
+
+- Four adjacent H3 case sections: SmolVLA 120, continued 150, π0.5 120,
+  two-toy extension. Record labels precede every video group; initial-pose cases
+  remain inside the 120-case section. Each case has one concise closing analysis.
+- Trajectory analysis and base velocity follow the case sections. Continued-stage
+  normalization statistics are grouped with base-velocity analysis.
+- The archived events CSV selects the top three adjacent target changes per
+  right-arm channel. All 21 selected events align to multiples of 25 frames;
+  this is an observed grid, not an asserted historical n_action_steps setting.
+  Seven-channel event indices and maximum changes are reproduced in
+  `stopping-summary.json` with the CSV source hash.
+- Blue target reversals and orange feedback co-vary in the archived plot;
+  analysis identifies command-side periodic revisions and grasp retries.
+  Chunk-handoff discontinuity is the architectural interpretation of this rhythm,
+  not a measured physical resonance or a recovered chunk-ID log.
+- Two-toy A/B videos use width ratio 1:1.775 to align their square/landscape
+  formats at equal height on desktop and mobile.
+- Current full-model trainable scope, BF16 autocast and preserve storage are
+  listed directly after the modular-storage explanation. ULP and AdamW links
+  sit at their first relevant explanation.

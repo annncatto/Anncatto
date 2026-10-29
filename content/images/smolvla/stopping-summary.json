@@ -1,0 +1,139 @@
+{
+  "frames": 2936,
+  "durationSeconds": 97.83333587646484,
+  "recordedTargets": {
+    "x.vel": {
+      "count": 2936,
+      "min": -0.004232851788401604,
+      "median": 0.00020411238074302673,
+      "p95": 0.0020334934815764427,
+      "max": 0.14938963949680328
+    },
+    "y.vel": {
+      "count": 2936,
+      "min": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "theta.vel": {
+      "count": 2936,
+      "min": -0.17742569744586945,
+      "median": -0.00015691667795181274,
+      "p95": 0.08324254676699638,
+      "max": 37.37262725830078
+    }
+  },
+  "inverseStopTests": [
+    {
+      "normalizedDtype": "torch.float32",
+      "normalizedStop": -0.43938732147216797,
+      "restoredDtype": "torch.float32",
+      "restoredVelocity": 5.587935447692871e-09
+    },
+    {
+      "normalizedDtype": "torch.bfloat16",
+      "normalizedStop": -0.439453125,
+      "restoredDtype": "torch.float32",
+      "restoredVelocity": -3.6302953958511353e-06
+    }
+  ],
+  "rightArmLargestChanges": {
+    "events": 21,
+    "on25FrameGrid": 21,
+    "gridFrames": 25,
+    "gridSecondsInRecordedTime": 0.8333333549954416,
+    "selection": "Three largest adjacent target changes per right-arm channel",
+    "channels": {
+      "arm_right_elbow_flex.pos": {
+        "frames": [
+          225,
+          750,
+          1750
+        ],
+        "maximumAdjacentChange": 9.629114985466003
+      },
+      "arm_right_gripper.pos": {
+        "frames": [
+          375,
+          1325,
+          1775
+        ],
+        "maximumAdjacentChange": 9.345121383666992
+      },
+      "arm_right_shoulder_lift.pos": {
+        "frames": [
+          500,
+          1825,
+          1850
+        ],
+        "maximumAdjacentChange": 9.472297668457031
+      },
+      "arm_right_shoulder_pan.pos": {
+        "frames": [
+          500,
+          2525,
+          2575
+        ],
+        "maximumAdjacentChange": 9.207529067993164
+      },
+      "arm_right_wrist_flex.pos": {
+        "frames": [
+          700,
+          1725,
+          2050
+        ],
+        "maximumAdjacentChange": 9.905967712402344
+      },
+      "arm_right_wrist_roll.pos": {
+        "frames": [
+          550,
+          575,
+          600
+        ],
+        "maximumAdjacentChange": 4.156593322753906
+      },
+      "arm_right_wrist_yaw.pos": {
+        "frames": [
+          350,
+          650,
+          700
+        ],
+        "maximumAdjacentChange": 5.900247812271118
+      }
+    }
+  },
+  "eventsSHA256": "caece99868f3241478bc3884c0d8faac5b66dbc4d02e05e21f812471920114f2",
+  "normalization": {
+    "mean": 0.024273079589486827,
+    "std": 0.055243000879508446,
+    "epsilon": 1e-08
+  },
+  "visualWindows": [
+    {
+      "phase": "after_forward",
+      "start": 6,
+      "end": 10,
+      "source": "archived base plot"
+    },
+    {
+      "phase": "after_turn",
+      "start": 24,
+      "end": 30,
+      "source": "archived base plot"
+    },
+    {
+      "phase": "right_arm_raised",
+      "start": 76,
+      "end": 80,
+      "source": "archived base plot and camera contact sheet"
+    }
+  ],
+  "windowBasis": "Approximate intervals read from figures; no per-window numerical statistics inferred.",
+  "reportSHA256": "27483ad83e5a3adc4e0e12e63c22e770b4ff616c5ca19e45eac37c5bc0cc6cc6",
+  "statsSHA256": "876ea33979fc9480d071ae91789f183600435bdb76f10acb611d7b6a48d79058",
+  "processorFileSHA256": "676d7dc3d42dea5f9f05f01ba93d53d5f4ea7d79e6d4fe41507b4cca1e09cac9",
+  "processorRevision": "e029e1f99bdf8f654db485b91524812c137e62ce",
+  "testDevice": "cpu",
+  "torchVersion": "2.11.0+cu130"
+}

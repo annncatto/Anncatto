@@ -2,7 +2,10 @@ import {C} from './theme.js';
 import {roundingSeries} from './smolvla-math.js';
 const bi=(en:string,zh:string)=>`<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
 const text=(x:number,y:number,en:string,zh=en,size=19,cls='')=>`<text x="${x}" y="${y}" font-size="${size}" class="${cls}"><tspan lang="en">${en}</tspan><tspan lang="zh-CN">${zh}</tspan></text>`;
-const box=(x:number,y:number,w:number,h:number,title:string,zh:string,line:string,lineZh=line,tone='blue')=>`<g class="sv-box sv-${tone}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9"/>${text(x+16,y+29,title,zh,19,'sv-svg-title')}${text(x+16,y+56,line,lineZh,16)}</g>`;
+const box=(x:number,y:number,w:number,h:number,title:string,zh:string,line:string,lineZh=line,tone='blue',extra:readonly [string,string,number?][]=[])=>{
+ const rows:readonly [string,string,number?][]=[[title,zh,19],[line,lineZh,16],...extra];
+ return `<g class="sv-box sv-${tone}"><rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9"/>${rows.map((r,i)=>text(x+w/2,y+h/2+(i-(rows.length-1)/2)*28,r[0],r[1],r[2]??16,i===0?'sv-svg-title':'')).join('')}</g>`;
+};
 const arrow=(id:string,x1:number,y1:number,x2:number,y2:number)=>`<path class="sv-arrow" d="M${x1},${y1} L${x2},${y2}" marker-end="url(#sv-${id}-arrow)"/>`;
 const svgNames:Record<string,string>={features:'Observation features',batch:'Flow-matching training',sampling:'Action sampling',comparison:'Action attention',normalization:'Action normalization paths',latency:'Inference and execution timing',rounding:'Weight-update rounding',dataset:'Demonstration durations'};
 const svg=(id:string,h:number,body:string)=>`<svg viewBox="0 0 1000 ${h}" role="img" aria-labelledby="sv-${id}-title"><title id="sv-${id}-title">${svgNames[id]}</title><defs><marker id="sv-${id}-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="${C.muted}"/></marker></defs>${body}</svg>`;
@@ -88,12 +91,10 @@ export function renderSmolFigure(id:string):string{
    box(300,35,300,90,'Image encoder + shuffle','视觉编码 + 空间重排','1024 patches → 64 tokens / view','1024 patch → 每视角 64 token')+
    box(20,175,240,90,'Language IDs','语言编号','[B,L]')+box(300,175,300,90,'Embedding','词嵌入','[B,L,960]')+
    box(20,315,240,90,'Robot state','机器人状态','[B,32] (padded)','[B,32]（补齐后）')+box(300,315,300,90,'State projection','状态投影','[B,1,960]')+
-   box(660,105,320,190,'Concatenate prefix','拼接 prefix','P = 64N + L + 1','P = 64N + L + 1','green')+
-   text(678,200,'[B,P,960]',undefined,22)+text(678,236,'N=4, L=48 → P=305',undefined,17)+
+   box(660,105,320,190,'Concatenate prefix','拼接 prefix','P = 64N + L + 1','P = 64N + L + 1','green',[['[B,P,960]','[B,P,960]',22],['N=4, L=48 → P=305','N=4, L=48 → P=305',17]])+
    box(660,365,320,95,'VLM layers 0…15','VLM 第 0…15 层','Images/text do not read actions','图像/文字不读动作')+
    box(660,545,320,100,'Layerwise KV cache','逐层 KV 缓存','Logical: [B,P,5,64]','逻辑形状：[B,P,5,64]','green')+
-   box(20,520,550,125,'Action expert, 16 layers','16 层动作专家','Noisy actions + time → [B,H,720]','噪声动作 + 时间 → [B,H,720]','warm')+
-   text(36,612,'Even layers: SA · Odd layers: CA','偶数层 SA · 奇数层 CA',18)+
+   box(20,520,550,125,'Action expert, 16 layers','16 层动作专家','Noisy actions + time → [B,H,720]','噪声动作 + 时间 → [B,H,720]','warm',[['Even layers: SA · Odd layers: CA','偶数层 SA · 奇数层 CA',18]])+
    [[260,80,300,80],[260,220,300,220],[260,360,300,360],[600,80,660,150],[600,220,660,220],[600,360,660,270],[820,295,820,365],[820,460,820,545],[660,590,570,590]].map(a=>arrow(id,...a as [number,number,number,number])).join('')+
    text(20,470,'The observation is fixed during one sampling call.','一次采样内，观察条件保持不变。',19));
  }else if(id==='batch'){
@@ -120,11 +121,11 @@ export function renderSmolFigure(id:string):string{
    text(20,35,'Demonstration reference branch','示教参考路径',21)+
    box(20,70,350,110,'Raw reference action','原始参考动作','a_ref at the intended target time','目标动作时刻的 a_ref')+
    box(600,70,380,110,'Normalized reference','归一化参考标签','z_ref = (a_ref − μ) / (σ + ε)','z_ref = (a_ref − μ) / (σ + ε)','green')+
-   arrow(id,370,125,600,125)+text(414,107,'Normalize','标准化',17)+
+   arrow(id,370,125,600,125)+text(485,107,'Normalize','标准化',17,'sv-center')+
    text(20,275,'Prediction branch: observation o_t, no future labels','预测路径：输入观察 o_t，不输入未来标签',21)+
    box(20,320,350,110,'Restored prediction','反归一化预测','a_hat = σ z_hat + μ','a_hat = σ z_hat + μ','warm')+
    box(600,320,380,110,'Model output before restoration','模型反归一化前的输出','z_hat[t,j] = Model(o_t)[j]','z_hat[t,j] = Model(o_t)[j]','warm')+
-   arrow(id,600,375,370,375)+text(409,354,'Restore','反归一化',17)+
+   arrow(id,600,375,370,375)+text(485,354,'Restore','反归一化',17,'sv-center')+
    text(20,492,'Raw panel: a_ref ↔ a_hat','原始域面板：a_ref ↔ a_hat',18)+
    text(535,492,'Normalized panel: z_ref ↔ z_hat','归一化面板：z_ref ↔ z_hat',18)+
    text(20,534,'Align by observation, chunk ID, j and intended action time.','按观察、chunk ID、j 与目标动作时刻对齐。',17));
@@ -149,11 +150,11 @@ const clips:Record<string,[string,string]>={
  'initial-pose-a':['Changed initial placement A','初始位置变化 A'], 'initial-pose-b':['Changed initial placement B','初始位置变化 B'],
  'continued-missed-grasp':['Missed grasp','漏抓'], 'continued-retreat':['Excessive retreat','后退过量'],
  'continued-success':['150-episode model','150 条模型'], 'pi05-rollout':['π0.5: collection rollout','π0.5：抓取与投放'],
- 'two-toys-a':['Two-toy test A','双玩偶测试 A'], 'two-toys-b':['Two-toy test B','双玩偶测试 B']
+ 'two-toys-a':['Test A','测试 A'], 'two-toys-b':['Test B','测试 B']
 };
 export function renderSmolMedia(names:string){
- const ids=names.split('|');
- return `<div class="sv-media-grid sv-${ids.length===3?'three':ids.length===2?'two':'one'}">${ids.map(id=>{
+ const ids=names.split('|'),twoToys=names==='two-toys-a|two-toys-b';
+ return `<div class="sv-media-grid sv-${ids.length===3?'three':ids.length===2?'two':'one'}${twoToys?' sv-two-toys':''}">${ids.map(id=>{
   const label=clips[id];if(!label)throw Error(`Unknown clip: ${id}`);
   const wide=['initial-pose-a','initial-pose-b','continued-success','pi05-rollout','two-toys-b'].includes(id);
   return `<figure class="sv-clip"><video width="${wide?568:480}" height="${wide?320:480}" controls muted loop playsinline preload="none" poster="/assets/content/smolvla/${id}.webp" aria-label="${label[0]}" data-sv-video><source src="/assets/content/smolvla/${id}.mp4" type="video/mp4"></video><figcaption><span class="figure-title">${bi(...label)}</span></figcaption></figure>`;
