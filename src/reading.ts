@@ -13,7 +13,7 @@ export function mountReadingNavigation() {
   const navigation = sidebar.querySelector<HTMLElement>("nav")!;
   const desktop = matchMedia("(min-width: 1180px)");
   const sections = [...navigation.querySelectorAll<HTMLAnchorElement>("a[href^='#']")]
-    .map(link => ({ link, target: document.getElementById(link.hash.slice(1))!, top: 0 }));
+    .map(link => ({ link, target: document.getElementById(link.hash.slice(1))!, top: 0, visible: true }));
   let start = 0, end = 0, frame = 0;
   let scrollStop: ReturnType<typeof setTimeout> | undefined;
 
@@ -35,6 +35,7 @@ export function mountReadingNavigation() {
     navigation.setAttribute("aria-label", language === "en" ? "Contents" : "文章目录");
     let current = sections[0];
     for (const section of sections) {
+      if (!section.visible) continue;
       if (section.top <= scrollY + 132) current = section;
       else break;
     }
@@ -47,7 +48,10 @@ export function mountReadingNavigation() {
   function measure() {
     start = article!.getBoundingClientRect().top + scrollY;
     end = article!.getBoundingClientRect().bottom + scrollY - innerHeight;
-    for (const section of sections) section.top = section.target.getBoundingClientRect().top + scrollY;
+    for (const section of sections) {
+      section.visible = section.target.checkVisibility();
+      section.top = section.target.getBoundingClientRect().top + scrollY;
+    }
     schedule();
   }
   function setLayout() { contents.open = desktop.matches; measure(); }

@@ -155,13 +155,19 @@ function readingMinutes(raw, language) {
   return Math.max(1, Math.ceil((words + tableWords) / 200 + (characters + tableCharacters) / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
 }
 function readingSidebar(raw, title, titleEn=title) {
-  const sections = [{ id: "article-top", en: titleEn, zh: title }];
-  for (const match of raw.matchAll(/<h2\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)) {
-    const title = language => (match[2].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[2]).replace(/<[^>]*>/g, "");
-    sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
+  const sections = [];
+  let parent;
+  for (const match of raw.matchAll(/<h([23])\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)) {
+    const heading = language => (match[3].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[3]).replace(/<[^>]*>/g, "");
+    const section = { id: match[2], en: heading("en"), zh: heading("zh-CN"), children: [] };
+    if (match[1] === "2") { sections.push(section); parent = section; }
+    else if (parent) parent.children.push(section);
+    else sections.push(section);
   }
+  const contentsLink = section => `<a href="#${esc(section.id)}">${bilingual(esc(section.en), esc(section.zh))}</a>`;
+  const tree = sections.map(section => `<li>${contentsLink(section)}${section.children.length ? `<ol class="contents-subsections">${section.children.map(child => `<li>${contentsLink(child)}</li>`).join("")}</ol>` : ""}</li>`).join("");
   const en = readingMinutes(raw, "en"), zh = readingMinutes(raw, "zh-CN");
-  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><ol>${sections.map((section,i) => `<li><a href="#${esc(section.id)}"${i === 0 ? ' aria-current="location"' : ""}>${bilingual(esc(section.en), esc(section.zh))}</a></li>`).join("")}</ol></nav></details></aside>`;
+  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><a class="contents-root" href="#article-top" aria-current="location">${bilingual(esc(titleEn),esc(title))}</a><ol>${tree}</ol></nav></details></aside>`;
 }
 for (const p of posts) {
   let figureNumber = 0;

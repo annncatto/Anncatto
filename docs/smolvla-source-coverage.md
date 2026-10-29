@@ -1,108 +1,98 @@
 # SmolVLA & 数值类型 — source coverage and release checks
 
-Article date: 2026-10-29 (Asia/Tokyo). Article route: `/notes/smolvla-numerical-types/`.
+Article route: `/notes/smolvla-numerical-types/`. Maintained as bilingual HTML
+chapter includes in an article-only worktree. Keep the unpublished robot
+workbench and D20 homepage separate from article maintenance releases.
 
-The article is maintained as HTML chapter includes, with bilingual prose. It is
-prepared in an isolated worktree based on `44cb43b`, not on the unpublished robot
-workbench branch. Publishing it must not reintroduce that homepage tool entry or
-any workbench changes.
+## Structure
 
-## Coverage
+- H1 article title; H2 chapters; H3 subsections in the nested site-wide TOC.
+- The first two chapters use initially closed native disclosures. TOC/deep links
+  reveal their target; reading progress ignores hidden section headings.
+- Model order follows the source note: architecture, action normalization,
+  observation features, attention, flow training, sampling, π0.5 comparison,
+  SmolVLM, asynchronous inference.
+- Numerical types proceed through representation, use in the policy pipeline,
+  training precision and controlled results, rounding mechanisms, implementation.
+  The fp32-master paper's findings are integrated into training precision.
+- Experiments preserve configurations, four synchronized views, 13 videos,
+  long-record curves, the 120/150 continuation, π0.5 timing, and two-toy extension.
+- Body prose excludes prompts, editing history, source-note narration and pending
+  verification. Source qualifications and audit details stay in this document.
 
-| Note requirement | Implementation |
-| --- | --- |
-| Keep `SmolVLA: small, efficient and capable` | Exact h2 in the first native disclosure |
-| First two major sections collapsible | Native details; initially closed; anchor navigation opens required ancestors |
-| Architecture, figures, expert, attention ablation | `01-model.html`: paper Figure 1, release configuration, implementation details, Table 6 |
-| Trace VLM features, training batch, sampling | Three separate native SVG flow diagrams; batch steps and sampling progress are interactive |
-| SmolVLM data and performance | Paper Figure 2, source categories, representative published scores; no grasp-rate extrapolation |
-| π0.5 architecture and comparison | Paper Figures 3 and 18, native structural diagram, openpi expert and time conditioning |
-| Asynchronous execution | Queue budget interactive figure; SmolVLA time/score distinction; RTC and stale-action discussion |
-| Formats and training implementation | Bit/range table, module-specific storage versus compute, optimizer sketch, actual-step reasoning |
-| fp32-master paper | Controlled storage comparison, update probe, replanning sensitivity and scoring limitations |
-| Experimental setup | Actual 120-episode metadata, synchronized four-camera frames, duration histogram, training-record table |
-| All requested clips | 13 original-speed silent MP4 loops with native playback controls, posters, source checksums |
-| Evaluation curves | Original right-arm figure plus expandable left-arm and base/lift plots; timing/units caveats preserved |
-| Continued training and two-toy extension | Separate stages; no invented total, success denominator or causal attribution |
-| Final analysis | Evidence/mechanism/test table and a controlled next-experiment sequence |
+## Confirmed experiment settings
 
-## Evidence reconciliation
+The user confirmed on 2026-10-29:
 
-- The user confirmed the form screenshot refers to the toy dataset; its red-module
-  task/dataset text was an entry error. Do not treat it as an unrelated experiment.
-- Its batch 8 / 200k / 1e-5 / loss 0.016 values are retained as an unlinked same-task
-  form record. They do not silently replace the report's 120/150-stage settings.
-- The π0.5 form's 0.003 loss is explicitly a form value, not a verified last log.
-- π0.5 three-view form versus four-view report remains a mapping discrepancy;
-  the four-view timing test does not resolve all training/rollout mappings.
-- The evaluation summary contains null checkpoint, effective policy config,
-  command rate, model rate, inference timing, and chunk metadata. None is inferred
-  from a directory name or from its approximately 30 Hz recording cadence.
-- Runtime trainable storage/master-copy behavior is unknown for the historical
-  runs. An exported BF16 checkpoint would not establish that by itself.
-- The two-toy extension adds 120 records; neither its total mixture size nor its
-  checkpoint association is invented.
+- Use the experimental report's two SmolVLA stages: 120 demonstrations / 100k
+  steps, then 150 demonstrations / another 100k steps.
+- Both stages update the full model, including VLM. This overrides the report's
+  frozen-VLM description. It is separate from the algorithm preset's expert-only
+  default and the published numerical paper's expert/projector experiment.
+- π0.5 uses four views: forward, chest, left wrist, right wrist.
+- The form's red-module task label was incorrect; its dataset corresponds to the
+  toy task. Its alternate SmolVLA run settings are superseded by the report's
+  two-stage settings; π0.5 loss 0.003 is retained from the form.
+- Training uses the algorithm defaults in `~/Alohamini` except explicit recorded
+  settings. Its default storage is preserve and compute is BF16 autocast.
 
-## Numerical and source details
+## Numerical evidence
 
-- Normalization follow-up: raw `x.vel` has exactly two stored values: 0
-  (102,656 frames) and 0.15000000596046448 (19,819 frames). Stop fraction is
-  83.817922%. Action mean/std are 0.02427307959 / 0.05524300088. Normalized
-  stop/forward are approximately -0.439387 / 2.275888. No intermediate raw vx
-  targets were found. This is a marginal frame statistic, not proof of harmful
-  imbalance or unobservable start/stop conditions.
-- `smolvla-normalization.py` extracts episode 0, 1.5–10 s: transitions at
-  71/30 and 249/30 seconds. The actual demonstrated and normalized traces use
-  separate axes. No network prediction is fabricated. Float64 round-trip error
-  for the inspected forward `(a-mean)/(std+eps)` and inverse `z*std+mean` is
-  2.2759e-8; runtime dtypes and processor bindings remain unverified historically.
-- The user’s velocity diagnostic priority is presented as a working hypothesis:
-  observability/alignment, phase distribution, generative/chunk behavior,
-  normalization implementation. Four logged streams form reference and prediction
-  branches, not a serial deployment pipeline. Intended action timestamps and
-  chunk indices are mandatory; final post-limit commands are a separate check.
+- Raw `x.vel` has two values: 0 (102,656 frames) and 0.15000000596046448
+  (19,819 frames), total 122,475. Mean/std: 0.02427307959 / 0.05524300088.
+  Stop/forward normalized values: -0.439387 / 2.275888.
+- `smolvla-normalization.py` extracts episode 0, 1.5–10 s, with transitions at
+  71/30 and 249/30 s. Genuine reference traces use separate raw/normalized axes.
+  No network predictions are fabricated. Float64 round-trip error under the
+  inspected forward `(a-mean)/(std+eps)` and inverse `z*std+mean` is 2.2759e-8.
+- The 150-episode dataset's action mean/std at x.vel are 0.02221962056 /
+  0.05559354208. Stop/forward targets are -0.399680 / 2.298475. Restoring the
+  old normalized stop/forward with new statistics gives -0.002207 and 0.148744.
+  The article uses rounded values recomputed directly from both stats.json files.
+- Numerical paper: 454 LIBERO-Object demonstrations, batch 16, 10k steps,
+  expert/projector training. Default stored weights: 96.6M BF16 + 3.3M FP32.
+  Success (default storage / FP32): lr1e-4 50-action open loop 59.3/69.5;
+  lr1e-4 replan10 88.4/92.6; lr1e-5 open loop 4.3/49.3. These are within-paper
+  storage comparisons, not measured success for the toy task.
+- AlohaMini code inspected at e029e1f: BF16 VLM loading, inherited expert dtype,
+  FP32 external projections, preserve storage by default, PyTorch AdamW;
+  `trainable_dtype=float32` promotes trainable storage before optimization.
+  Existing CPU tests for small updates and BF16 checkpoint/FP32 restoration
+  passed (2 selected tests). No robot motion or full training run was launched.
+- The 100-step plotting calculator uses constant decrements with nearest-even
+  format rounding and FP32 master accumulation. It illustrates rounding, not a
+  measured optimizer trajectory from the robot experiment.
+- Historical evaluation contains 2,936 rows over 97.833 s, postprocessed targets
+  and pre-request feedback. Raw network predictions, chunk IDs, effective policy
+  config and inference times are absent. The four-stream diagram distinguishes
+  reference and prediction branches and states the intended logging alignment.
+- Release weights checked through Safetensors headers and Hub metadata on
+  2026-10-29: SmolVLA 450,046,176 tensor elements; LeRobot π0.5 3,616,757,520.
+  Pinned revisions are in `content/images/smolvla/model-counts.json`.
 
-- One consistent noise-at-one convention: `x_t=(1-t)A+t*epsilon`, target
-  `epsilon-A`, integration from 1 to 0. Training is one supervised forward;
-  inference repeats the expert, not the visual prefix.
-- SmolVLA SA layers can read fixed prefix KV as well as causally masked actions.
-  CA layers read prefix KV only. Layers alternate, starting at SA at index 0.
-- Format simulator rounds nearest with ties to even, handles subnormals/overflow,
-  and accumulates the master path with FP32 rounding. It is a constant-update
-  demonstration, not an AdamW or robot simulator.
-- Histogram counts are `[1, 0, 14, 91, 14]` for durations `[0,10),…,[40,50)` seconds.
-  Summary totals: 120 episodes, 122,475 frames, 4,082.5 seconds; duration median
-  33.8167 seconds, minimum 5.4667, maximum 46.3333.
-- Release file element counts were checked through Safetensors headers and Hub
-  metadata on 2026-10-29; see `content/images/smolvla/model-counts.json` for pinned
-  revisions. SmolVLA: 450,046,176; LeRobot π0.5: 3,616,757,520. These are stored
-  tensor elements, not a claim about a deduplicated runtime trainable count.
-  Literature/runtime counts from different implementations are not reconciled by
-  inventing an architectural explanation.
+## Figures and media
 
-## Assets and reproduction
-
-`scripts/figures/smolvla-assets.py` accepts explicit attachment, dataset and
-evaluation directories. It uses the existing LeRobot Python environment and
-ffmpeg. It encodes only the video stream at original playback speed, removes
-audio, samples posters, prepares dataset statistics and camera frames, and
-downloads attributed paper figures. Source machine paths are not embedded in
-public JSON/HTML. Total encoded video size is about 16.2 MB.
-
-The note's explanatory screenshot diagrams and phone-form screenshots are not
-published. The three two-toy layout photos are used. All paper figures link to
-the exact paper; the SmolVLM figure credits its CC BY 4.0 license.
+- Attention comparison uses explicit action-query/key visibility matrices: SA
+  reads prefix and causal action keys; CA reads prefix; π0.5 reads prefix and
+  the full continuous action block. Input versus layerwise time conditioning
+  appears beneath the matrices. FAST visibility remains in the cited paper fig.
+- Timing diagram plots old/new chunks, inference and queue waiting on one clock.
+  It marks the remaining-queue buffer and elapsed actions skipped in the new
+  chunk. Both sliders change timing, stale-action count, and queue wait.
+- Removed batch/sampling highlight-only widgets and the duration histogram.
+  Retained the weight-rounding calculator and latency calculator.
+- SVGs share the site's blue/green/grey theme and have no outer figure frame.
+  Paper figures retain original artwork and attribution.
+- Thirteen original-speed silent MP4s retain native playback controls and lazy
+  playback; no repeated playback hints. Success labels: left / center / right.
+- `smolvla-assets.py` uses explicit source directories, ffmpeg and the existing
+  analysis environment. Public assets omit private filesystem paths. Source
+  screenshot prompts and form screenshots are excluded from the article.
 
 ## Validation
 
-- Build and internal-reference/MathML checks.
-- Unit checks for floating-point examples, even ties, subnormals, overflow, FP32
-  accumulation, queue budgets, and synchronous timing.
-- Browser checks in both languages at 390 / 768 / 1280 / 1440 px; no viewport or
-  SVG text overflow, runtime errors, failed media requests, or missing math.
-- Disclosure navigation and deep links, all interactive controls, image viewer
-  Escape, native video playback/pause, original speed and reduced-motion behavior.
-- Homepage article entry is present; Interactive tools remains empty.
-
-Run build/check/test after final edits, then inspect deployment success and the
-actual public article. Keep the separate robot workbench preview untouched.
+Build, local-reference/MathML checks, 28 unit tests; browser review in both
+languages at mobile/tablet/desktop widths. Check disclosures, nested TOC, hidden
+headings, numerical controls, video/poster loading, viewer dismissal, no viewport
+or SVG text overflow, and the empty homepage tools section. Verify the published
+article after a successful Pages deployment.
