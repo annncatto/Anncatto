@@ -139,7 +139,9 @@ article after a successful Pages deployment.
 
 - Four adjacent H3 case sections: SmolVLA 120, continued 150, π0.5 120,
   two-toy extension. Record labels precede every video group; initial-pose cases
-  remain inside the 120-case section. Each case has one concise closing analysis.
+  remain inside the 120-case section. Each failure group has a short observation, followed by unlabelled closing
+  analytical paragraphs for each case. The trajectory section identifies the
+  120-demo / 100k checkpoint and the 2026-10-23 10:32:19 episode-0 record.
 - Trajectory analysis and base velocity follow the case sections. Continued-stage
   normalization statistics are grouped with base-velocity analysis.
 - The archived events CSV selects the top three adjacent target changes per
