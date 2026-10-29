@@ -66,6 +66,20 @@ export function renderSmolFigure(id:string):string{
    box(20,295,445,80,'Time fused at input','时间在输入端融合','MLP(action embedding, time embedding)','MLP（动作 embedding，时间 embedding）')+
    box(535,295,445,80,'Time conditions each layer','时间调制每层','Time MLP → adaptive RMSNorm','时间 MLP → adaptive RMSNorm')+
    text(20,437,'Both: flow matching, parallel chunk generation.','共同点：流匹配，并行生成整个动作块。',22)+text(20,480,'Neither structure alone determines execution pauses.','两种结构本身都不能决定部署时是否停顿。',19));
+ }else if(id==='normalization'){
+  en='Four diagnostic streams, two independent branches';zh='四组诊断数值、两条独立路径';
+  body=svg(id,560,
+   text(20,35,'Demonstration reference branch','示教参考路径',21)+
+   box(20,70,350,110,'Raw reference action','原始参考动作','a_ref at the intended target time','目标动作时刻的 a_ref')+
+   box(600,70,380,110,'Normalized reference','归一化参考标签','z_ref = (a_ref − μ) / (σ + ε)','z_ref = (a_ref − μ) / (σ + ε)','green')+
+   arrow(id,370,125,600,125)+text(414,107,'Normalize','标准化',17)+
+   text(20,275,'Prediction branch: observation o_t, no future labels','预测路径：输入观察 o_t，不输入未来标签',21)+
+   box(20,320,350,110,'Restored prediction','反归一化预测','a_hat = σ z_hat + μ','a_hat = σ z_hat + μ','warm')+
+   box(600,320,380,110,'Model output before restoration','模型反归一化前的输出','z_hat[t,j] = Model(o_t)[j]','z_hat[t,j] = Model(o_t)[j]','warm')+
+   arrow(id,600,375,370,375)+text(409,354,'Restore','反归一化',17)+
+   text(20,492,'Raw panel: a_ref ↔ a_hat','原始域面板：a_ref ↔ a_hat',18)+
+   text(535,492,'Normalized panel: z_ref ↔ z_hat','归一化面板：z_ref ↔ z_hat',18)+
+   text(20,534,'Align by observation, chunk ID, j and intended action time.','按观察、chunk ID、j 与目标动作时刻对齐。',17));
  }else if(id==='latency'){
   en='Latency, queue buffer and stale actions';zh='延迟、队列缓冲与过时动作';body=latencySVG();
   controls=`<div class="controls sv-controls">${control('Latency (ms)','延迟（ms）','<input data-latency-ms type="range" min="0" max="1500" step="10" value="200">')}${control('Remaining fraction g','剩余比例 g','<input data-latency-g type="range" min="0" max="1" step="0.05" value="0.4">')}</div><p class="sv-readout" data-latency-readout aria-live="polite">${bi('50 actions · 30 Hz · 200 ms latency · buffer 667 ms · 6 elapsed steps.','50 步 · 30 Hz · 延迟 200 ms · 缓冲 667 ms · 已过去 6 步。')}</p>`;

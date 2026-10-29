@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
 import {quantizeFloat,roundingSeries,latencyBudget} from '../.build/smolvla-math.js';
 
 test('binary formats preserve known values, subnormals, overflow, and even ties',()=>{
@@ -27,4 +28,19 @@ test('queue budget separates buffer, latency and control rate',()=>{
  const empty=latencyBudget(50,30,0,200);assert.equal(empty.idle,.2);
  assert.ok(Math.abs(latencyBudget(25,30,0,106).syncHz-26.61462)<.001);
  assert.throws(()=>latencyBudget(50,0,.5,100));
+});
+
+test('published normalization trace preserves actual label support and round-trip scale',()=>{
+ const d=JSON.parse(readFileSync('content/images/smolvla/normalization-vx.json','utf8'));
+ assert.equal(d.values.reduce((n,v)=>n+v.frames,0),122475);
+ assert.equal(d.values.length,2);assert.equal(d.values[0].value,0);
+ assert.ok(Math.abs(d.values[0].fraction-.8381792202490305)<1e-12);
+ assert.equal(d.modelPredictionsRecorded,false);
+ assert.ok(d.samples.some(s=>s.rawReference===0));
+ assert.ok(d.samples.some(s=>s.rawReference>.14));
+ for(const s of d.samples){
+  assert.ok(Math.abs(s.normalizedReference*d.std+d.mean-s.rawReference)<3e-8);
+ }
+ assert.ok(d.transitionTimes[0]>2.36&&d.transitionTimes[0]<2.37);
+ assert.equal(d.transitionTimes[1],8.3);
 });

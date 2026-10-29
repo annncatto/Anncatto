@@ -45,6 +45,23 @@ any workbench changes.
 
 ## Numerical and source details
 
+- Normalization follow-up: raw `x.vel` has exactly two stored values: 0
+  (102,656 frames) and 0.15000000596046448 (19,819 frames). Stop fraction is
+  83.817922%. Action mean/std are 0.02427307959 / 0.05524300088. Normalized
+  stop/forward are approximately -0.439387 / 2.275888. No intermediate raw vx
+  targets were found. This is a marginal frame statistic, not proof of harmful
+  imbalance or unobservable start/stop conditions.
+- `smolvla-normalization.py` extracts episode 0, 1.5–10 s: transitions at
+  71/30 and 249/30 seconds. The actual demonstrated and normalized traces use
+  separate axes. No network prediction is fabricated. Float64 round-trip error
+  for the inspected forward `(a-mean)/(std+eps)` and inverse `z*std+mean` is
+  2.2759e-8; runtime dtypes and processor bindings remain unverified historically.
+- The user’s velocity diagnostic priority is presented as a working hypothesis:
+  observability/alignment, phase distribution, generative/chunk behavior,
+  normalization implementation. Four logged streams form reference and prediction
+  branches, not a serial deployment pipeline. Intended action timestamps and
+  chunk indices are mandatory; final post-limit commands are a separate check.
+
 - One consistent noise-at-one convention: `x_t=(1-t)A+t*epsilon`, target
   `epsilon-A`, integration from 1 to 0. Training is one supervised forward;
   inference repeats the expert, not the visual prefix.
