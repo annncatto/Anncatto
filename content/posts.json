@@ -1,5 +1,16 @@
 [
   {
+    "slug": "smolvla-numerical-types",
+    "title": "SmolVLA & 数值类型",
+    "titleEn": "SmolVLA & Numerical Types",
+    "description": "从视觉语言特征、流匹配与异步动作块，到 BF16 更新舍入，结合玩偶抓取的训练、曲线和实机表现分析实验。",
+    "descriptionEn": "Visual-language features, flow matching, asynchronous chunks and BF16 update rounding, connected to toy-collection training, trajectories and robot experiments.",
+    "date": "2026-10-29",
+    "source": "SmolVLA & 数值类型.html",
+    "module": "smolvla",
+    "sections": []
+  },
+  {
     "slug": "lightweight-structural-design",
     "title": "轻量化结构设计",
     "titleEn": "Lightweight Structural Design",

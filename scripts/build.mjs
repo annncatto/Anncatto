@@ -10,6 +10,7 @@ import { renderPi07Figure } from "../.build/pi07-diagrams.js";
 import { renderCourseFigure } from '../.build/lightweight-course.js';
 import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
+import { renderSmolFigure, renderSmolMedia } from '../.build/smolvla-figures.js';
 import { build as bundle } from 'esbuild';
 await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
 await bundle({entryPoints:['src/concept-worker.ts'],outfile:'.build/concept-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}]});
@@ -128,7 +129,7 @@ ${module ? `<script type="module" src="/assets/${module}.js"></script>` : ''}
 <header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${'<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
 ${body}
 </body>
-</html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`)
+</html>`.replace(/\b(href|src|poster)="\/(?!\/)/g, `$1="${basePath}/`)
     .replace(/(href|src)="([^"?]*\/assets\/[^"?]+\.(?:js|css))"/g, `$1="$2?v=${assetVersion}"`);
 }
 
@@ -144,7 +145,7 @@ function readingMinutes(raw, language) {
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
-  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|<figure\b/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|\{\{smolvla:|\{\{svmedia:|<figure\b/g)].length;
   const tableText = [...raw.matchAll(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`, "g"))]
     .filter(match => raw.lastIndexOf("<table", match.index) > raw.lastIndexOf("</table>", match.index))
     .map(match => match[1].replace(/<[^>]*>/g, " ")).join(" ");
@@ -168,7 +169,9 @@ for (const p of posts) {
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
       .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id))
       .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id))
-      .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id)));
+      .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id))
+      .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
+      .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
   const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
   const sidebar = readingSidebar(raw, p.title, p.titleEn);
   await write(

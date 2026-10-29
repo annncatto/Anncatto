@@ -15,11 +15,11 @@ const files = await walk(root);
 let count = 0;
 for (const file of files.filter((f) => f.endsWith(".html"))) {
   const html = await fs.readFile(file, "utf8");
-  if (/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|\{\{chapter:|katex-error/.test(html))
+  if (/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|\{\{chapter:|\{\{smolvla:|\{\{svmedia:|katex-error/.test(html))
     throw Error(`Unrendered content in ${file}`);
   const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map((m) => m[1]);
   if (new Set(ids).size !== ids.length) throw Error(`Duplicate IDs: ${file}`);
-  for (const m of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
+  for (const m of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)) {
     const link = m[1];
     if (!link.startsWith("/") && !link.startsWith("#")) continue;
     const [p, hash] = link.split("#");

@@ -1,0 +1,23 @@
+{
+  "checked": "2026-10-29",
+  "metric": "stored tensor elements, not deduplicated runtime trainable parameter count",
+  "models": [
+    {
+      "id": "lerobot/smolvla_base",
+      "revision": "5e8d12a6e2975b0e5e5fce7c8caf47c371d257b6",
+      "elementsByDtype": {
+        "F32": 3273552,
+        "BF16": 446772624
+      },
+      "total": 450046176
+    },
+    {
+      "id": "lerobot/pi05_base",
+      "revision": "22c30e5b34f9e7ab738b1b34fc2fc5ecfe2d28f0",
+      "elementsByDtype": {
+        "F32": 3616757520
+      },
+      "total": 3616757520
+    }
+  ]
+}

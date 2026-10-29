@@ -1,0 +1,14 @@
+<div class="sv-article">
+<div class="bilingual"><p lang="zh-CN">同一个玩偶收集任务，120 条示教训练出的 SmolVLA 已经能够完成抓取与投放；补充数据继续训练后，却出现了漏抓、后退过大和原有表现下降。换用 π0.5 后，实机动作看起来更连贯。这些变化把三个问题连在一起：视觉信息怎样进入动作生成、微小的参数更新能否真正写入权重，以及预测出的动作怎样按时送到机器人。</p><p lang="en">On the same toy-collection task, a SmolVLA trained on 120 demonstrations could grasp and deposit toys. Continued training with additional data brought missed grasps, excessive retreats, and poorer behavior in familiar settings. A later π0.5 run looked more continuous. These observations connect three questions: how visual information reaches action generation, whether small updates actually reach stored weights, and how predicted actions arrive at the robot on time.</p></div>
+<div class="bilingual"><p lang="zh-CN">前两节解释模型与数值计算，可展开阅读；<a href="#experiments">实验记录</a>保留配置、曲线和成功与失败片段，再逐项分析已有证据能说明什么。</p><p lang="en">The first two sections expand into the model and numerical background. The <a href="#experiments">experimental record</a> brings together configurations, trajectories, and success and failure clips, then examines what the evidence supports.</p></div>
+<details class="sv-chapter"><summary><h2 id="smolvla">SmolVLA: small, efficient and capable</h2><span class="sv-fold-label"><span lang="zh-CN">展开 / 收起</span><span lang="en">Expand / collapse</span></span></summary><div class="sv-chapter-body">
+{{chapter:smolvla/01-model.html}}
+</div></details>
+<details class="sv-chapter"><summary><h2 id="numerical-types"><span lang="zh-CN">数值类型</span><span lang="en">Numerical types</span></h2><span class="sv-fold-label"><span lang="zh-CN">展开 / 收起</span><span lang="en">Expand / collapse</span></span></summary><div class="sv-chapter-body">
+{{chapter:smolvla/02-numerics.html}}
+</div></details>
+{{chapter:smolvla/03-setup.html}}
+{{chapter:smolvla/04-results.html}}
+{{chapter:smolvla/05-analysis.html}}
+{{chapter:smolvla/06-references.html}}
+</div>

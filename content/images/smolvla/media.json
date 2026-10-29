@@ -1,0 +1,93 @@
+[
+  {
+    "id": "success-left",
+    "durationSeconds": 59.332,
+    "playbackSpeed": 1,
+    "sourceSha256": "3c0033c29aeb7013d9bca7ba85e47871de2927fc42a84f338e2b7ac234c53c40",
+    "bytes": 1462207
+  },
+  {
+    "id": "success-center",
+    "durationSeconds": 37.033,
+    "playbackSpeed": 1,
+    "sourceSha256": "34c78978f2796d3d68d8f9e613eeba096c0ea55737c9217a1c461ed7efda47cb",
+    "bytes": 861457
+  },
+  {
+    "id": "success-right",
+    "durationSeconds": 57.167,
+    "playbackSpeed": 1,
+    "sourceSha256": "123364f9a4abab681d5d9040c121010a45ec2a3239cd2c3cc6122c9e05436960",
+    "bytes": 1838544
+  },
+  {
+    "id": "failure-grasp",
+    "durationSeconds": 24.567,
+    "playbackSpeed": 1,
+    "sourceSha256": "9caa75cc795847740377d23842298ece0488a876f399a7c98101763fc3f8b2b2",
+    "bytes": 765916
+  },
+  {
+    "id": "failure-base",
+    "durationSeconds": 25.012,
+    "playbackSpeed": 1,
+    "sourceSha256": "420a78c9ef220cf2914274cebc37d28b5e230ac3228185764864f2e6b7a50c04",
+    "bytes": 686668
+  },
+  {
+    "id": "initial-pose-a",
+    "durationSeconds": 13.925,
+    "playbackSpeed": 1,
+    "sourceSha256": "35d069eb80598a7e26c67d6a9c28a546c793feda6fb9d50a3d9e023b6ca6c74c",
+    "bytes": 269520
+  },
+  {
+    "id": "initial-pose-b",
+    "durationSeconds": 45.4,
+    "playbackSpeed": 1,
+    "sourceSha256": "7c38c4f8d06c02b38ae5d56911583212e3897db93d2f46b885c89cdc2ed553de",
+    "bytes": 1001267
+  },
+  {
+    "id": "continued-missed-grasp",
+    "durationSeconds": 34.48,
+    "playbackSpeed": 1,
+    "sourceSha256": "4dc8fa213a04eee4a6029a23823d71b3fc2ab88739d05b61cf3306581bc5f8d0",
+    "bytes": 1131647
+  },
+  {
+    "id": "continued-retreat",
+    "durationSeconds": 47.433,
+    "playbackSpeed": 1,
+    "sourceSha256": "240cfbafeface5d9f69ca38eaf19bdb18cb813f2345a39f8b8bfe64ccc4c418c",
+    "bytes": 1396814
+  },
+  {
+    "id": "continued-success",
+    "durationSeconds": 65.867,
+    "playbackSpeed": 1,
+    "sourceSha256": "6ccb36607e543c18a8aca8468f7b73f331b423c45bc82141df2785120b153300",
+    "bytes": 1341809
+  },
+  {
+    "id": "pi05-rollout",
+    "durationSeconds": 38.002,
+    "playbackSpeed": 1,
+    "sourceSha256": "ae0f3833635f1a482d8d5672927747a3b0da8e085ddde9c52bbcb118b2095b2a",
+    "bytes": 1558690
+  },
+  {
+    "id": "two-toys-a",
+    "durationSeconds": 78.235,
+    "playbackSpeed": 1,
+    "sourceSha256": "3641880eb69017586e4092c42dde69de85336690877873a9c9b4e9534e736c1b",
+    "bytes": 1799163
+  },
+  {
+    "id": "two-toys-b",
+    "durationSeconds": 132.037,
+    "playbackSpeed": 1,
+    "sourceSha256": "50b6305a9c8bd34c223f529b3a9632721124e0e90e454a7c55eef89f80cdc7bf",
+    "bytes": 2064473
+  }
+]
