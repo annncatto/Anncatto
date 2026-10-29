@@ -102,21 +102,31 @@ article after a successful Pages deployment.
 - Removed the normalized-zero hypothetical row and its numerical examples from
   the normalization section. Stopping is defined in raw coordinates (zero), with
   its corresponding normalized target -0.439387.
-- Original per-frame recording was unavailable. Local reports and the supplied
-  training host were checked; the user chose analysis from archived figures.
-  Figure windows are approximate: 6–10 s after forward motion, 24–30 s after
-  turning, 76–80 s while the raised right arm transfers the toy. The contact
-  sheet supports the last visual phase. No per-window mean, zero-frame fraction,
-  displacement integral, or raw network output is invented.
-- Global target statistics come from the archived 2,936-frame summary. Lateral
-  targets are exactly zero in every frame; lateral feedback fluctuates in the
-  archived plot. Forward median 0.0002041124 and P95 0.0020334935 describe
-  postprocessing targets, not recorded normalized model outputs.
-- `smolvla-stopping.py` reproduces those statistics and calls AlohaMini's actual
+- The user supplied the original `file-000.parquet` through WeChat. SHA256:
+  `93ea0e1d7bb3e0875774ba1b8dd10c7c0919a23f18de197056c6b5f40b5f775b`.
+  All 18 action channels' min/median/P95/max match the archived report to 1e-12;
+  2,936 rows, episode 0, contiguous frame indices, 0–97.833 s at nominal 30 Hz.
+  Public artifacts contain aggregates and plots, not the private raw recording.
+- Phase windows remain 6–10 s after forward motion, 24–30 s after turning,
+  and 76–80 s while the raised right arm transfers the toy, now calculated from
+  raw rows using half-open intervals. The contact sheet supports the last phase.
+  The windows contain 120, 180 and 120 frames. No forward or angular target is
+  exactly zero; 97.5%, 90.0% and 95.8% of forward targets have magnitude <= .001.
+  Tables report signed target medians and absolute-value P95 for both signals;
+  pre-request feedback is not treated as same-step tracking error.
+- Lateral targets are zero in all 2,936 frames, while lateral-feedback absolute
+  P95 in the three windows is .003221, .004832, .004832 in recorded units.
+  This establishes feedback residuals under zero lateral commands, without
+  interpreting them as a measured displacement or recovering network outputs.
+- `smolvla-stopping.py` validates every channel against the report and calls the actual
   CPU Processor under BF16 autocast. FP32 stop round trip: 5.5879354e-9;
   pre-rounding the stop label to BF16: -3.6302954e-6; both restored outputs FP32.
   This isolates the inverse-operation residual; it does not evaluate reduced
   precision throughout the network or determine a training cause.
+- Standalone scientific plots show six zoomed stopping-target windows and
+  wrist-roll target/feedback traces with periodograms. Blue/green/grey palette
+  follows `src/theme.ts`. Per-window metrics, grid statistics, spectral peaks,
+  and source hashes are reproduced in `stopping-summary.json`.
 - Paper motivations added: CA/SA complementary conditioning/action dependencies,
   qualitative smoothness observation (§3.1), frozen-VLM expert training protocol
   (§4.7), synchronous lags and environmental responsiveness (§3.3/§4.6).
@@ -137,6 +147,16 @@ article after a successful Pages deployment.
   this is an observed grid, not an asserted historical n_action_steps setting.
   Seven-channel event indices and maximum changes are reproduced in
   `stopping-summary.json` with the CSV source hash.
+- Full-record confirmation: 117 of 2,935 adjacent changes lie on the 25-frame
+  grid. Their per-channel mean magnitudes are 5.2–18.1 times those elsewhere;
+  they account for 42.9% of wrist-roll total variation. These are all-row
+  comparisons, independent of selecting only the largest archived events.
+- Periodograms use nominal 30 Hz, linear detrending, and the largest non-DC
+  power bin. Target/feedback share peaks of .600 Hz (wrist roll, 16–26 s),
+  .583 Hz (wrist roll, 38–50 s), and .608 Hz (wrist yaw, 88–97.833 s).
+  Approximately 50 frames span a full oscillation; 25 frames describe the
+  switching grid. Neither is presented as a recovered chunk configuration or
+  a physical resonance frequency.
 - Blue target reversals and orange feedback co-vary in the archived plot;
   analysis identifies command-side periodic revisions and grasp retries.
   Chunk-handoff discontinuity is the architectural interpretation of this rhythm,

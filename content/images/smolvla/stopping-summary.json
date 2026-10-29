@@ -109,31 +109,347 @@
     "std": 0.055243000879508446,
     "epsilon": 1e-08
   },
-  "visualWindows": [
+  "recordingSHA256": "93ea0e1d7bb3e0875774ba1b8dd10c7c0919a23f18de197056c6b5f40b5f775b",
+  "recordedTimeHz": 30,
+  "stopWindows": [
     {
       "phase": "after_forward",
       "start": 6,
       "end": 10,
-      "source": "archived base plot"
+      "frames": 120,
+      "channels": {
+        "x.vel": {
+          "target": {
+            "count": 120,
+            "min": -0.00035306066274642944,
+            "median": 0.0004533100873231888,
+            "mean": 0.00041724409287174544,
+            "p95Abs": 0.0008451275527477264,
+            "max": 0.001176329329609871,
+            "exactZeroFrames": 0,
+            "absAtMost0.001Frames": 117
+          },
+          "feedback": {
+            "count": 120,
+            "min": -0.002789779333397746,
+            "median": 0.002789779333397746,
+            "mean": 0.0035104723103965324,
+            "p95Abs": 0.008369337767362595,
+            "max": 0.011159117333590984,
+            "exactZeroFrames": 14
+          }
+        },
+        "y.vel": {
+          "target": {
+            "count": 120,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0,
+            "p95Abs": 0.0,
+            "max": 0.0,
+            "exactZeroFrames": 120
+          },
+          "feedback": {
+            "count": 120,
+            "min": -0.003221359569579363,
+            "median": 3.23381685134843e-19,
+            "mean": 1.3422335420424769e-05,
+            "p95Abs": 0.003221359569579363,
+            "max": 0.004832039587199688,
+            "exactZeroFrames": 14
+          }
+        },
+        "theta.vel": {
+          "target": {
+            "count": 120,
+            "min": -0.0971064418554306,
+            "median": -0.006352834403514862,
+            "mean": 0.0011505817373593649,
+            "p95Abs": 0.06765677109360695,
+            "max": 0.0767667144536972,
+            "exactZeroFrames": 0
+          },
+          "feedback": {
+            "count": 120,
+            "min": -1.8930288553237915,
+            "median": -3.6533970309343816e-17,
+            "mean": 0.043381911764542265,
+            "p95Abs": 0.9465144276618958,
+            "max": 1.419771671295166,
+            "exactZeroFrames": 14
+          }
+        }
+      }
     },
     {
       "phase": "after_turn",
       "start": 24,
       "end": 30,
-      "source": "archived base plot"
+      "frames": 180,
+      "channels": {
+        "x.vel": {
+          "target": {
+            "count": 180,
+            "min": -0.0009027663618326187,
+            "median": 0.00017312541604042053,
+            "mean": 0.0002286010214851962,
+            "p95Abs": 0.0011171058751642702,
+            "max": 0.0017506517469882965,
+            "exactZeroFrames": 0,
+            "absAtMost0.001Frames": 162
+          },
+          "feedback": {
+            "count": 180,
+            "min": -0.008369337767362595,
+            "median": 1.0324257067715426e-19,
+            "mean": 0.0012089043752186827,
+            "p95Abs": 0.005579558666795492,
+            "max": 0.011159117333590984,
+            "exactZeroFrames": 30
+          }
+        },
+        "y.vel": {
+          "target": {
+            "count": 180,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0,
+            "p95Abs": 0.0,
+            "max": 0.0,
+            "exactZeroFrames": 180
+          },
+          "feedback": {
+            "count": 180,
+            "min": -0.006442719139158726,
+            "median": 0.0,
+            "mean": -0.0005905826006912523,
+            "p95Abs": 0.004832039587199688,
+            "max": 0.006442719139158726,
+            "exactZeroFrames": 30
+          }
+        },
+        "theta.vel": {
+          "target": {
+            "count": 180,
+            "min": -0.1475537270307541,
+            "median": -0.013290368020534515,
+            "mean": -0.008203327531615894,
+            "p95Abs": 0.12352584674954412,
+            "max": 0.13444483280181885,
+            "exactZeroFrames": 0
+          },
+          "feedback": {
+            "count": 180,
+            "min": -2.366286039352417,
+            "median": 0.0,
+            "mean": -0.055213342607021335,
+            "p95Abs": 1.419771671295166,
+            "max": 2.366286039352417,
+            "exactZeroFrames": 30
+          }
+        }
+      }
     },
     {
       "phase": "right_arm_raised",
       "start": 76,
       "end": 80,
-      "source": "archived base plot and camera contact sheet"
+      "frames": 120,
+      "channels": {
+        "x.vel": {
+          "target": {
+            "count": 120,
+            "min": -0.0014124494045972824,
+            "median": 0.0001653684303164482,
+            "mean": 8.612688009937605e-05,
+            "p95Abs": 0.0009659213945269584,
+            "max": 0.0010632481426000595,
+            "exactZeroFrames": 0,
+            "absAtMost0.001Frames": 115
+          },
+          "feedback": {
+            "count": 120,
+            "min": -0.005579558666795492,
+            "median": 0.0,
+            "mean": 0.0016273712700543305,
+            "p95Abs": 0.0057190476218238395,
+            "max": 0.011159117333590984,
+            "exactZeroFrames": 18
+          }
+        },
+        "y.vel": {
+          "target": {
+            "count": 120,
+            "min": 0.0,
+            "median": 0.0,
+            "mean": 0.0,
+            "p95Abs": 0.0,
+            "max": 0.0,
+            "exactZeroFrames": 120
+          },
+          "feedback": {
+            "count": 120,
+            "min": -0.006442719139158726,
+            "median": -0.0016106797847896814,
+            "mean": -0.0013959225014938661,
+            "p95Abs": 0.004832039587199688,
+            "max": 0.003221359569579363,
+            "exactZeroFrames": 18
+          }
+        },
+        "theta.vel": {
+          "target": {
+            "count": 120,
+            "min": -0.12676887214183807,
+            "median": -0.058434292674064636,
+            "mean": -0.054539596661925316,
+            "p95Abs": 0.11497635245323182,
+            "max": 0.05363759398460388,
+            "exactZeroFrames": 0
+          },
+          "feedback": {
+            "count": 120,
+            "min": -1.8930288553237915,
+            "median": -0.4732572138309479,
+            "mean": -0.5955153301358223,
+            "p95Abs": 1.419771671295166,
+            "max": 0.4732572138309479,
+            "exactZeroFrames": 18
+          }
+        }
+      }
     }
   ],
-  "windowBasis": "Approximate intervals read from figures; no per-window numerical statistics inferred.",
+  "mainMotionSpans": {
+    "x.vel": {
+      "absoluteThreshold": 0.05,
+      "runs": [
+        {
+          "firstFrame": 25,
+          "lastFrame": 169,
+          "frames": 145,
+          "start": 0.8333333134651184,
+          "endInclusive": 5.633333206176758
+        }
+      ]
+    },
+    "theta.vel": {
+      "absoluteThreshold": 5,
+      "runs": [
+        {
+          "firstFrame": 675,
+          "lastFrame": 695,
+          "frames": 21,
+          "start": 22.5,
+          "endInclusive": 23.16666603088379
+        }
+      ]
+    }
+  },
+  "windowBasis": "Task phases from archived camera views and motion transitions; half-open [start,end) intervals.",
+  "allFrameExactZeroTargets": {
+    "x.vel": 0,
+    "y.vel": 2936,
+    "theta.vel": 0
+  },
+  "rightArmGridChanges": {
+    "gridFrames": 25,
+    "gridEdges": 117,
+    "otherEdges": 2818,
+    "channels": {
+      "arm_right_shoulder_pan.pos": {
+        "gridMeanAbsChange": 2.7072848336309447,
+        "otherMeanAbsChange": 0.31761822284240937,
+        "ratio": 8.523707517166612,
+        "gridShareOfTotalVariation": 0.2613898338999327
+      },
+      "arm_right_shoulder_lift.pos": {
+        "gridMeanAbsChange": 3.6845044376503706,
+        "otherMeanAbsChange": 0.7042531882134458,
+        "ratio": 5.231789503143387,
+        "gridShareOfTotalVariation": 0.17845424765332984
+      },
+      "arm_right_elbow_flex.pos": {
+        "gridMeanAbsChange": 3.803826568600459,
+        "otherMeanAbsChange": 0.6162681454109165,
+        "ratio": 6.172356298026951,
+        "gridShareOfTotalVariation": 0.20399205877502902
+      },
+      "arm_right_wrist_flex.pos": {
+        "gridMeanAbsChange": 3.2779605735061517,
+        "otherMeanAbsChange": 0.4738079806098369,
+        "ratio": 6.918331281138612,
+        "gridShareOfTotalVariation": 0.22314461376306263
+      },
+      "arm_right_wrist_yaw.pos": {
+        "gridMeanAbsChange": 1.7900557642818515,
+        "otherMeanAbsChange": 0.16510736084601996,
+        "ratio": 10.841768380946187,
+        "gridShareOfTotalVariation": 0.3104101227862866
+      },
+      "arm_right_wrist_roll.pos": {
+        "gridMeanAbsChange": 0.9131484225264981,
+        "otherMeanAbsChange": 0.05052031368292165,
+        "ratio": 18.074876340983355,
+        "gridShareOfTotalVariation": 0.4287174530815122
+      },
+      "arm_right_gripper.pos": {
+        "gridMeanAbsChange": 2.7960127581897964,
+        "otherMeanAbsChange": 0.5264796985642465,
+        "ratio": 5.310770321846699,
+        "gridShareOfTotalVariation": 0.1806615488327833
+      }
+    }
+  },
+  "oscillationPeaks": [
+    {
+      "channel": "arm_right_wrist_roll.pos",
+      "start": 16,
+      "end": 26,
+      "frames": 300,
+      "target": {
+        "peakHzInRecordedTime": 0.6000000000000001,
+        "periodFrames": 49.99999999999999
+      },
+      "feedback": {
+        "peakHzInRecordedTime": 0.6000000000000001,
+        "periodFrames": 49.99999999999999
+      }
+    },
+    {
+      "channel": "arm_right_wrist_roll.pos",
+      "start": 38,
+      "end": 50,
+      "frames": 360,
+      "target": {
+        "peakHzInRecordedTime": 0.5833333333333333,
+        "periodFrames": 51.42857142857144
+      },
+      "feedback": {
+        "peakHzInRecordedTime": 0.5833333333333333,
+        "periodFrames": 51.42857142857144
+      }
+    },
+    {
+      "channel": "arm_right_wrist_yaw.pos",
+      "start": 88,
+      "end": 97.84,
+      "frames": 296,
+      "target": {
+        "peakHzInRecordedTime": 0.6081081081081081,
+        "periodFrames": 49.333333333333336
+      },
+      "feedback": {
+        "peakHzInRecordedTime": 0.6081081081081081,
+        "periodFrames": 49.333333333333336
+      }
+    }
+  ],
+  "spectrumMethod": "Periodogram, nominal 30 Hz recording, linear detrend, largest non-DC power bin.",
   "reportSHA256": "27483ad83e5a3adc4e0e12e63c22e770b4ff616c5ca19e45eac37c5bc0cc6cc6",
   "statsSHA256": "876ea33979fc9480d071ae91789f183600435bdb76f10acb611d7b6a48d79058",
   "processorFileSHA256": "676d7dc3d42dea5f9f05f01ba93d53d5f4ea7d79e6d4fe41507b4cca1e09cac9",
-  "processorRevision": "e029e1f99bdf8f654db485b91524812c137e62ce",
+  "processorRevision": "2a1d488540580a4cfcb95220846c22f8f5bc3af5",
   "testDevice": "cpu",
   "torchVersion": "2.11.0+cu130"
 }

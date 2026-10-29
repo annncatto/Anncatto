@@ -1177,6 +1177,7 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 .figure-viewer-close {flex-shrink:0;border:1px solid #dce4e7;border-radius:4px;background:#fff;color:#435a65;padding:6px 13px;font:inherit;font-size:14px;cursor:pointer;}
 .figure-viewer-content {overflow:auto;min-height:0;padding:24px;overscroll-behavior:contain;}
 .figure-viewer-content>img {display:block;max-width:100%;width:auto;height:auto;margin:auto;}
+.figure-viewer-content>img.sv-data-plot {width:100%;min-width:760px;max-width:none;}
 .figure-viewer-content>svg {display:block;width:100%;height:auto;min-width:640px;max-width:none;margin:auto;}
 .lightweight-article blockquote {margin:22px 0;padding:13px 20px;border-left:3px solid #b9cbd1;background:#f7f9f9;color:var(--ink);}
 .lightweight-article blockquote p {margin:6px 0;}
