@@ -1207,3 +1207,10 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 .sv-record-label {margin:22px 0 10px!important;}
 .sv-record-label[id] {scroll-margin-top:92px;}
 .sv-media-grid.sv-two.sv-two-toys {grid-template-columns:minmax(0,1fr) minmax(0,1.775fr);}
+
+/* Action positions in the DiT execution-window figure. */
+.dit-timeline {display:grid;grid-template-columns:repeat(16,minmax(0,1fr));gap:4px;margin:18px 0 10px;}
+.dit-timeline>span {display:flex;align-items:center;justify-content:center;min-width:0;height:34px;border-radius:3px;font-size:11px;font-variant-numeric:tabular-nums;}
+.dit-history {background:#e4ebed;color:#556b73;}
+.dit-executed {background:#4b9c80;color:white;}
+.dit-unused {background:#edf5f8;color:#556b73;}

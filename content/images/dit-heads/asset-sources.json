@@ -1,0 +1,76 @@
+{
+  "checkedDate": "2026-10-30",
+  "assets": [
+    {
+      "asset": "mtd.webp",
+      "source": "https://raw.githubusercontent.com/brysonjones/multitask_dit_policy/main/assets/mtdp_architecture.png",
+      "sha256": "d2cd9b90f2b9387f6b580ce89dd7270ab5adeda8af7de54dae80722f9f337ba3"
+    },
+    {
+      "asset": "dit-block.webp",
+      "source": "https://dit-policy.github.io/static/images/aloha_diffusion_arch.png",
+      "sha256": "e8ab0b0323444d5927263d8ed2afb51f7d508c202c14bc820c599964e3db8334"
+    },
+    {
+      "asset": "mdt.webp",
+      "source": "https://intuitive-robots.github.io/mdt_policy/static/image/mdt-v-figure.png",
+      "sha256": "b39b5c5142a53d02d52a83bb915f10537f19693f93fbb49df810828428328c8e"
+    },
+    {
+      "asset": "acdit.webp",
+      "source": "https://arxiv.org/html/2507.01961v3/Main_Method.png",
+      "sha256": "b6d3bd3514da0ae489bc1468409a1a689f2690beb0f21cec9465a00c57604e22"
+    },
+    {
+      "asset": "cogact.webp",
+      "source": "https://cogact.github.io/static/images/model.png",
+      "sha256": "8aa98e12987212618e17f889a73df3183bd7c1793ae69947220483bc4dd0a148"
+    },
+    {
+      "asset": "gr00t.webp",
+      "source": "https://raw.githubusercontent.com/NVIDIA/Isaac-GR00T/main/media/model-architecture.png",
+      "sha256": "8975318eb2dc787d909b1100004b9f630a3a917efdfebb44d1a48e3bc246470a"
+    },
+    {
+      "asset": "dit-original.webp",
+      "source": "https://openaccess.thecvf.com/content/ICCV2023/papers/Peebles_Scalable_Diffusion_Models_with_Transformers_ICCV_2023_paper.pdf#page=3",
+      "sha256": "9b4328fa3be0b83516ea5e466a12856a58364f6808a29436fc3a5b313342586a"
+    },
+    {
+      "asset": "lightdp.webp",
+      "source": "https://openaccess.thecvf.com/content/ICCV2025/papers/Wu_On-Device_Diffusion_Transformer_Policy_for_Efficient_Robot_Manipulation_ICCV_2025_paper.pdf#page=5",
+      "sha256": "0c25f42f4315d3589bf7513ecbcf367c6df51563b3fdeafab92b26f742ff7a7d"
+    },
+    {
+      "asset": "mode.webp",
+      "source": "https://arxiv.org/pdf/2412.12953#page=2",
+      "sha256": "246bcea028a917b68a4fccc298795bf8b7e4b39730696046a4b047db74834a20"
+    },
+    {
+      "asset": "spirit.svg",
+      "source": "https://huggingface.co/Spirit-AI-robotics/Spirit-v1.5/blob/main/config.json",
+      "sha256": "47d5b389b26447f88259b297d9fdf4cc2ae2092fa7ed95b973a3ab58929690ad"
+    },
+    {
+      "asset": "mtd-tensors.svg",
+      "source": "https://github.com/huggingface/lerobot/blob/53feaef37b67e8f4c23b6953e880ff535e39d6fe/src/lerobot/policies/multi_task_dit/modeling_multi_task_dit.py",
+      "sha256": "d1944e87996b82a019e928dc9cd4aa30ab9bbc6570f3d55650f927022310d073"
+    },
+    {
+      "asset": "nas25.mp4",
+      "source": "User-provided rollout",
+      "sourceSHA256": "e21856096a7377fcfcac17d72275e19807c5df0fa0efa328894759d76815cd0d",
+      "durationSeconds": 111.95,
+      "playbackSpeed": 1,
+      "audio": false
+    },
+    {
+      "asset": "nas30.mp4",
+      "source": "User-provided rollout",
+      "sourceSHA256": "1fcbb214f8c6524fbaddd84a4b53b204d8a44827cd146a1bdfe13f631a0ee8e5",
+      "durationSeconds": 57.3,
+      "playbackSpeed": 1,
+      "audio": false
+    }
+  ]
+}

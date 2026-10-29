@@ -1,5 +1,16 @@
 [
   {
+    "slug": "dit-heads",
+    "title": "DiT Heads",
+    "titleEn": "DiT Heads",
+    "description": "比较扩散 Transformer 策略与动作头，推导条件注入和 MTD 张量流，结合玩偶实验分析执行窗口、松爪与底盘速度。",
+    "descriptionEn": "Diffusion Transformer policies and action heads, conditioning and MTD tensor flow, with toy-task experiments on execution windows, release and base velocity.",
+    "date": "2026-10-30",
+    "source": "DiT Heads.html",
+    "module": "dit-heads",
+    "sections": []
+  },
+  {
     "slug": "smolvla-numerical-types",
     "title": "SmolVLA & 数值类型",
     "titleEn": "SmolVLA & Numerical Types",
