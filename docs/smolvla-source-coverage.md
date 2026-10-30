@@ -122,10 +122,16 @@ article after a successful Pages deployment.
   P95 in the three windows is .003221, .004832, .004832 in recorded units.
   This establishes feedback residuals under zero lateral commands, without
   interpreting them as a measured displacement or recovering network outputs.
-- `smolvla-stopping.py` validates every channel against the report and calls the actual
-  CPU Processor under BF16 autocast. FP32 stop round trip: 5.5879354e-9;
+- `smolvla-stopping.py` validates every channel against the report and imports
+  alohamini.learning.processor.Processor, not LeRobot’s processor classes. The
+  current source and revision2a1d488 both match the archived processor SHA256
+  676d7dc3d42dea5f9f05f01ba93d53d5f4ea7d79e6d4fe41507b4cca1e09cac9.
+  SmolVLAProcessor delegates normalization and action restoration to that shared
+  AlohaMini implementation. CPU BF16 autocast applies only to this isolated
+  arithmetic check; FP32 statistics promote both restored outputs to FP32. FP32 stop round trip: 5.5879354e-9;
   pre-rounding the stop label to BF16: -3.6302954e-6; both restored outputs FP32.
-  This isolates the inverse-operation residual; it does not evaluate reduced
+  Both residuals were reproduced with the same AlohaMini processor. The prose
+  and formula attribution now name this implementation. This isolates the inverse-operation residual; it does not evaluate reduced
   precision throughout the network or determine a training cause.
 - Standalone scientific plots show six zoomed stopping-target windows and
   wrist-roll target/feedback traces with periodograms. Blue/green/grey palette
