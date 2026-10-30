@@ -1253,3 +1253,6 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 .dit-history {background:#e4ebed;color:#556b73;}
 .dit-executed {background:#4b9c80;color:white;}
 .dit-unused {background:#edf5f8;color:#556b73;}
+
+/* Optional presentation articles retain a compact full-text entry. */
+.entry-format {font-size:12px;margin-left:14px;color:var(--muted);}

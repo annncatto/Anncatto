@@ -11,6 +11,7 @@ import { renderCourseFigure } from '../.build/lightweight-course.js';
 import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
 import { renderSmolFigure, renderSmolMedia } from '../.build/smolvla-figures.js';
+import { renderOpenwamDiagram } from '../.build/openwam-slide-diagrams.js';
 import { build as bundle } from 'esbuild';
 await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
 await bundle({entryPoints:['src/concept-worker.ts'],outfile:'.build/concept-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}]});
@@ -35,6 +36,7 @@ const versionHash = createHash("sha256");
 for (const name of moduleNames) versionHash.update(await fs.readFile(path.join(".build", name)));
 versionHash.update(await fs.readFile("public/style.css"));
 versionHash.update(await fs.readFile("public/fonts.css"));
+versionHash.update(await fs.readFile("public/slides.css"));
 const assetVersion = versionHash.digest("hex").slice(0, 12);
 for (const name of moduleNames) {
   const source = await fs.readFile(path.join(".build", name), "utf8");
@@ -109,7 +111,7 @@ function math(s) {
       ),
     );
 }
-function shell(title, description, body, interactive = false, module = '') {
+function shell(title, description, body, interactive = false, module = '', presentation = false) {
   return `<!doctype html>
 <html lang="en" data-language="en">
 <head>
@@ -121,12 +123,13 @@ function shell(title, description, body, interactive = false, module = '') {
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/style.css">
+${presentation ? '<link rel="stylesheet" href="/assets/slides.css">' : ''}
 ${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
 ${module ? `<script type="module" src="/assets/${module}.js"></script>` : ''}
 </head>
-<body>
+<body${presentation ? ' class="presentation-page"' : ''}>
 <a class="skip" href="#main">${bilingual("Skip to content", "跳至正文")}</a>
-<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${'<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
+${presentation ? '' : `<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav><nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav></header>`}
 ${body}
 </body>
 </html>`.replace(/\b(href|src|poster)="\/(?!\/)/g, `$1="${basePath}/`)
@@ -182,7 +185,7 @@ for (const p of posts) {
       .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id))
       .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
       .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
-  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
+  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` · <a href="/notes/${p.slug}/slides/">${bilingual('Presentation ↗','幻灯片 ↗')}</a>` : ''}</p></header>`;
   const sidebar = readingSidebar(raw, p.title, p.titleEn, p.tocDepth ?? (p.module === "dit-heads" ? 4 : 3));
   await write(
     `notes/${p.slug}/index.html`,
@@ -194,11 +197,16 @@ for (const p of posts) {
       p.module || '',
     ),
   );
+  if (p.presentation) {
+    const slides = math((await readArticleSource(p.presentation))
+      .replace(/\{\{openwam:([\w-]+)\}\}/g, (_, id) => renderOpenwamDiagram(id)));
+    await write(`notes/${p.slug}/slides/index.html`, shell(p.title, p.descriptionEn, slides, true, 'slides', true));
+  }
 }
 const listing = posts
   .map(
     (p) =>
-      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
+      `<li class="entry"><article><h2><a href="/notes/${p.slug}/${p.presentation ? 'slides/' : ''}">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` <a class="entry-format" href="/notes/${p.slug}/">${bilingual('Full article','全文')}</a>` : ''}</article></li>`,
   )
   .join("");
 await write(
