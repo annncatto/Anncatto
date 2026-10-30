@@ -78,8 +78,14 @@ where release sat in discarded historical chunks.
 ## Primary-source checks
 
 - Original diffusion: Sohl-Dickstein et al. (2015), DDPM (2020), DDIM (2020 /
-  ICLR2021). DDIM shares DDPM training and can use its epsilon predictor; the
-  displayed skipped-level equations use eta=0. Random initialization is retained.
+  ICLR2021). DDPM covers forward corruption, training, and reverse sampling.
+  DDIM is a generative model family sharing the training objective; in deployment
+  it commonly names its sampling procedure. The overview now separates objectives
+  from sampling processes, lists DDPM in both relevant contexts, and places DDPM
+  and DDIM sampling at H4 under diffusion models. Euler is described as an ODE
+  integrator in the flow-matching section. MTD objectives and samplers are listed
+  separately. DDIM can reuse an epsilon predictor; the displayed skipped-level
+  equations use eta=0. Random initialization is retained.
 - Flow Matching (Lipman et al.) supports Gaussian paths including diffusion
   paths; its straight-line conditional-path example is distinguished from DDPM
   noise regression and DDIM sampling. Generation time is distinct from action time.
