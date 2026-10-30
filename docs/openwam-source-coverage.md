@@ -56,7 +56,7 @@ python scripts/figures/openwam-assets.py /path/to/extracted/source
 - Chinese and English layouts checked at 390, 768 and 1440 px, with all score tables expanded: no whole-page horizontal overflow.
 - Image viewer checked on Figures 1, 8, 17 and 21 with Escape and close button; scrolling is restored after close.
 - References start collapsed in the compact shared format. Homepage includes the article and the shared Home footer works through the existing navigation.
-- Changes remain on `article/openwam`; no publication push is part of this work.
+- Draft preparation and validation used `article/openwam`, separately from unpublished homepage work. Publication follows an explicit user request.
 
 ## Integrated background supplements
 
