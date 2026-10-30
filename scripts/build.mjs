@@ -154,18 +154,22 @@ function readingMinutes(raw, language) {
   const codeLines = code.reduce((sum, match) => sum + match[1].split("\n").length, 0);
   return Math.max(1, Math.ceil((words + tableWords) / 200 + (characters + tableCharacters) / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
 }
-function readingSidebar(raw, title, titleEn=title) {
+function readingSidebar(raw, title, titleEn=title, maxDepth=3) {
   const sections = [];
-  let parent;
-  for (const match of raw.matchAll(/<h([23])\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)) {
+  const parents = [];
+  for (const match of raw.matchAll(/<h([234])\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)) {
+    const level = Number(match[1]);
+    if (level > maxDepth) continue;
     const heading = language => (match[3].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[3]).replace(/<[^>]*>/g, "");
     const section = { id: match[2], en: heading("en"), zh: heading("zh-CN"), children: [] };
-    if (match[1] === "2") { sections.push(section); parent = section; }
-    else if (parent) parent.children.push(section);
+    while (parents.length && parents.at(-1).level >= level) parents.pop();
+    if (parents.length) parents.at(-1).section.children.push(section);
     else sections.push(section);
+    parents.push({level, section});
   }
   const contentsLink = section => `<a href="#${esc(section.id)}">${bilingual(esc(section.en), esc(section.zh))}</a>`;
-  const tree = sections.map(section => `<li>${contentsLink(section)}${section.children.length ? `<ol class="contents-subsections">${section.children.map(child => `<li>${contentsLink(child)}</li>`).join("")}</ol>` : ""}</li>`).join("");
+  const contentsItems = items => items.map(section => `<li>${contentsLink(section)}${section.children.length ? `<ol class="contents-subsections">${contentsItems(section.children)}</ol>` : ""}</li>`).join("");
+  const tree = contentsItems(sections);
   const en = readingMinutes(raw, "en"), zh = readingMinutes(raw, "zh-CN");
   return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><a class="contents-root" href="#article-top" aria-current="location">${bilingual(esc(titleEn),esc(title))}</a><ol>${tree}</ol></nav></details></aside>`;
 }
@@ -179,7 +183,7 @@ for (const p of posts) {
       .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
       .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
   const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const sidebar = readingSidebar(raw, p.title, p.titleEn);
+  const sidebar = readingSidebar(raw, p.title, p.titleEn, p.module === "dit-heads" ? 4 : 3);
   await write(
     `notes/${p.slug}/index.html`,
     shell(

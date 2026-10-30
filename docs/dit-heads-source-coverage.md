@@ -8,8 +8,14 @@ Keep unpublished workbench/D20 work on its existing branches.
 
 - Shared conversation supplied the questions and algorithm list, not factual
   authority. Public claims use original papers, released configs, and code.
-- Four initially folded theory chapters: method overview, generative networks,
-  Multi-Task DiT, mobile manipulation. Experiments remain directly accessible.
+- Three initially folded theory chapters: generative networks, action generation
+  methods, and mobile manipulation. Experiments remain directly accessible.
+- Multi-Task DiT details are H4 subsections under its H3 algorithm entry. The
+  article's contents include H4 entries; other articles retain their current depth.
+- Generative networks now explains module roles, diffusion origins, DDPM training
+  and sampling, DDIM, flow matching, three timing quantities, tensor widths,
+  attention, conditioning, and parameter scale. The generic continuous/discrete
+  output subsection has been removed; experiment-specific normalization remains.
 - Nine compared methods: LeRobot Multi-Task DiT, DiT-Block Policy, MDT, MoDE,
   LightDP, CogACT, GR00T N1.7, Spirit v1.5, AC-DiT.
 - MTD is the LeRobot community implementation inspired by TRI LBM work;
@@ -70,6 +76,25 @@ predictions can change release timing. The clip comparison does not recover
 where release sat in discarded historical chunks.
 
 ## Primary-source checks
+
+- Original diffusion: Sohl-Dickstein et al. (2015), DDPM (2020), DDIM (2020 /
+  ICLR2021). DDIM shares DDPM training and can use its epsilon predictor; the
+  displayed skipped-level equations use eta=0. Random initialization is retained.
+- Flow Matching (Lipman et al.) supports Gaussian paths including diffusion
+  paths; its straight-line conditional-path example is distinguished from DDPM
+  noise regression and DDIM sampling. Generation time is distinct from action time.
+- Diffusion Policy Section3 already separates visual encoding from action
+  denoising. Octo SectionIII uses readouts and a diffusion action head; CogACT
+  uses VLM conditioning and a dedicated DiT. These support modular action
+  generation, not a universal historical transition from an entire policy
+  backbone to a head. Standalone diffusion policies remain a parallel route.
+- Algorithm-chapter introduction contains two paragraphs: applications (Diffuser,
+  Diffusion Policy, VLA heads), then coexistence with flow matching. CogACT
+  AppendixB reports10-step DDIM; LightDP supports continued acceleration of
+  diffusion. No claim of task-independent superiority of either objective.
+- All nine algorithm entries link their paper or technical source. MTD's author
+  write-up is separated from TRI's paper; GR00T N1.7 release documentation is
+  separated from the original N1 white paper; Spirit links technical blog/code.
 
 - DiT: Peebles/Xie Figure3; diffusion backbone and three conditioning variants.
 - DiT-Block: Dasari et al. Figure2; multimodal dropout and encoder/decoder policy.
