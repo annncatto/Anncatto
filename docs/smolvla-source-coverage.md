@@ -9,9 +9,22 @@ workbench and D20 homepage separate from article maintenance releases.
 - H1 article title; H2 chapters; H3 subsections in the nested site-wide TOC.
 - The first two chapters use initially closed native disclosures. TOC/deep links
   reveal their target; reading progress ignores hidden section headings.
-- Model order follows the source note: architecture, action normalization,
+- Model order follows the source note: architecture,
   observation features, attention, flow training, sampling, π0.5 comparison,
   SmolVLM, asynchronous inference.
+- Dataset-specific normalization is now Data preprocessing under Experimental
+  record, after the dataset/camera description and before training settings.
+  The dataflow disclosure is colocated there; changing120/150-demo statistics
+  belongs to the continued-training experiment.
+- Trajectory introductions define action as a postprocessed policy-side control
+  request and observation.state as measured state before the policy call/send.
+  Queued predictions may have been generated earlier. Raster plots retain their
+  Target / Pre-request feedback labels with explicit prose aliases; the local
+  wrist SVG uses green feedback and its caption specifies that colour.
+- Stopping analysis compares the actual command-P95 scales after dividing by
+  sigma:.015298,.020222,.017485. These are inverse-mapped equivalents, not
+  recorded raw network predictions. The independent CPU arithmetic check is a
+  disclosure under this quantitative comparison.
 - Numerical types proceed through representation, use in the policy pipeline,
   training precision and controlled results, rounding mechanisms, implementation.
   The fp32-master paper's findings are integrated into training precision.
