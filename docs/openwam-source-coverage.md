@@ -52,8 +52,28 @@ python scripts/figures/openwam-assets.py /path/to/extracted/source
 
 - `BASE_PATH=/Anncatto npm run build` and `npm run check` pass.
 - Existing suite: 32 tests pass.
-- Browser: all 21 images decode at their recorded dimensions; ten bilingual excerpts display correctly; headings through H4 appear in the contents.
+- Browser: all 21 images decode at their recorded dimensions; eleven bilingual excerpts display correctly; headings through H4 appear in the contents.
 - Chinese and English layouts checked at 390, 768 and 1440 px, with all score tables expanded: no whole-page horizontal overflow.
 - Image viewer checked on Figures 1, 8, 17 and 21 with Escape and close button; scrolling is restored after close.
 - References start collapsed in the compact shared format. Homepage includes the article and the shared Home footer works through the existing navigation.
 - Changes remain on `article/openwam`; no publication push is part of this work.
+
+## Integrated background supplements
+
+The follow-up shared conversation was read in full. Its additional background was integrated under the existing paper headings; no FAQ headings or conversation excerpts were added.
+
+- **Evaluation Protocol:** thin-client responsibilities, persistent WebSocket reuse, shared versus embodiment-specific action heads, linear velocity-field output, and active-slot supervision.
+- **Visual Representation Priors:** representative instances versus the representation-encoder category; channels versus token count and hidden width; S-VAE feature reconstruction, cosine and KL losses; frame averaging versus learned causal temporal compression; separate channel/time effects; equal channel count versus latent-space compatibility.
+- **Inference-Time Information Flow:** both schedule families, the backbone warp, and Euler increments. The relative-direction reversal is explained through the two factors varied together: feature conditioning and integration grids. The derived numerical example is explicitly illustrative, not a reproduction of Figure 9's success rates.
+
+Additional primary sources:
+
+- Peebles and Xie, *Scalable Diffusion Models with Transformers*: <https://arxiv.org/abs/2212.09748>.
+- Zheng et al., *Diffusion Transformers with Representation Autoencoders*: <https://arxiv.org/html/2510.11690v1>, §4.
+- Zhang et al., *Both Semantics and Reconstruction Matter*: <https://arxiv.org/html/2512.17909v1>, §3.3.
+- Wan2.2 causal VAE implementation: <https://github.com/Wan-Video/Wan2.2/blob/main/wan/modules/vae2_2.py>.
+- OpenWAM code checked at commit `3950b6d9ea848dc980a82a89b4554af2c082544a`: `denoise_schedule.py`, the S-VAE model/reducer/trainer, DINOv3/V-JEPA encoders, and benchmark client helpers. Article links pin the relevant code version.
+
+`scripts/figures/openwam-schedules.py` records the analytical noise-to-data grids in `content/images/openwam/schedule-analysis.json`. The optional `--upstream` argument compares them with the inspected official scheduler on CPU, converting its decreasing sigma convention to the paper's increasing clean-time convention. At N=10, rho=5, alpha=32 the first action-leading step is 0.4155844, versus 0.0217391 for the base grid. An action offset of 0.8 leaves two nonzero action updates. The maximum absolute difference from the official float32 grid is `9.009951640326364e-08`. This audits formulas and implementation, not the learned model's control accuracy or the causal contribution of discretization to success rates.
+
+The article's KaTeX spans now establish their own positioning context. This keeps clipped accessible MathML from enlarging the document's scrollable width on narrow screens, while retaining MathML for assistive technology and local scrolling for wide displayed equations.

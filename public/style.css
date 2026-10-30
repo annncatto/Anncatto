@@ -730,6 +730,9 @@ li {
   margin: 26px 0 12px;
   line-height: 1.5;
 }
+.openwam-article .katex {
+  position: relative;
+}
 .openwam-article .paper-figure img {
   max-height: 760px;
   object-fit: contain;

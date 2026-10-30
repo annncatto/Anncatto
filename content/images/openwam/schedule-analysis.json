@@ -1,0 +1,486 @@
+{
+  "source": "https://github.com/OpenWAM-Official/OpenWAM/blob/3950b6d9ea848dc980a82a89b4554af2c082544a/openwam/deploy/denoise_schedule.py",
+  "convention": "Paper t: 0=noise, 1=clean. Upstream sigma=1-t.",
+  "purpose": "Illustrative N=10, rho=5 schedule calculation; not a robot success-rate reproduction.",
+  "num_steps": 10,
+  "backbone_shift": 5,
+  "cases": {
+    "sync": {
+      "first_action_step": 0.021739130434782483,
+      "nonzero_action_updates": 10,
+      "max_action_step": 0.3571428571428571,
+      "grid": [
+        {
+          "step": 0,
+          "progress": 0.0,
+          "r_video": 0.0,
+          "r_action": 0.0,
+          "t_video": 0.0,
+          "t_action": 0.0
+        },
+        {
+          "step": 1,
+          "progress": 0.1,
+          "r_video": 0.1,
+          "r_action": 0.1,
+          "t_video": 0.021739130434782483,
+          "t_action": 0.021739130434782483
+        },
+        {
+          "step": 2,
+          "progress": 0.2,
+          "r_video": 0.2,
+          "r_action": 0.2,
+          "t_video": 0.04761904761904767,
+          "t_action": 0.04761904761904767
+        },
+        {
+          "step": 3,
+          "progress": 0.3,
+          "r_video": 0.3,
+          "r_action": 0.3,
+          "t_video": 0.07894736842105254,
+          "t_action": 0.07894736842105254
+        },
+        {
+          "step": 4,
+          "progress": 0.4,
+          "r_video": 0.4,
+          "r_action": 0.4,
+          "t_video": 0.11764705882352944,
+          "t_action": 0.11764705882352944
+        },
+        {
+          "step": 5,
+          "progress": 0.5,
+          "r_video": 0.5,
+          "r_action": 0.5,
+          "t_video": 0.16666666666666663,
+          "t_action": 0.16666666666666663
+        },
+        {
+          "step": 6,
+          "progress": 0.6,
+          "r_video": 0.6,
+          "r_action": 0.6,
+          "t_video": 0.23076923076923084,
+          "t_action": 0.23076923076923084
+        },
+        {
+          "step": 7,
+          "progress": 0.7,
+          "r_video": 0.7,
+          "r_action": 0.7,
+          "t_video": 0.3181818181818181,
+          "t_action": 0.3181818181818181
+        },
+        {
+          "step": 8,
+          "progress": 0.8,
+          "r_video": 0.8,
+          "r_action": 0.8,
+          "t_video": 0.44444444444444453,
+          "t_action": 0.44444444444444453
+        },
+        {
+          "step": 9,
+          "progress": 0.9,
+          "r_video": 0.9,
+          "r_action": 0.9,
+          "t_video": 0.6428571428571429,
+          "t_action": 0.6428571428571429
+        },
+        {
+          "step": 10,
+          "progress": 1.0,
+          "r_video": 1.0,
+          "r_action": 1.0,
+          "t_video": 1.0,
+          "t_action": 1.0
+        }
+      ]
+    },
+    "variance-video-lead": {
+      "first_action_step": 0.021739130434782483,
+      "nonzero_action_updates": 10,
+      "max_action_step": 0.3571428571428571,
+      "grid": [
+        {
+          "step": 0,
+          "progress": 0.0,
+          "r_video": 0.0,
+          "r_action": 0.0,
+          "t_video": 0.0,
+          "t_action": 0.0
+        },
+        {
+          "step": 1,
+          "progress": 0.1,
+          "r_video": 0.7804878048780489,
+          "r_action": 0.1,
+          "t_video": 0.41558441558441583,
+          "t_action": 0.021739130434782483
+        },
+        {
+          "step": 2,
+          "progress": 0.2,
+          "r_video": 0.888888888888889,
+          "r_action": 0.2,
+          "t_video": 0.6153846153846155,
+          "t_action": 0.04761904761904767
+        },
+        {
+          "step": 3,
+          "progress": 0.3,
+          "r_video": 0.9320388349514563,
+          "r_action": 0.3,
+          "t_video": 0.7328244274809161,
+          "t_action": 0.07894736842105254
+        },
+        {
+          "step": 4,
+          "progress": 0.4,
+          "r_video": 0.9552238805970149,
+          "r_action": 0.4,
+          "t_video": 0.8101265822784809,
+          "t_action": 0.11764705882352944
+        },
+        {
+          "step": 5,
+          "progress": 0.5,
+          "r_video": 0.9696969696969697,
+          "r_action": 0.5,
+          "t_video": 0.8648648648648649,
+          "t_action": 0.16666666666666663
+        },
+        {
+          "step": 6,
+          "progress": 0.6,
+          "r_video": 0.979591836734694,
+          "r_action": 0.6,
+          "t_video": 0.9056603773584909,
+          "t_action": 0.23076923076923084
+        },
+        {
+          "step": 7,
+          "progress": 0.7,
+          "r_video": 0.986784140969163,
+          "r_action": 0.7,
+          "t_video": 0.9372384937238494,
+          "t_action": 0.3181818181818181
+        },
+        {
+          "step": 8,
+          "progress": 0.8,
+          "r_video": 0.9922480620155039,
+          "r_action": 0.8,
+          "t_video": 0.9624060150375939,
+          "t_action": 0.44444444444444453
+        },
+        {
+          "step": 9,
+          "progress": 0.9,
+          "r_video": 0.9965397923875432,
+          "r_action": 0.9,
+          "t_video": 0.9829351535836175,
+          "t_action": 0.6428571428571429
+        },
+        {
+          "step": 10,
+          "progress": 1.0,
+          "r_video": 1.0,
+          "r_action": 1.0,
+          "t_video": 1.0,
+          "t_action": 1.0
+        }
+      ]
+    },
+    "variance-action-lead": {
+      "first_action_step": 0.41558441558441583,
+      "nonzero_action_updates": 10,
+      "max_action_step": 0.41558441558441583,
+      "grid": [
+        {
+          "step": 0,
+          "progress": 0.0,
+          "r_video": 0.0,
+          "r_action": 0.0,
+          "t_video": 0.0,
+          "t_action": 0.0
+        },
+        {
+          "step": 1,
+          "progress": 0.1,
+          "r_video": 0.1,
+          "r_action": 0.7804878048780489,
+          "t_video": 0.021739130434782483,
+          "t_action": 0.41558441558441583
+        },
+        {
+          "step": 2,
+          "progress": 0.2,
+          "r_video": 0.2,
+          "r_action": 0.888888888888889,
+          "t_video": 0.04761904761904767,
+          "t_action": 0.6153846153846155
+        },
+        {
+          "step": 3,
+          "progress": 0.3,
+          "r_video": 0.3,
+          "r_action": 0.9320388349514563,
+          "t_video": 0.07894736842105254,
+          "t_action": 0.7328244274809161
+        },
+        {
+          "step": 4,
+          "progress": 0.4,
+          "r_video": 0.4,
+          "r_action": 0.9552238805970149,
+          "t_video": 0.11764705882352944,
+          "t_action": 0.8101265822784809
+        },
+        {
+          "step": 5,
+          "progress": 0.5,
+          "r_video": 0.5,
+          "r_action": 0.9696969696969697,
+          "t_video": 0.16666666666666663,
+          "t_action": 0.8648648648648649
+        },
+        {
+          "step": 6,
+          "progress": 0.6,
+          "r_video": 0.6,
+          "r_action": 0.979591836734694,
+          "t_video": 0.23076923076923084,
+          "t_action": 0.9056603773584909
+        },
+        {
+          "step": 7,
+          "progress": 0.7,
+          "r_video": 0.7,
+          "r_action": 0.986784140969163,
+          "t_video": 0.3181818181818181,
+          "t_action": 0.9372384937238494
+        },
+        {
+          "step": 8,
+          "progress": 0.8,
+          "r_video": 0.8,
+          "r_action": 0.9922480620155039,
+          "t_video": 0.44444444444444453,
+          "t_action": 0.9624060150375939
+        },
+        {
+          "step": 9,
+          "progress": 0.9,
+          "r_video": 0.9,
+          "r_action": 0.9965397923875432,
+          "t_video": 0.6428571428571429,
+          "t_action": 0.9829351535836175
+        },
+        {
+          "step": 10,
+          "progress": 1.0,
+          "r_video": 1.0,
+          "r_action": 1.0,
+          "t_video": 1.0,
+          "t_action": 1.0
+        }
+      ]
+    },
+    "offset-video-lead": {
+      "first_action_step": 0.0,
+      "nonzero_action_updates": 2,
+      "max_action_step": 0.8333333333333334,
+      "grid": [
+        {
+          "step": 0,
+          "progress": 0.0,
+          "r_video": 0.0,
+          "r_action": 0,
+          "t_video": 0.0,
+          "t_action": 0.0
+        },
+        {
+          "step": 1,
+          "progress": 0.1,
+          "r_video": 0.1,
+          "r_action": 0,
+          "t_video": 0.021739130434782483,
+          "t_action": 0.0
+        },
+        {
+          "step": 2,
+          "progress": 0.2,
+          "r_video": 0.2,
+          "r_action": 0,
+          "t_video": 0.04761904761904767,
+          "t_action": 0.0
+        },
+        {
+          "step": 3,
+          "progress": 0.3,
+          "r_video": 0.3,
+          "r_action": 0,
+          "t_video": 0.07894736842105254,
+          "t_action": 0.0
+        },
+        {
+          "step": 4,
+          "progress": 0.4,
+          "r_video": 0.4,
+          "r_action": 0,
+          "t_video": 0.11764705882352944,
+          "t_action": 0.0
+        },
+        {
+          "step": 5,
+          "progress": 0.5,
+          "r_video": 0.5,
+          "r_action": 0,
+          "t_video": 0.16666666666666663,
+          "t_action": 0.0
+        },
+        {
+          "step": 6,
+          "progress": 0.6,
+          "r_video": 0.6,
+          "r_action": 0,
+          "t_video": 0.23076923076923084,
+          "t_action": 0.0
+        },
+        {
+          "step": 7,
+          "progress": 0.7,
+          "r_video": 0.7,
+          "r_action": 0,
+          "t_video": 0.3181818181818181,
+          "t_action": 0.0
+        },
+        {
+          "step": 8,
+          "progress": 0.8,
+          "r_video": 0.8,
+          "r_action": 0.0,
+          "t_video": 0.44444444444444453,
+          "t_action": 0.0
+        },
+        {
+          "step": 9,
+          "progress": 0.9,
+          "r_video": 0.9,
+          "r_action": 0.5,
+          "t_video": 0.6428571428571429,
+          "t_action": 0.16666666666666663
+        },
+        {
+          "step": 10,
+          "progress": 1.0,
+          "r_video": 1.0,
+          "r_action": 1.0,
+          "t_video": 1.0,
+          "t_action": 1.0
+        }
+      ]
+    },
+    "offset-action-lead": {
+      "first_action_step": 0.021739130434782483,
+      "nonzero_action_updates": 10,
+      "max_action_step": 0.3571428571428571,
+      "grid": [
+        {
+          "step": 0,
+          "progress": 0.0,
+          "r_video": 0,
+          "r_action": 0.0,
+          "t_video": 0.0,
+          "t_action": 0.0
+        },
+        {
+          "step": 1,
+          "progress": 0.1,
+          "r_video": 0,
+          "r_action": 0.1,
+          "t_video": 0.0,
+          "t_action": 0.021739130434782483
+        },
+        {
+          "step": 2,
+          "progress": 0.2,
+          "r_video": 0,
+          "r_action": 0.2,
+          "t_video": 0.0,
+          "t_action": 0.04761904761904767
+        },
+        {
+          "step": 3,
+          "progress": 0.3,
+          "r_video": 0,
+          "r_action": 0.3,
+          "t_video": 0.0,
+          "t_action": 0.07894736842105254
+        },
+        {
+          "step": 4,
+          "progress": 0.4,
+          "r_video": 0,
+          "r_action": 0.4,
+          "t_video": 0.0,
+          "t_action": 0.11764705882352944
+        },
+        {
+          "step": 5,
+          "progress": 0.5,
+          "r_video": 0,
+          "r_action": 0.5,
+          "t_video": 0.0,
+          "t_action": 0.16666666666666663
+        },
+        {
+          "step": 6,
+          "progress": 0.6,
+          "r_video": 0,
+          "r_action": 0.6,
+          "t_video": 0.0,
+          "t_action": 0.23076923076923084
+        },
+        {
+          "step": 7,
+          "progress": 0.7,
+          "r_video": 0,
+          "r_action": 0.7,
+          "t_video": 0.0,
+          "t_action": 0.3181818181818181
+        },
+        {
+          "step": 8,
+          "progress": 0.8,
+          "r_video": 0.0,
+          "r_action": 0.8,
+          "t_video": 0.0,
+          "t_action": 0.44444444444444453
+        },
+        {
+          "step": 9,
+          "progress": 0.9,
+          "r_video": 0.5,
+          "r_action": 0.9,
+          "t_video": 0.16666666666666663,
+          "t_action": 0.6428571428571429
+        },
+        {
+          "step": 10,
+          "progress": 1.0,
+          "r_video": 1.0,
+          "r_action": 1.0,
+          "t_video": 1.0,
+          "t_action": 1.0
+        }
+      ]
+    }
+  },
+  "upstreamSha256": "8ecd3c73bb78de767a3c669bea7a51fccfca6ffdaa726b49aab3663e96da5c30",
+  "upstreamMaxAbsDifference": 9.009951640326364e-08
+}
