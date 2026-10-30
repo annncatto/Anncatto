@@ -60,17 +60,37 @@
       "asset": "nas25.mp4",
       "source": "User-provided rollout",
       "sourceSHA256": "e21856096a7377fcfcac17d72275e19807c5df0fa0efa328894759d76815cd0d",
-      "durationSeconds": 111.95,
+      "durationSeconds": 111.97,
       "playbackSpeed": 1,
-      "audio": false
+      "audio": false,
+      "width": 568,
+      "height": 320,
+      "averageFrameRate": "335900/11197",
+      "frameCount": 3359,
+      "processing": "Original H.264 picture stream copied; audio and other tracks removed.",
+      "pictureStreamSHA256": "1b645bd27fa74a28765318f3bb66b2b5cf8ad936e03b7a921a7ef4d583aac17a",
+      "sha256": "8555f3b3ce02b68771183f0a9d2f5d4ebf41f6a6778a7553712c1ad6e056660a",
+      "posterWidth": 568,
+      "posterHeight": 320,
+      "posterSHA256": "2941c1ae73d65c59a8177803e1f8f812b4af34386162f491deea7dc7d5da0ea8"
     },
     {
       "asset": "nas30.mp4",
       "source": "User-provided rollout",
       "sourceSHA256": "1fcbb214f8c6524fbaddd84a4b53b204d8a44827cd146a1bdfe13f631a0ee8e5",
-      "durationSeconds": 57.3,
+      "durationSeconds": 57.301667,
       "playbackSpeed": 1,
-      "audio": false
+      "audio": false,
+      "width": 568,
+      "height": 320,
+      "averageFrameRate": "1031400/34381",
+      "frameCount": 1719,
+      "processing": "Original H.264 picture stream copied; audio and other tracks removed.",
+      "pictureStreamSHA256": "c23ff192ba0c47b79142710844a3b2f7dda8ab7a3d8736cf26648ec21bb6fe3c",
+      "sha256": "0e5e1dd105a735a1c2251cdaeb6888537fdceb14715263bd1e4779e4950627c4",
+      "posterWidth": 568,
+      "posterHeight": 320,
+      "posterSHA256": "c9fc855ef3a31e8e2650e41f2ad67eff3115eb4239f0963e34219add666063d4"
     }
   ]
 }

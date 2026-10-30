@@ -128,6 +128,11 @@ where release sat in discarded historical chunks.
 Original architecture assets retain their source colours and citations; custom
 SVGs/plots use the site palette. PDF figure crops exclude prose captions.
 Public media strip audio and retain original timing. Two clips use native controls.
+The rollout preparation script copies the original H.264 picture streams without
+re-encoding:568x320, approximately30fps,3359/1719 frames. Packet hashes verify
+that picture data matches the supplied sources. This replaces the previous
+20fps/CRF28 exports. Posters now retain568x320 instead of284x160; the article's
+single-video layout is capped at568 CSS pixels to avoid enlargement on desktop.
 One NAS slider changes executed positions, retained tail length and duration;
 static output is present before JavaScript. Theory diagrams have centered labels.
 

@@ -71,6 +71,7 @@
 .sv-media-grid.sv-four {grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;}
 .sv-media-grid.sv-two {grid-template-columns:repeat(2,minmax(0,1fr));}
 .sv-media-grid.sv-one {grid-template-columns:1fr;max-width:640px;margin-inline:auto;}
+.dit-article .sv-media-grid.sv-one {max-width:568px;}
 .sv-media-grid figure {margin:0;min-width:0;}
 .sv-media-grid img,.sv-media-grid video {display:block;width:100%;height:auto;border-radius:6px;background:#f0f4f3;}
 .sv-media-grid .figure-title {font-size:12px;font-weight:500;}
