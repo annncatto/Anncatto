@@ -74,10 +74,17 @@ peak magnitude is .3583% of .15. The150-demo dataset contains870 reverse,
 so MIN_MAX maps stop to0. Mean/std are .02221962056/.05559354208; MEAN_STD
 labels are -3.09783445,-.399679814,2.298474817. These are mapped labels, not
 recorded normalized network outputs. The public experiment now retains only the
-actual MIN_MAX mapping and its preserved zero point within base-velocity analysis;
+actual MIN_MAX mapping in Data preprocessing before training/results, referring
+to its preserved zero point briefly within base-velocity analysis;
 the hypothetical MEAN_STD comparison and separate normalization heading were
 removed. AlohaMini’s shared Processor reproduces the MIN_MAX stop round trip
 exactly at zero.
+
+Trajectory prose identifies recorded action as the postprocessed policy command
+and observation.state as measured feedback sampled before the policy call and
+send. It does not treat same-row differences as contemporaneous tracking error
+or assume every queued action is a fresh network inference. Success/trial counts
+and the rate are reported only beside the NAS30 result, once per language.
 
 The NAS interpretation follows the pinned MTD temporal contract: obs[-1,0],
 actions[-1,30], execution starts at index1. NAS25 executes current..+24 and leaves
