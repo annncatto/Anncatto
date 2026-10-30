@@ -1,5 +1,16 @@
 [
   {
+    "slug": "openwam",
+    "title": "OpenWAM",
+    "titleEn": "OpenWAM",
+    "description": "沿论文目录梳理世界知识继承、世界与动作协同及跨域预训练，结合中英引文、全部 21 张原图与受控实验理解 OpenWAM。",
+    "descriptionEn": "A close reading of world-prior inheritance, world–action synergy and cross-domain pretraining, with bilingual excerpts, all 21 original figures and controlled experiments.",
+    "date": "2026-10-30",
+    "source": "OpenWAM.html",
+    "tocDepth": 4,
+    "sections": []
+  },
+  {
     "slug": "dit-heads",
     "title": "DiT Heads",
     "titleEn": "DiT Heads",

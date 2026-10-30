@@ -183,7 +183,7 @@ for (const p of posts) {
       .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
       .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
   const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const sidebar = readingSidebar(raw, p.title, p.titleEn, p.module === "dit-heads" ? 4 : 3);
+  const sidebar = readingSidebar(raw, p.title, p.titleEn, p.tocDepth ?? (p.module === "dit-heads" ? 4 : 3));
   await write(
     `notes/${p.slug}/index.html`,
     shell(

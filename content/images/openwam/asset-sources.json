@@ -1,0 +1,219 @@
+{
+  "paper": "https://arxiv.org/abs/2609.07398v1",
+  "sourceArchive": "https://arxiv.org/src/2609.07398v1",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "credit": "Yuran Wang et al., OpenWAM (2026), Figures 1–21.",
+  "processing": "Complete author figure canvases rendered to lossless WebP; no content cropped or redrawn.",
+  "figures": [
+    {
+      "number": 1,
+      "source": "figures/teaser.pdf",
+      "sourceSha256": "376bed35bc09e386b7258112e744c73e76bd0e5e3292b1c409cb6e1616379f2e",
+      "file": "figure-01.webp",
+      "sha256": "66d4fd03ff76a6265966e1d8a6c2c9d990f96d5d9fb069b48eafcd3bcdf589db",
+      "width": 3600,
+      "height": 1425,
+      "bytes": 882370
+    },
+    {
+      "number": 2,
+      "source": "figures/openwam_infra/openwam-infra-model.pdf",
+      "sourceSha256": "e4840e5d97636bc39d9d8e32c5a14edeab1920bfe4177d83b5ba63940db86a07",
+      "file": "figure-02.webp",
+      "sha256": "562465494e66378891797411b085966a1fa1a1cd540e0892c75a79ec4d86798c",
+      "width": 3600,
+      "height": 1200,
+      "bytes": 151348
+    },
+    {
+      "number": 3,
+      "source": "figures/openwam_infra/inference_and_denoise.pdf",
+      "sourceSha256": "b81921a71af69450039c90a66e6e668ebf83b7dd0a7d7c261f228a682ad71fe0",
+      "file": "figure-03.webp",
+      "sha256": "75986bf443dd65331e0e4267eeb3fc26f5fb7ee496aaa071e8ebf8e9837cb3f5",
+      "width": 2800,
+      "height": 778,
+      "bytes": 72288
+    },
+    {
+      "number": 4,
+      "source": "figures/openwam_infra/acceleration.pdf",
+      "sourceSha256": "2dd2ba99c7d3692182e4728af4ebe7533ea6489e0d12c16add7dc307b27c8d2c",
+      "file": "figure-04.webp",
+      "sha256": "0dfe097f0e0cdee297e358b243676761bb01e3c52b3ecbb67088f7baeb63e18f",
+      "width": 2800,
+      "height": 928,
+      "bytes": 62564
+    },
+    {
+      "number": 5,
+      "source": "figures/openwam_infra/evaluation.pdf",
+      "sourceSha256": "ce2b8c9d3c42414babbfd0c6c03e4aa44c868a32296365d52aa0fe8988f881be",
+      "file": "figure-05.webp",
+      "sha256": "e26c989f4ecc8c3b2b4561896493bc6e16e4ed3d85dc856bc5c4647dde967ea6",
+      "width": 2800,
+      "height": 767,
+      "bytes": 193020
+    },
+    {
+      "number": 6,
+      "source": "figures/openwam_study/generative_backbones.pdf",
+      "sourceSha256": "3305ce780908deebeab8e5b50a09446f139b800a6d9dba3d7ed18d8be6a65cb9",
+      "file": "figure-06.webp",
+      "sha256": "980849af65bcba2dd432834fba2864974cd28c8dd6b3f9d26d917d54afa78e21",
+      "width": 2796,
+      "height": 2800,
+      "bytes": 70418
+    },
+    {
+      "number": 7,
+      "source": "figures/openwam_study/visual_representations.pdf",
+      "sourceSha256": "f6277229d21f16c3bca636dbde8bfc682ff67462613b841251daa893aa057d6d",
+      "file": "figure-07.webp",
+      "sha256": "b104b0fe7e51d38128e485ccba0bbe1066c6f7aff14192d9e04a33497d0bc29d",
+      "width": 2800,
+      "height": 1447,
+      "bytes": 64366
+    },
+    {
+      "number": 8,
+      "source": "figures/openwam_study/training_information_flow.pdf",
+      "sourceSha256": "54544f36777df9b87a043a203681e97adce0b7c0137ee68c5a9d966df7e669d7",
+      "file": "figure-08.webp",
+      "sha256": "efa9c6761632fe83dab110a5933b2dfcf8a80f3e397fdadc5786d303c0ce2633",
+      "width": 2800,
+      "height": 935,
+      "bytes": 33060
+    },
+    {
+      "number": 9,
+      "source": "figures/openwam_study/denoising_schedules.pdf",
+      "sourceSha256": "48138e0759c3538efd6fc1d18c861fe1164da207b84ed711d35a8c80adb35f0a",
+      "file": "figure-09.webp",
+      "sha256": "8c4a453933af37d53a452b9e4d3ef59cbcd76802afe3761c26092013973d07ef",
+      "width": 2800,
+      "height": 1552,
+      "bytes": 132048
+    },
+    {
+      "number": 10,
+      "source": "figures/openwam_study/pretraining_generalization.pdf",
+      "sourceSha256": "b54d5eda1310beb2a56719decc6ff2ee8fb908ce1de2457eef0b6a700e8b16a1",
+      "file": "figure-10.webp",
+      "sha256": "77b30c8834de6e17fd9a8c1f738d3c7d4916a6112747ef3d4ab067e51abee888",
+      "width": 2800,
+      "height": 1174,
+      "bytes": 35662
+    },
+    {
+      "number": 11,
+      "source": "figures/openwam_study/information_flow_scale.pdf",
+      "sourceSha256": "10c46b8f5d5922ccdff58bf89250faf34a15a825c6b80a4dcc65bbdefbd28197",
+      "file": "figure-11.webp",
+      "sha256": "8fea0b9a60f0d5ec156fea8beb0d12eeb2599a26a5049d5279c6b8f183351a8c",
+      "width": 2800,
+      "height": 1121,
+      "bytes": 38072
+    },
+    {
+      "number": 12,
+      "source": "figures/openwam_alpha/architecture.pdf",
+      "sourceSha256": "a61508ab243315739b6b9f81e89da8859abb986c3dcc5a033dc90b46674ff341",
+      "file": "figure-12.webp",
+      "sha256": "f5d93273565c31ddfa70ba356b6680b4464a0b47f8bac96e72a4ce1f9d6d9aa5",
+      "width": 2800,
+      "height": 2069,
+      "bytes": 463924
+    },
+    {
+      "number": 13,
+      "source": "figures/openwam_alpha/benchmark_grid.pdf",
+      "sourceSha256": "974654eaa8bd0a0db1c4a3b0c2c1f55e98510243416723aee4b2be3a96a4e644",
+      "file": "figure-13.webp",
+      "sha256": "83ffed1368c36e0a4b47332db1051c4474a495a76b099d94692ee4a21edbb3fc",
+      "width": 3600,
+      "height": 2062,
+      "bytes": 387562
+    },
+    {
+      "number": 14,
+      "source": "figures/openwam_alpha/benchmark_radial.pdf",
+      "sourceSha256": "301e2e6264ff4251e965bbc43e4f71f0bf63401c50b4f922e557f6a8acbdac14",
+      "file": "figure-14.webp",
+      "sha256": "72e309d1cf9c411fb6eceabd9fa9cc1ed6944a613a8b5e641b97bcdb9e1d2756",
+      "width": 2800,
+      "height": 2800,
+      "bytes": 219528
+    },
+    {
+      "number": 15,
+      "source": "figures/openwam_alpha/single-arm-comparison.pdf",
+      "sourceSha256": "86c8b7a2826f11913bfa2608665f497c9c852352a70d3939b8019c5f6b5e7651",
+      "file": "figure-15.webp",
+      "sha256": "ee641fc74634e1980638131208cf8d6a04267e977869d917dbbcbc916e3c458f",
+      "width": 2800,
+      "height": 2078,
+      "bytes": 494076
+    },
+    {
+      "number": 16,
+      "source": "figures/openwam_alpha/id_ood_benchmarks.pdf",
+      "sourceSha256": "2abd25a76c91aa88b7105f3b665e4fc13ce072aa3850cddb68c133a5789c4b46",
+      "file": "figure-16.webp",
+      "sha256": "0f66b0d43138260e7982919c6aa89dd826a573de47f6cdbf2df6b3aaa87348a7",
+      "width": 3600,
+      "height": 2089,
+      "bytes": 128908
+    },
+    {
+      "number": 17,
+      "source": "figures/openwam_alpha/real_world_experiment.pdf",
+      "sourceSha256": "ee5ca029a6987594684e05bba2c21327612ba8fe781ffd5cf2ad2c2a20b7d819",
+      "file": "figure-17.webp",
+      "sha256": "c279ea2bb9c5afea64079b5d08dbf774253c21457e7ef38773aec027654a80a4",
+      "width": 3600,
+      "height": 2025,
+      "bytes": 2148430
+    },
+    {
+      "number": 18,
+      "source": "figures/openwam_appendix/openwam_singlearm_setup.pdf",
+      "sourceSha256": "f9f6aff8bde8c44103d6cb987b49f0e36d93cfadcb4f2f9049469405f9766126",
+      "file": "figure-18.webp",
+      "sha256": "bbc7a2e19ea3c568cb4a316c77541e602065a8b45a5d8de394b88605fa252e2c",
+      "width": 2800,
+      "height": 1560,
+      "bytes": 1356358
+    },
+    {
+      "number": 19,
+      "source": "figures/openwam_appendix/singlearm_task_seq.pdf",
+      "sourceSha256": "fa4de5b1d5d22a8b80edb22c055df00162ce095fedfc64979f08f0e03d77d411",
+      "file": "figure-19.webp",
+      "sha256": "675dae74efc63b231a635f243523dbd7d09c3be3a1b6aa66e021b74da2c598fc",
+      "width": 3502,
+      "height": 3600,
+      "bytes": 2977262
+    },
+    {
+      "number": 20,
+      "source": "figures/openwam_appendix/dextrous_task_setup.jpg",
+      "sourceSha256": "d9010ac84189caf561f0d2af690a3c8b183af9a57eba02808abb81533f93d7dc",
+      "file": "figure-20.webp",
+      "sha256": "10b0bf65503671d5268323c052f61596096670c3384f9da9e566f3a5a936495b",
+      "width": 4096,
+      "height": 3072,
+      "bytes": 6547040
+    },
+    {
+      "number": 21,
+      "source": "figures/openwam_appendix/dextrous_task_seq.pdf",
+      "sourceSha256": "7e0653bf9641601221529de882f9dc8c2e0cd3a1a4ec0a7c20abb8913ece15a8",
+      "file": "figure-21.webp",
+      "sha256": "b3ff8ee903b7d5cba8537f7c8eec394922079e51045d093cf14201d3f97fad72",
+      "width": 3600,
+      "height": 2546,
+      "bytes": 2091118
+    }
+  ]
+}

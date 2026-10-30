@@ -723,6 +723,40 @@ li {
 .pi07-article .article-table table {
   min-width: 600px;
 }
+.openwam-article h2 {
+  overflow-wrap: anywhere;
+}
+.openwam-article h4 {
+  margin: 26px 0 12px;
+  line-height: 1.5;
+}
+.openwam-article .paper-figure img {
+  max-height: 760px;
+  object-fit: contain;
+}
+.openwam-article .article-table caption {
+  padding: 0 0 10px;
+  text-align: left;
+  line-height: 1.65;
+  color: var(--muted);
+  font-size: 12px;
+}
+.openwam-article .article-table td {
+  vertical-align: top;
+}
+.openwam-score-table {
+  margin: 12px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.openwam-score-table > summary {
+  cursor: pointer;
+  line-height: 1.6;
+  font-size: 14px;
+}
+.openwam-score-table .article-table table {
+  min-width: max-content;
+}
 .pi07-article .paper-figure-compact .paper-image {
   max-width: 440px;
 }
