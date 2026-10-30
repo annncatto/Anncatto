@@ -12,6 +12,12 @@ Keep unpublished workbench/D20 work on its existing branches.
   methods, and mobile manipulation. Experiments remain directly accessible.
 - Multi-Task DiT details are H4 subsections under its H3 algorithm entry. The
   article's contents include H4 entries; other articles retain their current depth.
+- References follow ACT's compact native details/summary pattern, initially
+  collapsed, with the references anchor retained. The same format applies to
+  SmolVLA and is recorded in AGENTS.md and the experimental-article workflow.
+- Shared reading estimates use currently visible, language-specific content
+  budgets. Hidden details bodies are excluded; toggles recalculate cost and
+  positions. Progress and remaining time use the same weighted content blocks.
 - Generative networks now explains module roles, diffusion origins, DDPM training
   and sampling, DDIM, flow matching, three timing quantities, tensor widths,
   attention, conditioning, and parameter scale. The generic continuous/discrete

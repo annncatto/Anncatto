@@ -82,6 +82,7 @@
 .sv-evidence-note {color:var(--muted);font-size:13px;}
 .sv-references {padding-left:22px;}
 .sv-references li {font-size:13px;line-height:1.8;margin-bottom:12px;}
+.article-references .sources li {margin:8px 0;line-height:22px;}
 .sv-article .paper-figure {margin:26px 0;}
 .sv-article .paper-figure .paper-image {max-width:none;}
 .sv-article .paper-figure img {max-height:640px;object-fit:contain;}
