@@ -36,6 +36,10 @@ The user confirmed on 2026-10-29:
 - Training uses the algorithm defaults in `~/Alohamini` except explicit recorded
   settings. Its default storage is preserve and compute is BF16 autocast.
 
+The user corrected the 150-demonstration retreat clip on 2026-10-30: the failure
+is an inability to retreat. The video label and bilingual case analysis follow
+that correction; the earlier excessive-retreat interpretation is superseded.
+
 ## Numerical evidence
 
 - Raw `x.vel` has two values: 0 (102,656 frames) and 0.15000000596046448

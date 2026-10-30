@@ -148,7 +148,7 @@ const clips:Record<string,[string,string]>={
  'success-left':['Left','左'], 'success-center':['Center','中'], 'success-right':['Right','右'],
  'failure-grasp':['Failed grasp','抓取失败'], 'failure-base':['Excessive advance','前进过量'],
  'initial-pose-a':['Changed initial placement A','初始位置变化 A'], 'initial-pose-b':['Changed initial placement B','初始位置变化 B'],
- 'continued-missed-grasp':['Missed grasp','漏抓'], 'continued-retreat':['Excessive retreat','后退过量'],
+ 'continued-missed-grasp':['Missed grasp','漏抓'], 'continued-retreat':['Failed to retreat','未能后退'],
  'continued-success':['150-episode model','150 条模型'], 'pi05-rollout':['π0.5: collection rollout','π0.5：抓取与投放'],
  'two-toys-a':['Test A','测试 A'], 'two-toys-b':['Test B','测试 B']
 };
