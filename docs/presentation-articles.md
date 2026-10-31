@@ -120,3 +120,7 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 - Supplemental concepts belong beside the equation, mechanism or result they clarify. Avoid a repeated expansion block at the bottom of each page. Use an outlined group for a distinct concept and a dashed divider for equally important parallel arguments.
 - `src/openwam-attention.ts` implements the visibility inspector through the pure rules in `src/slides-state.ts`. Selection changes which source streams the chosen Query can read. The source paper's measured scores remain fixed; there is no simulated model prediction or arbitrary animated emphasis.
 - Long English and Chinese versions need independent layout checks. Preserve body type size; shorten redundant language or rebalance modules before shrinking text.
+
+- A named framework and its subtopics must stay visibly connected: OpenWAM pages 3–5 now name Infra on a composition/training/serving path, and pages 6–11 name Study on the paper's three-question path. α's opening explicitly assembles the preceding choices.
+- Treat the source's experimental sequence as a sequence of accumulated conditions. State what stays fixed, what changes, the observed result and the retained default; distinguish the authors' interpretation from the numerical result. Avoid generic formulas obscuring the actual framework contribution.
+- Check internal card/row collisions as well as viewport overflow. SVG source-panel views need explicit clipping when aspect-ratio letterboxing could otherwise reveal adjacent panels.

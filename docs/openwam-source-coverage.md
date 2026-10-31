@@ -151,3 +151,22 @@ The fixed bottom supplemental blocks have been removed. DiT interfaces, PS-VAE c
 The new visibility inspector changes only the permitted source sets of a selected query under the four audited masks. O reads O; future V/A always read O and themselves; the respective directional mode enables the opposite future stream. A one-shot packet animation follows allowed edges after selection; measured success rates stay fixed. It never fabricates attention weights, model predictions or counterfactual scores. Reduced-motion mode keeps state changes without animation. Unit and browser tests cover the actual visibility rules.
 
 Current QA: `/tmp/openwam/qa-enriched.mjs` and `/tmp/openwam/qa-openwam-interaction.mjs`. Both languages are checked at 1440×900, 1280×800 and 1920×1080, with 320/390/768-pixel layouts checked for horizontal overflow. Figure viewers, keyboard closure, original-image counts, mask interaction and reduced motion are checked separately.
+
+## Infra → Study → α narrative repair · 2026-10-31
+
+The second-page overview is now a two-column composition: three peer contribution cards and a workflow on the left, three findings with scoped evidence on the right, and the original question excerpt at the bottom. English wording was independently shortened and card/row containment added to browser QA; a page can pass viewport checks while still containing internal overlaps.
+
+Pages 3–5 explicitly identify OpenWAM-Infra and highlight composition → training runtime → serving/evaluation. Page 4's common objective is framed as the trainer/architecture interface from §3.2, alongside the paper's Accelerate/ZeRO, BF16, checkpointing/offload and pretrain/fine-tune/resume utilities. Page 5 covers policy-buffer serving and acceleration from §3.3, with the Full/Clean2Random contract from §3.4. Complete panels 3a and 3b are displayed side by side using explicit SVG clip paths; the full unchanged figure is accessible from both.
+
+Pages 6–11 visibly identify OpenWAM-Study and the active source question: inherited priors, world–action interaction, or cross-domain transfer. The prose was rechecked against the corresponding source paragraphs and rewritten as a connected experiment sequence:
+
+- §4.1: pretrained generator weights are one inheritance channel; encoder-defined latents are another. The representation control explicitly randomizes generator weights to isolate the second channel.
+- §4.2.1: action-specific capacity is compared before the interaction direction; Dual is retained to balance complexity and isolate the VLM's contribution.
+- §4.2.2: joint attention is an interface; masks specify the direction. All variants retain clean observation access, while cross-stream future-token access changes.
+- §4.2.3: training-time world access motivates inference-order comparisons. The selected synchronized schedule and the authors' representation-learning interpretation are distinguished from the plot's numerical details. The existing Figure 9 source discrepancy remains documented above.
+- §4.3: retain the preceding dual/synchronous choices, compare robot-only and mixed pretraining at 600 hours, then revisit one-way versus mutual visibility after pretraining.
+- §5.1: page 12 opens by assembling the choices into α, before showing its full architecture.
+
+All new wording is condensed source-based paraphrase, not purported verbatim quotation. Explanatory diagrams and stage indicators are editorial presentation aids. No new experimental runs or newly measured results are implied. QA scripts: `/tmp/openwam/qa-reconnected.mjs` (both viewport and internal containment), `/tmp/openwam/qa-openwam-interaction.mjs` (visibility behavior, viewers, print and no-JavaScript fallback).
+
+The small supplemental PS-VAE preview on page 7 is replaced by an explicitly scoped dimensional-contraction diagram (DINOv3 768-D / V-JEPA 1024-D → S-VAE → 48-D), with the complete credited PS-VAE source still accessible by link. This explains the adapter actually compared in OpenWAM without presenting the reference paper's full pipeline as OpenWAM's own implementation. The final browser run passes all bilingual desktop/narrow layouts, internal overview containment, visibility interactions and figure viewers.
