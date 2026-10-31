@@ -1,6 +1,21 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {advanceSlide,slideState,denoisingPoint,resolveSlideHash} from '../.build/slides-state.js';
+import {advanceSlide,slideState,denoisingPoint,resolveSlideHash,visibleAttentionSources} from '../.build/slides-state.js';
+test('paper masks preserve a clean observation prefix and directional future access',()=>{
+ for(const mode of ['isolated','video','action','mutual']) {
+  assert.deepEqual(visibleAttentionSources(mode,'O'),['O']);
+  for(const query of ['V','A']) {
+   const sources=visibleAttentionSources(mode,query);
+   assert.ok(sources.includes('O')&&sources.includes(query));
+  }
+ }
+ assert.deepEqual(visibleAttentionSources('isolated','A'),['O','A']);
+ assert.deepEqual(visibleAttentionSources('video','A'),['O','A']);
+ assert.deepEqual(visibleAttentionSources('video','V'),['O','V','A']);
+ assert.deepEqual(visibleAttentionSources('action','V'),['O','V']);
+ assert.deepEqual(visibleAttentionSources('action','A'),['O','V','A']);
+ for(const query of ['V','A'])assert.deepEqual(visibleAttentionSources('mutual',query),['O','V','A']);
+});
 test('slide links preserve old aliases while an empty URL starts at the first build',()=>{
  const slides=[{id:'overview',aliases:[]},{id:'attention',aliases:['capacity','families']}];
  assert.equal(resolveSlideHash('',slides),-1);

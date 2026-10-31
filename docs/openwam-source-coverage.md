@@ -123,3 +123,31 @@ Supplemental figures are separate from the 21 OpenWAM originals and carry their 
 - Lipman et al., arXiv:2210.02747v2, flow-matching path and ODE-sampling definitions, linked as text rather than inventing a new experimental architecture.
 
 Source assets are copied unchanged. Supplemental image source URLs, dimensions, credits and hashes are recorded under `relatedFigures`. The repeated per-slide credit footer is replaced by a source-section link in the header; source attribution remains available in each original or related figure view.
+
+## Core-content audit and integrated explanation · 2026-10-31
+
+The audit compares the presentation against the main paper's actual section sequence and conclusions, not only its figure list. Previous omissions were substantive: the joint objective was described without its loss, self-contained experiments were understated, data cleaning and mixture shares were compressed away, and WAM/VLA and perturbation results were merely gallery links.
+
+| Source | Main-deck location | Evidence or mechanism retained |
+| --- | --- | --- |
+| §1 Introduction | 1–2 | Data asymmetry, coupled implementation choices, three parallel contributions, three research questions and findings |
+| §3.1 Composable model | 3, 8 | C(E,S,M), parameter-free orchestration, architecture families and dedicated action capacity |
+| §3.2 Training | 3–4 | Self-contained checkpoint, normalization/restore contract, independent noise times, complete two-stream weighted/masked flow-matching loss |
+| §3.3 Deployment | 5, 10, 14 | Serving versus denoising, buffer and executed horizon, coupled Euler update, acceleration; α's reported synchronous mode |
+| §3.4 Evaluation protocol | 11, 15 | Clean-only fine-tuning with Clean ID/Random OOD, downstream fine-tuning and benchmark/embodiment scope |
+| §4.1 Inherited priors | 6–7 | Backbone results and 5B choice; randomized-weight representation control; S-VAE bottleneck versus raw features |
+| §4.2 Synergy | 8–10 | Capacity comparisons, forward versus gradient paths, four masks with fixed measured scores, inference schedule evidence |
+| §4.3 Embodied consolidation | 11 | Fixed 600-hour budget, robot-only/sequential/co-training, ID/OOD and changed preferred visibility |
+| §5.1 Architecture/training/deployment | 12–14 | 5B+1B, frozen modules, causal anchor, token dimensions/RoPE/context, all 30 QKV bridges, AdaLN, unified 80-D space, loss/time sampling, ten-step synchronous generation |
+| §5.2 Data | 14 | 1,333.9M raw → 518.5M curated/sampled frames, 6,369 hours; human/real/synthetic shares, vision/signal cleaning, valid-coordinate masks |
+| §5.3 Simulation and WAM/VLA | 15 | Original Figure 16 visible; ID fitting versus OOD transfer, LIBERO-Plus perturbation scores and limited single-arm coverage |
+| §5.4 Real robots | 15 | Franka 99/120, three bimanual embodiments/18 tasks, new dexterous platform after task fine-tuning and OOD bottle 16/20 versus 6/20 |
+| Conclusions | 15 | Compact/robust/informative visual representation, diverse action-labeled data, complementary WAM/VLA strengths |
+
+All 21 original figures remain available unchanged. Figure 16 replaces the previous small general benchmark overview in the visible evaluation layout. Full benchmark tables, individual real-task photographs and appendix implementation detail remain in the full article and original-figure gallery. This is main-argument coverage, not a claim that every appendix experiment fits on 15 pages.
+
+The fixed bottom supplemental blocks have been removed. DiT interfaces, PS-VAE compression, causal tokenization and AdaLN are explained where used. Supplemental primary-source diagrams are differentiated from OpenWAM's own implementations. The second-page question excerpt is smaller and immediately follows the finding row.
+
+The new visibility inspector changes only the permitted source sets of a selected query under the four audited masks. O reads O; future V/A always read O and themselves; the respective directional mode enables the opposite future stream. A one-shot packet animation follows allowed edges after selection; measured success rates stay fixed. It never fabricates attention weights, model predictions or counterfactual scores. Reduced-motion mode keeps state changes without animation. Unit and browser tests cover the actual visibility rules.
+
+Current QA: `/tmp/openwam/qa-enriched.mjs` and `/tmp/openwam/qa-openwam-interaction.mjs`. Both languages are checked at 1440×900, 1280×800 and 1920×1080, with 320/390/768-pixel layouts checked for horizontal overflow. Figure viewers, keyboard closure, original-image counts, mask interaction and reduced motion are checked separately.

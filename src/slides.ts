@@ -1,5 +1,6 @@
 import { language, onLanguageChange } from './language.js';
 import { advanceSlide, slideState, resolveSlideHash, type SlideState } from './slides-state.js';
+import { mountOpenwamAttention } from './openwam-attention.js';
 
 const deck = document.querySelector<HTMLElement>('[data-deck]');
 if (deck) {
@@ -121,4 +122,5 @@ if (deck) {
   });
   [...list.children].forEach((button, i) => {button.textContent = `${String(i + 1).padStart(2, '0')}   ${title(slides[i])}`;});
   document.documentElement.classList.add('slides-ready'); fromURL();
+  deck.querySelectorAll<HTMLElement>('[data-mask-demo]').forEach(mountOpenwamAttention);
 }

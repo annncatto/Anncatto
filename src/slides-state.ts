@@ -30,3 +30,12 @@ export function denoisingPoint(s: number, mode: DenoisingMode, alpha = 4, offset
   const a = mode === 'action-variance' ? f(s) : mode === 'video-offset' ? h(s) : s;
   return {video: g(v), action: g(a)};
 }
+
+export type VisibilityMode = 'isolated' | 'video' | 'action' | 'mutual';
+export type AttentionStream = 'O' | 'V' | 'A';
+/** Rows are queries, columns are keys. O is the first, clean observation frame. */
+export function visibleAttentionSources(mode: VisibilityMode, query: AttentionStream): AttentionStream[] {
+  if (query === 'O') return ['O'];
+  if (query === 'V') return mode === 'video' || mode === 'mutual' ? ['O', 'V', 'A'] : ['O', 'V'];
+  return mode === 'action' || mode === 'mutual' ? ['O', 'V', 'A'] : ['O', 'A'];
+}

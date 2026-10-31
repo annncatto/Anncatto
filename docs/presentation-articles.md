@@ -113,3 +113,10 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 - 关联架构图在有足够空间的侧栏展示；其余以本页图入口打开现有放大对话框。补充内容不能挤掉论文主图，也不新增无意义动画。
 
 本版验证：538 个内部引用与 36 项测试通过。中英文在 1440×900、1280×800、1920×1080 的页标题均保持一行，无内容遮挡或溢出；320、390、768 像素窄屏无整页横向溢出。第二页问题截图与新增架构图的放大、关闭按钮及 Escape 均通过浏览器检查。
+
+### Integrated explanation and content coverage
+
+- OpenWAM's main-paper coverage is mapped explicitly in `docs/openwam-source-coverage.md`. A figure link alone does not count as explaining an important experimental finding; the result and its interpretation must be visible in the main narrative.
+- Supplemental concepts belong beside the equation, mechanism or result they clarify. Avoid a repeated expansion block at the bottom of each page. Use an outlined group for a distinct concept and a dashed divider for equally important parallel arguments.
+- `src/openwam-attention.ts` implements the visibility inspector through the pure rules in `src/slides-state.ts`. Selection changes which source streams the chosen Query can read. The source paper's measured scores remain fixed; there is no simulated model prediction or arbitrary animated emphasis.
+- Long English and Chinese versions need independent layout checks. Preserve body type size; shorten redundant language or rebalance modules before shrinking text.
