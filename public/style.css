@@ -1256,3 +1256,6 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 
 /* Optional presentation articles retain a compact full-text entry. */
 .entry-format {font-size:12px;margin-left:14px;color:var(--muted);}
+.entry-meta{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:8px;}
+.entry-meta time{margin-top:0;}
+.entry-meta .entry-format{margin-left:auto;white-space:nowrap;}

@@ -39,3 +39,12 @@ export function visibleAttentionSources(mode: VisibilityMode, query: AttentionSt
   if (query === 'V') return mode === 'video' || mode === 'mutual' ? ['O', 'V', 'A'] : ['O', 'V'];
   return mode === 'action' || mode === 'mutual' ? ['O', 'V', 'A'] : ['O', 'A'];
 }
+
+export type CrossAttentionConnection = 'AV' | 'VA';
+/** Feature-source → reader, simultaneously showing both cross-stream directions. */
+export function crossAttentionConnections(mode: VisibilityMode): CrossAttentionConnection[] {
+  const connections: CrossAttentionConnection[] = [];
+  if (visibleAttentionSources(mode, 'V').includes('A')) connections.push('AV');
+  if (visibleAttentionSources(mode, 'A').includes('V')) connections.push('VA');
+  return connections;
+}

@@ -206,7 +206,7 @@ for (const p of posts) {
 const listing = posts
   .map(
     (p) =>
-      `<li class="entry"><article><h2><a href="/notes/${p.slug}/${p.presentation ? 'slides/' : ''}">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` <a class="entry-format" href="/notes/${p.slug}/">${bilingual('Full article','全文')}</a>` : ''}</article></li>`,
+      `<li class="entry"><article><h2><a href="/notes/${p.slug}/${p.presentation ? 'slides/' : ''}">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><div class="entry-meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` <a class="entry-format" href="/notes/${p.slug}/">${bilingual('Full article','全文')}</a>` : ''}</div></article></li>`,
   )
   .join("");
 await write(

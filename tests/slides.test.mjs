@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {advanceSlide,slideState,denoisingPoint,resolveSlideHash,visibleAttentionSources} from '../.build/slides-state.js';
+import {advanceSlide,slideState,denoisingPoint,resolveSlideHash,visibleAttentionSources,crossAttentionConnections} from '../.build/slides-state.js';
+test('four masks expose four distinct directed cross-stream connections',()=>{
+ const states=['isolated','video','action','mutual'].map(crossAttentionConnections);
+ assert.deepEqual(states,[[],['AV'],['VA'],['AV','VA']]);
+ assert.equal(new Set(states.map(s=>s.join(','))).size,4);
+});
 test('paper masks preserve a clean observation prefix and directional future access',()=>{
  for(const mode of ['isolated','video','action','mutual']) {
   assert.deepEqual(visibleAttentionSources(mode,'O'),['O']);

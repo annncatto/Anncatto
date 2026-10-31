@@ -124,3 +124,13 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 - A named framework and its subtopics must stay visibly connected: OpenWAM pages 3–5 now name Infra on a composition/training/serving path, and pages 6–11 name Study on the paper's three-question path. α's opening explicitly assembles the preceding choices.
 - Treat the source's experimental sequence as a sequence of accumulated conditions. State what stays fixed, what changes, the observed result and the retained default; distinguish the authors' interpretation from the numerical result. Avoid generic formulas obscuring the actual framework contribution.
 - Check internal card/row collisions as well as viewport overflow. SVG source-panel views need explicit clipping when aspect-ratio letterboxing could otherwise reveal adjacent panels.
+
+### Compact heading navigation and mask inspection · 2026-10-31
+
+- Keep each page's existing title text. A compact chapter name sits above its stage links beside the title; the original-source reference stays at the end of the same heading bar. Source text abbreviated in the visible citation remains available in its title attribute. Infra, Study and α all use native hash links, with the active stage marked by `aria-current="step"`.
+- Color-backed findings are selective: page 8 places the retained architecture below its result table; page 10 places the authors' interpretation below the schedule plot. The corresponding prose is moved into these blocks, avoiding repeated conclusions.
+- The visibility inspector shows both cross-stream directions together. The previous single-query view made Isolated/Video-Sees-Action and Action-Sees-Video/Mutual look identical when the action query was selected. `crossAttentionConnections` derives the complete directed connections from the audited query/key rules: none, A→V, V→A, or both.
+- Animate packets only on allowed cross-stream paths for two short passes after selection. Static clean-observation paths remain shared by all masks. Reduced motion and navigation stop the packet animation; all reported success rates remain fixed.
+- Homepage cards use a metadata row with the date at the left and the full-article link at the right. This change does not include unpublished homepage tools.
+
+Browser checks: `/tmp/openwam/qa-compact-layout.mjs` covers titles, header/row collisions and bilingual desktop/narrow layouts. `/tmp/openwam/qa-compact-behavior.mjs` checks unchanged title text, chapter-link targets, the four distinct mask states and their packet directions, source viewers, print/no-JavaScript fallbacks and date/link alignment on the homepage.
