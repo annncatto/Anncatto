@@ -1,6 +1,7 @@
 import { language, onLanguageChange } from './language.js';
 import { advanceSlide, slideState, resolveSlideHash, type SlideState } from './slides-state.js';
 import { mountOpenwamAttention } from './openwam-attention.js';
+import { pixelCatSVG } from './pixel-cat.js';
 
 const deck = document.querySelector<HTMLElement>('[data-deck]');
 if (deck) {
@@ -13,6 +14,14 @@ if (deck) {
   const count = document.querySelector<HTMLElement>('[data-slide-count]')!;
   const buildControls = document.querySelector<HTMLElement>('[data-slide-builds]')!;
   const progress = document.querySelector<HTMLElement>('[data-slide-progress]')!;
+  const progressCat = document.createElement('span');
+  progressCat.className = 'deck-progress-cat';
+  progressCat.setAttribute('aria-hidden', 'true');
+  progressCat.innerHTML = pixelCatSVG();
+  progress.closest('.deck-footer')?.append(progressCat);
+  progress.parentElement?.style.setProperty('--slide-count', String(slides.length));
+  let catIndex = -1;
+  let catStop: ReturnType<typeof setTimeout> | undefined;
   const status = document.querySelector<HTMLElement>('[data-slide-status]')!;
   let state: SlideState = {index: 0, step: 0};
   let overviewOrigin: HTMLElement | null = null;
@@ -44,6 +53,13 @@ if (deck) {
     prev.textContent = language === 'en' ? '← Back' : '← 上一步';
     progress.style.width = `${(state.index + 1) / slides.length * 100}%`;
     progress.parentElement?.setAttribute('aria-valuenow', String(state.index + 1));
+    progressCat.style.left = `clamp(14px, ${(state.index + .5) / slides.length * 100}%, calc(100% - 14px))`;
+    if (catIndex >= 0 && catIndex !== state.index) {
+      clearTimeout(catStop);
+      progressCat.classList.add('is-moving');
+      catStop = setTimeout(() => progressCat.classList.remove('is-moving'), 350);
+    }
+    catIndex = state.index;
     buildControls.replaceChildren();
     if (builds[state.index]) for (let i = 0; i <= builds[state.index]; i++) {
       const b = document.createElement('button'); b.type = 'button';

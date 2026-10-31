@@ -22,18 +22,18 @@ export function renderOpenwamDiagram(name:string):string{
   box(860,180,390,55,'Pretrained model + evaluation','预训练模型与验证','green'),245);
  if(name==='training-contract')return renderOpenwamDiagram('flow-v2').replace(/ data-step="\d+"/g,'');
  if(name==='alpha-detail')return frame(id,'OpenWAM-alpha attention bridge with stream-owned parameters and context paths',
-  box(965,5,285,60,'Text + current-state token c','文本 + 当前状态 token c','gray')+
-  box(10,115,235,90,'World states|Nᵥ × 3072','世界流状态|Nᵥ × 3072')+box(10,310,235,90,'Action states|H × 1024','动作流状态|H × 1024','green')+
-  box(305,115,195,90,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(305,310,195,90,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
-  arrow(id,'M255 160H295')+arrow(id,'M255 355H295',0,green)+
-  box(580,175,300,170,'Concatenate token axis|24 heads × 128|Masked joint attention','沿 token 轴拼接|24 头 × 128 维|掩码联合注意力','gray')+
-  arrow(id,'M510 160H545V215H570')+arrow(id,'M510 355H545V305H570',0,green)+
-  box(965,110,285,110,'Own output projection|Cross-attention(c) + FFN','独立输出投影|交叉注意力(c) + 前馈网络')+
-  box(965,305,285,110,'Own output projection|Cross-attention(c) + FFN','独立输出投影|交叉注意力(c) + 前馈网络','green')+
-  arrow(id,'M890 215H925V165H955')+arrow(id,'M890 305H925V360H955',0,green)+
-  arrow(id,'M1107 75V100')+arrow(id,'M1240 35H1257V360H1250',0,green)+
-  text(730,385,'Split by token index','按 token 位置拆回两流',22)+
-  text(630,465,'AdaLN: separate noise times tᵥ and tₐ · observed tokens pinned at tᵥ = 1','AdaLN：各自的噪声时间 tᵥ、tₐ · 观测 token 固定在 tᵥ = 1',22),490);
+  box(915,0,290,62,'Text + state token c','文本＋当前状态 token c','gray')+
+  box(10,105,225,90,'World states|Nᵥ × 3072','世界流状态|Nᵥ × 3072')+box(10,300,225,90,'Action states|H × 1024','动作流状态|H × 1024','green')+
+  box(300,105,185,90,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(300,300,185,90,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
+  arrow(id,'M245 150H290')+arrow(id,'M245 345H290',0,green)+
+  box(560,140,280,180,'Concatenate tokens|24 heads × 128|Masked joint attention','沿 token 轴拼接|24 头 × 128 维|掩码联合注意力','gray')+
+  arrow(id,'M495 150H525V195H550')+arrow(id,'M495 345H525V275H550',0,green)+
+  box(915,100,290,105,'Own output projection|Cross-attention(c) + FFN','独立输出投影|交叉注意力(c)＋前馈网络')+
+  box(915,295,290,105,'Own output projection|Cross-attention(c) + FFN','独立输出投影|交叉注意力(c)＋前馈网络','green')+
+  arrow(id,'M850 195H880V150H905')+arrow(id,'M850 275H880V345H905',0,green)+
+  arrow(id,'M1060 72V90')+arrow(id,'M1215 31H1240V347H1215',0,green)+
+  text(700,365,'Split by token index','按 token 位置拆回两流',22)+
+  text(630,445,'AdaLN: separate noise times tᵥ and tₐ · observed tokens pinned at tᵥ = 1','AdaLN：各自的噪声时间 tᵥ、tₐ · 观测 token 固定在 tᵥ = 1',22),470);
  if(name==='flow-v2')return frame(id,'Joint flow training with independently noised paired targets',
   box(10,5,245,70,'Future latent target z','未来潜变量标签 z')+box(10,120,245,70,'Action target a','动作标签 a','green')+
   box(330,5,240,70,'Noise at tᵥ','在 tᵥ 加噪')+box(330,120,240,70,'Noise at tₐ','在 tₐ 加噪','green')+arrow(id,'M265 40H320')+arrow(id,'M265 155H320',0,green)+

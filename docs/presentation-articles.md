@@ -136,3 +136,11 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 Browser checks: `/tmp/openwam/qa-compact-layout.mjs` covers titles, header/row collisions and bilingual desktop/narrow layouts. `/tmp/openwam/qa-compact-behavior.mjs` checks unchanged title text, chapter-link targets, the four distinct mask states and their packet directions, source viewers, print/no-JavaScript fallbacks and date/link alignment on the homepage.
 
 - 2026-11-01: Stage-link text inherits `--slide-font`, matching the body at every screen breakpoint. Keep only chapter captions and source citations small. Compact spacing and concise English labels accommodate long headings; do not reduce stage-link text to fit the header. `/tmp/openwam/qa-legible-nav.mjs` checks both font equality and collisions in both languages.
+
+### Geometry and reading progress · 2026-11-01
+
+- The second page uses intrinsic card rows and an explicitly clipped question excerpt. Parallel contribution cards share a grid; findings may use different row heights to accommodate both languages without text collisions.
+- Pages 9–10 reserve one full-width finding below the comparison. Align both comparison columns at their top; do not nest the finding inside only one column.
+- The page 13 bridge routes each connection through open corridors, including the context path around the output blocks. Reduce the generic attention equation and repeated prose before reducing the architecture diagram.
+- The final page uses a common two-row grid for both columns. The Figure 16b–c crop is clipped and top-aligned; the complete original remains available through the viewer and original-figure index.
+- Presentation progress reuses `pixelCatSVG()` from article reading progress. Keep the track 3px high, split it into one segment per slide, and place the cat above the current segment center. A separate footer band protects controls and page numbers; responsive positioning keeps the cat within the viewport. Page changes trigger a short hop and horizontal transition; reduced motion disables movement and blinking. Hide the footer in print and retain the existing no-JavaScript reading fallback.
