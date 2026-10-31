@@ -215,5 +215,89 @@
       "height": 2546,
       "bytes": 2091118
     }
+  ],
+  "excerpts": [
+    {
+      "file": "research-questions.png",
+      "source": "OpenWAM, Introduction, three central questions",
+      "paperPage": 2,
+      "providedBy": "user screenshot",
+      "sha256": "a05318b1aba91ba96439141fda3ce27fd9f9f232b80f22101d87dea3913a84df",
+      "width": 1392,
+      "height": 205,
+      "processing": "Original supplied PNG preserved. SVG display viewport removes only surrounding white margin."
+    }
+  ],
+  "relatedFigures": [
+    {
+      "file": "related/dit-blocks.png",
+      "source": "https://www.wpeebles.com/images/DiT/block.png",
+      "paper": "https://www.wpeebles.com/DiT",
+      "credit": "Peebles & Xie, ICCV 2023, Figure 3",
+      "width": 6900,
+      "height": 2850,
+      "sha256": "68a20fe51c7d2109e559a13e26a1e6f7aa9bcb2ecab06adde50d976024a586c5",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/wan-causal-vae.png",
+      "source": "https://arxiv.org/html/2503.20314v1/vae.png",
+      "paper": "https://arxiv.org/html/2503.20314v1#S4.SS1",
+      "credit": "Wan Team, 2025, Figure 5 (Wan2.1)",
+      "width": 1348,
+      "height": 328,
+      "sha256": "777141b32eb11ff0e7fc575b5719f5b93521d787b8507e277eae8e6d36fa9f37",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/wan-dit.png",
+      "source": "https://arxiv.org/html/2503.20314v1/dit_arch.png",
+      "paper": "https://arxiv.org/html/2503.20314v1#S4.SS2",
+      "credit": "Wan Team, 2025, Figure 9 (Wan2.1)",
+      "width": 1359,
+      "height": 402,
+      "sha256": "bef79d2c48b29f1147a43d63b2d26422d6b538d376fd8df698c6e28c9d8c2921",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/wan22-vae.png",
+      "source": "https://raw.githubusercontent.com/Wan-Video/Wan2.2/main/assets/vae.png",
+      "paper": "https://github.com/Wan-Video/Wan2.2#2-efficient-high-definition-hybrid-ti2v",
+      "credit": "Wan2.2 official repository",
+      "width": 3476,
+      "height": 1168,
+      "sha256": "4aaea5e187f1c5908e15ade5bef24c9fb59882986bc3d2ad75f7fe820f3d772f",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/psvae-pipeline.png",
+      "source": "https://arxiv.org/html/2512.17909v1/figures/pipeline.png",
+      "paper": "https://arxiv.org/html/2512.17909v1#S3",
+      "credit": "Zhang et al., 2025, Figure 5",
+      "width": 2340,
+      "height": 832,
+      "sha256": "a69e1159ce83eee43ddf404dbadc246656fad197a06dd5a8cc06e8861b9282d5",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/egodex-skeleton.png",
+      "source": "https://arxiv.org/html/2505.11709v1/figs/skeleton_v2.png",
+      "paper": "https://arxiv.org/html/2505.11709v1#S3",
+      "credit": "Hoque et al., 2025, Figure 3, left panel",
+      "width": 3240,
+      "height": 2475,
+      "sha256": "bd90f93c835ca749ac97dd3554def89260c65aa7a1884fef1d7bf130f513d6b5",
+      "processing": "Original source image preserved without pixel changes."
+    },
+    {
+      "file": "related/egodex-activities.jpg",
+      "source": "https://arxiv.org/html/2505.11709v1/figs/collage_edit.jpg",
+      "paper": "https://arxiv.org/html/2505.11709v1#S3",
+      "credit": "Hoque et al., 2025, Figure 3, right panel",
+      "width": 5760,
+      "height": 3240,
+      "sha256": "28ccf590b2591cd89b584015afc379661bcf1161a5b63da53f41d9de730a08f2",
+      "processing": "Original source image preserved without pixel changes."
+    }
   ]
 }

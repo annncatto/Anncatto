@@ -107,3 +107,19 @@ The cup/tray illustration has been removed. Training is explicitly the common Op
 Further source discrepancy: Figure 9's linear-offset action-leading o=0.6 annotation reads 93.3%, while its synchronized baseline reads 93.0% and the main prose states that synchronized denoising performs best. The revised deck retains the image, describes the selected synchronized recipe, and does not amplify the prose claim into an unqualified numeric maximum.
 
 Current browser audit: `/tmp/openwam/paper-led-qa.mjs` checks all pages in both languages at three desktop sizes and three narrow widths, decodes every displayed original/cropped source image, and checks leaf content against the source-footer boundary. It also checks old anchors, source and SVG viewers, no-JavaScript and print behavior. There are no per-slide summary bars or decorative step animations.
+
+
+## Question excerpt and related architecture sources · 2026-10-31
+
+The original user-provided PNG of the three Introduction questions is displayed at the bottom of slide 2. Its original bytes are retained at `content/images/openwam/research-questions.png`; the display viewport trims only surrounding white margin. Credits and SHA-256 are recorded in `asset-sources.json`.
+
+Supplemental figures are separate from the 21 OpenWAM originals and carry their own primary-source attribution:
+
+- Peebles & Xie, DiT project page, conditioning-block architecture (Figure 3).
+- Wan Team, arXiv:2503.20314v1, causal VAE Figure 5 and video DiT Figure 9; these are explicitly Wan2.1 figures.
+- Wan2.2 official repository, VAE comparison table, paired with the official README's dense TI2V-5B versus MoE A14B distinction.
+- Zhang et al., arXiv:2512.17909v1, Figure 5 PS-VAE compact latent-space pipeline. The caption distinguishes this reference framework from OpenWAM's 48-D representation-compression experiment.
+- Hoque et al., arXiv:2505.11709v1, Figure 3 skeleton and manipulation panels. The added text distinguishes human skeletal annotations from executable robot coordinates.
+- Lipman et al., arXiv:2210.02747v2, flow-matching path and ODE-sampling definitions, linked as text rather than inventing a new experimental architecture.
+
+Source assets are copied unchanged. Supplemental image source URLs, dimensions, credits and hashes are recorded under `relatedFigures`. The repeated per-slide credit footer is replaced by a source-section link in the header; source attribution remains available in each original or related figure view.
