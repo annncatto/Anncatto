@@ -77,3 +77,20 @@ Additional primary sources:
 `scripts/figures/openwam-schedules.py` records the analytical noise-to-data grids in `content/images/openwam/schedule-analysis.json`. The optional `--upstream` argument compares them with the inspected official scheduler on CPU, converting its decreasing sigma convention to the paper's increasing clean-time convention. At N=10, rho=5, alpha=32 the first action-leading step is 0.4155844, versus 0.0217391 for the base grid. An action offset of 0.8 leaves two nonzero action updates. The maximum absolute difference from the official float32 grid is `9.009951640326364e-08`. This audits formulas and implementation, not the learned model's control accuracy or the causal contribution of discretization to success rates.
 
 The article's KaTeX spans now establish their own positioning context. This keeps clipped accessible MathML from enlarging the document's scrollable width on narrow screens, while retaining MathML for assistive technology and local scrolling for wide displayed equations.
+
+
+## Architecture-focused presentation revision · 2026-10-31
+
+The 15-page presentation now prioritizes the paper's architecture over benchmark coverage. The long-form article is unchanged. Main-source mechanisms were rechecked against the active TeX sections of arXiv:2609.07398v1, especially Composable Model, Training Runtime, Deployment Runtime and α Architecture/Training/Deployment.
+
+- `C(E,S,M)` is parameter-free orchestration; stream/backbone identity and the prepare/layer/finalize interface are explicit.
+- Tri-System uses frozen VLM features feeding a trainable understanding stream; α remains Dual-System. umT5 is text context, not a third understanding backbone.
+- The bridge diagram preserves separate residual widths and stream-owned projections; concatenation and splitting occur on the token axis. Mask rows are readers and columns are sources.
+- Conditioning separates text/state cross-attention, noise-time AdaLN and positional RoPE. Clean observation rows read only the observed prefix.
+- Training uses independently sampled world/action noise levels and a masked, time-weighted joint flow objective. The linear-path derivative explains the velocity targets; world velocity is not physical robot velocity.
+- Inference uses the audited synchronous noise-time grid, 10 coupled Euler steps, all 30 bridges per forward, and re-clamping of the observed prefix. The diagram routes the clean observation directly to the joint forward pass.
+- Missing human action labels are masked, not zero targets. Shared semantic action slots and inverse native mapping complete the data/control interface.
+- Figure 11's +0.72 is specifically the reported Clean2Random OOD difference, not an average across benchmarks. The reported Full difference is +0.16. Original source arithmetic discrepancy remains documented above.
+- The 21 complete source images remain in the canonical figure archive and gallery. The α main architecture panel is displayed with an SVG viewport; the full original remains accessible and unchanged.
+
+QA evidence is generated locally in `/tmp/openwam/mechanism-qa.json`. It checks leaf-content overlap against the callout boundary as well as viewport overflow, bilingual desktop and mobile layouts, source and SVG viewers, old aliases, joint-loop stepping, reduced motion, printing and no-JavaScript fallback.

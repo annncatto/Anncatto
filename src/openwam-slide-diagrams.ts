@@ -1,95 +1,113 @@
-const ink='#273b43',blue='#237ab2',green='#4b9c80';
+const ink='#273b43', blue='#237ab2', green='#4b9c80';
 const esc=(s:string)=>s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-function label(x:number,y:number,en:string,zh:string,size=19,color=ink){
- const lines=(s:string)=>s.split('|').map((l,i,a)=>`<tspan x="${x}" dy="${i?size*1.35:-(a.length-1)*size*.675}">${esc(l)}</tspan>`).join('');
+function text(x:number,y:number,en:string,zh:string,size=22,color=ink){
+ const lines=(s:string)=>s.split('|').map((l,i,a)=>`<tspan x="${x}" dy="${i?size*1.3:-(a.length-1)*size*.65}">${esc(l)}</tspan>`).join('');
  return `<text x="${x}" y="${y}" fill="${color}" font-size="${size}" text-anchor="middle" dominant-baseline="middle" lang="en">${lines(en)}</text><text x="${x}" y="${y}" fill="${color}" font-size="${size}" text-anchor="middle" dominant-baseline="middle" lang="zh-CN">${lines(zh)}</text>`;
 }
 function group(content:string,step=0){return `<g${step?` data-step="${step}"`:''}>${content}</g>`;}
-function box(x:number,y:number,w:number,h:number,en:string,zh:string,tone='blue',step=0){return group(`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${tone==='green'?'#edf6f2':tone==='gray'?'#f1f4f4':'#edf5fa'}" stroke="${tone==='green'?'#a7cdbd':tone==='gray'?'#c4d2d4':'#a7cadd'}" stroke-width="1.5"/>${label(x+w/2,y+h/2,en,zh)}`,step);}
+function box(x:number,y:number,w:number,h:number,en:string,zh:string,tone='blue',step=0){
+ return group(`<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="10" fill="${tone==='green'?'#edf6f2':tone==='gray'?'#f1f4f4':'#edf5fa'}" stroke="${tone==='green'?'#a7cdbd':tone==='gray'?'#c4d2d4':'#a7cadd'}" stroke-width="1.5"/>${text(x+w/2,y+h/2,en,zh)}`,step);
+}
 function arrow(id:string,d:string,step=0,color=blue){return group(`<path class="flow-line" d="${d}" fill="none" stroke="${color}" stroke-width="2.5" marker-end="url(#${id}-arrow)"/>`,step);}
-function both(id:string,d:string){return arrow(id,d).replace('<path ',`<path marker-start="url(#${id}-arrow)" `);}
-function wrap(id:string,title:string,content:string,height=430){return `<svg viewBox="0 0 1000 ${height}" role="img" aria-labelledby="${id}-title"><title id="${id}-title">${title}</title><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>${content}</svg>`;}
+function frame(id:string,title:string,content:string,height=250){return `<svg viewBox="0 0 1260 ${height}" role="img" aria-labelledby="${id}-title"><title id="${id}-title">${title}</title><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>${content}</svg>`;}
 export function renderOpenwamDiagram(name:string):string{
  const id='ow-'+name;
- if(name==='overview')return wrap(id,'Infrastructure, controlled study and pretrained model',
-  box(20,15,280,100,'OpenWAM-Infra|Composable experiments','OpenWAM-Infra|可组合的实验基础设施')+
-  arrow(id,'M310 65H352',1)+box(365,15,270,100,'OpenWAM-Study|Controlled comparisons','OpenWAM-Study|受控设计实验','green',1)+
-  arrow(id,'M645 65H687',2)+box(700,15,280,100,'OpenWAM-α|Pretrained model','OpenWAM-α|预训练模型','blue',2)+
-  label(160,160,'Encoder · backbone · mask','编码器 · 骨干 · 可见性',20)+label(500,160,'Priors · synergy · transfer','先验 · 协同 · 迁移',20)+label(840,160,'Simulation + real robots','仿真 + 真实机器人',20),200);
- if(name==='roadmap')return wrap(id,'OpenWAM: infrastructure, controlled study and model recipe',
-  box(20,80,280,105,'OpenWAM-Infra|Composable experiments','OpenWAM-Infra|可组合的实验基础设施')+
-  arrow(id,'M310 132H352',1)+box(365,80,270,105,'OpenWAM-Study|Controlled comparisons','OpenWAM-Study|受控设计实验','green',1)+
-  arrow(id,'M645 132H687',2)+box(700,80,280,105,'OpenWAM-α|Pretrained WAM','OpenWAM-α|整合配方并预训练','blue',2)+
-  group(label(160,240,'Encoder · backbone · mask','编码器 · 骨干 · 可见性',18)+label(500,240,'Priors · synergy · transfer','先验 · 协同 · 迁移',18)+label(840,240,'Simulation + real robots','仿真 + 真实机器人',18),2),310);
- if(name==='composition')return wrap(id,'World and action streams with a frozen visual encoder',
-  box(20,42,200,76,'Observed frame','当前观测帧','gray')+box(20,175,200,76,'Future video|training target','未来视频|训练标签','gray')+
-  box(275,42,190,76,'Frozen encoder E','冻结视觉编码器 E')+arrow(id,'M225 80H266')+arrow(id,'M225 213H250V95H266')+
-  box(520,42,210,76,'World stream W','世界流 W')+arrow(id,'M470 80H510')+
-  box(520,236,210,76,'Action stream A','动作流 A','green',1)+box(275,236,190,76,'Noisy actions','加噪动作','green',1)+arrow(id,'M470 274H510',1)+
-  arrow(id,'M600 128V225',2,green)+arrow(id,'M650 225V128',2)+
-  box(795,42,185,76,'Future latents','未来视觉潜变量','blue',3)+arrow(id,'M738 80H785',3)+
-  box(795,236,185,76,'Action chunk','动作块','green',3)+arrow(id,'M738 274H785',3,green)+
-  group(label(625,177,'Mask M','注意力可见性 M',18),2)+label(185,350,'Text + current state condition both streams','文本与当前状态共同提供条件',17)+
-  label(774,350,'C(E, S, M) separates representation, structure and visibility','C(E, S, M) 分别配置表征、网络与可见性',17),405);
- if(name==='compression'){
-  let frames='';for(let i=0;i<4;i++)frames+=`<rect x="${55+i*92}" y="65" width="75" height="75" rx="8" fill="#edf5fa" stroke="#a7cadd"/><circle cx="${72+i*92+i*12}" cy="102" r="9" fill="${blue}"/>`+label(92+i*92,164,`Frame ${i+1}`,`第 ${i+1} 帧`,16);
-  return wrap(id,'Temporal averaging and learned temporal compression',frames+
-   arrow(id,'M425 103H485')+box(500,65,195,75,'Temporal mean','时间平均','gray')+arrow(id,'M705 103H765')+box(780,65,190,75,'Same mean|for reversed order','顺序颠倒|均值相同','gray')+
-   group(box(55,245,340,85,'Causal 3D video encoder','因果 3D 视频编码器')+arrow(id,'M410 288H485')+box(500,245,195,85,'Learned compression','学习时序压缩','green')+arrow(id,'M705 288H765')+box(780,245,190,85,'Compact latents|with temporal context','紧凑潜变量|包含时序上下文','green'),1)+
-   group(label(510,384,'Token count N ≠ channels C ≠ Transformer width D','token 数 N ≠ 通道数 C ≠ Transformer 隐藏宽度 D',20),2));
+ if(name==='hypothesis')return frame(id,'OpenWAM couples world prediction and action generation',
+  box(10,65,260,90,'Visual dynamics|from video','视频中的|视觉动态知识')+
+  box(475,15,310,85,'World prediction','世界预测')+box(475,155,310,85,'Action generation','动作生成','green',1)+
+  arrow(id,'M280 110H365V58H465')+arrow(id,'M630 110V145',1)+arrow(id,'M710 145V110',2,green)+
+  box(995,65,255,90,'Robot actions|and task experience','机器人动作|与任务经验','green',2)+arrow(id,'M985 110H880V198H795',2,green)+
+  text(860,126,'Joint learning','联合学习',20)+text(630,127,'Feature exchange','特征交换',20),250);
+ if(name==='io')return frame(id,'Observed conditions and two jointly generated futures',
+  box(10,25,255,170,'Current images o₁|Instruction ℓ|Current robot state q','当前图像 o₁|任务指令 ℓ|当前本体状态 q','gray')+
+  box(480,50,290,120,'World–Action Model','世界—动作模型')+arrow(id,'M275 110H470')+
+  box(985,15,260,85,'Future visual latents|z','未来视觉潜变量|z','blue',1)+box(985,155,260,85,'Action chunk a₁:ₕ|Robot commands','动作块 a₁:ₕ|机器人指令','green',2)+
+  arrow(id,'M780 85H875V58H975',1)+arrow(id,'M780 138H875V198H975',2,green)+
+  text(628,220,'Generate both from noise','两类变量均从噪声生成',22),255);
+ if(name==='composition-v2')return frame(id,'Composable encoder, stream backbones, visibility and execution interfaces',
+  box(10,30,315,95,'E · Visual encoder|Defines latent targets','E · 视觉编码器|定义潜变量预测目标','gray')+
+  box(472,30,315,95,'S · Stream backbones|Own model parameters','S · 流的网络骨干|持有模型参数')+
+  box(934,30,315,95,'M · Attention mask|Defines readable sources','M · 注意力掩码|定义可读取的信息','green')+
+  arrow(id,'M168 138V168H420V190')+arrow(id,'M630 138V190',1)+arrow(id,'M1092 138V168H840V190',2,green)+
+  box(260,200,740,60,'C: prepare → layer steps → finalize','C：准备 token → 逐层组织计算 → 输出预测','gray',2),275);
+ if(name==='tokenization')return frame(id,'Video and action tokenization with a clean current frame',
+  box(10,20,220,75,'Current frame','当前帧','gray')+box(10,145,220,75,'Future frames|groups of four','未来帧|每四帧一组')+
+  box(340,65,230,110,'Frozen causal VAE','冻结因果 VAE','gray')+arrow(id,'M240 58H290V97H330')+arrow(id,'M240 182H290V145H330')+
+  box(690,15,270,80,'Clean latent prefix|O','干净潜变量前缀|O')+box(690,145,270,80,'Future latent grid|V','未来潜变量网格|V','blue',1)+
+  arrow(id,'M580 97H635V55H680')+arrow(id,'M580 145H635V185H680',1)+
+  box(1060,65,190,110,'(1,2,2) patch|3D RoPE','(1,2,2) patch|3D RoPE','blue',2)+arrow(id,'M970 55H1006V97H1050',2)+arrow(id,'M970 185H1006V145H1050',2)+
+  text(630,260,'Video: Nᵥ tokens × 3072     ·     Action: H tokens × 1024','视频：Nᵥ 个 token × 3072 维     ·     动作：H 个 token × 1024 维',22),280);
+ if(name==='families-v2')return frame(id,'Three families with shared, dual and understanding-augmented backbones',
+  box(15,15,365,70,'Video + action tokens','视频 + 动作 token')+arrow(id,'M198 95V120')+box(15,130,365,80,'One Transformer|Shared / routed FFNs','一个 Transformer|共享 / 路由前馈网络','gray')+
+  box(447,15,365,70,'Video DiT','视频 DiT')+box(447,155,365,70,'Action DiT','动作 DiT','green',1)+arrow(id,'M590 95V145',1)+arrow(id,'M670 145V95',1,green)+
+  box(880,15,365,70,'VLM → Understanding stream','VLM → 理解流','gray',2)+arrow(id,'M1062 95V120',2)+box(880,130,365,80,'World + action backbones|Read-only semantic context','世界 + 动作骨干|读取语义上下文','green',2),240);
+ if(name==='bridge')return frame(id,'Stream-owned QKV, joint masked attention and separate residual paths',
+  box(10,20,235,80,'World hidden states|Nᵥ × 3072','世界流隐藏状态|Nᵥ × 3072')+box(10,200,235,80,'Action hidden states|Nₐ × 1024','动作流隐藏状态|Nₐ × 1024','green')+
+  box(305,20,195,80,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(305,200,195,80,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
+  arrow(id,'M255 60H295')+arrow(id,'M255 240H295',0,green)+
+  box(580,65,300,170,'Concatenate token axis|Masked attention|Split token axis','沿 token 轴拼接|掩码注意力|按 token 位置拆分','gray',1)+
+  arrow(id,'M510 60H545V110H570',1)+arrow(id,'M510 240H545V190H570',1,green)+
+  box(965,20,285,80,'World output projection|Residual + FFN','世界流输出投影|残差 + 前馈网络','blue',2)+
+  box(965,200,285,80,'Action output projection|Residual + FFN','动作流输出投影|残差 + 前馈网络','green',2)+
+  arrow(id,'M890 110H925V60H955',2)+arrow(id,'M890 190H925V240H955',2,green)+
+  text(730,270,'Per head: Nᵥ + Nₐ tokens, dₕ = 128','每个头：Nᵥ + Nₐ 个 token，dₕ = 128',20),300);
+ if(name==='masks-v2'){
+  const modes=[['Isolated','隔离',false,false],['World reads action','世界读取动作',true,false],['Action reads world','动作读取世界',false,true],['Mutual','互通',true,true]] as const;
+  let content='';for(const [i,[en,zh,va,av]] of modes.entries()){
+   const x=i*315;content+=text(x+157,20,en,zh,22);
+   for(let j=0;j<3;j++)content+=text(x+120+j*60,57,['O','V','A'][j],['O','V','A'][j],20)+text(x+65,98+j*50,['O','V','A'][j],['O','V','A'][j],20);
+   for(let r=0;r<3;r++)for(let c=0;c<3;c++){
+    const allowed=r===c||c===0||(r===1&&c===2&&va)||(r===2&&c===1&&av);
+    const fill=allowed?(r===0?'#e4ebed':r===2?'#d7e9e1':'#dbeaf3'):'#f5f7f7';
+    content+=`<rect x="${x+93+c*60}" y="${76+r*50}" width="54" height="44" rx="5" fill="${fill}"/>`+text(x+120+c*60,98+r*50,allowed?'✓':'—',allowed?'✓':'—',22,allowed?ink:'#b1bec2');
+   }
+  }return frame(id,'Four side-by-side attention masks over observed, future-world and action tokens',content,238);
  }
- if(name==='capacity')return wrap(id,'Three backbone families: shared, separate and understanding-conditioned',
-  label(165,30,'Single backbone','单骨干',21)+box(45,70,240,80,'Video + action tokens','视频 + 动作 token')+box(45,210,240,90,'One Transformer','共享 Transformer','gray')+arrow(id,'M165 160V198')+
-  group(label(500,30,'Dual backbone','双骨干',21)+box(380,70,240,80,'Video DiT','视频 DiT')+box(380,250,240,80,'Action DiT','动作 DiT','green')+arrow(id,'M477 162V238',0,green)+arrow(id,'M523 238V162'),1)+
-  group(label(835,30,'Tri backbone','三骨干',21)+box(715,70,240,80,'Frozen VLM features','冻结 VLM 特征','gray')+box(715,250,240,80,'Video + action streams','视频流 + 动作流','green')+arrow(id,'M835 162V238')+label(835,197,'Read-only context','只读上下文',16),2)+
-  group(label(500,390,'Separate parameters preserve specialized capacity; attention controls communication','独立参数保留专门容量；注意力控制流间通信',19),2));
- if(name==='training-compact')return wrap(id,'Joint flow matching of future world latents and actions',
-  box(15,20,190,65,'Future latent z','未来潜变量 z')+box(15,135,190,65,'Action target a','动作标签 a','green')+
-  group(box(265,20,205,65,'Noise at tᵥ','tᵥ 时刻加噪')+box(265,135,205,65,'Noise at tₐ','tₐ 时刻加噪','green')+arrow(id,'M215 52H255')+arrow(id,'M215 167H255',0,green),1)+
-  group(box(535,60,195,100,'World + action|networks','世界 + 动作|网络')+arrow(id,'M480 52H505V90H525')+arrow(id,'M480 167H505V132H525',0,green),2)+
-  group(box(795,20,190,65,'v̂ᵥ ≈ z − εᵥ','v̂ᵥ ≈ z − εᵥ')+box(795,135,190,65,'v̂ₐ ≈ a − εₐ','v̂ₐ ≈ a − εₐ','green')+arrow(id,'M740 90H766V52H785')+arrow(id,'M740 132H766V167H785',0,green),3),220);
- if(name==='visibility'){
-  let matrix='';const labels=['O','V','A'];
-  for(let r=0;r<3;r++)for(let c=0;c<3;c++){
-   const base=r===c||c===0;matrix+=`<rect data-mask-cell="${r},${c}" x="${200+c*100}" y="${55+r*62}" width="92" height="54" rx="7" fill="${base?'#d7e9e1':'#f1f4f4'}" stroke="#ccdadd"/>`+`<text data-mask-mark="${r},${c}" x="${246+c*100}" y="${91+r*62}" text-anchor="middle" fill="${green}" font-size="25">${base?'✓':'—'}</text>`;
-  }
-  return `<svg viewBox="0 0 600 270" role="img" aria-labelledby="${id}-title"><title id="${id}-title">Query-key visibility matrix</title>${label(344,18,'Key · readable sources','Key · 读取来源',21)}${labels.map((l,c)=>label(246+c*100,42,l,l,21)).join('')}${labels.map((l,r)=>label(157,88+r*62,l,l,21)).join('')}${label(70,145,'Query','Query',21)}${matrix}${label(320,255,'O: observed · V: world · A: action','O：观测 · V：世界 · A：动作',20)}</svg>`;
+ if(name==='conditions')return frame(id,'Conditioning pathways into each stream block',
+  box(10,15,245,75,'Instruction ℓ → umT5|4096-D text features','指令 ℓ → umT5|4096 维文本特征','gray')+
+  box(10,145,245,75,'Current state q → Linear|One context token','当前状态 q → 线性层|一个上下文 token','gray')+
+  box(355,65,260,105,'Context c|Text + state','上下文 c|文本 + 状态')+arrow(id,'M265 52H300V100H345')+arrow(id,'M265 182H300V140H345')+
+  box(770,15,295,75,'World cross-attention','世界流交叉注意力')+box(770,145,295,75,'Action cross-attention','动作流交叉注意力','green',1)+
+  arrow(id,'M625 100H690V52H760')+arrow(id,'M625 140H690V182H760',1,green)+
+  text(1165,52,'tᵥ → AdaLN','tᵥ → AdaLN',20)+text(1165,182,'tₐ → AdaLN','tₐ → AdaLN',20)+
+  text(630,265,'RoPE locates tokens · AdaLN specifies noise level · Cross-attention reads task context','RoPE 标记 token 位置 · AdaLN 指定噪声水平 · 交叉注意力读取任务上下文',22),285);
+ if(name==='flow-v2')return frame(id,'Joint flow training with independently noised paired targets',
+  box(10,5,245,70,'Future latent target z','未来潜变量标签 z')+box(10,120,245,70,'Action target a','动作标签 a','green')+
+  box(330,5,240,70,'Noise at tᵥ','在 tᵥ 加噪')+box(330,120,240,70,'Noise at tₐ','在 tₐ 加噪','green')+arrow(id,'M265 40H320')+arrow(id,'M265 155H320',0,green)+
+  box(670,45,260,105,'Joint network|Given clean O and c','联合网络|以干净 O 与 c 为条件','gray',1)+arrow(id,'M580 40H620V80H660',1)+arrow(id,'M580 155H620V120H660',1,green)+
+  box(1020,5,230,70,'World velocity v̂ᵥ','世界向量场速度 v̂ᵥ','blue',2)+box(1020,120,230,70,'Action velocity v̂ₐ','动作向量场速度 v̂ₐ','green',2)+arrow(id,'M940 80H980V40H1010',2)+arrow(id,'M940 120H980V155H1010',2,green),205);
+ if(name==='jointloop'){
+  let ticks='';for(let i=0;i<=10;i++)ticks+=`<circle data-joint-tick="${i}" cx="${320+i*60}" cy="230" r="7" fill="${i===0?green:'#d5e1e2'}"/>`;
+  return frame(id,'Joint forward pass and coupled Euler updates repeated over ten steps',
+   box(10,25,245,90,'Current observation O|Held fixed every step','当前观测 O|每一步始终固定','gray')+
+   box(350,25,245,90,'Noisy world zᵢ|Noisy actions aᵢ','带噪世界 zᵢ|带噪动作 aᵢ')+
+   box(685,25,245,90,'Joint forward|30 attention bridges','联合前向|30 层注意力桥接','gray',1)+
+   box(1020,25,230,90,'Euler updates|zᵢ₊₁ and aᵢ₊₁','Euler 更新|zᵢ₊₁ 与 aᵢ₊₁','green',2)+
+   arrow(id,'M132 25V5H807V15')+arrow(id,'M605 70H675',1)+arrow(id,'M940 70H1010',2,green)+
+   arrow(id,'M1135 127V165H472V127',3,green)+text(805,165,'Repeat with new samples and noise time','用更新后的样本与噪声时间重复计算',22)+ticks+
+   text(220,230,'Noise t = 0','噪声 t = 0',20)+text(1040,230,'Data t = 1','数据 t = 1',20),255);
  }
- if(name==='masks'){
-  let matrix='';const labels=['O','V','A'];for(let r=0;r<3;r++)for(let c=0;c<3;c++){
-   const base=r===c||c===0;matrix+=`<rect data-mask-cell="${r},${c}" x="${596+c*100}" y="${85+r*85}" width="92" height="77" rx="8" fill="${base?'#d7e9e1':'#f1f4f4'}" stroke="#ccdadd"/>`+
-    `<text data-mask-mark="${r},${c}" x="${642+c*100}" y="${130+r*85}" text-anchor="middle" fill="${base?green:'#8b9da2'}" font-size="28">${base?'✓':'—'}</text>`;
-  }
-  return wrap(id,'Query–key visibility and observed-frame access',
-   box(25,55,300,65,'O · observed frame','O · 当前观测帧','gray')+box(25,167,300,65,'V · future world tokens','V · 未来世界 token')+box(25,279,300,65,'A · action tokens','A · 动作 token','green')+
-   `<path data-mask-edge="av" d="M340 195C475 195 475 310 340 310" stroke="${green}" stroke-width="3" fill="none" marker-end="url(#${id}-arrow)"/><path data-mask-edge="va" d="M355 300C520 300 520 205 355 205" stroke="${blue}" stroke-width="3" fill="none" marker-end="url(#${id}-arrow)"/>`+
-   label(750,32,'Keys · readable sources','Key · 被读取的来源',18)+labels.map((l,c)=>label(642+c*100,65,l,l,20)).join('')+labels.map((l,r)=>label(563,130+r*85,l,l,20)).join('')+matrix+
-   label(750,386,'Rows: queries · columns: keys','行：Query · 列：Key',18),425);
- }
- if(name==='flow')return wrap(id,'Independent noise times and joint flow-matching supervision',
-  box(20,45,200,75,'Future latent z','未来潜变量 z')+box(20,230,200,75,'Action target a','动作标签 a','green')+
-  group(box(285,45,220,75,'Mix noise at tᵥ','在 tᵥ 混入噪声')+arrow(id,'M230 82H275')+box(285,230,220,75,'Mix noise at tₐ','在 tₐ 混入噪声','green')+arrow(id,'M230 267H275',0,green),1)+
-  group(box(580,115,195,120,'World + action|networks','世界 + 动作|网络')+arrow(id,'M515 82H545V145H570')+arrow(id,'M515 267H545V205H570',0,green),2)+
-  group(box(835,45,145,75,'v̂ᵥ ≈ z − εᵥ','v̂ᵥ ≈ z − εᵥ')+box(835,230,145,75,'v̂ₐ ≈ a − εₐ','v̂ₐ ≈ a − εₐ','green')+arrow(id,'M785 145H807V82H825')+arrow(id,'M785 205H807V267H825',0,green),3)+
-  label(510,377,'Training learns a vector field; inference integrates it from noise to a sample','训练拟合向量场；推理从噪声出发积分，得到动作样本',19));
- if(name==='schedule'){
-  let grid='';for(let i=0;i<=5;i++){const x=65+i*98,y=245-i*43;grid+=`<path d="M${x} 30V245M65 ${y}H555" stroke="#e4edee"/>`+label(x,265,(i/5).toFixed(1),(i/5).toFixed(1),18)+label(36,y,(i/5).toFixed(1),(i/5).toFixed(1),18);}
-  return `<svg viewBox="0 0 600 305" role="img" aria-labelledby="${id}-title"><title id="${id}-title">World and action denoising clocks</title>${grid}<path d="M65 30V245H555" stroke="${ink}" fill="none"/><path d="M65 245L555 30" stroke="#bdccce" stroke-dasharray="7 6" fill="none"/><path data-schedule-path d="M65 245L555 30" stroke="${blue}" stroke-width="3" fill="none"/><g data-schedule-gridpoints></g><circle data-schedule-dot cx="65" cy="245" r="7" fill="${green}" stroke="white" stroke-width="2"/>${label(300,13,'Action time tₐ','动作时间 tₐ',20)}${label(310,295,'World time tᵥ','世界时间 tᵥ',20)}</svg>`;
- }
- if(name==='alpha')return wrap(id,'OpenWAM-alpha: separate widths, shared attention bridges',
-  box(20,35,220,80,'Frozen Wan VAE','冻结 Wan VAE','gray')+box(20,220,220,80,'80-D noisy actions','80 维加噪动作','green',1)+
-  box(320,35,310,80,'Wan2.2 TI2V · 5B|Hidden width 3072','Wan2.2 TI2V · 5B|隐藏宽度 3072')+arrow(id,'M250 75H310')+
-  box(320,220,310,80,'Action DiT · 1B|Hidden width 1024','Action DiT · 1B|隐藏宽度 1024','green',1)+arrow(id,'M250 260H310',1,green)+
-  group(box(725,110,250,110,'Shared attention|24 heads × 128','共享注意力|24 头 × 128')+both(id,'M640 75H675V135H715')+both(id,'M715 190H675V260H640')+label(500,165,'30 layer-wise bridges','30 层逐层桥接',20),2)+
-  group(box(20,355,400,60,'Frozen umT5 text features · 4096','冻结 umT5 文本特征 · 4096','gray')+box(515,355,460,60,'Current state · separate time conditioning','当前状态 · 独立的时间条件','gray'),3),450);
- if(name==='slots'){
-  let slots='';const fields=[['EEF xyz',3],['Rotation',6],['Gripper',1],['Hand',24]] as const;let x=35;
-  for(const [i,[text,n]] of fields.entries()){const w=[85,110,90,155][i];slots+=`<rect x="${x}" y="80" width="${w-3}" height="62" rx="4" fill="${text==='Hand'?'#d6e8e0':'#dbeaf3'}"/>`+label(x+w/2,176,`${text}|${n}`,`${text}|${n}`,15);x+=w;}
-  return wrap(id,'Unified 80-dimensional action space with validity masking',
-   label(240,35,'One side: 34 slots','单侧：34 个槽位',20)+slots+
-   box(535,80,185,62,'Other side · 34','另一侧 · 34','green',1)+box(755,80,210,62,'Reserved · 12','预留 · 12','gray',1)+
-   group(box(35,235,210,70,'Native action labels|normalize','原始动作标签|归一化')+arrow(id,'M255 270H295')+box(305,235,180,70,'Scatter → 80 D','映射到 80 维')+arrow(id,'M495 270H535')+box(545,235,190,70,'Masked action loss','有效槽位损失','green')+label(866,270,'Training targets','训练标签',18),2)+
-   group(label(150,390,'Generated outputs','生成输出',18)+box(305,355,260,70,'Generated 80-D samples','生成的 80 维样本','green')+arrow(id,'M575 390H645')+box(655,355,310,70,'Gather + denormalize','取回并反归一化','green'),2),455);
- }
+ if(name==='supervision')return frame(id,'Human and robot data share world prediction with masked robot-action supervision',
+  box(10,15,275,75,'Human video|No robot action labels','人类视频|无机器人动作标签','gray')+
+  box(10,155,275,75,'Robot video + q + a|Valid coordinate mask m','机器人视频 + q + a|有效坐标掩码 m','green')+
+  box(480,65,295,115,'World–action network|Joint optimization','世界—动作网络|联合优化')+
+  arrow(id,'M295 52H380V105H470')+arrow(id,'M295 192H380V145H470',1,green)+
+  box(975,15,275,75,'World loss|Human + robot video','世界损失|人类 + 机器人视频','blue',1)+
+  box(975,155,275,75,'Masked action loss|Robot labels','掩码动作损失|机器人标签','green',2)+
+  arrow(id,'M785 105H880V52H965',1)+arrow(id,'M785 145H880V192H965',2,green)+
+  text(630,250,'80-D semantic slots → one shared action head → gather native commands','80 维语义槽位 → 共享动作输出头 → 取回本体指令',22),270);
+ if(name==='execution')return frame(id,'Physical control loop around joint generation',
+  box(10,30,230,90,'Observe|Images + state','观测|图像 + 状态','gray')+
+  box(330,30,230,90,'Joint generation|N denoising steps','联合生成|N 次去噪积分')+
+  box(650,30,270,90,'Native action chunk|H predicted actions','本体动作块|H 个预测动作','green',1)+
+  box(1010,30,240,90,'Execute n actions|Robot motion','执行 n 个动作|机器人运动','green',2)+
+  arrow(id,'M250 75H320')+arrow(id,'M570 75H640',1)+arrow(id,'M930 75H1000',2,green)+
+  arrow(id,'M1130 132V190H125V132',3,green)+text(630,190,'Observe again → correct the next action chunk','重新观测 → 修正下一动作块',22),225);
+ if(name==='synthesis')return frame(id,'Training and inference use the same world–action feature connection',
+  box(10,40,280,115,'Video generation prior|Dynamics in latent space','视频生成先验|潜变量空间的动态知识')+
+  box(475,5,310,85,'World stream','世界流')+box(475,150,310,85,'Action stream','动作流','green',1)+
+  arrow(id,'M300 98H375V48H465')+arrow(id,'M595 100V140',1)+arrow(id,'M665 140V100',1,green)+
+  box(975,40,275,115,'Robot supervision|Executable actions','机器人监督|可执行动作','green',2)+arrow(id,'M965 98H885V192H795',2,green)+
+  text(830,120,'Bridge','桥接',20),250);
  throw new Error(`Unknown OpenWAM slide diagram: ${name}`);
 }

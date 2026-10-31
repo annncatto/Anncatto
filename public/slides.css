@@ -126,3 +126,36 @@
 @media(min-width:1750px){.presentation-page{--slide-font:24px;}}
 @media(min-width:901px) and (max-height:850px){.presentation-page{--slide-font:18px;}.slide{padding:18px 28px 12px;}.slide h1,.slide h2{font-size:40px;}.brief-body{margin:14px 0;}}
 .brief-deployment>.brief-two:first-child>.brief-column>.brief-card{flex:1;}
+/* Mechanism narrative: large diagrams followed by connected, equally sized explanations. */
+.mechanism-body{display:flex;flex-direction:column;justify-content:space-between;gap:16px;}
+.mechanism-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px;min-width:0;}
+.mechanism-copy{display:flex;flex-direction:column;gap:11px;min-width:0;}
+.mechanism-copy h3{color:#28645b;}
+.mechanism-three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;}
+.mechanism-card{min-width:0;display:flex;flex-direction:column;gap:12px;padding-top:12px;border-top:2px solid #9dc2b6;}
+.mechanism-card h3{color:#28645b;}
+.mechanism-diagram{flex:0 1 270px;min-height:180px;}
+.mechanism-diagram svg{max-height:300px;}
+.mechanism-body>.formula{flex-shrink:0;}
+.mechanism-evidence{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 32px;}
+.mechanism-evidence .paper-link{font-size:12px;align-self:flex-start;}
+.training-mechanism .mechanism-diagram{flex-basis:190px;min-height:130px;}
+.training-mechanism .mechanism-body{gap:10px;}
+.alpha-original{flex-basis:340px;min-height:240px;}
+.alpha-original svg{max-height:350px;}
+.joint-controls{margin-top:6px;}
+.joint-controls input[type=range]{width:230px;}
+.joint-controls output{margin-left:auto;}
+[data-joint-demo]{min-height:0;}
+[data-joint-demo] .mechanism-diagram{height:220px;min-height:180px;}
+@media(min-width:1750px){.mechanism-diagram{flex-basis:320px;}.mechanism-diagram svg{max-height:350px;}.alpha-original{flex-basis:390px;}.alpha-original svg{max-height:390px;}[data-joint-demo] .mechanism-diagram{height:260px;}.training-mechanism .mechanism-diagram{flex-basis:220px;}}
+@media(min-width:901px) and (max-height:850px){.mechanism-body{gap:12px;}.mechanism-copy{gap:9px;}.mechanism-diagram{flex-basis:220px;min-height:150px;}.alpha-original{flex-basis:290px;}.alpha-original svg{max-height:290px;}[data-joint-demo] .mechanism-diagram{height:180px;min-height:140px;}.training-mechanism .mechanism-diagram{flex-basis:160px;min-height:110px;}}
+@media(max-width:900px){.mechanism-body{display:flex;gap:22px;}.mechanism-columns,.mechanism-three,.mechanism-evidence{grid-template-columns:1fr;gap:24px;}.mechanism-diagram,.alpha-original{flex:auto;min-height:0;}.mechanism-diagram svg,.alpha-original svg{height:auto;max-height:none;}.mechanism-copy{gap:12px;}[data-joint-demo] .mechanism-diagram{height:auto;min-height:0;}.joint-controls output{margin-left:0;width:100%;}.mechanism-slide .formula{text-align:left;}.mechanism-slide .katex-display>.katex{text-align:left;}}
+@media(max-width:720px){.mechanism-diagram svg{min-width:960px;}.mechanism-diagram:has(svg[viewBox="0 0 2800 1260"]) svg{min-width:1100px;}.joint-controls input[type=range]{width:160px;}}
+@media print{.mechanism-body{display:block;}.mechanism-columns{grid-template-columns:repeat(2,minmax(0,1fr));}.mechanism-three{grid-template-columns:repeat(3,minmax(0,1fr));}.mechanism-evidence{grid-template-columns:repeat(2,minmax(0,1fr));}.mechanism-diagram{height:200px;min-height:0;margin:12px 0!important;}.mechanism-diagram svg{height:100%;max-height:230px;}.mechanism-copy,.mechanism-card{gap:8px;}.mechanism-body>*+*{margin-top:12px;}}
+.alpha-model-body .alpha-original{flex:1;min-height:0;}
+.alpha-model-body .alpha-original svg{max-height:none;overflow:hidden;}
+@media(max-width:900px){.alpha-model-body .alpha-original{flex:auto;}}
+[data-joint-demo].is-playing .flow-line{stroke-dasharray:10 7;animation:joint-flow .65s linear infinite;}
+@keyframes joint-flow{to{stroke-dashoffset:-34;}}
+@media(prefers-reduced-motion:reduce){[data-joint-demo].is-playing .flow-line{animation:none;}}
