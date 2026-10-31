@@ -18,7 +18,8 @@ if (deck) {
   progressCat.className = 'deck-progress-cat';
   progressCat.setAttribute('aria-hidden', 'true');
   progressCat.innerHTML = pixelCatSVG();
-  progress.closest('.deck-footer')?.append(progressCat);
+  const footer = progress.closest<HTMLElement>('.deck-footer')!;
+  footer.append(progressCat);
   progress.parentElement?.style.setProperty('--slide-count', String(slides.length));
   let catIndex = -1;
   let catStop: ReturnType<typeof setTimeout> | undefined;
@@ -29,6 +30,22 @@ if (deck) {
     const node = el.querySelector(`h1 [lang="${language === 'en' ? 'en' : 'zh-CN'}"],h2 [lang="${language === 'en' ? 'en' : 'zh-CN'}"]`);
     return node?.textContent || el.querySelector('h1,h2')?.textContent || '';
   };
+  function positionProgressCat(moving = false) {
+    const bounds = footer.getBoundingClientRect();
+    const target = Math.max(14, Math.min(bounds.width - 14, (state.index + .5) / slides.length * bounds.width));
+    const current = progressCat.getBoundingClientRect();
+    const targetX = bounds.left + target;
+    const fromX = moving ? current.left + current.width / 2 : targetX;
+    let lift = 7;
+    for (const control of footer.querySelectorAll<HTMLElement>('[data-slide-count],.deck-keyboard,.deck-builds button,.deck-advance>button')) {
+      const obstacle = control.getBoundingClientRect();
+      if (!obstacle.width || !obstacle.height) continue;
+      if (Math.max(fromX, targetX) + 16 >= obstacle.left && Math.min(fromX, targetX) - 16 <= obstacle.right)
+        lift = Math.max(lift, bounds.bottom - obstacle.top + 5);
+    }
+    progressCat.style.bottom = `${Math.ceil(lift)}px`;
+    progressCat.style.left = `clamp(14px, ${(state.index + .5) / slides.length * 100}%, calc(100% - 14px))`;
+  }
   function render(announce = true) {
     slides.forEach((el, i) => {
       const active = i === state.index;
@@ -53,13 +70,6 @@ if (deck) {
     prev.textContent = language === 'en' ? '← Back' : '← 上一步';
     progress.style.width = `${(state.index + 1) / slides.length * 100}%`;
     progress.parentElement?.setAttribute('aria-valuenow', String(state.index + 1));
-    progressCat.style.left = `clamp(14px, ${(state.index + .5) / slides.length * 100}%, calc(100% - 14px))`;
-    if (catIndex >= 0 && catIndex !== state.index) {
-      clearTimeout(catStop);
-      progressCat.classList.add('is-moving');
-      catStop = setTimeout(() => progressCat.classList.remove('is-moving'), 350);
-    }
-    catIndex = state.index;
     buildControls.replaceChildren();
     if (builds[state.index]) for (let i = 0; i <= builds[state.index]; i++) {
       const b = document.createElement('button'); b.type = 'button';
@@ -69,6 +79,12 @@ if (deck) {
     }
     if (announce) status.textContent = `${state.index + 1} / ${slides.length} · ${title(slides[state.index])}`;
     for (const b of list.querySelectorAll<HTMLElement>('button')) b.setAttribute('aria-current', String(Number(b.dataset.index) === state.index));
+    const moving = catIndex >= 0 && (catIndex !== state.index || progressCat.classList.contains('is-moving'));
+    clearTimeout(catStop);
+    progressCat.classList.toggle('is-moving', moving);
+    positionProgressCat(moving && !matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (moving) catStop = setTimeout(() => {progressCat.classList.remove('is-moving'); positionProgressCat();}, 380);
+    catIndex = state.index;
   }
   function go(nextState: SlideState, updateURL = true) {
     const previous = state.index; state = slideState(nextState.index, nextState.step, builds);
@@ -138,5 +154,8 @@ if (deck) {
   });
   [...list.children].forEach((button, i) => {button.textContent = `${String(i + 1).padStart(2, '0')}   ${title(slides[i])}`;});
   document.documentElement.classList.add('slides-ready'); fromURL();
+  const catLayout = new ResizeObserver(() => positionProgressCat(progressCat.classList.contains('is-moving')));
+  catLayout.observe(footer);
+  footer.querySelectorAll<HTMLElement>('.deck-position,.deck-advance').forEach(control => catLayout.observe(control));
   deck.querySelectorAll<HTMLElement>('[data-mask-demo]').forEach(mountOpenwamAttention);
 }
