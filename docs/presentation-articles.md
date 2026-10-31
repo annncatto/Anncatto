@@ -134,3 +134,5 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 - Homepage cards use a metadata row with the date at the left and the full-article link at the right. This change does not include unpublished homepage tools.
 
 Browser checks: `/tmp/openwam/qa-compact-layout.mjs` covers titles, header/row collisions and bilingual desktop/narrow layouts. `/tmp/openwam/qa-compact-behavior.mjs` checks unchanged title text, chapter-link targets, the four distinct mask states and their packet directions, source viewers, print/no-JavaScript fallbacks and date/link alignment on the homepage.
+
+- 2026-11-01: Stage-link text inherits `--slide-font`, matching the body at every screen breakpoint. Keep only chapter captions and source citations small. Compact spacing and concise English labels accommodate long headings; do not reduce stage-link text to fit the header. `/tmp/openwam/qa-legible-nav.mjs` checks both font equality and collisions in both languages.
