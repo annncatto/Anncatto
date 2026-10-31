@@ -94,3 +94,16 @@ The 15-page presentation now prioritizes the paper's architecture over benchmark
 - The 21 complete source images remain in the canonical figure archive and gallery. The α main architecture panel is displayed with an SVG viewport; the full original remains accessible and unchanged.
 
 QA evidence is generated locally in `/tmp/openwam/mechanism-qa.json`. It checks leaf-content overlap against the callout boundary as well as viewport overflow, bilingual desktop and mobile layouts, source and SVG viewers, old aliases, joint-loop stepping, reduced motion, printing and no-JavaScript fallback.
+
+
+## Paper-led presentation · 2026-10-31
+
+This supersedes the previous architecture-first deck organization. The presentation now follows Introduction → OpenWAM-Infra → OpenWAM-Study → OpenWAM-α within 15 pages. The first page is a title page; the second compresses the Introduction's explicit data asymmetry, monolithic-design problem, three questions and three contributions. New public prose is condensed from the corresponding paper sections, with explanatory additions confined to genuinely difficult mechanisms.
+
+Original Figures 1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13 and 17 are displayed directly in the main deck; Figures 2 and 12 also have complete panel views. The gallery preserves all 21 complete originals and source attribution. Original image files are unchanged.
+
+The cup/tray illustration has been removed. Training is explicitly the common OpenWAM-Infra interface from §3.2: future targets are noised, current conditions remain clean, and a forward pass predicts vector-field velocities, not completed action chunks. α's particular 80-D state, backbone dimensions and ten-step sampler appear only in its own section.
+
+Further source discrepancy: Figure 9's linear-offset action-leading o=0.6 annotation reads 93.3%, while its synchronized baseline reads 93.0% and the main prose states that synchronized denoising performs best. The revised deck retains the image, describes the selected synchronized recipe, and does not amplify the prose claim into an unqualified numeric maximum.
+
+Current browser audit: `/tmp/openwam/paper-led-qa.mjs` checks all pages in both languages at three desktop sizes and three narrow widths, decodes every displayed original/cropped source image, and checks leaf content against the source-footer boundary. It also checks old anchors, source and SVG viewers, no-JavaScript and print behavior. There are no per-slide summary bars or decorative step animations.
