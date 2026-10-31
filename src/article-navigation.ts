@@ -37,7 +37,18 @@ export function mountArticleNavigation(){
   button.addEventListener('click',()=>open(figure,button));
   figure.addEventListener('click',event=>{const mouse=event as MouseEvent;if(mouse.button!==0||mouse.metaKey||mouse.ctrlKey||mouse.shiftKey||mouse.altKey)return;const target=event.target as Element;if(target.closest('button,input,select,a:not(:has(img))'))return;
    // Interactive plots keep their own click behavior; all raster pictures open here.
-   if(target.closest('img')||figure.matches('.course-figure')&&target.closest('svg')){event.preventDefault();open(figure,button,target.closest('img,svg'));}
+   if(target.closest('img')||figure.matches('.course-figure,[data-enlarge-svg="true"]')&&target.closest('svg')){event.preventDefault();open(figure,button,target.closest('img,svg'));}
+  });
+ }
+ for(const trigger of document.querySelectorAll<HTMLAnchorElement>('[data-open-figure]')){
+  trigger.addEventListener('click',event=>{
+   if(event.button||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+   const figure=document.getElementById(trigger.dataset.openFigure!);
+   if(!figure||!article.contains(figure))return;
+   event.preventDefault();
+   const menu=trigger.closest('dialog');menu?.close();
+   const focusTarget=menu?document.querySelector<HTMLElement>('[data-paper-menu]')??trigger:trigger;
+   open(figure,focusTarget);
   });
  }
  const home=article.querySelector<HTMLAnchorElement>('[data-article-home]');

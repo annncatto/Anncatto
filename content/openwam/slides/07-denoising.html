@@ -1,0 +1,46 @@
+<section aria-labelledby="s-denoising-clocks-title" class="slide brief-slide" data-slide="" data-slide-aliases="s-denoising-results" id="s-denoising-clocks">
+<header class="slide-header">
+<div class="slide-kicker">07 · Inference-time information flow
+</div>
+<h2 id="s-denoising-clocks-title"><span lang="en">Coupled Denoising</span><span lang="zh-CN">世界与动作的耦合去噪</span>
+</h2>
+</header>
+<div class="brief-body">
+<div class="brief-two">
+<div class="brief-column">
+<h3><span lang="en">Measured success</span><span lang="zh-CN">实测成功率</span>
+</h3>
+<figure class="brief-figure paper-figure" id="paper-original-09"><img alt="Denoising schedules" decoding="async" height="1552" loading="lazy" src="/assets/content/openwam/figure-09.webp" width="2800"/>
+<figcaption><span><span lang="en">Denoising schedules</span><span lang="zh-CN">去噪调度</span></span><a href="https://arxiv.org/pdf/2609.07398v1#page=14">Fig. 9</a>
+</figcaption>
+</figure>
+<p class=""><span lang="en"><strong>Variance skew:</strong> video-leading is better. <strong>Offset delay:</strong> action-leading is better.</span><span lang="zh-CN"><strong>方差偏置：</strong>视频领先较好。<strong>偏移延迟：</strong>动作领先较好。</span>
+</p>
+<p class=""><span lang="en">The path changes both cross-stream conditions and Euler step sizes.</span><span lang="zh-CN">调度路径同时改变跨流条件和 Euler 积分步长。</span>
+</p>
+<div class="formula">$$g_\rho(r)=\frac{r}{\rho-(\rho-1)r},\quad\rho=5$$
+</div>
+</div>
+<div class="brief-column">
+<h3><span lang="en">Denoising clocks</span><span lang="zh-CN">去噪时钟</span>
+</h3>
+<div class="brief-schedule" data-schedule-demo="">
+<div class="slide-controls"><label><span lang="en">Path</span><span lang="zh-CN">路径</span><select aria-label="Denoising path" data-schedule-mode=""><option value="sync">Synchronous</option><option value="video-variance">Video leads · variance</option><option value="action-variance">Action leads · variance</option><option value="video-offset">Video leads · offset</option><option value="action-offset">Action leads · offset</option></select></label><label>α<select aria-label="Variance skew" data-schedule-alpha=""><option>4</option><option>8</option><option>32</option></select></label><label>o<select aria-label="Offset" data-schedule-offset=""><option>0.5</option><option>0.8</option></select></label>
+</div>
+<figure class="brief-figure brief-diagram">{{openwam:schedule}}
+<figcaption><span lang="en">Noise → data: the two streams may use different clocks.</span><span lang="zh-CN">从噪声到数据：两个流可以采用不同的去噪时钟。</span>
+</figcaption>
+</figure>
+<div class="slide-controls play-row"><button aria-pressed="false" data-schedule-play="" type="button"><span lang="en">Play 10 steps</span><span lang="zh-CN">播放 10 步</span></button><input aria-label="Euler step" data-schedule-step="" max="10" min="0" type="range" value="0"/><output data-schedule-readout=""></output>
+</div>
+<p data-schedule-metrics="">
+</p>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-callout"><span lang="en"><strong>Synchronous denoising reaches 93.0%, outperforming the tested variance-skew and offset schedules.</strong></span><span lang="zh-CN"><strong>同步去噪达到 93.0%，优于被测的方差偏置与偏移调度。</strong></span>
+</div>
+<p class="slide-source"><a href="https://arxiv.org/pdf/2609.07398v1#page=14">Wang et al. · OpenWAM</a> · <a href="/notes/openwam/#inference-flow"><span lang="en">Full explanation</span><span lang="zh-CN">详细论述</span></a>
+</p>
+</section>

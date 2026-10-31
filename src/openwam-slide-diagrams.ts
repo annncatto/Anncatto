@@ -11,6 +11,11 @@ function both(id:string,d:string){return arrow(id,d).replace('<path ',`<path mar
 function wrap(id:string,title:string,content:string,height=430){return `<svg viewBox="0 0 1000 ${height}" role="img" aria-labelledby="${id}-title"><title id="${id}-title">${title}</title><defs><marker id="${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs>${content}</svg>`;}
 export function renderOpenwamDiagram(name:string):string{
  const id='ow-'+name;
+ if(name==='overview')return wrap(id,'Infrastructure, controlled study and pretrained model',
+  box(20,15,280,100,'OpenWAM-Infra|Composable experiments','OpenWAM-Infra|可组合的实验基础设施')+
+  arrow(id,'M310 65H352',1)+box(365,15,270,100,'OpenWAM-Study|Controlled comparisons','OpenWAM-Study|受控设计实验','green',1)+
+  arrow(id,'M645 65H687',2)+box(700,15,280,100,'OpenWAM-α|Pretrained model','OpenWAM-α|预训练模型','blue',2)+
+  label(160,160,'Encoder · backbone · mask','编码器 · 骨干 · 可见性',20)+label(500,160,'Priors · synergy · transfer','先验 · 协同 · 迁移',20)+label(840,160,'Simulation + real robots','仿真 + 真实机器人',20),200);
  if(name==='roadmap')return wrap(id,'OpenWAM: infrastructure, controlled study and model recipe',
   box(20,80,280,105,'OpenWAM-Infra|Composable experiments','OpenWAM-Infra|可组合的实验基础设施')+
   arrow(id,'M310 132H352',1)+box(365,80,270,105,'OpenWAM-Study|Controlled comparisons','OpenWAM-Study|受控设计实验','green',1)+
@@ -38,6 +43,18 @@ export function renderOpenwamDiagram(name:string):string{
   group(label(500,30,'Dual backbone','双骨干',21)+box(380,70,240,80,'Video DiT','视频 DiT')+box(380,250,240,80,'Action DiT','动作 DiT','green')+arrow(id,'M477 162V238',0,green)+arrow(id,'M523 238V162'),1)+
   group(label(835,30,'Tri backbone','三骨干',21)+box(715,70,240,80,'Frozen VLM features','冻结 VLM 特征','gray')+box(715,250,240,80,'Video + action streams','视频流 + 动作流','green')+arrow(id,'M835 162V238')+label(835,197,'Read-only context','只读上下文',16),2)+
   group(label(500,390,'Separate parameters preserve specialized capacity; attention controls communication','独立参数保留专门容量；注意力控制流间通信',19),2));
+ if(name==='training-compact')return wrap(id,'Joint flow matching of future world latents and actions',
+  box(15,20,190,65,'Future latent z','未来潜变量 z')+box(15,135,190,65,'Action target a','动作标签 a','green')+
+  group(box(265,20,205,65,'Noise at tᵥ','tᵥ 时刻加噪')+box(265,135,205,65,'Noise at tₐ','tₐ 时刻加噪','green')+arrow(id,'M215 52H255')+arrow(id,'M215 167H255',0,green),1)+
+  group(box(535,60,195,100,'World + action|networks','世界 + 动作|网络')+arrow(id,'M480 52H505V90H525')+arrow(id,'M480 167H505V132H525',0,green),2)+
+  group(box(795,20,190,65,'v̂ᵥ ≈ z − εᵥ','v̂ᵥ ≈ z − εᵥ')+box(795,135,190,65,'v̂ₐ ≈ a − εₐ','v̂ₐ ≈ a − εₐ','green')+arrow(id,'M740 90H766V52H785')+arrow(id,'M740 132H766V167H785',0,green),3),220);
+ if(name==='visibility'){
+  let matrix='';const labels=['O','V','A'];
+  for(let r=0;r<3;r++)for(let c=0;c<3;c++){
+   const base=r===c||c===0;matrix+=`<rect data-mask-cell="${r},${c}" x="${200+c*100}" y="${55+r*62}" width="92" height="54" rx="7" fill="${base?'#d7e9e1':'#f1f4f4'}" stroke="#ccdadd"/>`+`<text data-mask-mark="${r},${c}" x="${246+c*100}" y="${91+r*62}" text-anchor="middle" fill="${green}" font-size="25">${base?'✓':'—'}</text>`;
+  }
+  return `<svg viewBox="0 0 600 270" role="img" aria-labelledby="${id}-title"><title id="${id}-title">Query-key visibility matrix</title>${label(344,18,'Key · readable sources','Key · 读取来源',21)}${labels.map((l,c)=>label(246+c*100,42,l,l,21)).join('')}${labels.map((l,r)=>label(157,88+r*62,l,l,21)).join('')}${label(70,145,'Query','Query',21)}${matrix}${label(320,255,'O: observed · V: world · A: action','O：观测 · V：世界 · A：动作',20)}</svg>`;
+ }
  if(name==='masks'){
   let matrix='';const labels=['O','V','A'];for(let r=0;r<3;r++)for(let c=0;c<3;c++){
    const base=r===c||c===0;matrix+=`<rect data-mask-cell="${r},${c}" x="${596+c*100}" y="${85+r*85}" width="92" height="77" rx="8" fill="${base?'#d7e9e1':'#f1f4f4'}" stroke="#ccdadd"/>`+
@@ -56,10 +73,8 @@ export function renderOpenwamDiagram(name:string):string{
   group(box(835,45,145,75,'v̂ᵥ ≈ z − εᵥ','v̂ᵥ ≈ z − εᵥ')+box(835,230,145,75,'v̂ₐ ≈ a − εₐ','v̂ₐ ≈ a − εₐ','green')+arrow(id,'M785 145H807V82H825')+arrow(id,'M785 205H807V267H825',0,green),3)+
   label(510,377,'Training learns a vector field; inference integrates it from noise to a sample','训练拟合向量场；推理从噪声出发积分，得到动作样本',19));
  if(name==='schedule'){
-  let grid='';for(let i=0;i<=5;i++){const x=160+i*116,y=370-i*64;grid+=`<path d="M${x} 50V370M160 ${y}H740" stroke="#e4edee" stroke-width="1"/>`+label(x,397,(i/5).toFixed(1),(i/5).toFixed(1),15)+label(127,y,(i/5).toFixed(1),(i/5).toFixed(1),15);}
-  return wrap(id,'World and action denoising clocks after the backbone warp',grid+`<path d="M160 50V370H740" stroke="${ink}" fill="none"/><path d="M160 370L740 50" stroke="#bdccce" stroke-dasharray="7 6" fill="none"/><path data-schedule-path d="M160 370L740 50" stroke="${blue}" stroke-width="3" fill="none"/><g data-schedule-gridpoints></g><circle data-schedule-dot cx="160" cy="370" r="8" fill="${green}" stroke="white" stroke-width="3"/>`+
-   label(450,432,'World time tᵥ · noise → data','世界时间 tᵥ · 噪声 → 数据',18)+label(452,24,'Action time tₐ · noise → data','动作时间 tₐ · 噪声 → 数据',18)+
-   box(790,100,180,90,'10 Euler steps','10 步 Euler 积分','gray')+label(880,235,'ρ = 5', 'ρ = 5',22)+label(880,295,'t = gρ(r)','t = gρ(r)',20),465);
+  let grid='';for(let i=0;i<=5;i++){const x=65+i*98,y=245-i*43;grid+=`<path d="M${x} 30V245M65 ${y}H555" stroke="#e4edee"/>`+label(x,265,(i/5).toFixed(1),(i/5).toFixed(1),18)+label(36,y,(i/5).toFixed(1),(i/5).toFixed(1),18);}
+  return `<svg viewBox="0 0 600 305" role="img" aria-labelledby="${id}-title"><title id="${id}-title">World and action denoising clocks</title>${grid}<path d="M65 30V245H555" stroke="${ink}" fill="none"/><path d="M65 245L555 30" stroke="#bdccce" stroke-dasharray="7 6" fill="none"/><path data-schedule-path d="M65 245L555 30" stroke="${blue}" stroke-width="3" fill="none"/><g data-schedule-gridpoints></g><circle data-schedule-dot cx="65" cy="245" r="7" fill="${green}" stroke="white" stroke-width="2"/>${label(300,13,'Action time tₐ','动作时间 tₐ',20)}${label(310,295,'World time tᵥ','世界时间 tᵥ',20)}</svg>`;
  }
  if(name==='alpha')return wrap(id,'OpenWAM-alpha: separate widths, shared attention bridges',
   box(20,35,220,80,'Frozen Wan VAE','冻结 Wan VAE','gray')+box(20,220,220,80,'80-D noisy actions','80 维加噪动作','green',1)+

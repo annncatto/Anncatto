@@ -37,9 +37,9 @@ export function mountOpenwamSlides(deck: HTMLElement) {
   const points=()=>Array.from({length:11},(_,i)=>denoisingPoint(i/10,mode.value as DenoisingMode,Number(alpha.value),Number(offset.value)));
   const update=()=>{
    const grid=points(),i=Number(step.value),point=grid[i];
-   schedule.querySelector('[data-schedule-path]')!.setAttribute('d',grid.map((p,i)=>`${i?'L':'M'}${160+p.video*580} ${370-p.action*320}`).join(''));
-   schedule.querySelector('[data-schedule-gridpoints]')!.innerHTML=grid.map((p,k)=>`<circle cx="${160+p.video*580}" cy="${370-p.action*320}" r="3.5" fill="${k<=i?'#237ab2':'#bfced3'}" stroke="white" stroke-width="1"><title>${k}: tᵥ=${p.video.toFixed(4)}, tₐ=${p.action.toFixed(4)}</title></circle>`).join('');
-   const dot=schedule.querySelector('[data-schedule-dot]')!;dot.setAttribute('cx',String(160+point.video*580));dot.setAttribute('cy',String(370-point.action*320));
+   schedule.querySelector('[data-schedule-path]')!.setAttribute('d',grid.map((p,i)=>`${i?'L':'M'}${65+p.video*490} ${245-p.action*215}`).join(''));
+   schedule.querySelector('[data-schedule-gridpoints]')!.innerHTML=grid.map((p,k)=>`<circle cx="${65+p.video*490}" cy="${245-p.action*215}" r="3.5" fill="${k<=i?'#237ab2':'#bfced3'}" stroke="white" stroke-width="1"><title>${k}: tᵥ=${p.video.toFixed(4)}, tₐ=${p.action.toFixed(4)}</title></circle>`).join('');
+   const dot=schedule.querySelector('[data-schedule-dot]')!;dot.setAttribute('cx',String(65+point.video*490));dot.setAttribute('cy',String(245-point.action*215));
    schedule.querySelector('[data-schedule-readout]')!.textContent=`${language==='en'?'Step':'积分步'} ${i}/10 · tᵥ = ${point.video.toFixed(4)} · tₐ = ${point.action.toFixed(4)}`;
    const deltas=grid.slice(1).map((p,j)=>p.action-grid[j].action),updates=deltas.filter(d=>d>1e-10).length,max=Math.max(...deltas);
    schedule.querySelector('[data-schedule-metrics]')!.textContent=language==='en'?`Nonzero action updates: ${updates}/10 · largest Δtₐ = ${max.toFixed(4)}`:`动作有效更新：${updates}/10 次 · 最大 Δtₐ = ${max.toFixed(4)}`;

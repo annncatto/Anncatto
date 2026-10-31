@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {advanceSlide,slideState,denoisingPoint} from '../.build/slides-state.js';
+import {advanceSlide,slideState,denoisingPoint,resolveSlideHash} from '../.build/slides-state.js';
+test('slide links preserve old aliases while an empty URL starts at the first build',()=>{
+ const slides=[{id:'overview',aliases:[]},{id:'attention',aliases:['capacity','families']}];
+ assert.equal(resolveSlideHash('',slides),-1);
+ assert.equal(resolveSlideHash('#',slides),-1);
+ assert.equal(resolveSlideHash('#attention',slides),1);
+ assert.equal(resolveSlideHash('#capacity',slides),1);
+ assert.equal(resolveSlideHash('#missing',slides),-1);
+ assert.equal(resolveSlideHash('#attention',[{id:'other',aliases:['attention']},...slides]),2);
+});
 test('slide navigation reveals builds and keeps reverse traversal reversible',()=>{
  const counts=[2,0,1];let s={index:0,step:0};
  const seen=[s];for(let i=0;i<5;i++){s=advanceSlide(s,1,counts);seen.push(s);}

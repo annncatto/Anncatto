@@ -1,5 +1,11 @@
 /** Navigation uses a build index within each slide; direct links start fully visible. */
 export type SlideState = { index: number; step: number };
+export function resolveSlideHash(hash: string, slides: {id: string; aliases: string[]}[]): number {
+  const id = hash.replace(/^#/, '');
+  if (!id) return -1;
+  const canonical = slides.findIndex(slide => slide.id === id);
+  return canonical >= 0 ? canonical : slides.findIndex(slide => slide.aliases.includes(id));
+}
 export function slideState(index: number, step: number, builds: number[]): SlideState {
   const i = Math.max(0, Math.min(builds.length - 1, Number.isFinite(index) ? Math.trunc(index) : 0));
   return { index: i, step: Math.max(0, Math.min(builds[i] ?? 0, Number.isFinite(step) ? Math.trunc(step) : 0)) };

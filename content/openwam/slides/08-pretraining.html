@@ -1,0 +1,68 @@
+<section aria-labelledby="s-transfer-title" class="slide brief-slide" data-slide="" data-slide-aliases="s-pretrained-visibility" id="s-transfer">
+<header class="slide-header">
+<div class="slide-kicker">08 · Human and robot experience
+</div>
+<h2 id="s-transfer-title"><span lang="en">Cross-Domain Pretraining</span><span lang="zh-CN">跨域预训练与信息流变化</span>
+</h2>
+</header>
+<div class="brief-body">
+<div class="brief-two">
+<div class="brief-column">
+<h3><span lang="en">600 hours · ID / OOD</span><span lang="zh-CN">600 小时 · ID / OOD</span>
+</h3>
+<figure class="brief-figure paper-figure landscape" id="paper-original-10"><img alt="Cross-domain pretraining" decoding="async" height="1174" loading="lazy" src="/assets/content/openwam/figure-10.webp" width="2800"/>
+<figcaption><span><span lang="en">Cross-domain pretraining</span><span lang="zh-CN">跨域预训练</span></span><a href="https://arxiv.org/pdf/2609.07398v1#page=15">Fig. 10</a>
+</figcaption>
+</figure>
+<div class="slide-table">
+<table>
+<thead>
+<tr><th scope="col"><span lang="en">Data</span><span lang="zh-CN">数据</span></th><th scope="col"><span lang="en">ID</span><span lang="zh-CN">ID</span></th><th scope="col"><span lang="en">OOD</span><span lang="zh-CN">OOD</span></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><span lang="en">No embodied stage</span><span lang="zh-CN">无具身预训练</span></td><td>87.00</td><td>14.50</td>
+</tr>
+<tr><td><span lang="en">Robot 600 h</span><span lang="zh-CN">机器人 600 h</span></td><td>88.50</td><td>23.80</td>
+</tr>
+<tr><td><span lang="en">Ego → robot</span><span lang="zh-CN">人类 → 机器人</span></td><td>87.10</td><td>26.50</td>
+</tr>
+<tr><td><span lang="en">Joint mixture</span><span lang="zh-CN">联合混合</span></td><td>87.68</td><td><strong>26.62</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="brief-column">
+<h3><span lang="en">One-way vs mutual attention</span><span lang="zh-CN">单向与双向注意力</span>
+</h3>
+<figure class="brief-figure paper-figure landscape" id="paper-original-11"><img alt="Pretraining and visibility" decoding="async" height="1121" loading="lazy" src="/assets/content/openwam/figure-11.webp" width="2800"/>
+<figcaption><span><span lang="en">Pretraining and visibility</span><span lang="zh-CN">预训练与可见性</span></span><a href="https://arxiv.org/pdf/2609.07398v1#page=16">Fig. 11</a>
+</figcaption>
+</figure>
+<div class="slide-table">
+<table>
+<thead>
+<tr><th scope="col"><span lang="en">Setting</span><span lang="zh-CN">设置</span></th><th scope="col"><span lang="en">Mutual − one-way / pp</span><span lang="zh-CN">双向 − 单向 / 百分点</span></th>
+</tr>
+</thead>
+<tbody>
+<tr><td><span lang="en">No embodied stage · Full</span><span lang="zh-CN">无具身预训练 · Full</span></td><td>−0.24</td>
+</tr>
+<tr><td><span lang="en">Pretrained · Full</span><span lang="zh-CN">预训练 · Full</span></td><td>+0.16</td>
+</tr>
+<tr><td><span lang="en">Pretrained · C2R ID</span><span lang="zh-CN">预训练 · C2R ID</span></td><td>+0.70</td>
+</tr>
+<tr><td><span lang="en">Pretrained · C2R OOD</span><span lang="zh-CN">预训练 · C2R OOD</span></td><td><strong>+0.72</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="slide-callout"><span lang="en"><strong>Joint human–robot data improves OOD transfer to 26.62% while ID stays near 87%;</strong> pretrained models also favor mutual visibility.</span><span lang="zh-CN"><strong>人类—机器人混合数据将 OOD 提高到 26.62%，ID 维持约 87%；</strong>预训练后的模型也更偏好双向可见。</span>
+</div>
+<p class="slide-source"><a href="https://arxiv.org/pdf/2609.07398v1#page=15">Wang et al. · OpenWAM</a> · <a href="/notes/openwam/#consolidating"><span lang="en">Full explanation</span><span lang="zh-CN">详细论述</span></a>
+</p>
+</section>

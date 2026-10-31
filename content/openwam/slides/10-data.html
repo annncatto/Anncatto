@@ -1,0 +1,73 @@
+<section aria-labelledby="s-data-title" class="slide brief-slide" data-slide="" data-slide-aliases="s-training-details" id="s-data">
+<header class="slide-header">
+<div class="slide-kicker">10 · Multi-domain pretraining
+
+</div>
+<h2 id="s-data-title"><span lang="en">Data Mixture and Training</span><span lang="zh-CN">数据配比与预训练</span>
+</h2>
+</header>
+<div class="brief-body">
+<div class="brief-data">
+<p class=""><span lang="en"><strong>518.5 M retained frames · 6,369 hours</strong>, selected from 1.3339 B frames / 14,348 hours.</span><span lang="zh-CN">从 13.339 亿帧 / 14,348 小时中保留 <strong>5.185 亿帧 · 6,369 小时</strong>。</span>
+</p>
+<div class="data-mixture">
+<div style="flex:30.1"><span lang="en"><strong>Human video · 30.1%</strong></span><span lang="zh-CN"><strong>人类视频 · 30.1%</strong></span>
+</div>
+<div style="flex:39.9"><span lang="en"><strong>Real robot · 39.9%</strong></span><span lang="zh-CN"><strong>真实机器人 · 39.9%</strong></span>
+</div>
+<div style="flex:30"><span lang="en"><strong>Simulation · 30.0%</strong></span><span lang="zh-CN"><strong>仿真 · 30.0%</strong></span>
+</div>
+</div>
+<div class="brief-two">
+<div class="brief-column">
+<div class="slide-table">
+<table>
+<thead>
+<tr><th><span lang="en">Source</span><span lang="zh-CN">来源</span></th><th><span lang="en">Frames / M</span><span lang="zh-CN">帧数 / M</span></th><th><span lang="en">Hours</span><span lang="zh-CN">小时</span></th><th><span lang="en">Share</span><span lang="zh-CN">帧占比</span></th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Ego video</td><td>155.7</td><td>1,442</td><td>30.1%</td>
+</tr>
+<tr><td>AgiBot</td><td>96.9</td><td>1,794</td><td>18.6%</td>
+</tr>
+<tr><td>RoboCOIN</td><td>74.1</td><td>686</td><td>14.3%</td>
+</tr>
+<tr><td>DROID</td><td>36.3</td><td>1,007</td><td>7.0%</td>
+</tr>
+<tr><td>InternData</td><td>155.5</td><td>1,440</td><td>30.0%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><span lang="en"><strong>71,600 ego videos / 3,006 task types.</strong> Real data spans 17 platforms; the mixture covers 21 robot embodiments.</span><span lang="zh-CN"><strong>自采 71,600 段第一视角视频，覆盖 3,006 类任务。</strong>真机数据覆盖 17 类平台，混合数据包含 21 种机器人本体。</span>
+</p>
+<p><span lang="en"><strong>Mixture weights use frame counts.</strong> Source frame rates differ, so frame shares and duration shares differ.</span><span lang="zh-CN"><strong>混合比例按帧数制定。</strong>来源帧率不同，帧占比与时长占比也不同。</span></p></div>
+<div class="brief-column">
+<section class="brief-card">
+<h3><span lang="en">State-first curation</span><span lang="zh-CN">状态优先清洗</span>
+</h3>
+<p><span lang="en">Trim leading/trailing idle motion below <strong>2 cm/s and 5°/s</strong>. Keep internal pauses.</span><span lang="zh-CN">按 <strong>2 cm/s、5°/s</strong> 裁去首尾空闲运动，保留任务内部暂停。</span>
+</p>
+</section>
+<section class="brief-card">
+<h3><span lang="en">Supervision</span><span lang="zh-CN">监督分工</span>
+</h3>
+<p><span lang="en"><strong>Human:</strong> world loss. <strong>Robot:</strong> world + action loss. The visual encoder stays frozen.</span><span lang="zh-CN"><strong>人类：</strong>世界损失。<strong>机器人：</strong>世界 + 动作损失。视觉编码器保持冻结。</span>
+</p>
+</section>
+<section class="brief-card">
+<h3><span lang="en">Temporal integrity</span><span lang="zh-CN">时序完整性</span>
+</h3>
+<p><span lang="en">Drop episodes with <strong>&gt;2% video–signal offset</strong> or <strong>&gt;70% removed frames</strong>.</span><span lang="zh-CN">视频—信号错位 <strong>&gt;2% 帧</strong>，或清洗去除 <strong>&gt;70% 帧</strong>时，丢弃整段 episode。</span>
+</p>
+</section>
+<p><span lang="en"><strong>Keep complete episodes</strong> within each source budget. Sample by retained counts, visiting each kept sample once per epoch.</span><span lang="zh-CN"><strong>按来源预算保留完整 episode</strong>，再按保留样本数量比例训练，每个样本每轮访问一次。</span></p></div>
+</div>
+</div>
+</div>
+<div class="slide-callout"><span lang="en"><strong>Video broadens visual-dynamics coverage; robot trajectories ground the shared model in executable actions.</strong></span><span lang="zh-CN"><strong>视频扩展视觉动态覆盖；机器人轨迹将共享模型锚定到可执行动作。</strong></span>
+</div>
+<p class="slide-source"><a href="https://arxiv.org/pdf/2609.07398v1#page=18">Wang et al. · OpenWAM</a> · <a href="/notes/openwam/#data-mixture"><span lang="en">Full explanation</span><span lang="zh-CN">详细论述</span></a>
+</p>
+</section>

@@ -1,5 +1,5 @@
 import { language, onLanguageChange } from './language.js';
-import { advanceSlide, slideState, type SlideState } from './slides-state.js';
+import { advanceSlide, slideState, resolveSlideHash, type SlideState } from './slides-state.js';
 import { mountOpenwamSlides } from './openwam-slides.js';
 
 const deck = document.querySelector<HTMLElement>('[data-deck]');
@@ -28,8 +28,9 @@ if (deck) {
       el.setAttribute('aria-hidden', String(!active));
       if (active) for (const image of el.querySelectorAll<HTMLImageElement>('img')) image.loading = 'eager';
       for (const fragment of el.querySelectorAll<HTMLElement>('[data-step]')) {
-        const visible = Number(fragment.dataset.step) <= (active ? state.step : builds[i]);
+        const visible = deck!.dataset.filled === 'true' || Number(fragment.dataset.step) <= (active ? state.step : builds[i]);
         fragment.classList.toggle('is-visible', visible);
+        fragment.classList.toggle('is-emphasized', active && state.step > 0 && Number(fragment.dataset.step) === state.step);
         fragment.setAttribute('aria-hidden', String(!visible));
         if (fragment instanceof HTMLElement) fragment.inert = !visible;
       }
@@ -62,8 +63,9 @@ if (deck) {
     window.dispatchEvent(new CustomEvent('slidechange', {detail: {...state}}));
   }
   function fromURL() {
-    const i = slides.findIndex(s => `#${s.id}` === location.hash);
-    go(i >= 0 ? {index: i, step: builds[i]} : {index: 0, step: 0}, false);
+    const hash = location.hash.slice(1);
+    const i = resolveSlideHash(hash, slides.map(s => ({id: s.id, aliases: (s.dataset.slideAliases || '').split(' ').filter(Boolean)})));
+    go(i >= 0 ? {index: i, step: builds[i]} : {index: 0, step: 0}, i >= 0 && slides[i].id !== hash);
   }
   prev.addEventListener('click', () => go(advanceSlide(state, -1, builds)));
   next.addEventListener('click', () => go(advanceSlide(state, 1, builds)));
@@ -75,6 +77,10 @@ if (deck) {
   });
   overview.querySelector('[data-slide-close]')?.addEventListener('click', closeOverview);
   overview.addEventListener('click', event => {if (event.target === overview) closeOverview();});
+  const papers = document.querySelector<HTMLDialogElement>('[data-paper-index]');
+  document.querySelector('[data-paper-menu]')?.addEventListener('click', () => papers?.showModal());
+  papers?.querySelector('[data-paper-close]')?.addEventListener('click', () => papers.close());
+  papers?.addEventListener('click', event => {if (event.target === papers) papers.close();});
   for (const [index, slide] of slides.entries()) {
     const button = document.createElement('button'); button.type = 'button'; button.dataset.index = String(index);
     button.addEventListener('click', () => {closeOverview(); go({index, step: builds[index]});}); list.append(button);
@@ -91,7 +97,7 @@ if (deck) {
     const targetElement = event.target as Element;
     if (targetElement.closest('input,select,textarea,[contenteditable="true"]')) return;
     const control = targetElement.closest('button,a');
-    if (control && ([' ', 'Enter'].includes(event.key) || !control.matches('[data-slide-prev],[data-slide-next],[data-slide-show-all]'))) return;
+    if (control && [' ', 'Enter'].includes(event.key)) return;
     let target: SlideState | undefined;
     if (['ArrowRight', ' ', 'PageDown'].includes(event.key)) target = advanceSlide(state, 1, builds, event.key === 'PageDown' || event.shiftKey);
     else if (['ArrowLeft', 'PageUp'].includes(event.key)) target = advanceSlide(state, -1, builds, event.key === 'PageUp' || event.shiftKey);

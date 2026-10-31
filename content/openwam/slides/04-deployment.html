@@ -1,0 +1,199 @@
+<section aria-labelledby="s-deployment-title" class="slide brief-slide" data-slide="" data-slide-aliases="s-evaluation" id="s-deployment">
+
+<header class="slide-header">
+
+<div class="slide-kicker">04 · Deployment and evaluation
+
+</div>
+
+<h2 id="s-deployment-title"><span lang="en">Serving Schedules and Evaluation</span><span lang="zh-CN">执行调度与评测协议</span>
+
+</h2>
+
+</header>
+
+<div class="brief-body">
+
+<div class="brief-deployment">
+
+<div class="brief-two">
+
+<div class="brief-column">
+
+<section class="brief-card">
+
+<h3><span lang="en">Synchronous serving</span><span lang="zh-CN">同步执行</span>
+
+</h3>
+
+<div class="serving-chart">
+
+<div class="serving-row"><span>Robot</span>
+
+<div class="time-block green span-2"><span lang="en">Execute A</span><span lang="zh-CN">执行 A</span>
+
+</div>
+
+<div class="time-block gray"><span lang="en">Wait</span><span lang="zh-CN">等待</span>
+
+</div>
+
+<div class="time-block green span-2"><span lang="en">Execute B</span><span lang="zh-CN">执行 B</span>
+
+</div>
+
+</div>
+
+<div class="serving-row"><span>Model</span>
+
+<div class="time-block blank span-2">
+
+</div>
+
+<div class="time-block blue"><span lang="en">Infer B</span><span lang="zh-CN">预测 B</span>
+
+</div>
+
+<div class="time-block blank span-2">
+
+</div>
+
+</div>
+
+</div>
+
+<ul>
+
+<li><span lang="en">An empty buffer pauses the robot until inference returns.</span><span lang="zh-CN">缓冲耗尽后，机器人等待推理返回。</span>
+
+</li>
+
+<li><span lang="en">Execution and computation are serial.</span><span lang="zh-CN">动作执行与模型计算串行进行。</span>
+
+</li>
+
+</ul>
+
+<p><span lang="en"><strong>Window n</strong> sets how long the robot executes before replanning; longer windows delay feedback updates.</span><span lang="zh-CN"><strong>执行窗口 n</strong> 决定两次重规划之间执行多久；窗口越长，反馈更新间隔越长。</span>
+</p>
+</section>
+
+</div>
+
+<div class="brief-column">
+
+<section class="brief-card">
+
+<h3><span lang="en">Asynchronous serving</span><span lang="zh-CN">异步执行</span>
+
+</h3>
+
+<div class="serving-chart">
+
+<div class="serving-row"><span>Robot</span>
+
+<div class="time-block green span-2"><span lang="en">Execute A</span><span lang="zh-CN">执行 A</span>
+
+</div>
+
+<div class="time-block green span-2"><span lang="en">Execute B</span><span lang="zh-CN">执行 B</span>
+
+</div>
+
+<div class="time-block blank">
+
+</div>
+
+</div>
+
+<div class="serving-row"><span>Model</span>
+
+<div class="time-block blank">
+
+</div>
+
+<div class="time-block blue"><span lang="en">Infer B</span><span lang="zh-CN">预测 B</span>
+
+</div>
+
+<div class="time-block blank span-3">
+
+</div>
+
+</div>
+
+</div>
+
+<ul>
+
+<li><span lang="en">Start prediction before the current buffer ends.</span><span lang="zh-CN">当前缓冲结束前提前预测。</span>
+
+</li>
+
+<li><span lang="en">Skip the stale prefix and align the new chunk.</span><span lang="zh-CN">跳过过时前缀，对齐新动作块。</span>
+
+</li>
+
+</ul>
+
+<p><span lang="en"><strong>H:</strong> prediction horizon; <strong>n:</strong> execution window; <strong>d = n/2:</strong> default lookahead.</span><span lang="zh-CN"><strong>H：</strong>预测长度；<strong>n：</strong>执行窗口；默认提前量 <strong>d = n/2</strong>。</span>
+</p>
+</section>
+
+</div>
+
+</div>
+
+<div class="brief-two">
+
+<div class="brief-column">
+
+<section class="brief-card">
+
+<h3><span lang="en">Full · in distribution</span><span lang="zh-CN">Full · 分布内</span>
+
+</h3>
+
+<p class=""><span lang="en"><strong>2,500 Clean + 25,000 Randomized</strong> trajectories; evaluate both seen distributions.</span><span lang="zh-CN"><strong>2,500 条 Clean + 25,000 条 Randomized</strong>；评测两个已见分布。</span>
+
+</p>
+
+</section>
+
+</div>
+
+<div class="brief-column">
+
+<section class="brief-card">
+
+<h3><span lang="en">Clean2Random · transfer</span><span lang="zh-CN">Clean2Random · 迁移</span>
+
+</h3>
+
+<p class=""><span lang="en">Train on <strong>Clean only</strong>; Randomized tests unseen visual and scene conditions.</span><span lang="zh-CN"><strong>仅以 Clean 训练</strong>；Randomized 检验未见视觉和场景条件。</span>
+
+</p>
+
+</section>
+
+</div>
+
+</div>
+
+<p class=""><span lang="en"><strong>α evaluation:</strong> synchronous serving + synchronous denoising, 10 steps, about 170 ms/chunk on RTX 5090. <a class="paper-link" data-open-figure="paper-original-03" href="/assets/content/openwam/figure-03.webp"><span lang="en">Figure 3 ↗</span><span lang="zh-CN">原图 3 ↗</span></a> · <a class="paper-link" data-open-figure="paper-original-04" href="/assets/content/openwam/figure-04.webp"><span lang="en">Figure 4 ↗</span><span lang="zh-CN">原图 4 ↗</span></a> · <a class="paper-link" data-open-figure="paper-original-05" href="/assets/content/openwam/figure-05.webp"><span lang="en">Figure 5 ↗</span><span lang="zh-CN">原图 5 ↗</span></a></span><span lang="zh-CN"><strong>α 评测：</strong>同步执行 + 同步去噪，10 步积分；RTX 5090 上约 170 ms / 动作块。<a class="paper-link" data-open-figure="paper-original-03" href="/assets/content/openwam/figure-03.webp"><span lang="en">Figure 3 ↗</span><span lang="zh-CN">原图 3 ↗</span></a> · <a class="paper-link" data-open-figure="paper-original-04" href="/assets/content/openwam/figure-04.webp"><span lang="en">Figure 4 ↗</span><span lang="zh-CN">原图 4 ↗</span></a> · <a class="paper-link" data-open-figure="paper-original-05" href="/assets/content/openwam/figure-05.webp"><span lang="en">Figure 5 ↗</span><span lang="zh-CN">原图 5 ↗</span></a></span>
+
+</p>
+
+</div>
+
+</div>
+
+<div class="slide-callout"><span lang="en"><strong>Overlapping inference with execution removes the serial wait;</strong> stale predictions must be skipped to preserve time alignment.</span><span lang="zh-CN"><strong>推理与执行重叠可消除串行等待；</strong>跳过过时预测才能保持动作的时间对齐。</span>
+
+</div>
+
+<p class="slide-source"><a href="https://arxiv.org/pdf/2609.07398v1#page=8">Wang et al. · OpenWAM</a> · <a href="/notes/openwam/#deployment-runtime"><span lang="en">Full explanation</span><span lang="zh-CN">详细论述</span></a>
+
+</p>
+
+</section>

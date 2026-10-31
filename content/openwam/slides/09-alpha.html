@@ -1,0 +1,22 @@
+<section aria-labelledby="s-alpha-title" class="slide brief-slide" data-slide="" data-slide-aliases="s-alpha-bridges" id="s-alpha">
+<header class="slide-header">
+<div class="slide-kicker">09 · The pretrained model
+</div>
+<h2 id="s-alpha-title"><span lang="en">OpenWAM-α Architecture</span><span lang="zh-CN">OpenWAM-α：逐层桥接的双骨干</span>
+</h2>
+</header>
+<div class="brief-body">
+<div class="brief-architecture">
+<figure class="brief-figure brief-diagram">{{openwam:alpha}}
+<figcaption><span lang="en">Each stream keeps its parameters and connects through a shared attention space.</span><span lang="zh-CN">各流保留独立参数，通过共享注意力空间连接。</span>
+</figcaption>
+</figure>
+<p class="brief-strip"><span lang="en"><strong>Video:</strong> 3D RoPE · <strong>Action:</strong> 1D RoPE · <strong>Conditioning:</strong> text, current state and independent noise times. <a class="paper-link" data-open-figure="paper-original-12" href="/assets/content/openwam/figure-12.webp">Figure 12 ↗</a></span><span lang="zh-CN"><strong>视频：</strong>3D RoPE · <strong>动作：</strong>1D RoPE · <strong>条件：</strong>文本、当前状态与独立噪声时间。<a class="paper-link" data-open-figure="paper-original-12" href="/assets/content/openwam/figure-12.webp">原图 12 ↗</a></span>
+</p>
+</div>
+</div>
+<div class="slide-callout"><span lang="en"><strong>Thirty attention bridges combine the pretrained video prior with dedicated action capacity, without sharing all backbone weights.</strong></span><span lang="zh-CN"><strong>30 层注意力桥接把预训练视频先验与独立动作容量结合起来，两个骨干保留各自权重。</strong></span>
+</div>
+<p class="slide-source"><a href="https://arxiv.org/pdf/2609.07398v1#page=17">Wang et al. · OpenWAM</a> · <a href="/notes/openwam/#alpha-architecture"><span lang="en">Full explanation</span><span lang="zh-CN">详细论述</span></a>
+</p>
+</section>
