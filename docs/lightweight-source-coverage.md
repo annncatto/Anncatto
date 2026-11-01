@@ -82,17 +82,17 @@ All 46 image occurrences in the three selected notes were inspected. Two topolog
 | 机器人设计（新增） / `机器人设计（新增）-1793537108518.webp` | Shared walls and interfaces | `#passive-robot-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537113275.webp` | Passive integration definition | `#passive-robot-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537117038.webp` | Cassie and ATRIAS spring energy | `#case-cassie` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537121297.webp` | Passive integration examples | `#passive-robot-integration` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537121297.webp` | Passive integration examples | `#passive-integration-examples` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537123966.webp` | Conflicting functions and maintenance | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537128751.webp` | Three active integration mechanisms | `#active-robot-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537131813.webp` | Integrated joint section | `#case-lwr-iii` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537135046.webp` | Series elastic actuator | `#series-elastic-actuation` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537142695.webp` | Comparison of traditional, passive and active methods | `#robot-method-comparison` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537142695.webp` | Comparison of traditional, passive and active methods | `#integration-method-comparison` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537156223.webp` | Knee function audit exercise | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537158986.webp` | Integration conclusions | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537162815.webp` | Robot case and metric objectives | `#integration-metrics` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537167183.webp` | M D F P A classification | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537169896.webp` | Quadruped design examples | `#leg-functional-design` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537167183.webp` | M D F P A classification | `#robot-five-methods` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537169896.webp` | Quadruped design examples | `#quadruped-methods` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537172817.webp` | Mini Cheetah joint design | `#case-mini-cheetah` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537176033.webp` | Humanoid design examples | `#leg-platform-comparison` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537179002.webp` | Cassie spring design | `#case-cassie` |
@@ -101,7 +101,7 @@ All 46 image occurrences in the three selected notes were inspected. Two topolog
 | 机器人设计（新增） / `机器人设计（新增）-1793537241643.webp` | Arm payload ratio and other metrics | `#arm-payload-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537245070.webp` | COT definition and interpretation | `#integration-metrics` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537248325.webp` | Arm gravity torque and mass spiral example | `#mass-layout-example` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537251747.webp` | Integration trade-offs | `#joint-function-audit` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537251747.webp` | Integration trade-offs | `#integration-tradeoffs` |
 | 轻量化设计（新增，放在最后，基本功） / `机器人设计（新增）-1793537652584.webp` | Bernd Klein textbook | `#further-reading` |
 | 轻量化设计（新增，放在最后，基本功） / `轻量化设计（新增，放在最后，基本功）-1793538500456.webp` | Load, stress and strain objectives | `#mechanics-foundations` |
 | 轻量化设计（新增，放在最后，基本功） / `轻量化设计（新增，放在最后，基本功）-1793538504080.webp` | Axial, torsional, shear and bending loads | `#section-loads` |
@@ -143,3 +143,9 @@ The November 1 follow-up separates legged robots and manipulators into distinct 
 Two added SVGs show the point-mass leg comparison (0.126 → 0.072 kg·m²) and the spring–mass energy path. The first calculation neglects each link’s centroidal inertia; the uniform-rod correction adds 0.006 kg·m² to both cases. It is a teaching model, not measured Mini Cheetah data. The Cassie spring diagram shows an equivalent model without inventing energy proportions.
 
 Primary verification includes the tendon–bone paper (DOI 10.1088/1748-3182/7/4/046005), MIT humanoid hardware design (arXiv:2104.09025, mass distribution and belt gearing), DLR joint/link construction, Kinova’s Gen3 user guide (carbon-fibre shell, aluminium, two actuator sizes and integrated sensors), Franka FR3 joint sensing, and Barrett’s cable-drive/Puck manual. The mixed generic robot table was replaced by case-specific exposition and separate leg/arm comparisons. The payload plot is placed with the manipulator cases, with a local table retaining each published load condition.
+
+### Source-table fidelity
+
+The next correction restores the source’s row structure rather than consolidating its categories. M/D/F/P/A occupy five separate rows; the traditional/passive/active comparison retains four aspects; quadruped, humanoid and arm matrices contain 5, 5 and 6 case rows respectively, with source method codes. All case matrices use Robot / Key lightweight measures / Methods, without invented scheduling or benefit columns. DLR LWR III is restored to the arm matrix as well as its detailed case. Previously omitted Cassie/Digit and electric Atlas/H1/G1 groupings are restored.
+
+The passive examples also retain all five source rows, including gearbox-housing integration, and the active section retains the three source routes. The four closing trade-offs are extracted explicitly. The secondary uniform-rod numerical extension and independent WAM subsection are removed; WAM remains represented by its source row. Known factual qualifications remain local: Cassie does not place every motor in the pelvis; transmission mechanisms and electric humanoid enclosures vary by model. The codes reproduce the source classification and are not quantitative scores or an exhaustive list of everything each robot uses.

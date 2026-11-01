@@ -516,7 +516,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537121297.webp",
       "sha256": "4dc9fff3fc0a2f9ce457ad459acad0a999f421741b66d8e49ef9c26065fcf97a",
-      "anchor": "passive-robot-integration",
+      "anchor": "passive-integration-examples",
       "topic": "Passive integration examples",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -556,7 +556,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537142695.webp",
       "sha256": "ad9524f6cd3561bcc1b23630792fac8241e7ddcc81cc0313f289ce05a09f9e4d",
-      "anchor": "robot-method-comparison",
+      "anchor": "integration-method-comparison",
       "topic": "Comparison of traditional, passive and active methods",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -588,7 +588,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537167183.webp",
       "sha256": "2162a7231e968314ba747635063f193c65570540a96f5f6ef7831231fcb162f1",
-      "anchor": "robot-method-comparison",
+      "anchor": "robot-five-methods",
       "topic": "M D F P A classification",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -596,7 +596,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537169896.webp",
       "sha256": "5215e6e574125845810ce6cc418cac2a366f2fc4082f03012a99d6435af498d3",
-      "anchor": "leg-functional-design",
+      "anchor": "quadruped-methods",
       "topic": "Quadruped design examples",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -668,7 +668,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537251747.webp",
       "sha256": "ab0cf0e7c2c49e64ce7a23a96b9bb3f8d8a51664f2b1b3606cea93ec4acddb5a",
-      "anchor": "joint-function-audit",
+      "anchor": "integration-tradeoffs",
       "topic": "Integration trade-offs",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },

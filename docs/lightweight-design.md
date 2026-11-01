@@ -77,3 +77,5 @@ The source-coverage audit records corrections to Cassie motor placement, LWR mas
 Validation: 39 tests; production build and internal-reference/MathML check; desktop English/Chinese figures, SVG text collision audit, 390 px page overflow, reference disclosure and figure-viewer Close/Escape.
 
 The functional-design case sections now separate legs and manipulators. Leg examples include tendon–bone load sharing, Mini Cheetah proximal drive and its point-mass calculation, Cassie spring energy and ANYdrive; arm examples include the five LWR III design mechanisms, distinct joint implementations, WAM cable transmission, payload conditions and the mass-spiral calculation. New leg diagrams retain their model assumptions.
+
+Source-table correction: method definitions use five distinct rows; case matrices reproduce 5 quadruped, 5 humanoid and 6 arm entries with M/D/F/P/A codes. Passive examples, the traditional/passive/active comparison and four closing trade-offs preserve their source fields. Case tables use a scoped 600 px minimum width and horizontal scrolling on narrow screens.
