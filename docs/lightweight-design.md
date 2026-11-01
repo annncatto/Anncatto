@@ -2,7 +2,7 @@
 
 For article authoring, follow [the course-note workflow](course-note-workflow.md). For the unpublished tool redesign, read [the tool handoff](lightweight-tool-handoff.md); the application section below describes an earlier implementation, not the current local redesign.
 
-The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
+The bilingual article is assembled from eleven files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
 
 | Module | Content |
 | --- | --- |
@@ -14,11 +14,13 @@ The bilingual article is assembled from nine files in `content/lightweight/`. `c
 | 06 | Axial/beam/plate/torsion indices, stress and curvature, official Ashby charts, material tables, fatigue and thermal properties |
 | 07 | Shape factors, thin-wall manufacture and the fixed-diameter/fixed-wall tube exercise |
 | 08 | Thin-wall efficiency, direct load paths and fully stressed design |
-| 09 | SIMP, computed simply supported beam evolution and component validation |
+| 09 | SIMP, computed simply supported beam evolution, manufacturable realization and the design loop |
+| 10 | Robot passive/active integration, joint/SEA architecture, M/D/F/P/A cases, system metrics and the arm mass-layout exercise |
+| 11 | Section loads, stress/strain, elastic laws, beam kinematics and fields, shear models, yield and capacity/self-weight indices |
 
-[Source coverage](lightweight-source-coverage.md) maps 47 embedded figures from 13 Obsidian notes to article anchors. The JSON companion records source hashes. Obsidian files are read-only inputs.
+[Source coverage](lightweight-source-coverage.md) maps 91 embedded figures from 15 Obsidian notes to article anchors. The JSON companion records source hashes. Obsidian files are read-only inputs.
 
-`src/lightweight-frameworks.ts` renders the relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
+`src/lightweight-foundations.ts` adds ten bilingual native SVG/HTML figures, including calculated shear-error and normalized material-index plots. `src/lightweight-frameworks.ts` renders the earlier relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
 
 Regenerate the SIMP PNG stages, animated GIF, convergence history and interactive fields with Python, NumPy, SciPy, Matplotlib and Pillow:
 
@@ -65,3 +67,11 @@ BASE_PATH=/Anncatto PORT=5181 npm run preview
 Preview paths are `/Anncatto/notes/lightweight-structural-design/` and `/Anncatto/labs/lightweight-robot/`. The article tests check assembly order, source anchors, metadata exclusion, scientific plots and the SIMP solve. Concept tests compare canonical mass/FK against MuJoCo, verify standing, IK, sizing and PPO serialization/updates. Browser checks cover both languages, mobile widths, SVG label collisions, playback, controls, exports and one-screen application layout.
 
 Three.js MIT and MuJoCo Apache 2.0 notices are distributed under `assets/licenses/`. `main` publishes GitHub Pages; draft work remains on `draft/lightweight-structure`, and D20 work stays on `local/d20-homepage`.
+
+## November 1 article update
+
+Read all 46 image occurrences in the topology, robot-design and fundamentals inputs; 44 newly inventoried attachments supplement the two existing topology figures. The article retains the computed SIMP solve and its original anchors, adds engineering realization, and appends robot integration followed by mechanics foundations. The former further-reading anchor now points to a compact, initially collapsed reference list at the end.
+
+The source-coverage audit records corrections to Cassie motor placement, LWR mass, beam signs, shear applicability, equivalent-stress evaluation and the buckling material index. The public text contains the resulting technical explanation rather than editorial history. The local tool and empty homepage tools heading are unchanged.
+
+Validation: 39 tests; production build and internal-reference/MathML check; desktop English/Chinese figures, SVG text collision audit, 390 px page overflow, reference disclosure and figure-viewer Close/Escape.

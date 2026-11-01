@@ -1259,3 +1259,11 @@ body:has(.concept-app) .language-switch button {font-size:11px;padding:2px 7px;}
 .entry-meta{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-top:8px;}
 .entry-meta time{margin-top:0;}
 .entry-meta .entry-format{margin-left:auto;white-space:nowrap;}
+
+/* Ordered engineering stages retain readable labels on narrow screens. */
+.foundation-flow {counter-reset:foundation;display:grid;grid-template-columns:1fr 1fr;gap:10px;list-style:none!important;padding:0!important;margin:0!important;}
+.foundation-flow li {counter-increment:foundation;position:relative;margin:0!important;padding:13px 14px 13px 49px!important;border:1px solid #d7e5e7;border-radius:5px;background:#f5faf9;}
+.foundation-flow li::before {content:counter(foundation);position:absolute;left:16px;top:15px;color:#237ab2;font-size:19px;font-weight:600;}
+.foundation-flow strong {display:block;font-size:15px;line-height:1.6;color:#315c70;}
+.foundation-flow li>span {display:block;font-size:13px;line-height:1.7;color:#556b73;margin-top:3px;}
+@media(max-width:520px){.foundation-flow {grid-template-columns:1fr;}}

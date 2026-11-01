@@ -1,3 +1,4 @@
+import {foundationFigures,foundationFigure} from './lightweight-foundations.js';
 import {FONT} from './theme.js';
 import {frameworkDrawing} from './lightweight-frameworks.js';
 const bi=(en:string,zh:string)=>`<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
@@ -9,9 +10,10 @@ function plot(id:string,height:number,en:string,zh:string,draw:(l:'en'|'zh')=>st
  return `<svg viewBox="0 0 680 ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${en}" style="font-family:${FONT}"><title>${en}</title><defs><marker id="course-${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#648795"/></marker></defs><g lang="en">${draw('en')}</g><g lang="zh-CN">${draw('zh')}</g></svg>`;
 }
 const label=(x:number,y:number,en:string,zh:string,l:'en'|'zh',size=14,anchor='middle')=>`<text x="${x}" y="${y}" font-size="${size}" text-anchor="${anchor}" fill="#3e5d6a">${l==='en'?en:zh}</text>`;
-export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload','indexbars','forcepaths'] as const;
+export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload','indexbars','forcepaths',...foundationFigures] as const;
 export type CourseFigure=typeof courseFigures[number];
 export function renderCourseFigure(id:CourseFigure){
+ const supplement=foundationFigure(id);if(supplement)return supplement;
  let body='',title=['',''],desc=['',''];
  const c=card;
  if(id==='framework'){
