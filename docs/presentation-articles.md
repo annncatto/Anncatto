@@ -1,5 +1,7 @@
 # 网页幻灯片文章
 
+编排、视觉和交付检查统一遵循[论文网页 PPT 工作流](presentation-workflow.md)。本文件保留实现细节与迭代记录；历史阶段的临时规则不覆盖当前工作流。
+
 ## 入口与文件
 
 `content/posts.json` 可选的 `presentation` 字段指向 `content/` 内的 HTML 源文件。存在此字段时，首页标题进入 `/notes/<slug>/slides/`，旁边保留全文链接。原有 `/notes/<slug>/` 及其章节锚点继续有效，文章头部提供幻灯片入口。
@@ -38,7 +40,7 @@ OpenWAM 的幻灯片入口为 `content/openwam/presentation.html`，15 页正文
 
 ## 历史版本记录
 
-以下记录早期版本，当前版式以文末“原论文主线版”为准。
+以下记录早期版本；当前要求以[论文网页 PPT 工作流](presentation-workflow.md)及公共组件实现为准。
 
 ## 2026-10-30 验证记录
 
