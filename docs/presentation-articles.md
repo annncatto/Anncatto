@@ -147,7 +147,7 @@ Browser checks: `/tmp/openwam/qa-compact-layout.mjs` covers titles, header/row c
 
 ### Inline chapter navigation and fullscreen evidence · 2026-11-01
 
-- Chapter names and stage labels share a baseline and body font size; place the source-section link just above them. Keep this row together. Narrow screens may scroll the navigation horizontally; long English page titles wrap before navigation text is reduced or clipped.
+- Chapter names and stage labels share a baseline and body font size; align the bottom of this navigation row with the page-title block, including wrapped English titles. Place the source-section link just above the navigation row. Keep this row together. Narrow screens may scroll the navigation horizontally; long English page titles wrap before navigation text is reduced or clipped.
 - The page 9 paper figure has a minimum readable height. Compact the result-table padding and visibility-inspector spacing, and remove duplicated result numbers from its final finding so the original evidence does not receive only leftover height. Fullscreen and ordinary desktop layouts need separate checks.
 - `/tmp/openwam/qa-inline-nav.mjs` checks both languages and the header structure, including 1366×768 and fullscreen-sized viewports. `/tmp/openwam/qa-compact-follow.mjs` samples the cat during navigation and checks control collisions, the compact footer, center alignment and the two conclusion blocks.
 
