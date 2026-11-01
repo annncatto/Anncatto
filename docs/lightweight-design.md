@@ -1,5 +1,7 @@
 # Lightweight structural design
 
+For article authoring, follow [the course-note workflow](course-note-workflow.md). For the unpublished tool redesign, read [the tool handoff](lightweight-tool-handoff.md); the application section below describes an earlier implementation, not the current local redesign.
+
 The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
 
 | Module | Content |
