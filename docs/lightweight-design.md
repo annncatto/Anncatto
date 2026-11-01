@@ -1,6 +1,6 @@
 # Lightweight structural design
 
-Read [the current tool handoff](lightweight-tool-handoff.md) before resuming local development. Course-note authoring follows `docs/course-note-workflow.md` on `main` (use `git show main:docs/course-note-workflow.md` if absent in this older worktree).
+Read [the current tool handoff](lightweight-tool-handoff.md) before resuming local development. Course-note authoring follows [the course-note workflow](course-note-workflow.md).
 
 The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
 
