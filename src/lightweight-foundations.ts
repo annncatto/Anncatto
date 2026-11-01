@@ -8,7 +8,7 @@ const path=(d:string,color=C.ink,width=2,extra='')=>`<path d="${d}" fill="none" 
 const arrow=(id:string,d:string,color=C.accent)=>path(d,color,2,`marker-end="url(#${id}-a)"`);
 const circle=(x:number,y:number,r:number,fill:string)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${fill}"/>`;
 function svg(id:string,height:number,title:string,draw:(l:Lang)=>string){return `<svg viewBox="0 0 900 ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${title}" style="font-family:${FONT}"><title>${title}</title><defs><marker id="${id}-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="context-stroke"/></marker></defs><g lang="en">${draw('en')}</g><g lang="zh-CN">${draw('zh')}</g></svg>`;}
-export const foundationFigures=['designloop','jointsection','seapath','sectionloads','strainbasics','planesections','cantileverfields','shearmodels','yieldloci','capacityindices'] as const;
+export const foundationFigures=['designloop','jointsection','seapath','sectionloads','strainbasics','planesections','cantileverfields','shearmodels','yieldloci','capacityindices','leglayout','legspring'] as const;
 export type FoundationFigure=typeof foundationFigures[number];
 export function shearDeflectionRatio(slenderness:number,poisson=.3,shearFactor=5/6){return (1+poisson)/(2*shearFactor*slenderness**2);}
 export const foundationMaterials=[{en:'Stainless steel',zh:'不锈钢',E:195,rho:7.8,yield:393},{en:'Aluminium',zh:'铝合金',E:74,rho:2.75,yield:364},{en:'Titanium',zh:'钛合金',E:105,rho:4.7,yield:750}];
@@ -137,6 +137,35 @@ export function foundationFigure(id:string):string|undefined {
     values.forEach((v,i)=>{const a=[v.strength,v.axial,v.buckling][k],bx=x+54+i*67;b+=`<rect x="${bx}" y="${330-a*65}" width="40" height="${a*65}" fill="${colors[i]}"/>`+t(bx+20,319-a*65,a.toFixed(2),a.toFixed(2),l,15)+t(bx+20,357,['Steel','Al','Ti'][i],['钢','铝','钛'][i],l,16);});
    }
    b+=t(450,409,'Strength → Ti     Axial stiffness → Al     Similar-section buckling → Al','强度 → 钛合金    轴向刚度 → 铝合金    相似截面屈曲 → 铝合金',l,18);return b;
+  });
+ }else if(id==='leglayout'){
+  title=['Hip inertia under two motor placements','两种电机布置的髋轴惯量'];
+  desc=['Straight 0.30 m + 0.30 m leg; links are point masses at their midpoints. Added transmission inertia is excluded.','0.30 m＋0.30 m 伸直腿，连杆按中点点质量计算，未计新增传动惯量。'];
+  body=svg(id,560,title[0],l=>{
+   let b='';
+   for(const [x,remote] of [[225,false],[660,true]] as const){
+    b+=t(x,35,remote?'Motor near hip':'Motor at knee',remote?'电机位于髋部附近':'电机位于膝部',l,21);
+    b+=rect(x-53,65,106,27,gray)+path(`M${x} 107V425`,C.muted,9)+circle(x,107,12,C.target)+`<circle cx="${x}" cy="266" r="8" fill="white" stroke="${C.muted}" stroke-width="2"/>`+circle(x,425,6,C.ink);
+    b+=circle(x,186,7,C.target)+circle(x,346,7,C.target)+t(x-25,191,'0.5 kg','0.5 kg',l,18,'end')+t(x-25,351,'0.3 kg','0.3 kg',l,18,'end');
+    const my=remote?107:266;b+=circle(x,my,20,C.accent)+t(x+35,my+6,'0.6 kg','0.6 kg',l,18,'start');
+    if(remote)b+=path(`M${x+12} 125V256H${x}`,C.target,2,'stroke-dasharray="5 4"');
+    b+=t(x,475,remote?'I₁ = 0.072 kg·m²':'I₀ = 0.126 kg·m²',remote?'I₁ = 0.072 kg·m²':'I₀ = 0.126 kg·m²',l,22);
+   }
+   b+=path('M95 107V266M85 107H105M85 266H105M95 266V425M85 425H105',C.grid,2)+t(79,191,'0.30 m','0.30 m',l,16,'end')+t(79,351,'0.30 m','0.30 m',l,16,'end');
+   b+=t(450,532,'Same mass · ΔI = 0.054 kg·m² · 42.9% lower','质量不变 · ΔI = 0.054 kg·m² · 降低 42.9%',l,21);return b;
+  });
+ }else if(id==='legspring'){
+  title=['Equivalent spring–mass leg and energy transfer','等效弹簧—质量腿与能量转换'];
+  desc=['Equivalent leg model. Compression stores elastic energy and unloading returns part of it; damping and actuator work affect the complete balance.','等效腿模型。压缩储存弹性能，卸载时返回部分能量，完整平衡还包含阻尼与执行器做功。'];
+  body=svg(id,365,title[0],l=>{
+   let b=rect(55,45,200,65,B)+t(155,85,'Body mass','躯干质量',l,21);
+   b+=path('M155 110V132L139 141L171 154L139 167L171 180L139 193L171 206L139 219L171 232L155 241V275',C.target,3)+path('M30 275H300',C.muted,3);
+   for(let x=40;x<290;x+=20)b+=path(`M${x} 276L${x+10} 288`,C.muted,1);
+   b+=arrow(id,'M307 133V238',C.target)+t(323,193,'x','x',l,20,'start');
+   b+=rect(400,35,470,112,B)+rect(400,173,470,112,G);
+   b+=t(635,71,'Compression','压缩储能',l,21)+t(635,115,'Body motion → spring deflection → Es ↑','躯干运动 → 弹簧变形 → Es ↑',l,19);
+   b+=t(635,211,'Unloading','卸载回弹',l,21)+t(635,255,'Es ↓ → spring work → body motion','Es ↓ → 弹簧做功 → 躯干运动',l,19);
+   b+=t(450,340,'Elastic energy: Es = ½ kx²','弹性储能：Es = ½ kx²',l,22);return b;
   });
  }else return undefined;
  return `<figure class="course-figure" data-course-figure="${id}">${body}<figcaption><span class="figure-title">${bi(title[0],title[1])}</span><span class="figure-description">${bi(desc[0],desc[1])}</span></figcaption></figure>`;

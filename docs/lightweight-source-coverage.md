@@ -81,24 +81,24 @@ All 46 image occurrences in the three selected notes were inspected. Two topolog
 | 机器人设计（新增） / `机器人设计（新增）-1793537105708.webp` | Function allocation | `#robot-design-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537108518.webp` | Shared walls and interfaces | `#passive-robot-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537113275.webp` | Passive integration definition | `#passive-robot-integration` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537117038.webp` | Cassie and ATRIAS spring energy | `#passive-robot-integration` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537117038.webp` | Cassie and ATRIAS spring energy | `#case-cassie` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537121297.webp` | Passive integration examples | `#passive-robot-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537123966.webp` | Conflicting functions and maintenance | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537128751.webp` | Three active integration mechanisms | `#active-robot-integration` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537131813.webp` | Integrated joint section | `#active-robot-integration` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537131813.webp` | Integrated joint section | `#case-lwr-iii` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537135046.webp` | Series elastic actuator | `#series-elastic-actuation` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537142695.webp` | Comparison of traditional, passive and active methods | `#robot-method-comparison` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537156223.webp` | Knee function audit exercise | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537158986.webp` | Integration conclusions | `#joint-function-audit` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537162815.webp` | Robot case and metric objectives | `#integration-metrics` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537167183.webp` | M D F P A classification | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537169896.webp` | Quadruped design examples | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537172817.webp` | Mini Cheetah joint design | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537176033.webp` | Humanoid design examples | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537179002.webp` | Cassie spring design | `#passive-robot-integration` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537234709.webp` | Arm examples | `#robot-method-comparison` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537238097.webp` | LWR III joint and CFRP integration | `#active-robot-integration` |
-| 机器人设计（新增） / `机器人设计（新增）-1793537241643.webp` | Arm payload ratio and other metrics | `#integration-metrics` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537169896.webp` | Quadruped design examples | `#leg-functional-design` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537172817.webp` | Mini Cheetah joint design | `#case-mini-cheetah` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537176033.webp` | Humanoid design examples | `#leg-platform-comparison` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537179002.webp` | Cassie spring design | `#case-cassie` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537234709.webp` | Arm examples | `#arm-integration-comparison` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537238097.webp` | LWR III joint and CFRP integration | `#case-lwr-iii` |
+| 机器人设计（新增） / `机器人设计（新增）-1793537241643.webp` | Arm payload ratio and other metrics | `#arm-payload-integration` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537245070.webp` | COT definition and interpretation | `#integration-metrics` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537248325.webp` | Arm gravity torque and mass spiral example | `#mass-layout-example` |
 | 机器人设计（新增） / `机器人设计（新增）-1793537251747.webp` | Integration trade-offs | `#joint-function-audit` |
@@ -122,7 +122,7 @@ All 46 image occurrences in the three selected notes were inspected. Two topolog
 
 - Cassie has five actuated and two passive joints per leg; do not repeat the claim that all motors are in the pelvis. Proximal placement remains part of system-level mass-layout analysis.
 - DLR LWR III retains the manufacturer’s 14 kg mass / 14 kg maximum payload (1.00). Reuse the existing model-specific arm table rather than replace it with the new slide’s 13.5 kg value or mix rated and conditional maximum loads.
-- Keep confirmed ASIMO magnesium/H-section data from Honda’s 2001 development report. Do not transfer a material, transmission or mass claim to every member of a robot family. Cheetah-family discussion uses verified Mini Cheetah construction; modern humanoid brand lists are consolidated into demonstrated integration mechanisms.
+- Keep confirmed ASIMO magnesium/H-section data from Honda’s 2001 development report. Do not transfer a material, transmission or mass claim to every member of a robot family. Early Cheetah tendon–bone load sharing and Mini Cheetah module construction are verified independently; modern humanoid brand lists are consolidated into demonstrated integration mechanisms.
 - The hydraulic Atlas example is attributed to Raibert’s first-hand engineering interview (2015); it does not describe the electric generation. Robot methods M/D/F/P/A are qualitative categories, not a numerical effectiveness score.
 - Recomputed the arm example: 17.658 → 11.772 N·m (33.3% lower); a uniform-rod/point-mass extension gives 0.640 → 0.410 kg·m². Added transmission mass must be budgeted explicitly.
 - The fundamentals property table is retained as illustrative, unspecified-grade data. Capacity/self-weight ratios are 5,136 / 13,493 / 16,267 for a 1 m bar at n=1, not ten times these values.
@@ -135,3 +135,11 @@ All 46 image occurrences in the three selected notes were inspected. Two topolog
 ### Reproducible drawings
 
 `src/lightweight-foundations.ts` generates the ten added diagrams from native SVG/HTML, with bilingual labels and the established site palette. The shear-error curve and material-index bars are calculated from the displayed models. Existing SIMP records and optimizer outputs remain unchanged.
+
+### Functional-design case organization
+
+The November 1 follow-up separates legged robots and manipulators into distinct sections. Mini Cheetah, Cassie and DLR LWR III each receive a dedicated analysis, with the knee function audit and COT under legs, and the forearm mass-spiral exercise under manipulators. The early Cheetah tendon–bone load path, Spot packaging, MIT humanoid, and individual arm implementations are retained separately from generic joint principles.
+
+Two added SVGs show the point-mass leg comparison (0.126 → 0.072 kg·m²) and the spring–mass energy path. The first calculation neglects each link’s centroidal inertia; the uniform-rod correction adds 0.006 kg·m² to both cases. It is a teaching model, not measured Mini Cheetah data. The Cassie spring diagram shows an equivalent model without inventing energy proportions.
+
+Primary verification includes the tendon–bone paper (DOI 10.1088/1748-3182/7/4/046005), MIT humanoid hardware design (arXiv:2104.09025, mass distribution and belt gearing), DLR joint/link construction, Kinova’s Gen3 user guide (carbon-fibre shell, aluminium, two actuator sizes and integrated sensors), Franka FR3 joint sensing, and Barrett’s cable-drive/Puck manual. The mixed generic robot table was replaced by case-specific exposition and separate leg/arm comparisons. The payload plot is placed with the manipulator cases, with a local table retaining each published load condition.

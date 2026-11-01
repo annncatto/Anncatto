@@ -508,7 +508,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537117038.webp",
       "sha256": "10d92af836032a42c2bf5a1f19b21bc09e0ababcba555e43c3248ec3006fa851",
-      "anchor": "passive-robot-integration",
+      "anchor": "case-cassie",
       "topic": "Cassie and ATRIAS spring energy",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -540,7 +540,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537131813.webp",
       "sha256": "82a9013bf55a1395c000a39485fb31d1de1eb7fb1216534654a8306145199b98",
-      "anchor": "active-robot-integration",
+      "anchor": "case-lwr-iii",
       "topic": "Integrated joint section",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -596,7 +596,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537169896.webp",
       "sha256": "5215e6e574125845810ce6cc418cac2a366f2fc4082f03012a99d6435af498d3",
-      "anchor": "robot-method-comparison",
+      "anchor": "leg-functional-design",
       "topic": "Quadruped design examples",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -604,7 +604,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537172817.webp",
       "sha256": "332ad23813036848bc7462350a87fe7839be98c7948ff9abfaf01862eeef3ade",
-      "anchor": "robot-method-comparison",
+      "anchor": "case-mini-cheetah",
       "topic": "Mini Cheetah joint design",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -612,7 +612,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537176033.webp",
       "sha256": "c03a8d70cd2a1ee7fa8b4c6bbd86e6e91003a81a8ca21de232d114277f309208",
-      "anchor": "robot-method-comparison",
+      "anchor": "leg-platform-comparison",
       "topic": "Humanoid design examples",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -620,7 +620,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537179002.webp",
       "sha256": "d8242eba34dff86f5419c7b06fd8be39618d9f5bf65078f76e98fe3b5d644b39",
-      "anchor": "passive-robot-integration",
+      "anchor": "case-cassie",
       "topic": "Cassie spring design",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -628,7 +628,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537234709.webp",
       "sha256": "2d37cd74d7a33f4e2c023f6150b168c5c2b383cdf3ff8d3d32ef412dfeb3bb7b",
-      "anchor": "robot-method-comparison",
+      "anchor": "arm-integration-comparison",
       "topic": "Arm examples",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -636,7 +636,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537238097.webp",
       "sha256": "dce4141bf1065ee16b0f5ac0a5958902697f0fe9d0c8825cc608426535de80fb",
-      "anchor": "active-robot-integration",
+      "anchor": "case-lwr-iii",
       "topic": "LWR III joint and CFRP integration",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },
@@ -644,7 +644,7 @@
       "note": "机器人设计（新增）",
       "attachment": "机器人设计（新增）-1793537241643.webp",
       "sha256": "d82f29985947c02494a661697b82c78b0ed75d4d8e0e33e21b4045d13dcea438",
-      "anchor": "integration-metrics",
+      "anchor": "arm-payload-integration",
       "topic": "Arm payload ratio and other metrics",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     },

@@ -20,7 +20,7 @@ The bilingual article is assembled from eleven files in `content/lightweight/`. 
 
 [Source coverage](lightweight-source-coverage.md) maps 91 embedded figures from 15 Obsidian notes to article anchors. The JSON companion records source hashes. Obsidian files are read-only inputs.
 
-`src/lightweight-foundations.ts` adds ten bilingual native SVG/HTML figures, including calculated shear-error and normalized material-index plots. `src/lightweight-frameworks.ts` renders the earlier relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
+`src/lightweight-foundations.ts` adds twelve bilingual native SVG/HTML figures, including calculated shear-error and normalized material-index plots. `src/lightweight-frameworks.ts` renders the earlier relationship diagrams. `src/lightweight-course.ts` assembles bilingual figures; `src/lightweight-diagrams.ts` evaluates selectable scientific plots. Original image credits appear beside the figures. Ansys Granta charts retain their copyright notices and property definitions.
 
 Regenerate the SIMP PNG stages, animated GIF, convergence history and interactive fields with Python, NumPy, SciPy, Matplotlib and Pillow:
 
@@ -75,3 +75,5 @@ Read all 46 image occurrences in the topology, robot-design and fundamentals inp
 The source-coverage audit records corrections to Cassie motor placement, LWR mass, beam signs, shear applicability, equivalent-stress evaluation and the buckling material index. The public text contains the resulting technical explanation rather than editorial history. The local tool and empty homepage tools heading are unchanged.
 
 Validation: 39 tests; production build and internal-reference/MathML check; desktop English/Chinese figures, SVG text collision audit, 390 px page overflow, reference disclosure and figure-viewer Close/Escape.
+
+The functional-design case sections now separate legs and manipulators. Leg examples include tendon–bone load sharing, Mini Cheetah proximal drive and its point-mass calculation, Cassie spring energy and ANYdrive; arm examples include the five LWR III design mechanisms, distinct joint implementations, WAM cable transmission, payload conditions and the mass-spiral calculation. New leg diagrams retain their model assumptions.
