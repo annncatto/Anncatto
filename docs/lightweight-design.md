@@ -1,5 +1,7 @@
 # Lightweight structural design
 
+Read [the current tool handoff](lightweight-tool-handoff.md) before resuming local development. Course-note authoring follows `docs/course-note-workflow.md` on `main` (use `git show main:docs/course-note-workflow.md` if absent in this older worktree).
+
 The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
 
 | Module | Content |
@@ -36,7 +38,7 @@ The viewer uses a native dialog with an independently scrolling body and persist
 
 ## Independent concept-design application
 
-`/labs/lightweight-robot/` is linked from the homepage's bilingual Interactive tools section. The workbench prioritizes design variables and comparable calculations over individual joint posing. Its first section has an outcome strip, structure/material inputs, a central motion view and drive/load inputs. Equations, substitutions, screening judgments and a member/transmission schematic follow below. The interface is scrollable; it no longer compresses every control and drawing into one viewport.
+`/labs/lightweight-robot/` is linked only from this local preview's Interactive tools section. The public homepage keeps that heading without entries; this redesign is not released. The workbench prioritizes design variables and comparable calculations over individual joint posing. Its first section has an outcome strip, structure/material inputs, a central motion view and drive/load inputs. Equations, substitutions, screening judgments and a member/transmission schematic follow below. The interface is scrollable; it no longer compresses every control and drawing into one viewport.
 
 - `concept-model.ts`: canonical joint tree, explicit member and joint spacing, actuator envelopes, physical mass/COM/full inertia tensors, FK/IK and URDF/MJCF/JSON.
 - `design-analysis.ts`: full driven-subtree joint inertia, reflected rotor inertia, actual section bending axis, member and transmission compliance, Rayleigh frequency estimate, torque sizing and friction-based backdrive threshold.
