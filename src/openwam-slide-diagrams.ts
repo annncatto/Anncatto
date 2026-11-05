@@ -21,6 +21,14 @@ export function renderOpenwamDiagram(name:string):string{
   box(435,180,360,55,'Evidence-backed recipe','实验支持的设计原则')+arrow(id,'M805 207H850')+
   box(860,180,390,55,'Pretrained model + evaluation','预训练模型与验证','green'),245);
  if(name==='training-contract')return renderOpenwamDiagram('flow-v2').replace(/ data-step="\d+"/g,'');
+ if(name==='dual-layer')return frame(id,'One dual-system joint self-attention layer with independent stream parameters',
+  box(10,15,210,70,'Video tokens','视频 token')+box(10,195,210,70,'Action tokens','动作 token','green')+
+  box(285,15,190,70,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(285,195,190,70,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
+  arrow(id,'M230 50H275')+arrow(id,'M230 230H275',0,green)+
+  box(550,65,275,150,'Concatenate token axis|Masked joint attention|Split to original streams','沿 token 轴拼接|掩码联合注意力|拆回各自流','gray')+
+  arrow(id,'M485 50H515V105H540')+arrow(id,'M485 230H515V175H540',0,green)+
+  box(930,15,320,70,'Video projection + block suffix','视频流投影与后半层计算')+box(930,195,320,70,'Action projection + block suffix','动作流投影与后半层计算','green')+
+  arrow(id,'M835 105H880V50H920')+arrow(id,'M835 175H880V230H920',0,green),285);
  if(name==='alpha-detail')return frame(id,'OpenWAM-alpha attention bridge with stream-owned parameters and context paths',
   box(915,0,290,62,'Text + state token c','文本＋当前状态 token c','gray')+
   box(10,105,225,90,'World states|Nᵥ × 3072','世界流状态|Nᵥ × 3072')+box(10,300,225,90,'Action states|H × 1024','动作流状态|H × 1024','green')+

@@ -1,0 +1,27 @@
+<section aria-labelledby="s-design-space-title" class="slide brief-slide paper-slide paper-architecture paper-compact-header" data-slide=""  id="s-design-space">
+<header class="slide-header"><h2 id="s-design-space-title"><span lang="en">Design Dimensions and Shared Interfaces</span><span lang="zh-CN">设计维度与统一接口</span></h2><nav aria-label="OpenWAM-Infra" class="paper-section-path"><strong>OpenWAM-Infra</strong><div class="paper-section-stages"><a aria-current="step" class="section-path-stage" href="#s-design-space"><span lang="en">Design space</span><span lang="zh-CN">设计维度</span></a><span aria-hidden="true" class="section-path-arrow">→</span><a class="section-path-stage" href="#s-composition"><span lang="en">Composition</span><span lang="zh-CN">组合架构</span></a><span aria-hidden="true" class="section-path-arrow">→</span><a class="section-path-stage" href="#s-training"><span lang="en">Training</span><span lang="zh-CN">训练运行时</span></a><span aria-hidden="true" class="section-path-arrow">→</span><a class="section-path-stage" href="#s-deployment"><span lang="en">Serving / eval.</span><span lang="zh-CN">部署与评测</span></a></div></nav><a aria-label="OpenWAM source section" class="slide-kicker" href="https://arxiv.org/pdf/2609.07398v1#page=5" title="03 · §3–3.1 · Modular infrastructure and initialization control">03 · §3–3.1 ↗</a></header>
+<div class="brief-body paper-body infra-coupling-body">
+<p><span lang="en"><strong>Monolithic WAMs bind six design dimensions</strong>: an architecture change can also alter representation, data and sampling. Infra exposes these choices through explicit interfaces for controlled comparison.</span><span lang="zh-CN">检验世界—动作协同，需要辨明收益来自哪项设计。<strong>单体式 WAM 常将六个设计维度绑定</strong>；更换架构时，表征、数据与采样过程也可能同时变化。Infra 通过明确的接口组织这些选择。</span></p>
+<div class="infra-coupling-grid">
+<div class="slide-table infra-design-table"><table><caption><span lang="en">Six coupled design dimensions</span><span lang="zh-CN">六个容易耦合的设计维度</span></caption><thead><tr><th scope="col"><span lang="en">Design dimension</span><span lang="zh-CN">设计维度</span></th><th scope="col"><span lang="en">Dependency</span><span lang="zh-CN">依赖关系</span></th></tr></thead><tbody><tr><th scope="row"><span lang="en">Generative backbone</span><span lang="zh-CN">生成骨干</span></th><td><span lang="en">Pretrained video DiTs are adapted to particular latent spaces, noise parameterizations and generation tasks.</span><span lang="zh-CN">预训练视频 DiT 适配特定潜空间、噪声参数化与生成任务。</span></td></tr>
+<tr><th scope="row"><span lang="en">Visual representation</span><span lang="zh-CN">视觉表征</span></th><td><span lang="en">Changing the encoder changes latent dimensions, distributions and prediction targets.</span><span lang="zh-CN">更换编码器会改变潜变量的维度、分布与预测目标。</span></td></tr>
+<tr><th scope="row"><span lang="en">Model architecture</span><span lang="zh-CN">模型架构</span></th><td><span lang="en">Shared backbones, experts and separate streams allocate computation and parameters differently.</span><span lang="zh-CN">共享骨干、专家与独立流决定视频和动作如何计算、分配参数。</span></td></tr>
+<tr><th scope="row"><span lang="en">Information flow</span><span lang="zh-CN">信息流</span></th><td><span lang="en">Attention visibility and gradient paths depend on how the streams interact.</span><span lang="zh-CN">注意力可见性、参数共享与梯度路径依赖流之间的交互方式。</span></td></tr>
+<tr><th scope="row"><span lang="en">Inference procedure</span><span lang="zh-CN">推理过程</span></th><td><span lang="en">Denoising schedules use the world/action noise-state relationships learned during training.</span><span lang="zh-CN">去噪调度依赖训练中学到的世界／动作噪声状态关系。</span></td></tr>
+<tr><th scope="row"><span lang="en">Training data</span><span lang="zh-CN">训练数据</span></th><td><span lang="en">Human videos and robot trajectories supply different action labels and supervision.</span><span lang="zh-CN">人类视频、机器人轨迹及动作标注影响训练目标与动作空间。</span></td></tr>
+</tbody></table></div>
+<div class="paper-copy infra-coupling-copy">
+<div class="paper-panel"><h3><span lang="en">Four components with explicit interfaces</span><span lang="zh-CN">四个具有明确接口的组件</span></h3><ul>
+<li><span lang="en"><strong>Composable model:</strong> encoders, stream backbones and visibility masks.</span><span lang="zh-CN"><strong>组合模型：</strong>接入编码器、流骨干与可见性掩码。</span></li>
+<li><span lang="en"><strong>Training runtime:</strong> one trainer for all supported compositions.</span><span lang="zh-CN"><strong>训练运行时：</strong>同一训练器处理不同模型组合。</span></li>
+<li><span lang="en"><strong>Deployment runtime:</strong> one policy server serves the resulting checkpoints.</span><span lang="zh-CN"><strong>部署运行时：</strong>同一策略服务器加载并服务模型检查点。</span></li>
+<li><span lang="en"><strong>Evaluation protocol:</strong> benchmarks access that server through a common protocol.</span><span lang="zh-CN"><strong>评测协议：</strong>各基准通过统一协议访问该服务器。</span></li>
+</ul></div>
+<div class="paper-panel"><h3><span lang="en">Control over pretrained initialization</span><span lang="zh-CN">预训练初始化的控制</span></h3><ul>
+<li><span lang="en"><strong>Matched encoder:</strong> reuse the pretrained video DiT with its native visual encoder.</span><span lang="zh-CN"><strong>原生匹配：</strong>使用视频骨干配套的视觉编码器，直接复用预训练 DiT 参数。</span></li>
+<li><span lang="en"><strong>Representation ablation:</strong> swap encoders and randomly initialize the base DiT to isolate visual-representation gains (§4.1.2).</span><span lang="zh-CN"><strong>表征对照：</strong>替换编码器并随机初始化基础 DiT，单独检验视觉表征带来的收益（§4.1.2）。</span></li>
+</ul></div>
+</div>
+</div>
+</div>
+</section>
