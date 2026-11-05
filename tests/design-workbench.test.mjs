@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {initialConcept,copyDesign,generateRobot,inertiaAbout,qa,fk,jointInertia} from '../.build/concept-model.js';
 import {initialConditions,analyzeDesign} from '../.build/design-analysis.js';
-import {motionFrame,footSole} from '../.build/design-motion.js';
+import {motionFrame,footSole,polygonMargin} from '../.build/design-motion.js';
 import {packingConflicts} from '../.build/design-packing.js';
 const close=(a,b,t=1e-8)=>assert.ok(Math.abs(a-b)<t*Math.max(1,Math.abs(a),Math.abs(b)),`${a} != ${b}`);
 const design=(robot='quadruped',extra={})=>({...copyDesign(initialConcept),robot,bodyLength:robot==='quadruped'?.46:.22,bodyWidth:robot==='biped'?.22:.23,...extra});
@@ -37,13 +37,13 @@ test('custom lengths propagate to child joints, COM, geometry and derived metric
  const d=design('arm'),a=generateRobot(d);d.parts.j2={length:.43};d.jointDistances={j1:.18,j5:.08};const b=generateRobot(d),upper=b.nodes.find(n=>n.id==='j2');close(b.nodes.find(n=>n.id==='j3').offset[2],.43);close(b.nodes.find(n=>n.id==='j1').offset[2],.18);close(b.nodes.find(n=>n.id==='j5').offset[2],.08);
  assert.ok(jointInertia(b,'j2')>jointInertia(a,'j2'));assert.ok(b.mass>a.mass);close(upper.member.length,.43);
 });
-test('reference motion preserves planted feet, flat soles, reachable paths and support margins',()=>{
+test('reference motion preserves planted feet, flat soles, reachable paths and planned ZMP constraints',()=>{
  for(const robot of ['quadruped','biped','arm']){
   const model=generateRobot(design(robot)),T=period(robot);
   for(let i=0;i<128;i++){
    const t=i*T/128,f=motionFrame(model,t);assert.ok(f.trackingError<(robot==='arm'?.00021:1e-8));assert.ok(Object.values(f.q).every(Number.isFinite));
    if(robot==='arm')continue;
-   assert.ok(f.supportMargin>.02,`${robot} support ${i}: ${f.supportMargin}`);
+   assert.ok(f.plannerValid,`${robot} centroidal preview`);if(f.stage==='motion')assert.ok(polygonMargin(f.zmp,f.supportPolygon)>.009,`${robot} planned ZMP ${i}`);
    const next=motionFrame(model,t+.0001);
    for(const n of model.nodes.filter(n=>n.tip==='foot')){
     const sole=footSole(n,f.poses[n.id]),later=footSole(n,next.poses[n.id]);assert.ok(sole[2]>-1e-8);

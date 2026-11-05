@@ -1,0 +1,14 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {analyzeCADSegment} from '../.build/source-structure.js';
+const close=(a,b,tol=1e-5)=>assert.ok(Math.abs(a-b)<=tol*Math.max(Math.abs(b),1e-20),`${a} != ${b}`);
+function uniform(angle=0){const width=.02,height=.04,L=.5,rho=2700,E=69e9,ca=Math.cos(angle),sa=Math.sin(angle),Iv=height*width**3/12,Iu=width*height**3/12;
+ const transform=([x,y])=>[ca*x-sa*y,sa*x+ca*y],boundary=[[-width/2,-height/2],[width/2,-height/2],[width/2,height/2],[-width/2,height/2]].map(transform);
+ const C00=ca*ca*Iv+sa*sa*Iu,C11=sa*sa*Iv+ca*ca*Iu,C01=ca*sa*(Iv-Iu);
+ return{part:{id:'analytic',density:rho,E,strength:240e6,sections:Array.from({length:21},(_,i)=>({s:i/20*L,area:width*height,Iu:C11,Iv:C00,Iuv:C01,boundary,valid:true}))},input:{start:0,end:20,force:30,angle,E,strength:240e6,tipMass:0},width,height,L,rho,Iv,Iu,E};
+}
+test('CAD bending integrates the exact cantilever displacement and outer-fibre stress',()=>{const {part,input,L,Iv,width,E}=uniform(),a=analyzeCADSegment(part,input);close(a.deflection,input.force*L**3/(3*E*Iv));close(a.stress,input.force*L*width/(2*Iv));close(a.mass,2700*.02*.04*.5);});
+test('two-direction Ritz matches the analytic static-shape quotient and bounds the exact mode',()=>{const {part,input,L,Iv,E,rho,width,height}=uniform(),a=analyzeCADSegment(part,input),scale=Math.sqrt(E*Iv/(rho*width*height*L**4))/(2*Math.PI),exact=1.8751040687**2*scale,rayleigh=Math.sqrt(140/11)*scale;close(a.frequency,rayleigh);assert.ok(a.frequency>exact&&a.frequency<exact*1.015);});
+test('unsymmetric bending is invariant under rotation of the section and force',()=>{const u=uniform(),v=uniform(.63),a=analyzeCADSegment(u.part,u.input),b=analyzeCADSegment(v.part,v.input);close(a.deflection,b.deflection);close(a.stress,b.stress);close(a.frequency,b.frequency);assert.ok(Math.abs(v.part.sections[0].Iuv)>0);});
+test('force, E and attached modal mass have independent physical effects',()=>{const {part,input}=uniform(),a=analyzeCADSegment(part,input),b=analyzeCADSegment(part,{...input,force:60}),c=analyzeCADSegment(part,{...input,E:2*input.E}),d=analyzeCADSegment(part,{...input,tipMass:2});close(b.stress,2*a.stress);close(b.deflection,2*a.deflection);close(b.frequency,a.frequency);close(c.deflection,a.deflection/2);close(c.frequency,a.frequency*Math.sqrt(2));assert.ok(d.frequency<a.frequency);close(d.stress,a.stress);});
+test('section voids and absent boundary data cannot produce a valid structural result',()=>{const {part,input}=uniform();part.sections[10].valid=false;assert.throws(()=>analyzeCADSegment(part,input),/空截面/);part.sections[10].valid=true;part.sections[10].boundary=[];assert.throws(()=>analyzeCADSegment(part,input),/边界/);assert.throws(()=>analyzeCADSegment(part,{...input,start:20,end:0}));});

@@ -1,0 +1,226 @@
+{
+  "format": 1,
+  "models": {
+    "go2": {
+      "repository": "unitreerobotics/unitree_ros",
+      "commit": "3ae893d905d11795ddf1075825ee5010364a1109",
+      "urdf": "robots/go2_description/urdf/go2_description.urdf",
+      "packagePaths": {
+        "go2_description": "robots/go2_description"
+      },
+      "licensePath": "LICENSE",
+      "license": "BSD-3-Clause",
+      "files": [
+        {
+          "path": "LICENSE",
+          "bytes": 1558,
+          "gitBlobSha": "6dfdadaa90baa4f7bea7400d3c4e8b9c784ae37f"
+        },
+        {
+          "path": "robots/go2_description/dae/base.dae",
+          "bytes": 10727399,
+          "gitBlobSha": "4e47b5bec4a3c91ae4a1d49d73080d697a917cf1"
+        },
+        {
+          "path": "robots/go2_description/dae/calf.dae",
+          "bytes": 1125517,
+          "gitBlobSha": "83221779392a5d19af59561d0ea4eea48ef6102a"
+        },
+        {
+          "path": "robots/go2_description/dae/calf_mirror.dae",
+          "bytes": 1125457,
+          "gitBlobSha": "413fd75d8b173b4597a35cc71e618a7d025069bd"
+        },
+        {
+          "path": "robots/go2_description/dae/foot.dae",
+          "bytes": 506988,
+          "gitBlobSha": "22bfcf49d7b6d07015c88f55e4ca153463bd5d0e"
+        },
+        {
+          "path": "robots/go2_description/dae/hip.dae",
+          "bytes": 4666421,
+          "gitBlobSha": "1bec1a72feb8a5d941ad6767341bc1d79d7eff0d"
+        },
+        {
+          "path": "robots/go2_description/dae/thigh.dae",
+          "bytes": 3884136,
+          "gitBlobSha": "a17c0482f296f2e19849f2544bf309866adfb801"
+        },
+        {
+          "path": "robots/go2_description/dae/thigh_mirror.dae",
+          "bytes": 3896575,
+          "gitBlobSha": "fb424112d623ad912f75248bedb1f62c6c28d3b6"
+        },
+        {
+          "path": "robots/go2_description/urdf/go2_description.urdf",
+          "bytes": 27441,
+          "gitBlobSha": "70bce96b3e96a1c4cf5eeb1753bbd4351c9122e4"
+        }
+      ]
+    },
+    "rp1-24": {
+      "repository": "Roboparty/rp1_description",
+      "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+      "urdf": "urdf/rp1_24dof.urdf",
+      "packagePaths": {},
+      "license": null,
+      "files": [
+        {
+          "path": "meshes/base_link.STL",
+          "bytes": 2954484,
+          "gitBlobSha": "46f9ec3f4f0df829ee936f204a6b068dae08ce46"
+        },
+        {
+          "path": "meshes/base_link_hip_flange_blue.STL",
+          "bytes": 329634,
+          "gitBlobSha": "dd340f5f99136fa671b95f7dd88857335202d54e"
+        },
+        {
+          "path": "meshes/left_ankle_pitch_link.STL",
+          "bytes": 63484,
+          "gitBlobSha": "6e819ef9ec195e73096f18810d4e9e1e6520d619"
+        },
+        {
+          "path": "meshes/left_ankle_roll_detail_blue.STL",
+          "bytes": 174534,
+          "gitBlobSha": "25b373b09a84c052ccc651226c592cf4644899d6"
+        },
+        {
+          "path": "meshes/left_ankle_roll_link_visual_white.STL",
+          "bytes": 641634,
+          "gitBlobSha": "e440a1a27ab724b0b8bcb63d7c35d959105a3062"
+        },
+        {
+          "path": "meshes/left_elbow_link.STL",
+          "bytes": 1927134,
+          "gitBlobSha": "cd8ce17830aca51c64a1e4abc150823bda73ab9f"
+        },
+        {
+          "path": "meshes/left_hip_pitch_link.STL",
+          "bytes": 882384,
+          "gitBlobSha": "2b5d961300c57b9e3a0cdad7a6834b1e30014422"
+        },
+        {
+          "path": "meshes/left_hip_roll_link.STL",
+          "bytes": 1816834,
+          "gitBlobSha": "3f07d266ebe63e99b93375e2935f0e648e1ba652"
+        },
+        {
+          "path": "meshes/left_hip_yaw_link.STL",
+          "bytes": 1650784,
+          "gitBlobSha": "c89e4cf639aeca976897ee2d4ec200defc0c9d31"
+        },
+        {
+          "path": "meshes/left_knee_link.STL",
+          "bytes": 4138534,
+          "gitBlobSha": "0be480959491f52be5f4a16963bb6231602a9b9e"
+        },
+        {
+          "path": "meshes/left_shoulder_pitch_link.STL",
+          "bytes": 906184,
+          "gitBlobSha": "27c46a970f0b0698b7232da8c02dbae9b3d12176"
+        },
+        {
+          "path": "meshes/left_shoulder_roll_link.STL",
+          "bytes": 1201984,
+          "gitBlobSha": "fd2238d87f252c84a82cf344620a65fb987fcdfd"
+        },
+        {
+          "path": "meshes/left_shoulder_yaw_link.STL",
+          "bytes": 1027984,
+          "gitBlobSha": "b9fce2b8a87add224010116a7fa024c18b3aef14"
+        },
+        {
+          "path": "meshes/left_wrist_link.STL",
+          "bytes": 950684,
+          "gitBlobSha": "8e6df50d857bd8118464d9b8e5b02aef50ba7910"
+        },
+        {
+          "path": "meshes/right_ankle_pitch_link.STL",
+          "bytes": 63484,
+          "gitBlobSha": "7c89f685eb9a964e7d2e47f9f498d2a87436818b"
+        },
+        {
+          "path": "meshes/right_ankle_roll_detail_blue.STL",
+          "bytes": 174884,
+          "gitBlobSha": "eba8363d59a5cfca88bd68102040d2bd39a6501d"
+        },
+        {
+          "path": "meshes/right_ankle_roll_link_visual_white.STL",
+          "bytes": 642034,
+          "gitBlobSha": "9410967528ef544ce97b92f00361d2eab097e2a3"
+        },
+        {
+          "path": "meshes/right_elbow_link.STL",
+          "bytes": 1927534,
+          "gitBlobSha": "aca57807229ea18882c3503fa8e87bc70d2a2389"
+        },
+        {
+          "path": "meshes/right_hip_pitch_link.STL",
+          "bytes": 884784,
+          "gitBlobSha": "7ebdae9bd8e6a10c3bed1515da5dd305bcc3f79d"
+        },
+        {
+          "path": "meshes/right_hip_roll_link.STL",
+          "bytes": 1815834,
+          "gitBlobSha": "7f4530060c06a9e34d5512a3a7cb27bff7812a36"
+        },
+        {
+          "path": "meshes/right_hip_yaw_link.STL",
+          "bytes": 1796034,
+          "gitBlobSha": "31e08c25bfe6ff1ddc5abf344c717fc3e7c67890"
+        },
+        {
+          "path": "meshes/right_knee_link.STL",
+          "bytes": 4129784,
+          "gitBlobSha": "2840dde81aad8b03f94abaff1a71db63d4389d2e"
+        },
+        {
+          "path": "meshes/right_shoulder_pitch_link.STL",
+          "bytes": 906634,
+          "gitBlobSha": "122119c83731ce9aa77bfbf276e4cf9cb5ddad31"
+        },
+        {
+          "path": "meshes/right_shoulder_roll_link.STL",
+          "bytes": 1272984,
+          "gitBlobSha": "2f3e3494f65e86be43fe88740fabcddb457e84c1"
+        },
+        {
+          "path": "meshes/right_shoulder_yaw_link.STL",
+          "bytes": 1028484,
+          "gitBlobSha": "7197e15c65d65560741f30f3410c6e715ab6cb61"
+        },
+        {
+          "path": "meshes/right_wrist_link.STL",
+          "bytes": 951534,
+          "gitBlobSha": "40b56ba63f5524dd97057123724d40698cc8b663"
+        },
+        {
+          "path": "meshes/waist_roll_link.STL",
+          "bytes": 741434,
+          "gitBlobSha": "137e7052cc9c4afe8974860b2a871a6f4d7e7f73"
+        },
+        {
+          "path": "meshes/waist_yaw_link.STL",
+          "bytes": 3406834,
+          "gitBlobSha": "eebeabe6cdc7154ad78b22879473697fc4be6c6a"
+        },
+        {
+          "path": "meshes/waist_yaw_link_visual_white.STL",
+          "bytes": 5907084,
+          "gitBlobSha": "1e9ec7c1fb19c0b3154832054557dbbd00a681b9"
+        },
+        {
+          "path": "meshes/waist_yaw_logo_visual_blue.STL",
+          "bytes": 53584,
+          "gitBlobSha": "7e8c01631c4287ef9d8395301fd7f733eeabe067"
+        },
+        {
+          "path": "urdf/rp1_24dof.urdf",
+          "bytes": 30387,
+          "gitBlobSha": "637c82196f79ccc195ed0d9875bac67916e11a6b"
+        }
+      ]
+    }
+  }
+}

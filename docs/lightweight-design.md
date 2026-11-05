@@ -1,5 +1,9 @@
 # Lightweight structural design
 
+2026-11-02 运动载荷、全身控制、Alohamini、Go2 与 RP1 原模型的运行接入及仿真／实机边界见[运动载荷与闭环验证](lightweight-control.md)。固定模型版本、网格转换和许可见[开源模型来源核对](lightweight-model-sources.md)；当前九组闭环结果见[验证记录](lightweight-validation.json)，RP1 六组动作参数比较见[参数测试记录](lightweight-source-sweep.json)。
+
+For current rendering, motion validation and the open-source review, see [rendering and kinematics](lightweight-rendering.md). For the current material-selection interface, simplified FK diagram, Springer sources and sizing derivation, see [materials and mechanism display](lightweight-materials.md). The independent-application description below records the earlier Three.js interface baseline; the linked material document and handoff describe the current interface.
+
 Read [the current tool handoff](lightweight-tool-handoff.md) before resuming local development. Course-note authoring follows [the course-note workflow](course-note-workflow.md).
 
 The bilingual article is assembled from nine files in `content/lightweight/`. `content/轻量化结构设计.html` defines their order. `scripts/content.mjs` expands includes with replacement callbacks to preserve LaTeX dollar delimiters.
@@ -36,7 +40,9 @@ The qualitative cost diagram uses the cost function and its analytical derivativ
 
 The viewer uses a native dialog with an independently scrolling body and persistent Close button. Escape and backdrop clicks dismiss it, restore page overflow and return focus without moving the reading position. Its title follows the selected language. Styles are shared in `public/style.css`; the article source contains no navigation markup.
 
-## Independent concept-design application
+## Earlier concept-design application baseline
+
+This section preserves the earlier implementation and its limitations. The current interface includes source robot selection, full-width joint loads and actual MuJoCo closed-loop replay; use the control document and handoff linked above for current behavior and validation results.
 
 `/labs/lightweight-robot/` is linked only from this local preview's Interactive tools section. The public homepage keeps that heading without entries; this redesign is not released. The workbench prioritizes design variables and comparable calculations over individual joint posing. Its first section has an outcome strip, structure/material inputs, a central motion view and drive/load inputs. Equations, substitutions, screening judgments and a member/transmission schematic follow below. The interface is scrollable; it no longer compresses every control and drawing into one viewport.
 

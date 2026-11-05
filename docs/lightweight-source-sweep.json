@@ -1,0 +1,1161 @@
+{
+  "schema": "anncatto.source-motion-sweep.v1",
+  "createdAt": "2026-11-02T02:37:25.058Z",
+  "hardwareValidated": false,
+  "parametersOnly": true,
+  "scope": "Six RP1 reference-motion combinations at 0.025 m lift and ground friction 0.7, with unchanged controller and thresholds. Tracking metrics compare states at the same integration time. Nominal rigid-body simulation cases, not a verified operating region or hardware results.",
+  "controllerSources": {
+    "src/concept-model.ts": "18a83515005884deb8aeddb9133c17f18de1d7622be99fae6b4bf223cc7eb922",
+    "src/design-motion.ts": "40f0dbe9a1cbcfeda46e448000de8280eec31462e28a4e6b74a5d2f468450bd0",
+    "src/design-gait.ts": "80c6b55c4c4627090389966abf49240b8dad5a6c1842e911720b40a48de4a408",
+    "src/design-dynamics.ts": "935a9ef2d65dbfd6e16f739edb27b0369794fa9a2e346533b79178611322f927",
+    "src/design-wbc.ts": "e6bacd91d49ee36765b19b11417d2f689a703ca6445148e08ff5f471a4c1523e",
+    "src/design-validation.ts": "ec8e7dc85aa2abf82357606cb5bc506e7720d90c05819faede09c0ec278e898a",
+    "src/source-leg-kinematics.ts": "6ca2ec6dab98f0aebb5aaf8ae7eca2191c1ba373b738f65be65d105d3cb3a6f4",
+    "src/source-robot.ts": "91314f38f0e75fd5e906550920dd835efb6501256c36283f17dc11d7d286305c",
+    "src/source-robot-data.ts": "8e5afef0b75c7dd62f91bb37b70691d2c6ed4966dcc61021de4c04f00f67419d",
+    "src/source-physics.ts": "085232acda8b251f5613fea62949b533bda7dd77a83dbe32f557fd8d466ffdd9"
+  },
+  "cases": [
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2,
+        "strideLength": 0.06,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2,
+        "stride": 0.06,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "ef514962",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": false,
+        "positionRms": 0.0009635585554605995,
+        "jointRms": 0.010597836679504534,
+        "maxTilt": 0.009939245844520633,
+        "distance": 0.27114854787641285,
+        "maxTorqueUse": 0.5942690152983555,
+        "saturatedFraction": 0,
+        "maxSpeedUse": 0.12498152020434426,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.051808933784709944,
+        "peakSlip": {
+          "time": 8.019999999999348,
+          "body": 13,
+          "normalForce": 13.903895947261143,
+          "velocity": [
+            -0.048747164379001444,
+            0.017546497796286094
+          ]
+        },
+        "reason": "Contact tangential speed exceeded 0.05 m/s",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    },
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2.4,
+        "strideLength": 0.06,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2.4,
+        "stride": 0.06,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "3506ae8c",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": true,
+        "positionRms": 0.0009267356937682047,
+        "jointRms": 0.010930937295128458,
+        "maxTilt": 0.011429010296621056,
+        "distance": 0.23059996880840367,
+        "maxTorqueUse": 0.5871695748404274,
+        "saturatedFraction": 0,
+        "maxSpeedUse": 0.21231102367967955,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.012790938584361998,
+        "peakSlip": {
+          "time": 7.029999999999448,
+          "body": 13,
+          "normalForce": 9.241778924601608,
+          "velocity": [
+            -0.012716977895322959,
+            0.0013735294240706103
+          ]
+        },
+        "reason": "",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    },
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2.8,
+        "strideLength": 0.06,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2.8,
+        "stride": 0.06,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "c1988d10",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": false,
+        "positionRms": 0.0010221161545301176,
+        "jointRms": 0.011525825461934836,
+        "maxTilt": 0.012655606474601256,
+        "distance": 0.1972859090641653,
+        "maxTorqueUse": 0.6245809487255114,
+        "saturatedFraction": 0,
+        "maxSpeedUse": 0.22831187032848763,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.12246609077752418,
+        "peakSlip": {
+          "time": 8.019999999999348,
+          "body": 13,
+          "normalForce": 6.961472789977992,
+          "velocity": [
+            -0.12003592403805566,
+            0.02427592079940371
+          ]
+        },
+        "reason": "Contact tangential speed exceeded 0.05 m/s",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    },
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2,
+        "strideLength": 0.09,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2,
+        "stride": 0.09,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "cb3b53d",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": false,
+        "positionRms": 0.013634770487831908,
+        "jointRms": 0.02621810995754702,
+        "maxTilt": 0.07595807138474953,
+        "distance": 0.4056366118246082,
+        "maxTorqueUse": 1,
+        "saturatedFraction": 0.0004995004995004995,
+        "maxSpeedUse": 1.4894641375216027,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.1991833316362749,
+        "peakSlip": {
+          "time": 3.5499999999998306,
+          "body": 7,
+          "normalForce": 599.9540934142618,
+          "velocity": [
+            -0.04795085004882812,
+            0.19332541369752987
+          ]
+        },
+        "reason": "Joint speed exceeded its limit; Contact tangential speed exceeded 0.05 m/s",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    },
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2.4,
+        "strideLength": 0.09,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2.4,
+        "stride": 0.09,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "d5051fe3",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": false,
+        "positionRms": 0.01604063175816577,
+        "jointRms": 0.03727867515260302,
+        "maxTilt": 0.059082720986246,
+        "distance": 0.34438785814408285,
+        "maxTorqueUse": 1,
+        "saturatedFraction": 0.0008741258741258741,
+        "maxSpeedUse": 1.4147659854624497,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.16751282168393553,
+        "peakSlip": {
+          "time": 7.809999999999362,
+          "body": 13,
+          "normalForce": 59.388324236869465,
+          "velocity": [
+            0.01812499371952816,
+            -0.1665293668731766
+          ]
+        },
+        "reason": "Joint speed exceeded its limit; Contact tangential speed exceeded 0.05 m/s",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    },
+    {
+      "design": {
+        "robot": "biped",
+        "material": "aluminium",
+        "section": "box",
+        "process": "tube",
+        "l1": 0.3,
+        "l2": 0.31,
+        "armLengths": [
+          0.3,
+          0.27,
+          0.11
+        ],
+        "width": 0.034,
+        "height": 0.045,
+        "wall": 0.002,
+        "bodyLength": 0.46,
+        "bodyWidth": 0.23,
+        "bodyHeight": 0.12,
+        "bodyMass": 5,
+        "motorMass": 0.45,
+        "motorTorque": 24,
+        "ratio": 9,
+        "rotorInertia": 0.000025,
+        "toolMass": 0.45,
+        "payload": 0,
+        "tool": "gripper",
+        "remote": false,
+        "minWall": 0.0012,
+        "stockAllowance": 0.003,
+        "processYield": 0.85,
+        "maxToolReach": 8,
+        "allowDeflection": 0.001,
+        "safety": 1.5,
+        "tipForce": 60,
+        "speed": 0.25,
+        "properties": {},
+        "parts": {},
+        "joints": {},
+        "legModel": "rp1",
+        "gaitPeriod": 2.8,
+        "strideLength": 0.09,
+        "stepHeight": 0.025,
+        "groundFriction": 0.7
+      },
+      "source": {
+        "id": "rp1",
+        "name": "RoboParty RP1 · 24 DOF",
+        "commit": "8c12d13ae05143bc1f67f51f1046ddb14cc9d112",
+        "meshAsset": "models/rp1-24/robot.glb",
+        "urdfAsset": "models/rp1-24/source.urdf",
+        "collisionAssets": [
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/left_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_hip_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_hip_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_knee_link.STL",
+            "path": "models/rp1-24/source/meshes/right_knee_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_ankle_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_ankle_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/waist_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/waist_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/left_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/left_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/left_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/left_wrist_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_pitch_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_pitch_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_roll_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_roll_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_shoulder_yaw_link.STL",
+            "path": "models/rp1-24/source/meshes/right_shoulder_yaw_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_elbow_link.STL",
+            "path": "models/rp1-24/source/meshes/right_elbow_link.STL"
+          },
+          {
+            "vfsPath": "rp1-24/meshes/right_wrist_link.STL",
+            "path": "models/rp1-24/source/meshes/right_wrist_link.STL"
+          }
+        ],
+        "license": "Model sub-repository license unspecified; local evaluation only",
+        "modelAssumptions": [
+          "Source URDF inertias and effort/velocity limits; not hardware-identified.",
+          "Native collision primitives and convex hulls of source collision meshes.",
+          "URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown.",
+          "Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      },
+      "motion": {
+        "period": 2.8,
+        "stride": 0.09,
+        "lift": 0.025
+      },
+      "report": {
+        "fingerprint": "c873ef3f",
+        "engine": "MuJoCo 3.17.0",
+        "controller": "Torque-limited weighted whole-body inverse dynamics QP, 100 Hz / physics 500 Hz",
+        "duration": 10.010000000000012,
+        "completed": true,
+        "passed": false,
+        "positionRms": 0.0009694043464439346,
+        "jointRms": 0.011927283935435861,
+        "maxTilt": 0.011650096854037123,
+        "distance": 0.2950717078459572,
+        "maxTorqueUse": 0.6702624654176148,
+        "saturatedFraction": 0,
+        "maxSpeedUse": 0.35562342858101065,
+        "maxJointLimitError": 0,
+        "maxContactSlipSpeed": 0.08950786863788775,
+        "peakSlip": {
+          "time": 8.019999999999348,
+          "body": 13,
+          "normalForce": 2.6220992567703223,
+          "velocity": [
+            -0.08949255226149873,
+            -0.0016557891835281002
+          ]
+        },
+        "reason": "Contact tangential speed exceeded 0.05 m/s",
+        "hardwareValidated": false,
+        "rigidBodyOnly": true,
+        "assumptions": [
+          "Ideal simulation state feedback; no sensing noise, delay or state estimator.",
+          "Rigid links and transmissions; elastic deformation is screened separately.",
+          "Entered/source effort and speed limits; no identified torque-speed, current or thermal model.",
+          "Source URDF inertias and effort/velocity limits; not hardware-identified. Native collision primitives and convex hulls of source collision meshes. URDF damping, friction and any declared armature retained; undeclared rotor coupling, torque-speed and thermal behavior unknown. Workbench reference planner and torque control; no official trained policy is running."
+        ]
+      }
+    }
+  ]
+}

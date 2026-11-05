@@ -5,6 +5,12 @@ export const materials = {
   steel: { en: 'Steel · S355', zh: '结构钢 · S355', rho: 7850, E: 210e9, G: 81e9, strength: 355e6, color: '#84959e' },
   titanium: { en: 'Titanium · Ti-6Al-4V', zh: '钛合金 · Ti-6Al-4V', rho: 4430, E: 114e9, G: 44e9, strength: 830e6, color: '#b0adb8' },
   carbon: { en: 'CFRP · quasi-isotropic laminate', zh: 'CFRP · 准各向同性层合板', rho: 1600, E: 60e9, G: 20e9, strength: 300e6, color: '#36464e' },
+  // Stratasys MDS_FDM_ABS-M30_0925a (2025), pp. 7 and 10: specific gravity
+  // 1.058; F770 / T14 / XZ / 0.25 mm tensile E=2.00 GPa, yield=32.5 MPa.
+  // Typical comparison data, not this robot's measured printed-part properties.
+  // G is an isotropic screening assumption derived with nu=.35, not a test value.
+  // https://www.stratasys.com/contentassets/5460e85552cf40a097148d125e8be84f/mds_fdm_abs-m30_0925a.pdf
+  abs: { en: 'ABS · ABS-M30 reference', zh: 'ABS · ABS-M30 参考', rho: 1058, E: 2e9, G: 2e9 / (2 * (1 + .35)), strength: 32.5e6, color: '#cbd5df' },
 } as const;
 export type Material = keyof typeof materials;
 export type RobotType = 'quadruped' | 'biped' | 'arm';

@@ -1,0 +1,88 @@
+{
+  "date": "2026-11-02",
+  "scope": "Clamped CAD segment, manual transverse load; not whole-joint modes",
+  "files": [
+    {
+      "file": "public/models/alohamini-left/structure.json",
+      "sha256": "81e91c71f88811fc301403beb09dc7860d6e7d1ab2e8f22d350c4d5bfdd91043"
+    },
+    {
+      "file": "public/models/rp1-24/structural/m447-sections.json",
+      "sha256": "0c2c1aa87b68dd88ca383d83a6f5e0128f76a7f976fca084964aa8bb73972728"
+    }
+  ],
+  "cases": [
+    {
+      "part": "0:1:1:51",
+      "link": "left_Upper_Arm",
+      "material": "ABS",
+      "sectionCount": 43,
+      "validSections": 43,
+      "inputs": {
+        "start": 8,
+        "end": 34,
+        "force": 60,
+        "angle": 0,
+        "E": 2000000000,
+        "strength": 32500000,
+        "tipMass": 0
+      },
+      "spanM": 0.109832249915,
+      "massKg": 0.09478407935935906,
+      "stressPa": 204025.3490508021,
+      "deflectionM": 0.000008051302574255208,
+      "frequencyHz": 986.2007615616582,
+      "integrationSegments": 179
+    },
+    {
+      "part": "0:1:1:52",
+      "link": "left_Lower_Arm",
+      "material": "ABS",
+      "sectionCount": 43,
+      "validSections": 42,
+      "inputs": {
+        "start": 8,
+        "end": 34,
+        "force": 60,
+        "angle": 0,
+        "E": 2000000000,
+        "strength": 32500000,
+        "tipMass": 0
+      },
+      "spanM": 0.127926585227,
+      "massKg": 0.11288365359315874,
+      "stressPa": 6152440.329162972,
+      "deflectionM": 0.000022637524691180234,
+      "frequencyHz": 631.6256196261221,
+      "integrationSegments": 446
+    },
+    {
+      "part": "YCL.M000447",
+      "link": "right_knee_link",
+      "material": "6061-T6",
+      "sectionCount": 82,
+      "validSections": 82,
+      "inputs": {
+        "start": 16,
+        "end": 65,
+        "force": 60,
+        "angle": 0,
+        "E": 70000000000,
+        "strength": 220000000,
+        "tipMass": 0
+      },
+      "spanM": 0.1700460341008077,
+      "massKg": 0.13255322248508605,
+      "stressPa": 5443020.696237891,
+      "deflectionM": 0.000019691189473806472,
+      "frequencyHz": 365.0084785243603,
+      "integrationSegments": 1722
+    }
+  ],
+  "verification": {
+    "fullTests": 89,
+    "passed": 89,
+    "log": "/tmp/lightweight-cad-full-tests.log",
+    "cadAnalyticTests": "uniform/tapered beams, energy consistency, refinement and rotated section invariance"
+  }
+}

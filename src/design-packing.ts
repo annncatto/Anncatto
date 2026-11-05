@@ -2,7 +2,7 @@ import {type RobotModel,type Transform,type V3,type Component,add,sub,dot,cross,
 interface Envelope{node:string;parent:string|null;role:Component['role'];centre:V3;axes:V3[];half:V3}
 /** Conservative solid envelopes; adjoining joint interfaces are intentionally excluded. */
 export function packingConflicts(model:RobotModel,poses:Record<string,Transform>){
- const parts:Envelope[]=model.nodes.flatMap(n=>n.components.filter(c=>!['collar','belt'].includes(c.role)).map(c=>{
+ const parts:Envelope[]=model.nodes.flatMap(n=>n.components.filter(c=>c.shape!=='mesh'&&!['collar','belt'].includes(c.role)).map(c=>{
   const p=poses[n.id]!,q=qm(p.q,c.q),half:V3=c.shape==='cylinder'?[c.size[0],c.size[0],c.size[1]/2]:c.shape==='sphere'?[c.size[0],c.size[0],c.size[0]]:c.shape==='member'?[c.section!.section==='tube'?c.section!.height/2:c.section!.width/2,c.section!.height/2,c.size[2]/2]:[c.size[0]/2,c.size[1]/2,c.size[2]/2];
   return{node:n.id,parent:n.parent,role:c.role,centre:add(p.p,rotate(p.q,c.p)),axes:([[1,0,0],[0,1,0],[0,0,1]] as V3[]).map(a=>rotate(q,a)),half};
  }));

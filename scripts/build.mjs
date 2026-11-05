@@ -13,6 +13,7 @@ import { readArticleSource } from './content.mjs';
 import { build as bundle } from 'esbuild';
 await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
 await bundle({entryPoints:['src/concept-worker.ts'],outfile:'.build/concept-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}]});
+await bundle({entryPoints:['src/design-load-worker.ts'],outfile:'.build/design-load-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}],legalComments:'eof'});
 const out = path.resolve("dist");
 const esc = (s) =>
   s
