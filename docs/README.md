@@ -20,3 +20,5 @@
 - [网页幻灯片实现与迭代记录](presentation-articles.md)。当前排版与验收规则以 PPT 工作流为准。
 
 轻量化工具继续在 `draft/lightweight-design-workbench` 本地开发，公开首页的“交互工具”栏目保持无入口。统一文档路径不改变工具的发布范围。
+
+2026-11-05：用户授权发布轻量化工具；公开构建与本地 RP1 资源的具体范围见[工具交接](lightweight-tool-handoff.md)。工具与实验文章继续在主目录维护。

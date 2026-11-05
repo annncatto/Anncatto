@@ -2,17 +2,15 @@
 
 核对日期：2026-11-04。先读 [运动载荷与闭环验证](lightweight-control.md)，再读 [开源方案、渲染与运动学校核](lightweight-rendering.md)；材料口径见 [材料选型与机构示意](lightweight-materials.md)，RP1／Go2 原模型来源与资产见 [开源模型来源核对](lightweight-model-sources.md)。本文用于在新对话继续本地开发，记录实际代码位置、用户要求、当前能力和验证范围。
 
-## 先确认工作位置与发布边界
+## 工作位置与公开构建
 
-- 工作目录：`/home/anncatto/Anncatto`。
-- 本地重构分支：`draft/lightweight-design-workbench`。
-- 工具功能基线：`57f8376f7100b0f824ccd711890ebac50a8d8fba`；后续可能增加交接文档提交。
-- 本次核对时的 `main`：`1692553ff5665bc805055fc784c8634cc1bc747a`。这是状态快照，继续工作时重新读取最新提交。
-- 独立工具路径：`/labs/lightweight-robot/`；本地预览带 `/Anncatto/` 前缀。
-- **用户要求暂时只在本地调试，不上线工具、不恢复公开首页入口。**公开首页只保留“交互工具”栏目，下面没有项目。
-- 本地分支的 `scripts/build.mjs` 仍会在本地首页生成工具链接；该改动不能随文章维护合入线上。
-- 本地分支早于后续 SmolVLA、DiT 和 OpenWAM 文章维护。保留现有工作，不能拿整个旧工作树覆盖当前 `main`，也不能把旧的公共样式和构建脚本直接替换到新版。
-- `local/d20-homepage` 是另外的未发布主页工作，不属于本次工具任务。
+- 用户于 2026-11-05 要求直接发布工具，并在同一工作空间继续实验文章。
+- 规范工作目录为 `/home/anncatto/Anncatto`；工具与文章共同维护，`main` 推送触发 GitHub Pages。
+- 独立工具路径为 `/labs/lightweight-robot/`，首页已恢复入口。
+- 公开构建提供 Go2、AlohaMini 与通用人形，保留模型原许可与来源。RP1 整套描述模型尚未明确许可，原网格和 URDF 保留在本地且不提交；RP1 结构 CAD 有独立 CERN-OHL-W-2.0 许可。
+- 本地完整模型预览：`LOCAL_MODELS=1 BASE_PATH=/Anncatto npm run build`；普通构建自动排除 RP1 原模型资源，网页不会提供对应选项。原有 RP1 方案保存在浏览器备份中。
+- CI 用 `node scripts/models/fetch-rp1-test-assets.mjs` 获取固定版本的测试输入并校验 Git blob 哈希；下载物不进入公开构建。新增来源文件须继续核对许可。
+- 合并以当前主站为基础，保留 SmolVLA、DiT Heads、OpenWAM 文章、演示和公共样式。`local/d20-homepage` 仍为单独未发布工作。
 
 ## 用户希望工具解决什么问题
 

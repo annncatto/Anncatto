@@ -1,6 +1,6 @@
 {
-  "checked": "2026-10-25",
-  "scope": "Screenshots embedded in the 13 user-selected course notes; original Obsidian files remain unchanged.",
+  "checked": "2026-11-01",
+  "scope": "Screenshots embedded in the 15 user-selected course notes; original Obsidian files remain unchanged. November additions follow topology, robot integration and mechanics foundations.",
   "notes": [
     {
       "file": "优化目标.md",
@@ -20,7 +20,7 @@
     },
     {
       "file": "拓扑优化.md",
-      "sha256": "8672a6eb7d1072eb00e69531d66097b39045dc11fb8abd6ea45b57cb03b27af9"
+      "sha256": "9a826b56cf29c99e92f47e691199efba3281481bb960082cbccfa445d6e43d90"
     },
     {
       "file": "材料.md",
@@ -53,6 +53,14 @@
     {
       "file": "选材.md",
       "sha256": "8b6fe9682401a66078333356d52952b79e7bef670b647ccf78efe958bffec6d0"
+    },
+    {
+      "file": "机器人设计（新增）.md",
+      "sha256": "e77a3128c17cf7ade93cec291127bbc358d271453713a44c532186074c81092f"
+    },
+    {
+      "file": "轻量化设计（新增，放在最后，基本功）.md",
+      "sha256": "9fadcc43a3788548a481b103ed99f9b846725ff53db1d1fc24df2417abfffcd7"
     }
   ],
   "attachments": [
@@ -431,6 +439,358 @@
       "anchor": "concept-design",
       "topic": "Mass cost, distal inertia, constrained design, two routes and early decisions",
       "treatment": "Intro general principles; robot-specific consequences at end"
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1793434006261.webp",
+      "sha256": "acc3fd33ba900688423c1d3aac6ee43e1b45ed2bc7e53e6de5e7a1dd8202bb48",
+      "anchor": "robot-design-domain",
+      "topic": "Design domain and dynamics-derived loads",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1793435388201.webp",
+      "sha256": "a9725839158e65d12eb86bb3c0a59bd192c1d1f25e3435941fa4513bc6cbc041",
+      "anchor": "sizing-shape-realization",
+      "topic": "Sizing, shape, thin walls and sandwich failure modes",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1793436232813.webp",
+      "sha256": "5bcc979fd9f70870323ca79b49a748e98085c399e0d17a474466cab7736cb005",
+      "anchor": "robot-design-loop",
+      "topic": "Proximal mass placement, Cassie, WAM and system budget",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "拓扑优化",
+      "attachment": "拓扑优化-1793436844130.webp",
+      "sha256": "1fbe7750f17a6c2b392e7c38654dcb709a000f847b884ba55f9a58a47cf30a50",
+      "anchor": "robot-design-loop",
+      "topic": "Eight-stage design and verification loop",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793540289620.webp",
+      "sha256": "a9a76e8b1b412fab1a8afa3db1c5a1e95e23e8119bdd12a07c45bcb2a7e10354",
+      "anchor": "robot-design-integration",
+      "topic": "Integration objectives",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537105708.webp",
+      "sha256": "6ff0c4322a7a1f50544477f54b481e75ffb8e3b8dbe2cfbed3e25c7fa1d67f84",
+      "anchor": "robot-design-integration",
+      "topic": "Function allocation",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537108518.webp",
+      "sha256": "293c26ebc8b45b80e0758c7190255bf99017a3ce6278c820210988eb1090c0fa",
+      "anchor": "passive-robot-integration",
+      "topic": "Shared walls and interfaces",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537113275.webp",
+      "sha256": "d4f94824d6bb7853d43bf8b67f7d73f42830e0a4d98620bbe319ebaeac7d3614",
+      "anchor": "passive-robot-integration",
+      "topic": "Passive integration definition",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537117038.webp",
+      "sha256": "10d92af836032a42c2bf5a1f19b21bc09e0ababcba555e43c3248ec3006fa851",
+      "anchor": "case-cassie",
+      "topic": "Cassie and ATRIAS spring energy",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537121297.webp",
+      "sha256": "4dc9fff3fc0a2f9ce457ad459acad0a999f421741b66d8e49ef9c26065fcf97a",
+      "anchor": "passive-integration-examples",
+      "topic": "Passive integration examples",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537123966.webp",
+      "sha256": "5874bbb0d7dff5a84885800e7699b0c694c0dac799de253c3f3f4188a33c884c",
+      "anchor": "joint-function-audit",
+      "topic": "Conflicting functions and maintenance",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537128751.webp",
+      "sha256": "79c1dc0b1e26e960a58862d3f6d779ea97e43f09df1ebd5c12a6887825b67586",
+      "anchor": "active-robot-integration",
+      "topic": "Three active integration mechanisms",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537131813.webp",
+      "sha256": "82a9013bf55a1395c000a39485fb31d1de1eb7fb1216534654a8306145199b98",
+      "anchor": "case-lwr-iii",
+      "topic": "Integrated joint section",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537135046.webp",
+      "sha256": "cd412a5cea7d7b17072bbf260fceab0b3f0d5c2cdfdb80100980c00f2ee4a009",
+      "anchor": "series-elastic-actuation",
+      "topic": "Series elastic actuator",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537142695.webp",
+      "sha256": "ad9524f6cd3561bcc1b23630792fac8241e7ddcc81cc0313f289ce05a09f9e4d",
+      "anchor": "integration-method-comparison",
+      "topic": "Comparison of traditional, passive and active methods",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537156223.webp",
+      "sha256": "cbe362555b7d7a2b244a36048fefe3fd71fb6bfb21642f990f53fa858682703e",
+      "anchor": "joint-function-audit",
+      "topic": "Knee function audit exercise",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537158986.webp",
+      "sha256": "45e6c4a2f0c6928ad5988afcf69a73c7db55991a061bfcd776b058d116c9dfb7",
+      "anchor": "joint-function-audit",
+      "topic": "Integration conclusions",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537162815.webp",
+      "sha256": "36cd968fe57a72a490273d7a0f0a58f0acc6de5395ea3bac16ec88e8fe4b943f",
+      "anchor": "integration-metrics",
+      "topic": "Robot case and metric objectives",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537167183.webp",
+      "sha256": "2162a7231e968314ba747635063f193c65570540a96f5f6ef7831231fcb162f1",
+      "anchor": "robot-five-methods",
+      "topic": "M D F P A classification",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537169896.webp",
+      "sha256": "5215e6e574125845810ce6cc418cac2a366f2fc4082f03012a99d6435af498d3",
+      "anchor": "quadruped-methods",
+      "topic": "Quadruped design examples",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537172817.webp",
+      "sha256": "332ad23813036848bc7462350a87fe7839be98c7948ff9abfaf01862eeef3ade",
+      "anchor": "case-mini-cheetah",
+      "topic": "Mini Cheetah joint design",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537176033.webp",
+      "sha256": "c03a8d70cd2a1ee7fa8b4c6bbd86e6e91003a81a8ca21de232d114277f309208",
+      "anchor": "leg-platform-comparison",
+      "topic": "Humanoid design examples",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537179002.webp",
+      "sha256": "d8242eba34dff86f5419c7b06fd8be39618d9f5bf65078f76e98fe3b5d644b39",
+      "anchor": "case-cassie",
+      "topic": "Cassie spring design",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537234709.webp",
+      "sha256": "2d37cd74d7a33f4e2c023f6150b168c5c2b383cdf3ff8d3d32ef412dfeb3bb7b",
+      "anchor": "arm-integration-comparison",
+      "topic": "Arm examples",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537238097.webp",
+      "sha256": "dce4141bf1065ee16b0f5ac0a5958902697f0fe9d0c8825cc608426535de80fb",
+      "anchor": "case-lwr-iii",
+      "topic": "LWR III joint and CFRP integration",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537241643.webp",
+      "sha256": "d82f29985947c02494a661697b82c78b0ed75d4d8e0e33e21b4045d13dcea438",
+      "anchor": "arm-payload-integration",
+      "topic": "Arm payload ratio and other metrics",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537245070.webp",
+      "sha256": "a755551523667028cd316e579e45facf46c310c3cbb990f9d4732b75f4304d0d",
+      "anchor": "integration-metrics",
+      "topic": "COT definition and interpretation",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537248325.webp",
+      "sha256": "7a601578dedbcd78e307a9b37ce6581c3d971d7bda5eb44f26d727c8177cf123",
+      "anchor": "mass-layout-example",
+      "topic": "Arm gravity torque and mass spiral example",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "机器人设计（新增）",
+      "attachment": "机器人设计（新增）-1793537251747.webp",
+      "sha256": "ab0cf0e7c2c49e64ce7a23a96b9bb3f8d8a51664f2b1b3606cea93ec4acddb5a",
+      "anchor": "integration-tradeoffs",
+      "topic": "Integration trade-offs",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "机器人设计（新增）-1793537652584.webp",
+      "sha256": "7ac5d1d73cd7e657631e1650af7d05e7f9f2822fc97af8e1e2c27b82a1b5704d",
+      "anchor": "further-reading",
+      "topic": "Bernd Klein textbook",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538500456.webp",
+      "sha256": "fd0f47b257f585bba24e58062c678bebafedb6d45f5f8b85fbfbc0c02157b678",
+      "anchor": "mechanics-foundations",
+      "topic": "Load, stress and strain objectives",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538504080.webp",
+      "sha256": "9bc0b19a07a3704b6b8ba0632ef78bf1018a0a5b6e8c08203cd07e71e505ffe2",
+      "anchor": "section-loads",
+      "topic": "Axial, torsional, shear and bending loads",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538507317.webp",
+      "sha256": "2fcd01fbb72f4f310054834c07d53c6a68fa184f3cf1e164880d7a41869af96d",
+      "anchor": "stress-strain-basics",
+      "topic": "Stress and strain definitions",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538509705.webp",
+      "sha256": "b262cf07013536de9062e33e1d21da167f71ce5fab681fda2bf4ad99ef39af18",
+      "anchor": "axial-extension-example",
+      "topic": "Elastic properties table and tensile bar exercise",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538512551.webp",
+      "sha256": "3b52f3750eda76ac14d50b7331abe6a7e1583fd03dea328db43bd2a833b77b32",
+      "anchor": "euler-bernoulli-beam",
+      "topic": "Beam theory scope",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538515613.webp",
+      "sha256": "dd988a48d5504d2d4dc91094592d748348efff5dba8bebcf7f87a61571bf55a9",
+      "anchor": "euler-bernoulli-beam",
+      "topic": "Plane section kinematics and linear strain",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538519574.webp",
+      "sha256": "08e3f6345f71a795f51d4264ab8d155e1b9ddcba2500f24bfe9c15501bf8f015",
+      "anchor": "cantilever-load-fields",
+      "topic": "Bending stress, moment-curvature and cantilever fields",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538596940.webp",
+      "sha256": "305f7cb12476a68a28914fc592059985fa59ce40b1ab7fe34c2e60deab88274d",
+      "anchor": "shear-deformable-beams",
+      "topic": "Shear and yield objectives",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538599540.webp",
+      "sha256": "0f72e7e5a1134d84d09a28d2d2934166d8e529ecf9588054624b32e8886ca58f",
+      "anchor": "shear-deformable-beams",
+      "topic": "Timoshenko and Levinson",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538602524.webp",
+      "sha256": "ab4661bdb4e2bbf04ca33fc5dd7bc25481a12c289df16b298684fe84f5ca8558",
+      "anchor": "combined-stress-yield",
+      "topic": "Von Mises and Tresca yield loci",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538952893.webp",
+      "sha256": "a32b926d451d9841b33c6d07e1bd8581117858a997e22f44523aad86c051db8b",
+      "anchor": "load-capacity-selfweight",
+      "topic": "Structural efficiency objectives",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538955492.webp",
+      "sha256": "c0f423485069a58991fdbfbdde8e7c43ee460890a101aadddb4202f11b3ddb82",
+      "anchor": "load-capacity-selfweight",
+      "topic": "Capacity to self-weight ratio",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793538958141.webp",
+      "sha256": "5d6d737f9abac4a056b7f865295d19cb2cdc3d790d91e05f464091c9d804cfa5",
+      "anchor": "load-capacity-selfweight",
+      "topic": "Strength-limited bar derivation",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "轻量化设计（新增，放在最后，基本功）",
+      "attachment": "轻量化设计（新增，放在最后，基本功）-1793539178433.webp",
+      "sha256": "8b3c39da5ec276e1af2afd3bdf9fcf0b5783040f3f8fd1fa7780c9ea1ae1877e",
+      "anchor": "constraint-dependent-ranking",
+      "topic": "Strength, stiffness and buckling comparison",
+      "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
     }
   ]
 }

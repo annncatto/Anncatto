@@ -10,6 +10,8 @@ import { renderPi07Figure } from "../.build/pi07-diagrams.js";
 import { renderCourseFigure } from '../.build/lightweight-course.js';
 import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
+import { renderSmolFigure, renderSmolMedia } from '../.build/smolvla-figures.js';
+import { renderOpenwamDiagram } from '../.build/openwam-slide-diagrams.js';
 import { build as bundle } from 'esbuild';
 await bundle({entryPoints:['src/lightweight-lab.ts'],outfile:'.build/lightweight-lab.js',bundle:true,format:'esm',target:'es2022',minify:true,external:['./language.js'],legalComments:'eof',banner:{js:'/*! Includes Three.js (MIT). License: assets/licenses/three-LICENSE.txt */'}});
 await bundle({entryPoints:['src/concept-worker.ts'],outfile:'.build/concept-worker.js',bundle:true,format:'esm',target:'es2022',minify:true,plugins:[{name:'mujoco-runtime',setup(build){build.onResolve({filter:/^@mujoco\/mujoco$/},()=>({path:'./vendor/mujoco/mujoco.js',external:true}));}}]});
@@ -23,7 +25,12 @@ const esc = (s) =>
     .replaceAll('"', "&quot;");
 await fs.rm(out, { recursive: true, force: true });
 await fs.mkdir(out, { recursive: true });
-await fs.cp("public", path.join(out, "assets"), { recursive: true });
+const localModels = process.env.LOCAL_MODELS === '1';
+await fs.cp("public", path.join(out, "assets"), { recursive: true, filter: source => {
+  const rel = path.relative('public', source).split(path.sep).join('/');
+  // Keep unlicensed source meshes local. Structural CAD has its own license.
+  return localModels || !rel.startsWith('models/rp1-24/') || rel.startsWith('models/rp1-24/structural');
+} });
 await fs.cp("content/images", path.join(out, "assets/content"), {
   recursive: true,
 });
@@ -35,6 +42,7 @@ const versionHash = createHash("sha256");
 for (const name of moduleNames) versionHash.update(await fs.readFile(path.join(".build", name)));
 versionHash.update(await fs.readFile("public/style.css"));
 versionHash.update(await fs.readFile("public/fonts.css"));
+versionHash.update(await fs.readFile("public/slides.css"));
 const assetVersion = versionHash.digest("hex").slice(0, 12);
 for (const name of moduleNames) {
   const source = await fs.readFile(path.join(".build", name), "utf8");
@@ -109,7 +117,7 @@ function math(s) {
       ),
     );
 }
-function shell(title, description, body, interactive = false, module = '') {
+function shell(title, description, body, interactive = false, module = '', presentation = false) {
   return `<!doctype html>
 <html lang="en" data-language="en">
 <head>
@@ -121,15 +129,16 @@ function shell(title, description, body, interactive = false, module = '') {
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/style.css">
+${presentation ? '<link rel="stylesheet" href="/assets/slides.css">' : ''}
 ${interactive ? '<link rel="stylesheet" href="/assets/katex/katex.min.css"><script type="module" src="/assets/app.js"></script>' : '<script type="module" src="/assets/language.js"></script>'}
 ${module ? `<script type="module" src="/assets/${module}.js"></script>` : ''}
 </head>
-<body>
+<body${presentation ? ' class="presentation-page"' : ''}>
 <a class="skip" href="#main">${bilingual("Skip to content", "跳至正文")}</a>
-<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav>${'<nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav>'}</header>
+${presentation ? '' : `<header class="sitebar container"><nav aria-label="Main navigation"><a href="/">Anncatto</a></nav><nav class="language-switch" aria-label="Article language"><button data-language-choice="en" aria-pressed="true">EN</button><button data-language-choice="zh" aria-pressed="false">中文</button></nav></header>`}
 ${body}
 </body>
-</html>`.replace(/\b(href|src)="\/(?!\/)/g, `$1="${basePath}/`)
+</html>`.replace(/\b(href|src|poster)="\/(?!\/)/g, `$1="${basePath}/`)
     .replace(/(href|src)="([^"?]*\/assets\/[^"?]+\.(?:js|css))"/g, `$1="$2?v=${assetVersion}"`);
 }
 
@@ -145,7 +154,7 @@ function readingMinutes(raw, language) {
   const words = (prose.match(/[A-Za-z0-9]+(?:['’−-][A-Za-z0-9]+)*/g) || []).length;
   const characters = (prose.match(/[\u3400-\u9fff]/g) || []).length;
   const formulas = [...raw.matchAll(/\$\$[\s\S]*?\$\$/g)].length;
-  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|<figure\b/g)].length;
+  const figures = [...raw.matchAll(/\{\{figure:|\{\{pi07:|\{\{lightweight:|\{\{course:|\{\{smolvla:|\{\{svmedia:|<figure\b/g)].length;
   const tableText = [...raw.matchAll(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`, "g"))]
     .filter(match => raw.lastIndexOf("<table", match.index) > raw.lastIndexOf("</table>", match.index))
     .map(match => match[1].replace(/<[^>]*>/g, " ")).join(" ");
@@ -154,14 +163,24 @@ function readingMinutes(raw, language) {
   const codeLines = code.reduce((sum, match) => sum + match[1].split("\n").length, 0);
   return Math.max(1, Math.ceil((words + tableWords) / 200 + (characters + tableCharacters) / 350 + (formulas * 9 + figures * 20 + codeLines * 2) / 60));
 }
-function readingSidebar(raw, title, titleEn=title) {
-  const sections = [{ id: "article-top", en: titleEn, zh: title }];
-  for (const match of raw.matchAll(/<h2\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h2>/g)) {
-    const title = language => (match[2].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[2]).replace(/<[^>]*>/g, "");
-    sections.push({ id: match[1], en: title("en"), zh: title("zh-CN") });
+function readingSidebar(raw, title, titleEn=title, maxDepth=3) {
+  const sections = [];
+  const parents = [];
+  for (const match of raw.matchAll(/<h([234])\b[^>]*id="([^"]+)"[^>]*>([\s\S]*?)<\/h\1>/g)) {
+    const level = Number(match[1]);
+    if (level > maxDepth) continue;
+    const heading = language => (match[3].match(new RegExp(`<span lang="${language}">([\\s\\S]*?)<\\/span>`))?.[1] || match[3]).replace(/<[^>]*>/g, "");
+    const section = { id: match[2], en: heading("en"), zh: heading("zh-CN"), children: [] };
+    while (parents.length && parents.at(-1).level >= level) parents.pop();
+    if (parents.length) parents.at(-1).section.children.push(section);
+    else sections.push(section);
+    parents.push({level, section});
   }
+  const contentsLink = section => `<a href="#${esc(section.id)}">${bilingual(esc(section.en), esc(section.zh))}</a>`;
+  const contentsItems = items => items.map(section => `<li>${contentsLink(section)}${section.children.length ? `<ol class="contents-subsections">${contentsItems(section.children)}</ol>` : ""}</li>`).join("");
+  const tree = contentsItems(sections);
   const en = readingMinutes(raw, "en"), zh = readingMinutes(raw, "zh-CN");
-  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`${en} min read`, `预计 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><ol>${sections.map((section,i) => `<li><a href="#${esc(section.id)}"${i === 0 ? ' aria-current="location"' : ""}>${bilingual(esc(section.en), esc(section.zh))}</a></li>`).join("")}</ol></nav></details></aside>`;
+  return `<aside class="reading-sidebar" data-reading-sidebar data-minutes-en="${en}" data-minutes-zh="${zh}"><div class="reading-status"><div class="reading-summary"><span data-reading-time>${bilingual(`Full article: ~${en} min`, `全文约 ${zh} 分钟`)}</span><span data-reading-percent>0%</span></div><div class="reading-meter" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span data-reading-fill></span><span class="reading-cat" data-reading-cat aria-hidden="true">${pixelCatSVG()}</span></div></div><details class="article-contents" open><summary>${bilingual("Contents", "目录")}</summary><nav aria-label="Contents"><p class="contents-title">${bilingual("Contents", "目录")}</p><a class="contents-root" href="#article-top" aria-current="location">${bilingual(esc(titleEn),esc(title))}</a><ol>${tree}</ol></nav></details></aside>`;
 }
 for (const p of posts) {
   let figureNumber = 0;
@@ -169,9 +188,11 @@ for (const p of posts) {
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
       .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id))
       .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id))
-      .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id)));
-  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time></p></header>`;
-  const sidebar = readingSidebar(raw, p.title, p.titleEn);
+      .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id))
+      .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
+      .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
+  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` · <a href="/notes/${p.slug}/slides/">${bilingual('Presentation ↗','幻灯片 ↗')}</a>` : ''}</p></header>`;
+  const sidebar = readingSidebar(raw, p.title, p.titleEn, p.tocDepth ?? (p.module === "dit-heads" ? 4 : 3));
   await write(
     `notes/${p.slug}/index.html`,
     shell(
@@ -182,11 +203,16 @@ for (const p of posts) {
       p.module || '',
     ),
   );
+  if (p.presentation) {
+    const slides = math((await readArticleSource(p.presentation))
+      .replace(/\{\{openwam:([\w-]+)\}\}/g, (_, id) => renderOpenwamDiagram(id)));
+    await write(`notes/${p.slug}/slides/index.html`, shell(p.title, p.descriptionEn, slides, true, 'slides', true));
+  }
 }
 const listing = posts
   .map(
     (p) =>
-      `<li class="entry"><article><h2><a href="/notes/${p.slug}/">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><time datetime="${p.date}">${p.date}</time></article></li>`,
+      `<li class="entry"><article><h2><a href="/notes/${p.slug}/${p.presentation ? 'slides/' : ''}">${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</a></h2><p>${bilingual(esc(p.descriptionEn),esc(p.description))}</p><div class="entry-meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` <a class="entry-format" href="/notes/${p.slug}/">${bilingual('Full article','全文')}</a>` : ''}</div></article></li>`,
   )
   .join("");
 await write(
@@ -194,7 +220,7 @@ await write(
   shell(
     "Articles",
     "AI and robotics articles by Anncatto.",
-    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul><section class="home-tools" aria-labelledby="tools-heading"><h2 id="tools-heading">${bilingual("Interactive tools","交互工具")}</h2><ul class="entries"><li class="entry"><h3><a href="/labs/lightweight-robot/">${bilingual("Lightweight Concept Design","轻量化概念设计")} <span class="home-tool-arrow" aria-hidden="true">↗</span></a></h3><p>${bilingual("Adjust materials, sections and joint layouts for quadrupeds, humanoids and arms. Compare mass and stiffness, inspect the 3D assembly and export engineering models.","调整四足、人形与机械臂的材料、截面和关节布置，比较质量与刚度，查看三维装配并导出工程模型。")}</p></li></ul></section></main>`,
+    `<main id="main" class="container"><h1>${bilingual("Articles","文章")}</h1><ul class="entries">${listing}</ul><section class="home-tools" aria-labelledby="tools-heading"><h2 id="tools-heading">${bilingual("Interactive tools","交互工具")}</h2><ul class="entries"><li class="entry"><h3><a href="/labs/lightweight-robot/">${bilingual("Lightweight Concept Design","轻量化概念设计")} <span class="home-tool-arrow" aria-hidden="true">↗</span></a></h3><p>${bilingual("Explore robot geometry, materials and motion loads. Compare mass, stiffness and drive requirements, and export design models.","调整机器人构型与材料，比较质量、刚度和运动载荷，检验驱动需求并导出设计模型。")}</p></li></ul></section></main>`,
   ),
 );
 await write(
@@ -205,7 +231,7 @@ await write(
     `<main id="main" class="container"><h1>${bilingual("Page not found","页面不存在")}</h1><p><a href="/">${bilingual("Back to articles","返回文章列表")}</a></p></main>`,
   ),
 );
-await write('labs/lightweight-robot/index.html',shell('Lightweight Concept Design','Compare robot mass distribution, structural stiffness, reflected inertia and drive requirements.',math(await fs.readFile('content/lightweight-lab.html','utf8')),true,'lightweight-lab'));
+await write('labs/lightweight-robot/index.html',shell('Lightweight Concept Design','Parametric robot assemblies, material and section sizing, manufacturing and contact dynamics.',math((await fs.readFile('content/lightweight-lab.html','utf8')).replace('data-design-workbench', `data-design-workbench data-local-models="${localModels}"`)),true,'lightweight-lab'));
 for (const id of Object.keys(defaults))
   await write(`figures/${id}.svg`, renderDiagram(id));
 await write("figures/reading-cat.svg", pixelCatSVG());

@@ -1,0 +1,151 @@
+{
+  "source": "/home/anncatto/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf",
+  "sha256": "8459353ebc6af5800d809b96566b5073a7fcff880c67171ab07a0bd2f98ffee6",
+  "mesh_processing": "lossless float32 position welding; all triangles preserved; vertex normals computed for display",
+  "links": {
+    "left_Base": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Base.STL",
+      "sha256": "e434f4998e44e8ba1ffa2b90f97a3811e8be025dea779a66a5c7f365f46f6913",
+      "triangles": 93504,
+      "vertices": 45241,
+      "min": [
+        -0.0692906528711319,
+        -0.04001668468117714,
+        -1.0305734043924986e-10
+      ],
+      "max": [
+        0.0692906603217125,
+        0.06054671108722687,
+        0.07590100169181824
+      ]
+    },
+    "left_Rotation_Pitch": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Rotation_Pitch.STL",
+      "sha256": "b0d45384570ce976bf5ec4773b822c650dc5e063484810592492443909bda767",
+      "triangles": 223715,
+      "vertices": 132814,
+      "min": [
+        -0.03293127939105034,
+        -0.061967503279447556,
+        -0.017562951892614365
+      ],
+      "max": [
+        0.037168409675359726,
+        0.030899573117494583,
+        0.07412252575159073
+      ]
+    },
+    "left_Upper_Arm": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Upper_Arm.STL",
+      "sha256": "e0ec84ba9c317f76ad153c79feed5c430a5d1ea7b161b1386ef93f98e0f6f079",
+      "triangles": 240053,
+      "vertices": 142487,
+      "min": [
+        -0.057070765644311905,
+        -0.018275287002325058,
+        -0.04850732162594795
+      ],
+      "max": [
+        0.014949999749660492,
+        0.1543048620223999,
+        0.05518138036131859
+      ]
+    },
+    "left_Lower_Arm": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Lower_Arm.STL",
+      "sha256": "a26bd76bb2b28df4aa175f3ee8b852d1b9a683af681d4b509deb21894e72de20",
+      "triangles": 120358,
+      "vertices": 56976,
+      "min": [
+        -0.014949999749660492,
+        -0.2085385024547577,
+        -0.05041528865695
+      ],
+      "max": [
+        0.02062228135764599,
+        0.01827140897512436,
+        0.05338359996676445
+      ]
+    },
+    "left_Wrist_Pitch_Roll": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Wrist_Pitch_Roll.STL",
+      "sha256": "912f3c1dcbde86bc6e088aef2e76ad65d10fd8b75e5cf075686ea4a5a5a44428",
+      "triangles": 3178,
+      "vertices": 1565,
+      "min": [
+        -0.015621142461895943,
+        -0.04033147171139717,
+        -0.028172317892313004
+      ],
+      "max": [
+        0.015621049329638481,
+        0.015597601421177387,
+        0.027972238138318062
+      ]
+    },
+    "left_wrist_yaw": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_wrist_yaw.STL",
+      "sha256": "287208b4608245740a148f45c31668b3de975772fa15cdbfb910cd405d39b511",
+      "triangles": 169184,
+      "vertices": 80985,
+      "min": [
+        -0.022595148533582687,
+        -0.01445756945759058,
+        -0.04247710108757019
+      ],
+      "max": [
+        0.02222122997045517,
+        0.06099950149655342,
+        0.060837272554636
+      ]
+    },
+    "left_Fixed_Jaw": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Fixed_Jaw.STL",
+      "sha256": "de4af3b62e96ea792137033c4322681cf929df7d563e64f2526c5edb0d2e7b69",
+      "triangles": 87304,
+      "vertices": 40044,
+      "min": [
+        -0.03519999980926514,
+        -0.10077203810214996,
+        -0.017958354204893112
+      ],
+      "max": [
+        0.03032446838915348,
+        0.0279999990016222,
+        0.10395611077547073
+      ]
+    },
+    "left_Moving_Jaw": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_Moving_Jaw.STL",
+      "sha256": "01710e46191ba7e868cc78bdf34faafef7b154ee8869e2ec5a484ef13c81aea9",
+      "triangles": 1502,
+      "vertices": 745,
+      "min": [
+        -0.010116488672792912,
+        -0.08599443733692169,
+        -0.0252138189971447
+      ],
+      "max": [
+        0.010116481222212315,
+        0.010116484947502613,
+        0.03093073144555092
+      ]
+    },
+    "left_camera": {
+      "source_file": "/home/anncatto/Alohamini/models/alohamini2pro/meshes/visual/left_camera.STL",
+      "sha256": "d6573d3a98352ccf784996440a8299474f4c9692f9ed2ae5e44ac499e2b93e05",
+      "triangles": 3188,
+      "vertices": 1711,
+      "min": [
+        -0.017999999225139618,
+        -0.01848411373794079,
+        1.3667278153661755e-07
+      ],
+      "max": [
+        0.017999999225139618,
+        0.01848411373794079,
+        0.019109202548861504
+      ]
+    }
+  }
+}

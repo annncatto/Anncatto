@@ -18,13 +18,14 @@ import {sourceMemberDefinitions} from './design-source-members.js';
 
 const root=document.querySelector<HTMLElement>('[data-design-workbench]');
 if(root){
+ const localModels=root.dataset.localModels==='true';
  const $=<T extends HTMLElement>(s:string)=>root.querySelector<T>(s)!;
  const tr=(en:string,zh:string)=>language==='en'?en:zh;
  const fmt=(x:number,n=2)=>Number.isFinite(x)?x.toFixed(n):'—';
  const sourceName=(d:ConceptDesign)=>d.armModel==='aloha'?'Alohamini':d.legModel==='go2'?'Unitree Go2':d.legModel==='rp1'?'RoboParty RP1':'';
  const sourceMassNote=(d:ConceptDesign)=>d.sourceMode==='derived'?tr('Member mass follows material density, section and length. The remaining assembly budget stays fixed; joint limits retain the source values.','杆件质量随材料密度、截面与长度调整，其余总成保持预算；关节限值沿用源模型。'):d.armModel==='aloha'?(d.armInertia==='urdf'?tr('Original URDF mass budget: 2.0 kg.','旧 URDF 总质量预算：2.0 kg。'):tr('LIBERO CAD nominal mass: 1.84962 kg, including the camera once. Link COMs and full inertia tensors use the same bundle.','LIBERO CAD 名义总质量 1.84962 kg，摄像头计入一次；质心与完整惯量采用同一物性包。')):tr('Link masses and full inertia tensors are taken from the published URDF; they have not been identified on hardware here.','连杆质量与完整惯量张量沿用公开 URDF；本工具未进行实机辨识。');
  const sourceDriveNote=(d:ConceptDesign)=>d.legModel==='rp1'?tr('The source URDF supplies torque and speed limits, reflected inertia, viscous damping and joint friction; these are included. RoboLab also publishes a torque–speed actuator model and rated operating points. That additional model is not enabled here.','已采用原 URDF 的转矩、转速限值，以及反射惯量、黏性阻尼和关节摩擦。官方 RoboLab 另有转矩—转速模型与额定工作点，当前尚未启用这套执行器模型。'):d.legModel==='go2'?tr('Torque and speed limits use the Unitree ROS URDF. It does not specify reflected rotor inertia or joint friction. Unitree also publishes an mjlab actuator configuration for a different rigid-body model; using it requires a matched model profile.','转矩与转速限值采用 Unitree ROS 的 URDF；该文件没有声明转子反射惯量和关节摩擦。宇树另有 mjlab 执行器配置，但配套刚体模型不同，需要成套匹配后采用。'):tr('Torque and speed limits use the local URDF. The local BOM identifies the servos, allowing manufacturer ratings to be added by model. Reflected rotor inertia, transmission friction and stiffness are not defined in the current model.','转矩与转速限值采用本地 URDF。本地 BOM 已列出舵机型号，可以按型号补充厂家额定参数；当前模型尚未定义转子反射惯量、传动摩擦和刚度。');
-  const defaults=(robot:RobotType):ConceptDesign=>({...copyDesign(initialConcept),robot,bodyLength:robot==='quadruped'?.46:.22,bodyWidth:robot==='biped'?.22:.23,bodyMass:robot==='arm'?3:5,...(robot==='arm'?{armModel:'aloha' as const,toolMass:0,armCirclePlane:'yz' as const,armCircleRadius:.06}:{legModel:robot==='quadruped'?'go2' as const:'rp1' as const,payload:0})});
+  const defaults=(robot:RobotType):ConceptDesign=>({...copyDesign(initialConcept),robot,bodyLength:robot==='quadruped'?.46:.22,bodyWidth:robot==='biped'?.22:.23,bodyMass:robot==='arm'?3:5,...(robot==='arm'?{armModel:'aloha' as const,toolMass:0,armCirclePlane:'yz' as const,armCircleRadius:.06}:{legModel:robot==='quadruped'?'go2' as const:localModels?'rp1' as const:'concept' as const,payload:0})});
  type Profile='source'|'derived'|'generic';
  type ProfileSnapshot={design:ConceptDesign;conditions:DesignConditions;selected:string;materialSelected?:string;hasReference:boolean;referenceDesign:ConceptDesign;referenceConditions:DesignConditions};
  const profileOf=(d:ConceptDesign):Profile=>isSourceDesign(d)?d.sourceMode==='derived'?'derived':'source':'generic';
@@ -36,6 +37,10 @@ if(root){
  try{
   const stored=localStorage.getItem('anncatto.lightweight-design.v3'),saved=JSON.parse(stored||'null');
   if(saved){
+   if(!localModels&&saved.design?.legModel==='rp1'){
+    localStorage.setItem('anncatto.lightweight-design.v3.local-rp1-backup',stored!);
+    saved.design=defaults('biped');
+   }
    if(saved.design?.robot==='arm'&&!saved.design.armModel){localStorage.setItem('anncatto.lightweight-design.v3.concept-arm-backup',JSON.stringify(saved));saved.design={...saved.design,armModel:'aloha',toolMass:0,parts:{},joints:{}};delete saved.design.armCircleCenter;}
    if(!saved.modelSelectionVersion&&['quadruped','biped'].includes(saved.design?.robot)&&!['go2','rp1'].includes(saved.design.legModel)){
     localStorage.setItem('anncatto.lightweight-design.v3.before-source-defaults',stored!);
@@ -69,6 +74,7 @@ if(root){
   try{localStorage.setItem('anncatto.lightweight-profiles.v1',JSON.stringify(profiles));localStorage.setItem('anncatto.lightweight-design.v3',JSON.stringify({design,conditions,modelSelectionVersion:1}));}catch{}
  }
  function selectProfile(profile:Profile,robot:RobotType=design.robot){
+  if(robot==='biped'&&!localModels)profile='generic';
   if(robot===design.robot&&profile===profileOf(design))return;
   persistWorkbench();const previous=profiles.entries[profileKey(design.robot,profileOf(design))]!,saved=profiles.entries[profileKey(robot,profile)],next=saved?copyDesign(saved.design):profileDefaults(robot,profile),nextConditions=saved?{...saved.conditions}:{...initialConditions};
   try{const nextModel=generateRobot(next);analyzeDesign(nextModel,nextConditions);design=next;conditions=nextConditions;selected=saved?.selected&&nextModel.nodes.some(n=>n.id===saved.selected)?saved.selected:defaultMember(nextModel);materialSelected=saved?.materialSelected??'';hasReference=saved?.hasReference??false;referenceDesign=saved?.referenceDesign?copyDesign(saved.referenceDesign):copyDesign(design);referenceConditions={...(saved?.referenceConditions??conditions)};referenceCacheKey='';liveGroup=robot==='biped'?'legs':'all';time=0;rebuild(true,true);}
@@ -189,7 +195,7 @@ if(root){
    input('d:quadHipPitch',tr('Thigh rearward tilt','大腿后倾角'),(d.quadHipPitch??.48)*180/Math.PI,'°',0,80,1,true)+
    input('d:quadKneeFlexion',tr('Knee included angle','膝部内夹角'),180-(d.quadKneeFlexion??.96)*180/Math.PI,'°',50,160,1,true)+
    `<p class="design-control-note">${tr('Thigh tilt is measured from vertical. A 180° knee is straight. These angles define the design stance and change during walking.','大腿相对竖直方向向后倾斜；膝内夹角 180° 表示伸直。这两个角度定义设计站姿，行走时随动作变化。')}</p><p class="design-control-note" data-stance-measures></p>`):'';
-  const baselineName=isArm?'Alohamini':d.robot==='quadruped'?'Go2':'RP1';const modelChoice=choices('model-profile',tr('Robot model','机器人模型'),[['source',tr('Original model','原模型')+' · '+baselineName],['derived',tr('Parametric design','参数化概念设计')+' · '+baselineName],['generic',tr('Generic beam model','通用梁构型')]],profileOf(d));
+  const baselineName=isArm?'Alohamini':d.robot==='quadruped'?'Go2':'RP1';const modelChoice=choices('model-profile',tr('Robot model','机器人模型'),[...(d.robot==='biped'&&!localModels?[]:[['source',tr('Original model','原模型')+' · '+baselineName],['derived',tr('Parametric design','参数化概念设计')+' · '+baselineName]] as [string,string][]),['generic',tr('Generic beam model','通用梁构型')]],profileOf(d));
   const sourceURL=model.source?(model.source.id==='aloha'?new URL('./models/alohamini-left/source.urdf',import.meta.url).href:model.source.id==='go2'?`https://github.com/unitreerobotics/unitree_ros/blob/${model.source.commit}/robots/go2_description/urdf/go2_description.urdf`:`https://github.com/Roboparty/rp1_description/blob/${model.source.commit}/urdf/rp1_24dof.urdf`):'';
   const sourceGeometry=(d.armModel==='aloha'?choices('d:armReference',tr('Evaluation posture','评估姿态'),[['bent',tr('Bent','屈肘')],['extended',tr('Extended','水平伸展')]],d.armReference??'bent'):'')+`${model.source?`<p class="design-control-note"><a href="${sourceURL}">${tr('Source model','模型来源')} · ${model.source.commit.slice(0,8)}</a></p>`:''}${d.armModel==='aloha'&&d.sourceMode!=='derived'?`<label class="design-check"><input type="checkbox" name="d:armBeamEquivalent" ${hasElasticModel(d)?'checked':''}>${tr('Custom equivalent beam (assumed section)','自定义等效梁（假设截面）')}</label>`:''}`;
   $('[data-model-control]').innerHTML=modelChoice;

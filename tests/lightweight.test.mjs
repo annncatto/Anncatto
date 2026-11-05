@@ -5,6 +5,7 @@ import {initialDesign,sectionProperties,evaluateDesign,cantileverCurve,exportURD
 import {inverse2R,forward2R,footCycle} from '../.build/lightweight-kinematics.js';
 import {relativeMaterialIndex,lightweightDiagram,lightweightMessage} from '../.build/lightweight-diagrams.js';
 import {courseFigures,renderCourseFigure} from '../.build/lightweight-course.js';
+import {shearDeflectionRatio,normalizedFoundationIndices,foundationMaterials} from '../.build/lightweight-foundations.js';
 import {readFile} from 'node:fs/promises';
 const close=(a,b,tol=1e-8)=>assert.ok(Math.abs(a-b)<=tol*Math.max(1,Math.abs(a),Math.abs(b)),`${a} != ${b}`);
 test('closed tube section and cantilever equations preserve SI units',()=>{
@@ -66,7 +67,7 @@ test('material-index comparisons and scientific plots stay finite in both langua
 
 test('course chapter sequence preserves source scope and excludes the independent studio',async()=>{
  const source=await readArticleSource('轻量化结构设计.html');
- assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','classical-methods','functional-integration','concept-design','inertia-mass','lightweight-indices','shape','structural-efficiency','optimization']);
+ assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','classical-methods','functional-integration','concept-design','inertia-mass','lightweight-indices','shape','structural-efficiency','optimization','robot-design-integration','mechanics-foundations']);
  assert.ok(source.includes('<div class="formula">$$'));
  assert.equal((source.match(/\$\$/g)||[]).length%2,0);
  assert.doesNotMatch(source,/<iframe|data-studio|labs\/lightweight-robot|workbench|K_I|Paris law|14-bit|14 位|\\mathbb C/);
@@ -92,4 +93,16 @@ test('published topology stages come from the recorded constrained solve',async(
  assert.equal(solve.history.length,81);assert.ok(solve.history.at(-1).compliance<solve.history[0].compliance*.2);
  for(const h of solve.history){assert.ok(Math.abs(h.volume-.4)<1e-4);assert.ok(h.free_residual<1e-7);assert.ok(Number.isFinite(h.compliance));}
  for(const step of [0,15,40,80]){const buffer=await readFile(new URL(`../content/images/lightweight/topology-${String(step).padStart(2,'0')}.png`,import.meta.url));assert.equal(buffer.readUInt32BE(16),1800);assert.equal(buffer.readUInt32BE(20),700);}
+});
+
+test('beam shear corrections and material rankings follow the stated constraints',()=>{
+ close(shearDeflectionRatio(10),.0078);close(shearDeflectionRatio(5),.0312);close(shearDeflectionRatio(2),.195);
+ const indices=normalizedFoundationIndices();
+ for(const key of ['strength','axial','buckling'])close(indices[0][key],1);
+ assert.ok(indices[2].strength>indices[1].strength&&indices[1].strength>1);
+ assert.ok(indices[1].axial>1&&indices[2].axial<1);
+ assert.ok(indices[1].buckling>indices[2].buckling&&indices[2].buckling>1);
+ // The strength measure is capacity / self-weight, with density converted from g/cm³.
+ const capacity=foundationMaterials.map(m=>m.yield*1e6/(m.rho*1000*9.81));
+ close(capacity[0],5136,1e-4);close(capacity[1],13493,1e-4);close(capacity[2],16267,1e-4);
 });

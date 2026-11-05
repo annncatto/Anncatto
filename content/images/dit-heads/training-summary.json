@@ -1,0 +1,1139 @@
+{
+  "model": "Multi-Task DiT",
+  "checkpointStep": 200000,
+  "dataset": {
+    "episodes": 150,
+    "frames": 155727,
+    "fps": 30
+  },
+  "training": {
+    "steps": 200000,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 4,
+    "mixed_precision": "bfloat16",
+    "optimizer": {
+      "type": "adam",
+      "lr": 2e-05,
+      "weight_decay": 0.0,
+      "grad_clip_norm": 10.0,
+      "betas": [
+        0.95,
+        0.999
+      ],
+      "eps": 1e-08
+    },
+    "scheduler": {
+      "warmup_steps": 0,
+      "decay_steps": 200000,
+      "decay_lr": 0.0,
+      "type": "diffusers_cosine"
+    },
+    "ema": {
+      "enable": true,
+      "decay": null,
+      "update_after_step": 0,
+      "inv_gamma": 1.0,
+      "power": 0.75,
+      "min_decay": 0.0,
+      "max_decay": 0.9999,
+      "use_for_eval": true
+    },
+    "seed": 42
+  },
+  "checkpointConfig": {
+    "n_obs_steps": 2,
+    "horizon": 32,
+    "n_action_steps": 24,
+    "objective": "diffusion",
+    "noise_scheduler_type": "DDPM",
+    "num_train_timesteps": 100,
+    "num_inference_steps": null,
+    "hidden_dim": 512,
+    "num_layers": 6,
+    "num_heads": 8,
+    "normalization_mapping": {
+      "VISUAL": "MEAN_STD",
+      "STATE": "MIN_MAX",
+      "ACTION": "MIN_MAX"
+    },
+    "input_features": {
+      "observation.images.forward": {
+        "type": "VISUAL",
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      },
+      "observation.images.wrist_right": {
+        "type": "VISUAL",
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      },
+      "observation.images.chest": {
+        "type": "VISUAL",
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      },
+      "observation.images.wrist_left": {
+        "type": "VISUAL",
+        "shape": [
+          3,
+          256,
+          256
+        ]
+      },
+      "observation.state": {
+        "type": "STATE",
+        "shape": [
+          18
+        ]
+      }
+    },
+    "output_features": {
+      "action": {
+        "type": "ACTION",
+        "shape": [
+          18
+        ]
+      }
+    },
+    "drop_n_last_frames": 7
+  },
+  "checkpointTensorElements": {
+    "dtype": {
+      "F32": 305933074
+    },
+    "module": {
+      "noise_predictor": 156705042,
+      "observation_encoder": 149228032
+    }
+  },
+  "lossCurve": [
+    {
+      "endStep": 1000,
+      "meanLoss": 0.06765659158455674,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 2000,
+      "meanLoss": 0.024640453769126908,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 3000,
+      "meanLoss": 0.01932913557521533,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 4000,
+      "meanLoss": 0.017168028621876146,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 5000,
+      "meanLoss": 0.015244788323296234,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 6000,
+      "meanLoss": 0.014272581401950446,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 7000,
+      "meanLoss": 0.013660234254493843,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 8000,
+      "meanLoss": 0.012685225036664633,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 9000,
+      "meanLoss": 0.01208121947592008,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 10000,
+      "meanLoss": 0.011350456265558024,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 11000,
+      "meanLoss": 0.011222981706785503,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 12000,
+      "meanLoss": 0.010537559772637905,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 13000,
+      "meanLoss": 0.01042530427884776,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 14000,
+      "meanLoss": 0.009829616369199356,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 15000,
+      "meanLoss": 0.009578880273198592,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 16000,
+      "meanLoss": 0.009438070827658521,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 17000,
+      "meanLoss": 0.009316425327735488,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 18000,
+      "meanLoss": 0.009048314706931706,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 19000,
+      "meanLoss": 0.008843375961936545,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 20000,
+      "meanLoss": 0.008624608927042574,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 21000,
+      "meanLoss": 0.008662382945607533,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 22000,
+      "meanLoss": 0.008207950975658605,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 23000,
+      "meanLoss": 0.008265846326583415,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 24000,
+      "meanLoss": 0.00810205134669377,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 25000,
+      "meanLoss": 0.007834792662775727,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 26000,
+      "meanLoss": 0.00784325356807676,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 27000,
+      "meanLoss": 0.00756484260680736,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 28000,
+      "meanLoss": 0.007513615877542179,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 29000,
+      "meanLoss": 0.007391199279998545,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 30000,
+      "meanLoss": 0.007345346913927642,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 31000,
+      "meanLoss": 0.007155886425069184,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 32000,
+      "meanLoss": 0.007143639733934833,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 33000,
+      "meanLoss": 0.006995382875291398,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 34000,
+      "meanLoss": 0.006945742554584285,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 35000,
+      "meanLoss": 0.006901864185929299,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 36000,
+      "meanLoss": 0.006703765382131678,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 37000,
+      "meanLoss": 0.0064625315569719535,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 38000,
+      "meanLoss": 0.006565425335458713,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 39000,
+      "meanLoss": 0.006395227202629031,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 40000,
+      "meanLoss": 0.006284402506622428,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 41000,
+      "meanLoss": 0.0062581281789243805,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 42000,
+      "meanLoss": 0.006201190031308215,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 43000,
+      "meanLoss": 0.006126290174310271,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 44000,
+      "meanLoss": 0.005917196179878374,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 45000,
+      "meanLoss": 0.005834648772855872,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 46000,
+      "meanLoss": 0.005883398381396546,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 47000,
+      "meanLoss": 0.005809597291314276,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 48000,
+      "meanLoss": 0.005695578871076577,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 49000,
+      "meanLoss": 0.005702696224470855,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 50000,
+      "meanLoss": 0.005733200739283347,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 51000,
+      "meanLoss": 0.005655619326338637,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 52000,
+      "meanLoss": 0.005573917450783483,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 53000,
+      "meanLoss": 0.00543521033594152,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 54000,
+      "meanLoss": 0.0053004598408806485,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 55000,
+      "meanLoss": 0.005448262271027488,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 56000,
+      "meanLoss": 0.005236101673603116,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 57000,
+      "meanLoss": 0.005348191203323949,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 58000,
+      "meanLoss": 0.005177805373961746,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 59000,
+      "meanLoss": 0.005181117746054951,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 60000,
+      "meanLoss": 0.005064710497652413,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 61000,
+      "meanLoss": 0.0050535032612024225,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 62000,
+      "meanLoss": 0.005083202899753814,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 63000,
+      "meanLoss": 0.005060459138105216,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 64000,
+      "meanLoss": 0.004912211400551314,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 65000,
+      "meanLoss": 0.004941334632847429,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 66000,
+      "meanLoss": 0.0049943504062321155,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 67000,
+      "meanLoss": 0.004708292035007617,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 68000,
+      "meanLoss": 0.004805012211094436,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 69000,
+      "meanLoss": 0.0046714396577153825,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 70000,
+      "meanLoss": 0.0046550418937004,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 71000,
+      "meanLoss": 0.00468599527124752,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 72000,
+      "meanLoss": 0.0047512569124664875,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 73000,
+      "meanLoss": 0.004568817536739516,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 74000,
+      "meanLoss": 0.004441836585458077,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 75000,
+      "meanLoss": 0.004565797928753454,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 76000,
+      "meanLoss": 0.004426397783972789,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 77000,
+      "meanLoss": 0.0042603684769164825,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 78000,
+      "meanLoss": 0.004316002475185087,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 79000,
+      "meanLoss": 0.0043389743440311575,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 80000,
+      "meanLoss": 0.004285924911542679,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 81000,
+      "meanLoss": 0.004239784409604908,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 82000,
+      "meanLoss": 0.0042620646716641205,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 83000,
+      "meanLoss": 0.004207035083560186,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 84000,
+      "meanLoss": 0.004202880830038339,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 85000,
+      "meanLoss": 0.004176079388191283,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 86000,
+      "meanLoss": 0.004117646487276943,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 87000,
+      "meanLoss": 0.004139349237488204,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 88000,
+      "meanLoss": 0.004138573395255662,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 89000,
+      "meanLoss": 0.004009878997279884,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 90000,
+      "meanLoss": 0.004074198183527188,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 91000,
+      "meanLoss": 0.0040533919143272215,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 92000,
+      "meanLoss": 0.0039008904664260624,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 93000,
+      "meanLoss": 0.003966334444776294,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 94000,
+      "meanLoss": 0.003877649806025147,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 95000,
+      "meanLoss": 0.003882181369324826,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 96000,
+      "meanLoss": 0.0038660187227906135,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 97000,
+      "meanLoss": 0.00387330775448936,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 98000,
+      "meanLoss": 0.0037936973203068192,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 99000,
+      "meanLoss": 0.003708764048933517,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 100000,
+      "meanLoss": 0.003789997987074457,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 101000,
+      "meanLoss": 0.0037894615971745226,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 102000,
+      "meanLoss": 0.0035567654223777937,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 103000,
+      "meanLoss": 0.0036586673581587093,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 104000,
+      "meanLoss": 0.003601246595615521,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 105000,
+      "meanLoss": 0.003541384034851944,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 106000,
+      "meanLoss": 0.003565043861781305,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 107000,
+      "meanLoss": 0.003641422908887762,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 108000,
+      "meanLoss": 0.003525123017032456,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 109000,
+      "meanLoss": 0.003434690986712667,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 110000,
+      "meanLoss": 0.0034861842049613186,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 111000,
+      "meanLoss": 0.0033909812190177037,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 112000,
+      "meanLoss": 0.003396588929314021,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 113000,
+      "meanLoss": 0.0033135286432807334,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 114000,
+      "meanLoss": 0.003323960389003332,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 115000,
+      "meanLoss": 0.0034205763426798513,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 116000,
+      "meanLoss": 0.0032838296636255107,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 117000,
+      "meanLoss": 0.0032122027550449276,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 118000,
+      "meanLoss": 0.003287157145139645,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 119000,
+      "meanLoss": 0.003237887146919093,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 120000,
+      "meanLoss": 0.0032655764832343268,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 121000,
+      "meanLoss": 0.0032459136536272127,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 122000,
+      "meanLoss": 0.0031763498254076695,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 123000,
+      "meanLoss": 0.0031759279475008953,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 124000,
+      "meanLoss": 0.003111463176952384,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 125000,
+      "meanLoss": 0.0030867603929564213,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 126000,
+      "meanLoss": 0.0031530450468817434,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 127000,
+      "meanLoss": 0.003042818647387321,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 128000,
+      "meanLoss": 0.0030436296484804186,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 129000,
+      "meanLoss": 0.0030873788632761715,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 130000,
+      "meanLoss": 0.003046181214534954,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 131000,
+      "meanLoss": 0.0029684710450655983,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 132000,
+      "meanLoss": 0.0029911492849278147,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 133000,
+      "meanLoss": 0.0029451413739207057,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 134000,
+      "meanLoss": 0.0029772831817663245,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 135000,
+      "meanLoss": 0.0028692168198722356,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 136000,
+      "meanLoss": 0.0028984399246619434,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 137000,
+      "meanLoss": 0.002888745928052231,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 138000,
+      "meanLoss": 0.0029352179787092607,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 139000,
+      "meanLoss": 0.002859955329238801,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 140000,
+      "meanLoss": 0.0028733085207986735,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 141000,
+      "meanLoss": 0.002766885813411136,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 142000,
+      "meanLoss": 0.0028008946619102063,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 143000,
+      "meanLoss": 0.0028754238869441906,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 144000,
+      "meanLoss": 0.0027668159324075532,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 145000,
+      "meanLoss": 0.002829376873381989,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 146000,
+      "meanLoss": 0.002733734331886808,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 147000,
+      "meanLoss": 0.002816005894159389,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 148000,
+      "meanLoss": 0.002810144147308165,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 149000,
+      "meanLoss": 0.0027695331035029083,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 150000,
+      "meanLoss": 0.0026270468446891754,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 151000,
+      "meanLoss": 0.002637663445651924,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 152000,
+      "meanLoss": 0.002638411086256383,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 153000,
+      "meanLoss": 0.0026771673352795917,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 154000,
+      "meanLoss": 0.002607647217264457,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 155000,
+      "meanLoss": 0.0026505879506421477,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 156000,
+      "meanLoss": 0.0025666552554612283,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 157000,
+      "meanLoss": 0.002625270046513833,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 158000,
+      "meanLoss": 0.0026206598130484055,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 159000,
+      "meanLoss": 0.0026529359535506954,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 160000,
+      "meanLoss": 0.002557810470394543,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 161000,
+      "meanLoss": 0.0025371445845339623,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 162000,
+      "meanLoss": 0.0025780940617696614,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 163000,
+      "meanLoss": 0.0025789002277088,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 164000,
+      "meanLoss": 0.0025234729800049536,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 165000,
+      "meanLoss": 0.0025101885197855154,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 166000,
+      "meanLoss": 0.0024868433201063454,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 167000,
+      "meanLoss": 0.0025041460802149233,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 168000,
+      "meanLoss": 0.002470578467427913,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 169000,
+      "meanLoss": 0.0025472269466190484,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 170000,
+      "meanLoss": 0.0024710269984243496,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 171000,
+      "meanLoss": 0.0025112070001487154,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 172000,
+      "meanLoss": 0.002467529010937142,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 173000,
+      "meanLoss": 0.002482700995180494,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 174000,
+      "meanLoss": 0.002415454525660607,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 175000,
+      "meanLoss": 0.002452980078267501,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 176000,
+      "meanLoss": 0.002369673183262421,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 177000,
+      "meanLoss": 0.002475717003288082,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 178000,
+      "meanLoss": 0.0023532214314618614,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 179000,
+      "meanLoss": 0.0024589031291834544,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 180000,
+      "meanLoss": 0.0024781528023231658,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 181000,
+      "meanLoss": 0.0024684696619442547,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 182000,
+      "meanLoss": 0.002343876446257127,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 183000,
+      "meanLoss": 0.002393026463503702,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 184000,
+      "meanLoss": 0.0023965306809568573,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 185000,
+      "meanLoss": 0.002413173334063686,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 186000,
+      "meanLoss": 0.0024545512178356147,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 187000,
+      "meanLoss": 0.0024266032095820265,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 188000,
+      "meanLoss": 0.002331862780478332,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 189000,
+      "meanLoss": 0.0023388093552748615,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 190000,
+      "meanLoss": 0.002415371455237619,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 191000,
+      "meanLoss": 0.0024198018255501665,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 192000,
+      "meanLoss": 0.0023543911066144572,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 193000,
+      "meanLoss": 0.0024056332912368817,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 194000,
+      "meanLoss": 0.0023817374203154032,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 195000,
+      "meanLoss": 0.0023473019570319593,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 196000,
+      "meanLoss": 0.0023637768912649335,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 197000,
+      "meanLoss": 0.002335478033266554,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 198000,
+      "meanLoss": 0.0023910626131073516,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 199000,
+      "meanLoss": 0.002380925634670348,
+      "loggedUpdates": 1000
+    },
+    {
+      "endStep": 200000,
+      "meanLoss": 0.0024279867358709454,
+      "loggedUpdates": 1000
+    }
+  ],
+  "lastMetrics": {
+    "step": 200000,
+    "loss": 0.001272895449801581,
+    "grad_norm": 0.14771468937397003,
+    "lr": 1.233700919200942e-15
+  },
+  "sourceHashes": {
+    "trainConfig": "94add86df8c36dd4c8b43c086c19d90e7e1ba02ecdc9dbe55fda302c96b04f13",
+    "modelConfig": "e797c23eb50f51e111e80bbb2075287a80321d2dc7d2d435122e4db4729c0f7f",
+    "metrics": "11f225544fe8e1211a8a26461ded9350e328c984605ae056c147d0a473339893",
+    "tensorHeader": "ed980e952e8ca9a77b9128c7057224498983e1d6d31a013ef291bf18c6b6b292"
+  },
+  "confirmedEvaluation": {
+    "nas30": {
+      "successes": 4,
+      "trials": 10
+    },
+    "nas25": "Release failure in supplied clip"
+  }
+}

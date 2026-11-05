@@ -1,0 +1,156 @@
+{
+  "source": {
+    "repository": "unitreerobotics/unitree_ros",
+    "commit": "3ae893d905d11795ddf1075825ee5010364a1109",
+    "urdfPath": "robots/go2_description/urdf/go2_description.urdf",
+    "urdfSha256": "7d19fe48e2e689ee1a032ab99f2a4a8b671d87e73de48d3e65811682a5b48b9e",
+    "license": "BSD-3-Clause",
+    "licenseStatus": "specified",
+    "localOnly": true,
+    "meshAsset": "models/go2/robot.glb",
+    "urdfAsset": "models/go2/source.urdf",
+    "assets": [
+      {
+        "path": "models/go2/source/LICENSE",
+        "sourcePath": "LICENSE",
+        "bytes": 1558,
+        "gitBlobSha": "6dfdadaa90baa4f7bea7400d3c4e8b9c784ae37f",
+        "sha256": "84aac59fd3246e3ddc49d1387644e8fcf43b0def4f0b9fe687f372e90446df2d"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/base.dae",
+        "sourcePath": "robots/go2_description/dae/base.dae",
+        "bytes": 10727399,
+        "gitBlobSha": "4e47b5bec4a3c91ae4a1d49d73080d697a917cf1",
+        "sha256": "e52bebbb5c7ff1f6aedee620c9b5b349f6e965360ecc63a9bb743eeff2d0be64"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/calf.dae",
+        "sourcePath": "robots/go2_description/dae/calf.dae",
+        "bytes": 1125517,
+        "gitBlobSha": "83221779392a5d19af59561d0ea4eea48ef6102a",
+        "sha256": "29872fa1a435b92bc2b395fdfa7f0aee26101db3c494681896bd4ef24ee7883c"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/calf_mirror.dae",
+        "sourcePath": "robots/go2_description/dae/calf_mirror.dae",
+        "bytes": 1125457,
+        "gitBlobSha": "413fd75d8b173b4597a35cc71e618a7d025069bd",
+        "sha256": "79c66be7ed06760bd5001c067a1fb0ac517f639d8b1a5f89be471903b3f359e1"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/foot.dae",
+        "sourcePath": "robots/go2_description/dae/foot.dae",
+        "bytes": 506988,
+        "gitBlobSha": "22bfcf49d7b6d07015c88f55e4ca153463bd5d0e",
+        "sha256": "ffbd95fd641866ce9bd277aa249b92dafc9148d70131fa2c52709a35ce5b710b"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/hip.dae",
+        "sourcePath": "robots/go2_description/dae/hip.dae",
+        "bytes": 4666421,
+        "gitBlobSha": "1bec1a72feb8a5d941ad6767341bc1d79d7eff0d",
+        "sha256": "8735e10617afe252cef0844c1d139d15bc6d4c653660d742fea9fe05c2704d8f"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/thigh.dae",
+        "sourcePath": "robots/go2_description/dae/thigh.dae",
+        "bytes": 3884136,
+        "gitBlobSha": "a17c0482f296f2e19849f2544bf309866adfb801",
+        "sha256": "a622381ae308897ff143b8bbf02f075457c342b22984205040424a5a983246fa"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/thigh_mirror.dae",
+        "sourcePath": "robots/go2_description/dae/thigh_mirror.dae",
+        "bytes": 3896575,
+        "gitBlobSha": "fb424112d623ad912f75248bedb1f62c6c28d3b6",
+        "sha256": "c7bae0b0565c2aa4b7cc15a538d795e9153e0f10c821cc18429e92693172bdc6"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/urdf/go2_description.urdf",
+        "sourcePath": "robots/go2_description/urdf/go2_description.urdf",
+        "bytes": 27441,
+        "gitBlobSha": "70bce96b3e96a1c4cf5eeb1753bbd4351c9122e4",
+        "sha256": "7d19fe48e2e689ee1a032ab99f2a4a8b671d87e73de48d3e65811682a5b48b9e"
+      }
+    ],
+    "collisionAssets": [],
+    "displayProcessing": "All triangles retained. Exact position indexing; STL normals recomputed for display. COLLADA internal matrices, diffuse colors and normals preserved; no world-up conversion.",
+    "repo": "unitreerobotics/unitree_ros"
+  },
+  "summary": {
+    "links": 42,
+    "joints": 41,
+    "activeJoints": 12,
+    "mass": 16.087,
+    "visuals": 17,
+    "collisions": 27,
+    "meshFiles": 7,
+    "uniqueVisualTriangles": 196836
+  },
+  "displayMeshes": {
+    "robots/go2_description/dae/base.dae": {
+      "triangles": 77928,
+      "instanceTriangles": 77928,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/hip.dae": {
+      "triangles": 37040,
+      "instanceTriangles": 148160,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/thigh.dae": {
+      "triangles": 30134,
+      "instanceTriangles": 60268,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/calf.dae": {
+      "triangles": 8602,
+      "instanceTriangles": 17204,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/foot.dae": {
+      "triangles": 4404,
+      "instanceTriangles": 17616,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/thigh_mirror.dae": {
+      "triangles": 30126,
+      "instanceTriangles": 60252,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    },
+    "robots/go2_description/dae/calf_mirror.dae": {
+      "triangles": 8602,
+      "instanceTriangles": 17204,
+      "format": "collada",
+      "positionReconstructionExact": true,
+      "sourceUpAxis": "Z_UP",
+      "unitMeter": 1.0
+    }
+  },
+  "glb": {
+    "bytes": 5595892,
+    "sha256": "8e161256a1cf5fe73b6e4ec5310d670b1f8b4561457d58c9b3fae851fa60d39d",
+    "meshCount": 7
+  },
+  "hardwareValidated": false,
+  "physicsValidated": false
+}

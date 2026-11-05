@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "classification": "CAD nominal physical model; not hardware identified",
+  "repository": {
+    "path": "/home/anncatto/Alohamini",
+    "branch": "feat/libero-dynamics",
+    "commit": "7d9b4b64efa4a160e415c81292d138632f69410b",
+    "sourceFiles": [
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/model.py",
+        "sha256": "6a55268d3df20d5aaa093b692df57c1cc54746cfc044d850167ede9f3bbf120f",
+        "headSha256": "6a55268d3df20d5aaa093b692df57c1cc54746cfc044d850167ede9f3bbf120f",
+        "modified": false
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/description.py",
+        "sha256": "78899391fe73951b4c6c283ce5e9bd418c4c426e77579006248d506921c7bffe",
+        "headSha256": "78899391fe73951b4c6c283ce5e9bd418c4c426e77579006248d506921c7bffe",
+        "modified": false
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/inertial_binding.py",
+        "sha256": "471b9698fe243feb9cb073c15efe004fc63e30450f3a009a5c50c062f8ee25e7",
+        "headSha256": "471b9698fe243feb9cb073c15efe004fc63e30450f3a009a5c50c062f8ee25e7",
+        "modified": false
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/inertia.py",
+        "sha256": "9d2f9c8bb3d1fb0824f6a2b74da9f0e23c9fb5973dcb6bfa0199f8041593e1f5",
+        "headSha256": "9d2f9c8bb3d1fb0824f6a2b74da9f0e23c9fb5973dcb6bfa0199f8041593e1f5",
+        "modified": false
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/control.py",
+        "sha256": "f5dba63af2e25dd6df3366abe7e1a768f525652e9973910367a20618f756814a",
+        "headSha256": "f5dba63af2e25dd6df3366abe7e1a768f525652e9973910367a20618f756814a",
+        "modified": false
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/export.py",
+        "sha256": "b744cbce0866823974d13bffc41c053181a196bd1fd7912a952695c1bd07a584",
+        "headSha256": "de0e6157e67ed5ad1ceab6ca5b0709dc1daa642c1d81b4cd6b601e341d9aa33f",
+        "modified": true
+      },
+      {
+        "path": "simulation/mujoco/alohamini_mujoco/libero.py",
+        "sha256": "f5605915764f9fe4296b652333a7e22cfb33f4690f16b58f40dcbeabf6a2ab3f",
+        "headSha256": "cdb32f82a5e180a59ad64506425b3909bd8d46a9e9801d0cc0fa8d644d189165",
+        "modified": true
+      }
+    ]
+  },
+  "sources": [
+    {
+      "path": "/home/anncatto/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf",
+      "sha256": "8459353ebc6af5800d809b96566b5073a7fcff880c67171ab07a0bd2f98ffee6"
+    },
+    {
+      "path": "/home/anncatto/Alohamini_workspace/simulation/cad/alohamini2pro_active_inertias_20261102/inertia.json",
+      "sha256": "b22a27a4981a026c4891fbe9b79014cf9376c5a1f54c85b27b22ffc89cd7f23e"
+    },
+    {
+      "path": "/home/anncatto/Alohamini_workspace/simulation/collections/libero_spatial_task8_train_20261103/part_0/reset_012/model/model.xml",
+      "sha256": "6e044d118425209d1a2ef500434a46ceb8695840441885a2434883e6f9a738a9"
+    }
+  ],
+  "sourceDescriptionSha256": {
+    "urdf/alohamini2pro.urdf": "8459353ebc6af5800d809b96566b5073a7fcff880c67171ab07a0bd2f98ffee6",
+    "srdf/alohamini2pro.srdf": "48314b09feef0348655a8f027c40638b5232a684420aef1ce124fccf714f68e6"
+  },
+  "sourceClassification": {
+    "classification": "manual SolidWorks CAD properties with user mass overrides; not identified hardware inertias",
+    "report_sha256": "807bddc746db1926ca977b9b1f67bb07dbefc16b251e03d4e395789ae774528e",
+    "step_sha256": "c18ecfb9a43dfc326f3cd8ee90ef39fef95c7ea65b5ac1abdf64257268de82ac",
+    "cad_manifest_sha256": "e7070ebfb728fd33680c599abd5adb9fea08919ff243237237675c19d240497c",
+    "column_frame_binding_sha256": "c7a3c0260948e58da83c9ab34733bcfd5fd01a09f26863abe3fb3db6da1d3746",
+    "shoulder_subassembly_step_sha256": "bb8902b3dd797ea5cb462397456569df8f1cdb1667400b1d416fe46237058753",
+    "shoulder_mass_consistency_sha256": "3fd17e04ff5fa78cb6ab4b64e9061286ddf7ffa3bddd661a764c0c47417cb890",
+    "active_mass_catalog_sha256": "aaa89de3a99e9975d858d23036879f45ca166b4f203e8a5bc3a7acb1e1903f57"
+  },
+  "importedScope": "Fixed left_Base subtree: original joint geometry and limits; CAD nominal mass, COM and central tensor in each original link frame. Camera mass is included once in left_Fixed_Jaw.",
+  "originalUrdfSubtreeMass": 2.0,
+  "importedSubtreeMass": 1.84962,
+  "leftRigidGroups": 8,
+  "originalLinks": 10,
+  "jointArmature": [
+    {
+      "name": "left_shoulder_pan",
+      "value": 0.00038740560914602627,
+      "kind": "bearing-upper-bound",
+      "range": [
+        0,
+        0.00038740560914602627
+      ]
+    }
+  ],
+  "limitations": [
+    "CAD nominal tensors with user mass overrides, not identified hardware dynamics.",
+    "Pi tower stationary components have no mass report. Base inertia is a known subtotal; base and wheel locks are mandatory.",
+    "Internal motor rotor and gear reflected inertia, friction, compliance and delay remain uncalibrated.",
+    "Pan race armature uses the whole-bearing inertia upper bound; sensitivity range is zero to this value.",
+    "ST3250 horns use closed mesh geometry and nominal aluminium density 2700 kg/m^3.",
+    "Each printed part is anchored locally. STEP occurrence placements and legacy motor/print assembly placements differ; no CAD global frame is used as world.",
+    "Existing robot joint axes, encoder zeros and collision geometry are retained; mass import does not certify their hardware accuracy."
+  ],
+  "excludedSimulationSettings": {
+    "jointDampingAndFriction": "Original left-arm URDF declares neither; source MJCF has zero damping/frictionloss, not identified zero physical loss.",
+    "pdGains": "Task controller gains depend on initialization inertia and explicit overrides; they are not material stiffness or identified servo constants.",
+    "contact": "LIBERO robot friction [1,0.005,0.0001], solver, timestep, scene placement and collision candidates belong to a separate simulation configuration.",
+    "rotorInertia": "Pan armature is an upper-bound bearing term. Internal motor/gear reflected inertia remains uncalibrated."
+  },
+  "mjcfComparison": [
+    {
+      "name": "left_Base",
+      "maximumAbsoluteErrors": {
+        "com": 0.0,
+        "inertia": 2.168404344971009e-19,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Rotation_Pitch",
+      "maximumAbsoluteErrors": {
+        "com": 3.469446951953614e-18,
+        "inertia": 2.710505431213761e-20,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Upper_Arm",
+      "maximumAbsoluteErrors": {
+        "com": 0.0,
+        "inertia": 1.0842021724855044e-19,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Lower_Arm",
+      "maximumAbsoluteErrors": {
+        "com": 1.3877787807814457e-17,
+        "inertia": 6.505213034913027e-19,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Wrist_Pitch_Roll",
+      "maximumAbsoluteErrors": {
+        "com": 3.469446951953614e-18,
+        "inertia": 8.470329472543003e-21,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_wrist_yaw",
+      "maximumAbsoluteErrors": {
+        "com": 6.911788849595091e-19,
+        "inertia": 6.641267702065749e-20,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Fixed_Jaw",
+      "maximumAbsoluteErrors": {
+        "com": 3.469446951953614e-18,
+        "inertia": 1.3552527156068805e-19,
+        "mass": 0.0
+      }
+    },
+    {
+      "name": "left_Moving_Jaw",
+      "maximumAbsoluteErrors": {
+        "com": 3.469446951953614e-18,
+        "inertia": 1.0164395367051604e-20,
+        "mass": 0.0
+      }
+    }
+  ]
+}

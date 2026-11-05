@@ -1,0 +1,51 @@
+{
+  "model": "Multi-Task DiT",
+  "demonstrations": 150,
+  "checkpointStep": 200000,
+  "recordingDate": "2026-10-23",
+  "recordingId": "20261023_101851",
+  "episode": 0,
+  "frames": 1825,
+  "durationSeconds": 60.79999923706055,
+  "recordedHz": 30.000000376450394,
+  "targets": {
+    "x.vel": {
+      "count": 1825,
+      "min": -0.0005374507745727897,
+      "median": 0.00025832632672972977,
+      "p95": 0.14959773421287537,
+      "max": 0.15000000596046448
+    },
+    "y.vel": {
+      "count": 1825,
+      "min": 0.0,
+      "median": 0.0,
+      "p95": 0.0,
+      "max": 0.0
+    },
+    "theta.vel": {
+      "count": 1825,
+      "min": -0.7439379096031189,
+      "median": 0.02960115298628807,
+      "p95": 2.2119496822357174,
+      "max": 44.2391357421875
+    },
+    "arm_right_gripper.pos": {
+      "count": 1825,
+      "min": 1.256612777709961,
+      "median": 1.9039554595947266,
+      "p95": 28.573134231567366,
+      "max": 41.80419158935547
+    }
+  },
+  "largestRightArmChanges": {
+    "events": 21,
+    "on25FrameGrid": 21,
+    "selection": "Three largest adjacent target changes per right-arm channel; archived event selection, not a full edge distribution."
+  },
+  "sourceHashes": {
+    "report": "77ba878fb68fa1b97c01f67cbad758f1408c570adbf7f439702001919e980eef",
+    "events": "f567537ad87897aebb79ebf529870e79ccc829695c3a82ab6b249157a854b7e9"
+  },
+  "rawNormalizedPredictionsRecorded": false
+}

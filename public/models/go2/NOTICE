@@ -1,0 +1,7 @@
+Source: https://github.com/unitreerobotics/unitree_ros
+Commit: 3ae893d905d11795ddf1075825ee5010364a1109
+URDF: robots/go2_description/urdf/go2_description.urdf
+Local workbench only; no hardware validation.
+Upstream license: BSD-3-Clause; see LICENSE.
+Source bytes and physical parameters are preserved. Display GLB indexes all original triangles; STL normals are recomputed for display, COLLADA matrices/diffuse colors/normals are preserved. No mesh decimation.
+GLB groups are link-local visual assets, not extra rigid bodies.

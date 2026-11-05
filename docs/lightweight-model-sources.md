@@ -1,6 +1,6 @@
 # 轻量化工具的参考机器人模型
 
-核对日期：2026-11-02。分支 `draft/lightweight-design-workbench`，仅本地。本文记录来源、版本和接入条件；当前控制与测试口径见[运动载荷与闭环验证](lightweight-control.md)。
+来源核对日期：2026-11-02；公开构建范围更新于 2026-11-05，见[交接](lightweight-tool-handoff.md)。本文记录来源、版本和接入条件；当前控制与测试口径见[运动载荷与闭环验证](lightweight-control.md)。
 
 ## 选择结果与当前状态
 

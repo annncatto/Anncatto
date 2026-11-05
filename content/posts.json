@@ -1,10 +1,44 @@
 [
   {
+    "slug": "openwam",
+    "title": "OpenWAM",
+    "titleEn": "OpenWAM",
+    "description": "视频生成先验如何支持机器人动作学习：模块化架构、世界与动作的信息流，以及跨域预训练的实验结果。",
+    "descriptionEn": "How video-generation priors support robot action learning: modular architectures, world–action information flow and cross-domain pretraining results.",
+    "presentation": "openwam/presentation.html",
+    "date": "2026-10-30",
+    "source": "OpenWAM.html",
+    "tocDepth": 4,
+    "sections": []
+  },
+  {
+    "slug": "dit-heads",
+    "title": "DiT Heads",
+    "titleEn": "DiT Heads",
+    "description": "比较扩散 Transformer 策略与动作头，推导条件注入和 MTD 张量流，结合玩偶实验分析执行窗口、松爪与底盘速度。",
+    "descriptionEn": "Diffusion Transformer policies and action heads, conditioning and MTD tensor flow, with toy-task experiments on execution windows, release and base velocity.",
+    "date": "2026-10-30",
+    "source": "DiT Heads.html",
+    "module": "dit-heads",
+    "sections": []
+  },
+  {
+    "slug": "smolvla-numerical-types",
+    "title": "SmolVLA & 数值类型",
+    "titleEn": "SmolVLA & Numerical Types",
+    "description": "从视觉语言特征、流匹配与异步动作块，到 BF16 更新舍入，结合玩偶抓取的训练、曲线和实机表现分析实验。",
+    "descriptionEn": "Visual-language features, flow matching, asynchronous chunks and BF16 update rounding, connected to toy-collection training, trajectories and robot experiments.",
+    "date": "2026-10-29",
+    "source": "SmolVLA & 数值类型.html",
+    "module": "smolvla",
+    "sections": []
+  },
+  {
     "slug": "lightweight-structural-design",
     "title": "轻量化结构设计",
     "titleEn": "Lightweight Structural Design",
-    "description": "从导论展开经典与集成方法，结合概念设计与机器人调研，推导惯量、选材指数与截面效率，理解制造和拓扑优化。",
-    "descriptionEn": "Classical and integrated methods, concept design and robot structures, with derivations of inertia, material indices and section efficiency, manufacturing and topology optimization.",
+    "description": "从导论、选材和结构效率展开轻量化方法，推导惯量与材料指数，结合拓扑优化、机器人功能集成及载荷、应力应变和梁理论。",
+    "descriptionEn": "Lightweight methods from material selection to topology optimization, robot functional integration, and mechanics foundations: loads, stress, strain and beam theory.",
     "date": "2026-10-24",
     "source": "轻量化结构设计.html",
     "module": "lightweight-article",

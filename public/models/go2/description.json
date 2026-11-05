@@ -1,0 +1,3571 @@
+{
+  "id": "go2",
+  "name": "go2_description",
+  "root": "base",
+  "source": {
+    "repository": "unitreerobotics/unitree_ros",
+    "commit": "3ae893d905d11795ddf1075825ee5010364a1109",
+    "urdfPath": "robots/go2_description/urdf/go2_description.urdf",
+    "urdfSha256": "7d19fe48e2e689ee1a032ab99f2a4a8b671d87e73de48d3e65811682a5b48b9e",
+    "license": "BSD-3-Clause",
+    "licenseStatus": "specified",
+    "localOnly": true,
+    "meshAsset": "models/go2/robot.glb",
+    "urdfAsset": "models/go2/source.urdf",
+    "assets": [
+      {
+        "path": "models/go2/source/LICENSE",
+        "sourcePath": "LICENSE",
+        "bytes": 1558,
+        "gitBlobSha": "6dfdadaa90baa4f7bea7400d3c4e8b9c784ae37f",
+        "sha256": "84aac59fd3246e3ddc49d1387644e8fcf43b0def4f0b9fe687f372e90446df2d"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/base.dae",
+        "sourcePath": "robots/go2_description/dae/base.dae",
+        "bytes": 10727399,
+        "gitBlobSha": "4e47b5bec4a3c91ae4a1d49d73080d697a917cf1",
+        "sha256": "e52bebbb5c7ff1f6aedee620c9b5b349f6e965360ecc63a9bb743eeff2d0be64"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/calf.dae",
+        "sourcePath": "robots/go2_description/dae/calf.dae",
+        "bytes": 1125517,
+        "gitBlobSha": "83221779392a5d19af59561d0ea4eea48ef6102a",
+        "sha256": "29872fa1a435b92bc2b395fdfa7f0aee26101db3c494681896bd4ef24ee7883c"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/calf_mirror.dae",
+        "sourcePath": "robots/go2_description/dae/calf_mirror.dae",
+        "bytes": 1125457,
+        "gitBlobSha": "413fd75d8b173b4597a35cc71e618a7d025069bd",
+        "sha256": "79c66be7ed06760bd5001c067a1fb0ac517f639d8b1a5f89be471903b3f359e1"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/foot.dae",
+        "sourcePath": "robots/go2_description/dae/foot.dae",
+        "bytes": 506988,
+        "gitBlobSha": "22bfcf49d7b6d07015c88f55e4ca153463bd5d0e",
+        "sha256": "ffbd95fd641866ce9bd277aa249b92dafc9148d70131fa2c52709a35ce5b710b"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/hip.dae",
+        "sourcePath": "robots/go2_description/dae/hip.dae",
+        "bytes": 4666421,
+        "gitBlobSha": "1bec1a72feb8a5d941ad6767341bc1d79d7eff0d",
+        "sha256": "8735e10617afe252cef0844c1d139d15bc6d4c653660d742fea9fe05c2704d8f"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/thigh.dae",
+        "sourcePath": "robots/go2_description/dae/thigh.dae",
+        "bytes": 3884136,
+        "gitBlobSha": "a17c0482f296f2e19849f2544bf309866adfb801",
+        "sha256": "a622381ae308897ff143b8bbf02f075457c342b22984205040424a5a983246fa"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/dae/thigh_mirror.dae",
+        "sourcePath": "robots/go2_description/dae/thigh_mirror.dae",
+        "bytes": 3896575,
+        "gitBlobSha": "fb424112d623ad912f75248bedb1f62c6c28d3b6",
+        "sha256": "c7bae0b0565c2aa4b7cc15a538d795e9153e0f10c821cc18429e92693172bdc6"
+      },
+      {
+        "path": "models/go2/source/robots/go2_description/urdf/go2_description.urdf",
+        "sourcePath": "robots/go2_description/urdf/go2_description.urdf",
+        "bytes": 27441,
+        "gitBlobSha": "70bce96b3e96a1c4cf5eeb1753bbd4351c9122e4",
+        "sha256": "7d19fe48e2e689ee1a032ab99f2a4a8b671d87e73de48d3e65811682a5b48b9e"
+      }
+    ],
+    "collisionAssets": [],
+    "displayProcessing": "All triangles retained. Exact position indexing; STL normals recomputed for display. COLLADA internal matrices, diffuse colors and normals preserved; no world-up conversion.",
+    "repo": "unitreerobotics/unitree_ros"
+  },
+  "links": [
+    {
+      "name": "base",
+      "inertial": {
+        "mass": 6.921,
+        "xyz": [
+          0.021112,
+          0.0,
+          -0.005366
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.02448,
+          0.098077,
+          0.107,
+          0.00012166,
+          0.0014849,
+          -3.12e-05
+        ]
+      },
+      "visuals": [
+        {
+          "name": "base::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/base.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/base.dae",
+            "sourcePath": "robots/go2_description/dae/base.dae",
+            "vfsPath": "go2/robots/go2_description/dae/base.dae"
+          },
+          "material": {
+            "name": "深色橡胶_001-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "base::visual:0",
+          "bounds": {
+            "min": [
+              -0.12799790501594543,
+              -0.09722297785282677,
+              -0.0968390138616438
+            ],
+            "max": [
+              0.33195799589157104,
+              0.09677696667881129,
+              0.08883398328690621
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "base::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "box",
+            "size": [
+              0.3762,
+              0.0935,
+              0.114
+            ]
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.12799790501594543,
+          -0.09722297785282677,
+          -0.0968390138616438
+        ],
+        "max": [
+          0.33195799589157104,
+          0.09677696667881129,
+          0.08883398328690621
+        ]
+      }
+    },
+    {
+      "name": "Head_upper",
+      "inertial": {
+        "mass": 0.001,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "Head_upper::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.05,
+            "length": 0.09
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "Head_lower",
+      "inertial": {
+        "mass": 0.001,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "Head_lower::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "sphere",
+            "radius": 0.047
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_hip",
+      "inertial": {
+        "mass": 0.678,
+        "xyz": [
+          -0.0054,
+          0.00194,
+          -0.000105
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00048,
+          0.000884,
+          0.000596,
+          -3.01e-06,
+          1.11e-06,
+          -1.42e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FL_hip::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/hip.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/hip.dae",
+            "sourcePath": "robots/go2_description/dae/hip.dae",
+            "vfsPath": "go2/robots/go2_description/dae/hip.dae"
+          },
+          "material": {
+            "name": "深色橡胶_001-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "FL_hip::visual:0",
+          "bounds": {
+            "min": [
+              -0.06961596012115479,
+              -0.03808397052277303,
+              -0.04939198132555994
+            ],
+            "max": [
+              0.04846196994185448,
+              0.037516959429402016,
+              0.04909896094400373
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FL_hip::collision:0",
+          "xyz": [
+            0.0,
+            0.08,
+            0.0
+          ],
+          "rpy": [
+            1.5707963267948966,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.046,
+            "length": 0.04
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.06961596012115479,
+          -0.03808397052277303,
+          -0.04939198132555994
+        ],
+        "max": [
+          0.04846196994185448,
+          0.037516959429402016,
+          0.04909896094400373
+        ]
+      }
+    },
+    {
+      "name": "FL_hip_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.000111842,
+          5.9647e-05,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_thigh",
+      "inertial": {
+        "mass": 1.152,
+        "xyz": [
+          -0.00374,
+          -0.0223,
+          -0.0327
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00584,
+          0.0058,
+          0.00103,
+          8.72e-05,
+          -0.000289,
+          0.000808
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FL_thigh::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/thigh.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/thigh.dae",
+            "sourcePath": "robots/go2_description/dae/thigh.dae",
+            "vfsPath": "go2/robots/go2_description/dae/thigh.dae"
+          },
+          "material": {
+            "name": "深色橡胶_003-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "FL_thigh::visual:0",
+          "bounds": {
+            "min": [
+              -0.04839295148849487,
+              -0.0567959588596379,
+              -0.22735400378916626
+            ],
+            "max": [
+              0.04846400022506714,
+              0.016620989671577845,
+              0.050576978096924255
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FL_thigh::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            -0.1065
+          ],
+          "rpy": [
+            0.0,
+            1.5707963267948966,
+            0.0
+          ],
+          "geometry": {
+            "type": "box",
+            "size": [
+              0.213,
+              0.0245,
+              0.034
+            ]
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.04839295148849487,
+          -0.0567959588596379,
+          -0.22735400378916626
+        ],
+        "max": [
+          0.04846400022506714,
+          0.016620989671577845,
+          0.050576978096924255
+        ]
+      }
+    },
+    {
+      "name": "FL_thigh_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_calf",
+      "inertial": {
+        "mass": 0.154,
+        "xyz": [
+          0.00548,
+          -0.000975,
+          -0.115
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00108,
+          0.0011,
+          3.29e-05,
+          3.4e-07,
+          1.72e-05,
+          8.28e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FL_calf::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/calf.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/calf.dae",
+            "sourcePath": "robots/go2_description/dae/calf.dae",
+            "vfsPath": "go2/robots/go2_description/dae/calf.dae"
+          },
+          "material": {
+            "name": "黑色足端_005-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "FL_calf::visual:0",
+          "bounds": {
+            "min": [
+              -0.025931970298290252,
+              -0.019608915105279026,
+              -0.23556390448266032
+            ],
+            "max": [
+              0.032435978680849076,
+              0.020013024777194386,
+              0.031088941427945674
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FL_calf::collision:0",
+          "xyz": [
+            0.008,
+            0.0,
+            -0.06
+          ],
+          "rpy": [
+            0.0,
+            -0.21,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.012,
+            "length": 0.12
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.025931970298290252,
+          -0.019608915105279026,
+          -0.23556390448266032
+        ],
+        "max": [
+          0.032435978680849076,
+          0.020013024777194386,
+          0.031088941427945674
+        ]
+      }
+    },
+    {
+      "name": "FL_calflower",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "FL_calflower::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.011,
+            "length": 0.065
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_calflower1",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "FL_calflower1::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.0155,
+            "length": 0.03
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_calf_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FL_foot",
+      "inertial": {
+        "mass": 0.04,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FL_foot::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/foot.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/foot.dae",
+            "sourcePath": "robots/go2_description/dae/foot.dae",
+            "vfsPath": "go2/robots/go2_description/dae/foot.dae"
+          },
+          "material": {
+            "name": "黑色足端_007-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "FL_foot::visual:0",
+          "bounds": {
+            "min": [
+              -0.026029980316758156,
+              -0.01977597757684117,
+              -0.022914989741218045
+            ],
+            "max": [
+              0.019277940928936005,
+              0.019831001284824373,
+              0.015875999925959155
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FL_foot::collision:0",
+          "xyz": [
+            -0.002,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "sphere",
+            "radius": 0.022
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.026029980316758156,
+          -0.01977597757684117,
+          -0.022914989741218045
+        ],
+        "max": [
+          0.019277940928936005,
+          0.019831001284824373,
+          0.015875999925959155
+        ]
+      }
+    },
+    {
+      "name": "FR_hip",
+      "inertial": {
+        "mass": 0.678,
+        "xyz": [
+          -0.0054,
+          -0.00194,
+          -0.000105
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00048,
+          0.000884,
+          0.000596,
+          3.01e-06,
+          1.11e-06,
+          1.42e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FR_hip::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            3.1415,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/hip.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/hip.dae",
+            "sourcePath": "robots/go2_description/dae/hip.dae",
+            "vfsPath": "go2/robots/go2_description/dae/hip.dae"
+          },
+          "material": {
+            "name": "深色橡胶_001-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "FR_hip::visual:0",
+          "bounds": {
+            "min": [
+              -0.06961596012115479,
+              -0.03752139427965825,
+              -0.04909902401639888
+            ],
+            "max": [
+              0.04846196994185448,
+              0.038083983979955986,
+              0.049391917831894554
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FR_hip::collision:0",
+          "xyz": [
+            0.0,
+            -0.08,
+            0.0
+          ],
+          "rpy": [
+            1.5707963267948966,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.046,
+            "length": 0.04
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.06961596012115479,
+          -0.03752139427965825,
+          -0.04909902401639888
+        ],
+        "max": [
+          0.04846196994185448,
+          0.038083983979955986,
+          0.049391917831894554
+        ]
+      }
+    },
+    {
+      "name": "FR_hip_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.000111842,
+          5.9647e-05,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FR_thigh",
+      "inertial": {
+        "mass": 1.152,
+        "xyz": [
+          -0.00374,
+          0.0223,
+          -0.0327
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00584,
+          0.0058,
+          0.00103,
+          -8.72e-05,
+          -0.000289,
+          -0.000808
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FR_thigh::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/thigh_mirror.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/thigh_mirror.dae",
+            "sourcePath": "robots/go2_description/dae/thigh_mirror.dae",
+            "vfsPath": "go2/robots/go2_description/dae/thigh_mirror.dae"
+          },
+          "material": {
+            "name": "深色橡胶_012-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "FR_thigh::visual:0",
+          "bounds": {
+            "min": [
+              -0.04839295148849487,
+              -0.016620990106235113,
+              -0.22735400616910095
+            ],
+            "max": [
+              0.04846400022506714,
+              0.056795950633443656,
+              0.05057698421720462
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FR_thigh::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            -0.1065
+          ],
+          "rpy": [
+            0.0,
+            1.5707963267948966,
+            0.0
+          ],
+          "geometry": {
+            "type": "box",
+            "size": [
+              0.213,
+              0.0245,
+              0.034
+            ]
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.04839295148849487,
+          -0.016620990106235113,
+          -0.22735400616910095
+        ],
+        "max": [
+          0.04846400022506714,
+          0.056795950633443656,
+          0.05057698421720462
+        ]
+      }
+    },
+    {
+      "name": "FR_thigh_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FR_calf",
+      "inertial": {
+        "mass": 0.154,
+        "xyz": [
+          0.00548,
+          0.000975,
+          -0.115
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00108,
+          0.0011,
+          3.29e-05,
+          -3.4e-07,
+          1.72e-05,
+          -8.28e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FR_calf::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/calf_mirror.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/calf_mirror.dae",
+            "sourcePath": "robots/go2_description/dae/calf_mirror.dae",
+            "vfsPath": "go2/robots/go2_description/dae/calf_mirror.dae"
+          },
+          "material": {
+            "name": "黑色足端_006-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "FR_calf::visual:0",
+          "bounds": {
+            "min": [
+              -0.025931970298290252,
+              -0.020012953478565496,
+              -0.23556390361136434
+            ],
+            "max": [
+              0.032435978680849076,
+              0.0196089864052116,
+              0.03108894017052692
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FR_calf::collision:0",
+          "xyz": [
+            0.01,
+            0.0,
+            -0.06
+          ],
+          "rpy": [
+            0.0,
+            -0.2,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.013,
+            "length": 0.12
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.025931970298290252,
+          -0.020012953478565496,
+          -0.23556390361136434
+        ],
+        "max": [
+          0.032435978680849076,
+          0.0196089864052116,
+          0.03108894017052692
+        ]
+      }
+    },
+    {
+      "name": "FR_calflower",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "FR_calflower::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.011,
+            "length": 0.065
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "FR_calflower1",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "FR_calflower1::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.0155,
+            "length": 0.03
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "FR_calf_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "FR_foot",
+      "inertial": {
+        "mass": 0.04,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [
+        {
+          "name": "FR_foot::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/foot.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/foot.dae",
+            "sourcePath": "robots/go2_description/dae/foot.dae",
+            "vfsPath": "go2/robots/go2_description/dae/foot.dae"
+          },
+          "material": {
+            "name": "黑色足端_007-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "FR_foot::visual:0",
+          "bounds": {
+            "min": [
+              -0.026029980316758156,
+              -0.01977597757684117,
+              -0.022914989741218045
+            ],
+            "max": [
+              0.019277940928936005,
+              0.019831001284824373,
+              0.015875999925959155
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "FR_foot::collision:0",
+          "xyz": [
+            -0.002,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "sphere",
+            "radius": 0.022
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.026029980316758156,
+          -0.01977597757684117,
+          -0.022914989741218045
+        ],
+        "max": [
+          0.019277940928936005,
+          0.019831001284824373,
+          0.015875999925959155
+        ]
+      }
+    },
+    {
+      "name": "RL_hip",
+      "inertial": {
+        "mass": 0.678,
+        "xyz": [
+          0.0054,
+          0.00194,
+          -0.000105
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00048,
+          0.000884,
+          0.000596,
+          3.01e-06,
+          -1.11e-06,
+          -1.42e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RL_hip::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            3.1415,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/hip.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/hip.dae",
+            "sourcePath": "robots/go2_description/dae/hip.dae",
+            "vfsPath": "go2/robots/go2_description/dae/hip.dae"
+          },
+          "material": {
+            "name": "深色橡胶_001-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "RL_hip::visual:0",
+          "bounds": {
+            "min": [
+              -0.04846198363169524,
+              -0.03808397052277303,
+              -0.04909970168182174
+            ],
+            "max": [
+              0.06961834592649606,
+              0.037516959429402016,
+              0.04939124016498495
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RL_hip::collision:0",
+          "xyz": [
+            0.0,
+            0.08,
+            0.0
+          ],
+          "rpy": [
+            1.5707963267948966,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.046,
+            "length": 0.04
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.04846198363169524,
+          -0.03808397052277303,
+          -0.04909970168182174
+        ],
+        "max": [
+          0.06961834592649606,
+          0.037516959429402016,
+          0.04939124016498495
+        ]
+      }
+    },
+    {
+      "name": "RL_hip_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.000111842,
+          5.9647e-05,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RL_thigh",
+      "inertial": {
+        "mass": 1.152,
+        "xyz": [
+          -0.00374,
+          -0.0223,
+          -0.0327
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00584,
+          0.0058,
+          0.00103,
+          8.72e-05,
+          -0.000289,
+          0.000808
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RL_thigh::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/thigh.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/thigh.dae",
+            "sourcePath": "robots/go2_description/dae/thigh.dae",
+            "vfsPath": "go2/robots/go2_description/dae/thigh.dae"
+          },
+          "material": {
+            "name": "深色橡胶_003-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "RL_thigh::visual:0",
+          "bounds": {
+            "min": [
+              -0.04839295148849487,
+              -0.0567959588596379,
+              -0.22735400378916626
+            ],
+            "max": [
+              0.04846400022506714,
+              0.016620989671577845,
+              0.050576978096924255
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RL_thigh::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            -0.1065
+          ],
+          "rpy": [
+            0.0,
+            1.5707963267948966,
+            0.0
+          ],
+          "geometry": {
+            "type": "box",
+            "size": [
+              0.213,
+              0.0245,
+              0.034
+            ]
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.04839295148849487,
+          -0.0567959588596379,
+          -0.22735400378916626
+        ],
+        "max": [
+          0.04846400022506714,
+          0.016620989671577845,
+          0.050576978096924255
+        ]
+      }
+    },
+    {
+      "name": "RL_thigh_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RL_calf",
+      "inertial": {
+        "mass": 0.154,
+        "xyz": [
+          0.00548,
+          -0.000975,
+          -0.115
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00108,
+          0.0011,
+          3.29e-05,
+          3.4e-07,
+          1.72e-05,
+          8.28e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RL_calf::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/calf.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/calf.dae",
+            "sourcePath": "robots/go2_description/dae/calf.dae",
+            "vfsPath": "go2/robots/go2_description/dae/calf.dae"
+          },
+          "material": {
+            "name": "黑色足端_005-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "RL_calf::visual:0",
+          "bounds": {
+            "min": [
+              -0.025931970298290252,
+              -0.019608915105279026,
+              -0.23556390448266032
+            ],
+            "max": [
+              0.032435978680849076,
+              0.020013024777194386,
+              0.031088941427945674
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RL_calf::collision:0",
+          "xyz": [
+            0.01,
+            0.0,
+            -0.06
+          ],
+          "rpy": [
+            0.0,
+            -0.2,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.013,
+            "length": 0.12
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.025931970298290252,
+          -0.019608915105279026,
+          -0.23556390448266032
+        ],
+        "max": [
+          0.032435978680849076,
+          0.020013024777194386,
+          0.031088941427945674
+        ]
+      }
+    },
+    {
+      "name": "RL_calflower",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "RL_calflower::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.011,
+            "length": 0.065
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "RL_calflower1",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "RL_calflower1::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.0155,
+            "length": 0.03
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "RL_calf_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RL_foot",
+      "inertial": {
+        "mass": 0.04,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RL_foot::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/foot.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/foot.dae",
+            "sourcePath": "robots/go2_description/dae/foot.dae",
+            "vfsPath": "go2/robots/go2_description/dae/foot.dae"
+          },
+          "material": {
+            "name": "黑色足端_007-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "RL_foot::visual:0",
+          "bounds": {
+            "min": [
+              -0.026029980316758156,
+              -0.01977597757684117,
+              -0.022914989741218045
+            ],
+            "max": [
+              0.019277940928936005,
+              0.019831001284824373,
+              0.015875999925959155
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RL_foot::collision:0",
+          "xyz": [
+            -0.002,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "sphere",
+            "radius": 0.022
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.026029980316758156,
+          -0.01977597757684117,
+          -0.022914989741218045
+        ],
+        "max": [
+          0.019277940928936005,
+          0.019831001284824373,
+          0.015875999925959155
+        ]
+      }
+    },
+    {
+      "name": "RR_hip",
+      "inertial": {
+        "mass": 0.678,
+        "xyz": [
+          0.0054,
+          -0.00194,
+          -0.000105
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00048,
+          0.000884,
+          0.000596,
+          -3.01e-06,
+          -1.11e-06,
+          1.42e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RR_hip::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            3.1415,
+            3.1415,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/hip.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/hip.dae",
+            "sourcePath": "robots/go2_description/dae/hip.dae",
+            "vfsPath": "go2/robots/go2_description/dae/hip.dae"
+          },
+          "material": {
+            "name": "深色橡胶_001-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "RR_hip::visual:0",
+          "bounds": {
+            "min": [
+              -0.048461955731962575,
+              -0.03752139427965825,
+              -0.04939265856845509
+            ],
+            "max": [
+              0.06961833610124728,
+              0.038083983979955986,
+              0.049098282857081364
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RR_hip::collision:0",
+          "xyz": [
+            0.0,
+            -0.08,
+            0.0
+          ],
+          "rpy": [
+            1.5707963267948966,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.046,
+            "length": 0.04
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.048461955731962575,
+          -0.03752139427965825,
+          -0.04939265856845509
+        ],
+        "max": [
+          0.06961833610124728,
+          0.038083983979955986,
+          0.049098282857081364
+        ]
+      }
+    },
+    {
+      "name": "RR_hip_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.000111842,
+          5.9647e-05,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RR_thigh",
+      "inertial": {
+        "mass": 1.152,
+        "xyz": [
+          -0.00374,
+          0.0223,
+          -0.0327
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00584,
+          0.0058,
+          0.00103,
+          -8.72e-05,
+          -0.000289,
+          -0.000808
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RR_thigh::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/thigh_mirror.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/thigh_mirror.dae",
+            "sourcePath": "robots/go2_description/dae/thigh_mirror.dae",
+            "vfsPath": "go2/robots/go2_description/dae/thigh_mirror.dae"
+          },
+          "material": {
+            "name": "深色橡胶_012-effect",
+            "rgba": [
+              0.6717055,
+              0.6924257,
+              0.7742702,
+              1.0
+            ]
+          },
+          "glbNode": "RR_thigh::visual:0",
+          "bounds": {
+            "min": [
+              -0.04839295148849487,
+              -0.016620990106235113,
+              -0.22735400616910095
+            ],
+            "max": [
+              0.04846400022506714,
+              0.056795950633443656,
+              0.05057698421720462
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RR_thigh::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            -0.1065
+          ],
+          "rpy": [
+            0.0,
+            1.5707963267948966,
+            0.0
+          ],
+          "geometry": {
+            "type": "box",
+            "size": [
+              0.213,
+              0.0245,
+              0.034
+            ]
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.04839295148849487,
+          -0.016620990106235113,
+          -0.22735400616910095
+        ],
+        "max": [
+          0.04846400022506714,
+          0.056795950633443656,
+          0.05057698421720462
+        ]
+      }
+    },
+    {
+      "name": "RR_thigh_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RR_calf",
+      "inertial": {
+        "mass": 0.154,
+        "xyz": [
+          0.00548,
+          0.000975,
+          -0.115
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.00108,
+          0.0011,
+          3.29e-05,
+          -3.4e-07,
+          1.72e-05,
+          -8.28e-06
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RR_calf::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/calf_mirror.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/calf_mirror.dae",
+            "sourcePath": "robots/go2_description/dae/calf_mirror.dae",
+            "vfsPath": "go2/robots/go2_description/dae/calf_mirror.dae"
+          },
+          "material": {
+            "name": "黑色足端_006-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "RR_calf::visual:0",
+          "bounds": {
+            "min": [
+              -0.025931970298290252,
+              -0.020012953478565496,
+              -0.23556390361136434
+            ],
+            "max": [
+              0.032435978680849076,
+              0.0196089864052116,
+              0.03108894017052692
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RR_calf::collision:0",
+          "xyz": [
+            0.01,
+            0.0,
+            -0.06
+          ],
+          "rpy": [
+            0.0,
+            -0.2,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.013,
+            "length": 0.12
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.025931970298290252,
+          -0.020012953478565496,
+          -0.23556390361136434
+        ],
+        "max": [
+          0.032435978680849076,
+          0.0196089864052116,
+          0.03108894017052692
+        ]
+      }
+    },
+    {
+      "name": "RR_calflower",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "RR_calflower::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.011,
+            "length": 0.065
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "RR_calflower1",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [
+        {
+          "name": "RR_calflower1::collision:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "cylinder",
+            "radius": 0.0155,
+            "length": 0.03
+          }
+        }
+      ],
+      "visualBounds": null
+    },
+    {
+      "name": "RR_calf_rotor",
+      "inertial": {
+        "mass": 0.089,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          5.9647e-05,
+          0.000111842,
+          5.9647e-05,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "RR_foot",
+      "inertial": {
+        "mass": 0.04,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          9.6e-06,
+          9.6e-06,
+          9.6e-06,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [
+        {
+          "name": "RR_foot::visual:0",
+          "xyz": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "mesh",
+            "filename": "package://go2_description/dae/foot.dae",
+            "scale": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "asset": "models/go2/source/robots/go2_description/dae/foot.dae",
+            "sourcePath": "robots/go2_description/dae/foot.dae",
+            "vfsPath": "go2/robots/go2_description/dae/foot.dae"
+          },
+          "material": {
+            "name": "黑色足端_007-effect",
+            "rgba": [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          },
+          "glbNode": "RR_foot::visual:0",
+          "bounds": {
+            "min": [
+              -0.026029980316758156,
+              -0.01977597757684117,
+              -0.022914989741218045
+            ],
+            "max": [
+              0.019277940928936005,
+              0.019831001284824373,
+              0.015875999925959155
+            ]
+          }
+        }
+      ],
+      "collisions": [
+        {
+          "name": "RR_foot::collision:0",
+          "xyz": [
+            -0.002,
+            0.0,
+            0.0
+          ],
+          "rpy": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "geometry": {
+            "type": "sphere",
+            "radius": 0.022
+          }
+        }
+      ],
+      "visualBounds": {
+        "min": [
+          -0.026029980316758156,
+          -0.01977597757684117,
+          -0.022914989741218045
+        ],
+        "max": [
+          0.019277940928936005,
+          0.019831001284824373,
+          0.015875999925959155
+        ]
+      }
+    },
+    {
+      "name": "imu",
+      "inertial": {
+        "mass": 0.0,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "radar",
+      "inertial": {
+        "mass": 0.0,
+        "xyz": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rpy": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "tensor": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    },
+    {
+      "name": "front_camera",
+      "inertial": null,
+      "visuals": [],
+      "collisions": [],
+      "visualBounds": null
+    }
+  ],
+  "joints": [
+    {
+      "name": "Head_upper_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "Head_upper",
+      "xyz": [
+        0.285,
+        0.0,
+        0.01
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "Head_lower_joint",
+      "type": "fixed",
+      "parent": "Head_upper",
+      "child": "Head_lower",
+      "xyz": [
+        0.008,
+        0.0,
+        -0.07
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_hip_joint",
+      "type": "revolute",
+      "parent": "base",
+      "child": "FL_hip",
+      "xyz": [
+        0.1934,
+        0.0465,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FL_hip_rotor_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "FL_hip_rotor",
+      "xyz": [
+        0.11215,
+        0.04675,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_thigh_joint",
+      "type": "revolute",
+      "parent": "FL_hip",
+      "child": "FL_thigh",
+      "xyz": [
+        0.0,
+        0.0955,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.5708,
+        "upper": 3.4907,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FL_thigh_rotor_joint",
+      "type": "fixed",
+      "parent": "FL_hip",
+      "child": "FL_thigh_rotor",
+      "xyz": [
+        0.0,
+        -0.00015,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_calf_joint",
+      "type": "revolute",
+      "parent": "FL_thigh",
+      "child": "FL_calf",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -2.7227,
+        "upper": -0.83776,
+        "effort": 45.43,
+        "velocity": 15.7
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FL_calflower_joint",
+      "type": "fixed",
+      "parent": "FL_calf",
+      "child": "FL_calflower",
+      "xyz": [
+        0.02,
+        0.0,
+        -0.148
+      ],
+      "rpy": [
+        0.0,
+        0.05,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_calflower1_joint",
+      "type": "fixed",
+      "parent": "FL_calflower",
+      "child": "FL_calflower1",
+      "xyz": [
+        -0.01,
+        0.0,
+        -0.04
+      ],
+      "rpy": [
+        0.0,
+        0.48,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_calf_rotor_joint",
+      "type": "fixed",
+      "parent": "FL_thigh",
+      "child": "FL_calf_rotor",
+      "xyz": [
+        0.0,
+        -0.03235,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FL_foot_joint",
+      "type": "fixed",
+      "parent": "FL_calf",
+      "child": "FL_foot",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_hip_joint",
+      "type": "revolute",
+      "parent": "base",
+      "child": "FR_hip",
+      "xyz": [
+        0.1934,
+        -0.0465,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FR_hip_rotor_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "FR_hip_rotor",
+      "xyz": [
+        0.11215,
+        -0.04675,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_thigh_joint",
+      "type": "revolute",
+      "parent": "FR_hip",
+      "child": "FR_thigh",
+      "xyz": [
+        0.0,
+        -0.0955,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.5708,
+        "upper": 3.4907,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FR_thigh_rotor_joint",
+      "type": "fixed",
+      "parent": "FR_hip",
+      "child": "FR_thigh_rotor",
+      "xyz": [
+        0.0,
+        0.00015,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_calf_joint",
+      "type": "revolute",
+      "parent": "FR_thigh",
+      "child": "FR_calf",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -2.7227,
+        "upper": -0.83776,
+        "effort": 45.43,
+        "velocity": 15.7
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "FR_calflower_joint",
+      "type": "fixed",
+      "parent": "FR_calf",
+      "child": "FR_calflower",
+      "xyz": [
+        0.02,
+        0.0,
+        -0.148
+      ],
+      "rpy": [
+        0.0,
+        0.05,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_calflower1_joint",
+      "type": "fixed",
+      "parent": "FR_calflower",
+      "child": "FR_calflower1",
+      "xyz": [
+        -0.01,
+        0.0,
+        -0.04
+      ],
+      "rpy": [
+        0.0,
+        0.48,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_calf_rotor_joint",
+      "type": "fixed",
+      "parent": "FR_thigh",
+      "child": "FR_calf_rotor",
+      "xyz": [
+        0.0,
+        0.03235,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "FR_foot_joint",
+      "type": "fixed",
+      "parent": "FR_calf",
+      "child": "FR_foot",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_hip_joint",
+      "type": "revolute",
+      "parent": "base",
+      "child": "RL_hip",
+      "xyz": [
+        -0.1934,
+        0.0465,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RL_hip_rotor_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "RL_hip_rotor",
+      "xyz": [
+        -0.11215,
+        0.04675,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_thigh_joint",
+      "type": "revolute",
+      "parent": "RL_hip",
+      "child": "RL_thigh",
+      "xyz": [
+        0.0,
+        0.0955,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -0.5236,
+        "upper": 4.5379,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RL_thigh_rotor_joint",
+      "type": "fixed",
+      "parent": "RL_hip",
+      "child": "RL_thigh_rotor",
+      "xyz": [
+        0.0,
+        -0.00015,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_calf_joint",
+      "type": "revolute",
+      "parent": "RL_thigh",
+      "child": "RL_calf",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -2.7227,
+        "upper": -0.83776,
+        "effort": 45.43,
+        "velocity": 15.7
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RL_calflower_joint",
+      "type": "fixed",
+      "parent": "RL_calf",
+      "child": "RL_calflower",
+      "xyz": [
+        0.02,
+        0.0,
+        -0.148
+      ],
+      "rpy": [
+        0.0,
+        0.05,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_calflower1_joint",
+      "type": "fixed",
+      "parent": "RL_calflower",
+      "child": "RL_calflower1",
+      "xyz": [
+        -0.01,
+        0.0,
+        -0.04
+      ],
+      "rpy": [
+        0.0,
+        0.48,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_calf_rotor_joint",
+      "type": "fixed",
+      "parent": "RL_thigh",
+      "child": "RL_calf_rotor",
+      "xyz": [
+        0.0,
+        -0.03235,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RL_foot_joint",
+      "type": "fixed",
+      "parent": "RL_calf",
+      "child": "RL_foot",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_hip_joint",
+      "type": "revolute",
+      "parent": "base",
+      "child": "RR_hip",
+      "xyz": [
+        -0.1934,
+        -0.0465,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -1.0472,
+        "upper": 1.0472,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RR_hip_rotor_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "RR_hip_rotor",
+      "xyz": [
+        -0.11215,
+        -0.04675,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_thigh_joint",
+      "type": "revolute",
+      "parent": "RR_hip",
+      "child": "RR_thigh",
+      "xyz": [
+        0.0,
+        -0.0955,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -0.5236,
+        "upper": 4.5379,
+        "effort": 23.7,
+        "velocity": 30.1
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RR_thigh_rotor_joint",
+      "type": "fixed",
+      "parent": "RR_hip",
+      "child": "RR_thigh_rotor",
+      "xyz": [
+        0.0,
+        0.00015,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_calf_joint",
+      "type": "revolute",
+      "parent": "RR_thigh",
+      "child": "RR_calf",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit": {
+        "lower": -2.7227,
+        "upper": -0.83776,
+        "effort": 45.43,
+        "velocity": 15.7
+      },
+      "dynamics": {}
+    },
+    {
+      "name": "RR_calflower_joint",
+      "type": "fixed",
+      "parent": "RR_calf",
+      "child": "RR_calflower",
+      "xyz": [
+        0.02,
+        0.0,
+        -0.148
+      ],
+      "rpy": [
+        0.0,
+        0.05,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_calflower1_joint",
+      "type": "fixed",
+      "parent": "RR_calflower",
+      "child": "RR_calflower1",
+      "xyz": [
+        -0.01,
+        0.0,
+        -0.04
+      ],
+      "rpy": [
+        0.0,
+        0.48,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_calf_rotor_joint",
+      "type": "fixed",
+      "parent": "RR_thigh",
+      "child": "RR_calf_rotor",
+      "xyz": [
+        0.0,
+        0.03235,
+        0.0
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "RR_foot_joint",
+      "type": "fixed",
+      "parent": "RR_calf",
+      "child": "RR_foot",
+      "xyz": [
+        0.0,
+        0.0,
+        -0.213
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "imu_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "imu",
+      "xyz": [
+        -0.02557,
+        0.0,
+        0.04232
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "radar_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "radar",
+      "xyz": [
+        0.28945,
+        0.0,
+        -0.046825
+      ],
+      "rpy": [
+        0.0,
+        2.8782,
+        0.0
+      ],
+      "axis": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    },
+    {
+      "name": "front_camera_joint",
+      "type": "fixed",
+      "parent": "base",
+      "child": "front_camera",
+      "xyz": [
+        0.32715,
+        -3e-05,
+        0.04297
+      ],
+      "rpy": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "limit": {},
+      "dynamics": {}
+    }
+  ]
+}

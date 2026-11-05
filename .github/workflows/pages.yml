@@ -25,6 +25,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Fetch pinned model test fixtures
+        run: node scripts/models/fetch-rp1-test-assets.mjs
       - name: Configure Pages
         id: pages
         uses: actions/configure-pages@v5

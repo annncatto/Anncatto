@@ -1,0 +1,3 @@
+# Preserve pinned upstream model bytes, including CAD and URDF line endings.
+public/models/**/source/** -text -diff
+public/models/**/source.urdf -text -diff
