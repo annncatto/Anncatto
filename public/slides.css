@@ -366,3 +366,24 @@
 }
 @media(min-width:1750px){#s-attention .paper-body>.paper-main{min-height:365px;}#s-attention .mask-inspector svg{height:190px;max-height:190px;}}
 @media screen and (max-width:900px){.slides-ready .presentation-deck{height:calc(100% - 20px);align-self:start;}}
+
+/* Infra first separates scientific dependencies from experimental confounding. */
+.infra-coupling-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:24px;flex:1;min-height:0;}
+.infra-design-table table{table-layout:fixed;}
+.infra-design-table caption{text-align:left;font-weight:600;color:#28645b;padding:0 0 8px;}
+.infra-design-table th:first-child{width:29%;}
+.infra-design-table tbody th{background:transparent;color:var(--ink);}
+.infra-design-table th,.infra-design-table td{padding:9px 10px;}
+.infra-coupling-copy{justify-content:space-between;gap:14px;}
+.infra-coupling-copy .paper-panel{flex:1;justify-content:center;}
+.infra-composition-contract{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:16px;padding:10px 14px;border-top:1px dashed #b9cecd;background:#f3f8f6;flex-shrink:0;}
+.infra-composition-contract>a{font-size:12px;white-space:nowrap;}
+.infra-composition-contract .formula{font-size:24px;}
+@media(min-width:901px) and (max-height:850px){.infra-coupling-grid{gap:20px;}.infra-design-table th,.infra-design-table td{padding:6px 9px;}.infra-composition-contract{padding:8px 12px;gap:12px;}.infra-coupling-copy{gap:10px;}}
+@media(max-width:900px){.infra-coupling-grid{grid-template-columns:1fr;flex:auto;gap:20px;}.infra-design-table table{min-width:520px;}.infra-coupling-copy{gap:14px;}.infra-composition-contract{grid-template-columns:1fr;gap:9px;}.infra-composition-contract .formula{margin:0;}.infra-composition-contract>a{justify-self:start;}}
+@media print{.infra-coupling-grid{grid-template-columns:1.12fr 1fr;}.infra-design-table table{min-width:0;}.infra-composition-contract{grid-template-columns:auto 1fr;}.infra-composition-contract>a{grid-column:2;}.infra-composition-contract .formula{font-size:18px;}}
+
+.paper-overview .overview-stack{grid-template-rows:minmax(min-content,1fr) auto;}
+.paper-overview .overview-findings{grid-template-rows:repeat(3,auto);}
+
+@media(min-width:901px) and (max-height:800px){.paper-overview .paper-body{margin:9px 0;gap:10px;}.overview-finding{padding:7px 10px;gap:3px;}}
