@@ -45,7 +45,7 @@ export function renderOpenwamDiagram(name:string):string{
  if(name==='flow-v2')return frame(id,'Joint flow training with independently noised paired targets',
   box(10,5,245,70,'Future latent target z','未来潜变量标签 z')+box(10,120,245,70,'Action target a','动作标签 a','green')+
   box(330,5,240,70,'Noise at tᵥ','在 tᵥ 加噪')+box(330,120,240,70,'Noise at tₐ','在 tₐ 加噪','green')+arrow(id,'M265 40H320')+arrow(id,'M265 155H320',0,green)+
-  box(670,45,260,105,'Joint network|Given clean O and c','联合网络|以干净 O 与 c 为条件','gray',1)+arrow(id,'M580 40H620V80H660',1)+arrow(id,'M580 155H620V120H660',1,green)+
+  box(670,45,260,105,'Configured WAM|Given clean O and c','所配置的 WAM|以干净 O 与 c 为条件','gray',1)+arrow(id,'M580 40H620V80H660',1)+arrow(id,'M580 155H620V120H660',1,green)+
   box(1020,5,230,70,'World velocity v̂z','世界向量场速度 v̂z','blue',2)+box(1020,120,230,70,'Action velocity v̂ₐ','动作向量场速度 v̂ₐ','green',2)+arrow(id,'M940 80H980V40H1010',2)+arrow(id,'M940 120H980V155H1010',2,green),205);
  throw new Error(`Unknown OpenWAM slide diagram: ${name}`);
 }

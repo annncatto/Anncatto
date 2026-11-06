@@ -206,7 +206,7 @@ Final QA for the expanded deck: 19 pages; no desktop slide overflow at 1280×800
 
 ## Prior WAM design combinations · 2026-11-06
 
-Current deck: 21 pages. The six-dimension table remains on slide 3; its former four-component and initialization-control boxes are replaced by the two concrete predecessors named in OpenWAM §1. Two readable primary-figure pages follow before OpenWAM’s unchanged complete Figure 2.
+Current deck: 19 pages. Slide 3 compares both predecessors on the same six design axes in one aligned table. The two separate predecessor pages have been merged into this table; complete figures remain available through attributed viewers. OpenWAM’s complete Figure 2 follows on slide 4 without reducing its display area.
 
 | Work | Chronology and primary evidence | Supported design relationships |
 | --- | --- | --- |
@@ -220,6 +220,22 @@ Source pages:
 - <https://research.nvidia.com/labs/dir/cosmos-policy/> and <https://github.com/NVlabs/cosmos-policy> (official project and implementation).
 - <https://arxiv.org/html/2512.13030v1#S4>, <https://github.com/thu-ml/Motus>, and <https://openaccess.thecvf.com/content/CVPR2026/papers/Bi_Motus_A_Unified_Latent_Action_World_Model_CVPR_2026_paper.pdf>.
 
-Figure provenance, original-file hashes, converted hashes, dimensions and licenses are recorded in `content/images/openwam/related/prior-wam-sources.json`. Cosmos Policy Figs.1–2 and Motus Fig.1 retain the complete original canvases, losslessly converted to WebP; the Motus figure is not mislabeled with OpenWAM’s CC BY license. The original 21 OpenWAM figures and archive remain unchanged. The two main predecessor architectures are visible directly; Cosmos Fig.2 supplies an additional enlarged layout view.
+Figure provenance, original-file hashes, converted hashes, dimensions and licenses are recorded in `content/images/openwam/related/prior-wam-sources.json`. Cosmos Policy Figs.1–2 and Motus Fig.1 retain the complete original canvases, losslessly converted to WebP; the Motus figure is not mislabeled with OpenWAM’s CC BY license. The original 21 OpenWAM figures and archive remain unchanged. Slide-3 table headers open the complete Cosmos overview, Cosmos latent-frame injection diagram and Motus architecture. Old predecessor slide hashes resolve to slide 3.
 
-Validation artifacts: `/tmp/openwam-prior-wams-20261106/qa.json` and bilingual screenshots. Build and internal references pass; the 21-page count, old anchors, case links, image loading, viewport containment, figure-viewer close/Escape, fullscreen, no-JavaScript fallback and first/last navigation are checked.
+Validation artifacts for the preceding 21-page version: `/tmp/openwam-prior-wams-20261106/qa.json`. The merged 19-page version is checked separately below.
+
+
+### Aligned comparison and Infra narrative · 2026-11-06
+
+- “单体式系统（monolithic systems）” follows the Introduction and §2; §3 explains it as model, training, serving and evaluation organized around one model design. It does not mean a single backbone. The unsupported architectural-change-causes-data-change phrasing is removed; six computational-effect rows are explanatory mappings grounded in the cited predecessors, not an original-paper table or causal ablation.
+- The Study contribution card now says human-video/robot-data joint pretraining. §4.3 fixes downstream protocols and examines its ID/OOD transfer; the shorthand is not presented as zero-shot cross-embodiment transfer.
+- Composition → common-form flow objective → one concrete layer connection is explicit. The common diagram says configured WAM. Dual-system joint self-attention is one supported §3.1 variant and the setting retained in §4.2 and α, not a universal Infra wiring rule.
+- The layer-interaction page removes the generic checkpoint/Accelerate/ZeRO/BF16/offload list. Its right panel explains independent attention/FFN parameters, masked feature access and cross-stream gradient paths. The original Figure 2 still contains the training-utilities overview.
+- The serving page pairs Figure 3a with execution modes and Figure 3b with denoising schedules. §5.1.3 explicitly specifies synchronous execution for all reported α simulation/real-robot benchmarks and synchronized video/action denoising with 10 coupled Euler steps. These two independent choices are stated in their respective columns. RoboTwin evaluation definitions remain in the later Study protocol discussion rather than below the denoising figure.
+- Source evidence for α: primary HTML §5.1.3, “Synchronized Denoising” and “Inference Mode”; noise warp ρ=5 and 10-step count are kept distinct from the illustrative five steps in Figure 3.
+
+- Backbone source naming: the table identifies `Wan2.1-I2V-14B-480P` as the pretrained 480P video-generation checkpoint, not a downstream OpenWAM camera-resolution claim. The source link points to its official model card. The unrelated A14B family sentence is removed; the dense TI2V-5B property remains in its table row.
+
+- The official `configs/model/video_backbone/wan21_i2v_14b_480p.yaml` explicitly names the 480P checkpoint and a fixed 480×832 first-frame-conditioned canvas. That canvas size now links to the config from the backbone table; it describes the model-side composed video, not every raw robot camera's resolution.
+
+Merged-deck validation: 19 slides and six comparison rows; both languages pass desktop viewport containment at 1280×800, 1366×768, 1440×900 and 1920×1080. At 320/390/768 px the table scrolls within its own container with no document-width overflow. Full primary Figure 2 is decoded and visible at 1353×424 CSS pixels (1440×900 viewport). All three predecessor figure viewers load full originals and close via Escape/button; old case hashes, menu count, fullscreen, first/last navigation and no-JavaScript fallback pass. Six existing slide-state tests and build/internal-reference checks pass. QA: `/tmp/openwam-prior-wams-20261106/merged-qa.json`, `figure-qa.mjs`, and bilingual screenshots.
