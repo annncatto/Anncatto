@@ -1,5 +1,16 @@
 [
   {
+    "slug": "openwam-action-slots",
+    "title": "OpenWAM & 动作表示",
+    "titleEn": "OpenWAM & Action Representations",
+    "description": "双臂积木分类实验：18 维关节动作的学习与执行、颜色误分类，以及末端表示与预训练权重的关系。",
+    "descriptionEn": "Bimanual block sorting: learning and executing 18-coordinate joint actions, color errors, and the relationship between TCP representations and pretrained weights.",
+    "date": "2026-11-06",
+    "source": "OpenWAM & 动作表示.html",
+    "module": "openwam-slots",
+    "sections": []
+  },
+  {
     "slug": "openwam",
     "title": "OpenWAM",
     "titleEn": "OpenWAM",

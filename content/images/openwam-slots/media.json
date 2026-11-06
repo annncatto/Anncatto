@@ -1,0 +1,67 @@
+[
+  {
+    "asset": "sorting-success.mp4",
+    "source": "User-provided video; reused at the user’s request",
+    "original_sha256": "074a52726ae65f67665ff1d33b397e9494e5c3d130f658aa0c59a258ba2f7330",
+    "asset_sha256": "9f3aaf8479f7d95256dc4592d12823efef262cdf44f76968444bf4edd411cb03",
+    "processing": "H.264 CRF 23, fast preset, yuv420p, AAC 96k, faststart; original speed and dimensions",
+    "scope": "Successful example",
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 1280,
+          "height": 720,
+          "r_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "25.680000",
+        "size": "4219308"
+      }
+    }
+  },
+  {
+    "asset": "sorting-continuous.mp4",
+    "source": "User-provided video; reused at the user’s request",
+    "original_sha256": "a20a0b68989c6e90910936c6b3f6fe4952f35819865e6dead6a33f7e6c0ff171",
+    "asset_sha256": "0c297c67c8d0a049db7b30a496da34f8c255145d2b9d07909478c2f686a03bd2",
+    "processing": "H.264 CRF 23, fast preset, yuv420p, AAC 96k, faststart; original speed and dimensions",
+    "scope": "Continuous recording with operator replenishment and late wrong-basket deposit; confirmed by user",
+    "probe": {
+      "programs": [],
+      "streams": [
+        {
+          "codec_name": "h264",
+          "width": 960,
+          "height": 544,
+          "r_frame_rate": "30/1"
+        },
+        {
+          "codec_name": "aac",
+          "r_frame_rate": "0/0"
+        }
+      ],
+      "format": {
+        "duration": "285.567000",
+        "size": "37872462"
+      }
+    }
+  },
+  {
+    "asset": "wrong-basket.mp4",
+    "source_asset": "sorting-continuous.mp4",
+    "source_range_s": [
+      248,
+      261
+    ],
+    "asset_sha256": "22723eca61c900be4a27518005577b04bb8678fabc764c20506f4dfc4d6e6b99",
+    "processing": "13-second excerpt at original speed; H.264 CRF 20, AAC; unchanged dimensions",
+    "scope": "Green-block wrong-basket deposit; visible object placement, grasp, transfer, and release"
+  }
+]

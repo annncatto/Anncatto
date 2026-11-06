@@ -1673,3 +1673,23 @@ body:has(.design-workbench) .sitebar :is(a,button){color:#181818;}
 .design-workbench .design-cad-results strong { display:block; font-size:23px; font-weight:600; margin-top:6px; }
 .design-workbench [data-cad-structure] p { font-size:15px; line-height:1.65; }
 @media(max-width:800px){.design-workbench .design-cad-layout{grid-template-columns:1fr}.design-workbench .design-cad-fields,.design-workbench .design-cad-results{grid-template-columns:repeat(2,minmax(0,1fr))}.design-workbench .design-cad-heading label{width:100%}.design-workbench .design-cad-results strong{font-size:20px}}
+
+/* OpenWAM sorting experiment */
+.ow-rotation {border:1px solid var(--line,#cbd5e1);border-radius:10px;padding:1.2rem;margin:1.8rem 0}
+.ow-rotation .controls label {display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;width:100%}
+.ow-rotation input[type=range] {flex:1;min-width:140px;accent-color:#3263d9}
+.ow-rotation output {font-variant-numeric:tabular-nums;min-width:60px}
+.ow-rotation-values {display:grid;grid-template-columns:.7fr 1fr 1fr;gap:1rem}
+.ow-rotation-values p {display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.ow-rotation-values code {font-size:.88rem;white-space:normal}
+.ow-pipeline {display:grid;grid-template-columns:repeat(4,1fr);gap:.8rem;margin:1.5rem 0}
+.ow-pipeline>div {padding:1rem;border-top:3px solid #7099ec;background:#f3f6fc;min-width:0}
+.ow-pipeline p {font-size:.88rem;line-height:1.7;margin:.6rem 0 0}
+.ow-long-record {margin:1.5rem 0}
+.ow-long-record>summary {cursor:pointer;font-weight:600;padding:.8rem 0}
+.ow-experiment-status {border-left:3px solid #8eb764;background:#f7faf3;padding:.5rem 1.2rem;margin:1rem 0 2rem}
+.ow-status-line {font-size:.85rem;color:#64715e}
+.ow-comparison {min-width:880px}
+.ow-comparison td {min-width:150px}
+.ow-comparison td:first-child {min-width:100px}
+@media(max-width:700px){.ow-pipeline{grid-template-columns:repeat(2,1fr)}.ow-rotation-values{grid-template-columns:1fr}.ow-rotation-values p{margin:.4rem 0}.ow-rotation{padding:.85rem}}

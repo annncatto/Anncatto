@@ -11,6 +11,8 @@
 
 实现与来源记录：
 
+- [OpenWAM 动作表示实验来源](openwam-slots-source-coverage.md)：实验数据、检查点、训练耗时、接口对照、视频及复现。
+
 - [轻量化设计实现记录](lightweight-design.md)、[材料选型与机构示意](lightweight-materials.md)、[渲染与运动学校核](lightweight-rendering.md)、[运动载荷与闭环验证](lightweight-control.md)、[开源模型来源核对](lightweight-model-sources.md)与[素材覆盖表](lightweight-source-coverage.md)。
 - 工具配色参考：[提取色板](lightweight-ui-palette.svg)。
 - 结构数据与计算：[CAD 截面与结构校核](lightweight-structural-checks.md)、[原机器人承力件资料](source-structure-sources.md)、[结构验证快照](lightweight-structure-validation.json)。
