@@ -22,7 +22,7 @@ export function renderOpenwamDiagram(name:string):string{
   box(860,180,390,55,'Pretrained model + evaluation','预训练模型与验证','green'),245);
  if(name==='training-contract')return renderOpenwamDiagram('flow-v2').replace(/ data-step="\d+"/g,'');
  if(name==='dual-layer')return frame(id,'One dual-system joint self-attention layer with independent stream parameters',
-  box(10,15,210,70,'Video tokens','视频 token')+box(10,195,210,70,'Action tokens','动作 token','green')+
+  box(10,15,210,70,'World tokens Hᵥ','世界 token Hᵥ')+box(10,195,210,70,'Action tokens Hₐ','动作 token Hₐ','green')+
   box(285,15,190,70,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(285,195,190,70,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
   arrow(id,'M230 50H275')+arrow(id,'M230 230H275',0,green)+
   box(550,65,275,150,'Concatenate token axis|Masked joint attention|Split to original streams','沿 token 轴拼接|掩码联合注意力|拆回各自流','gray')+
@@ -31,7 +31,7 @@ export function renderOpenwamDiagram(name:string):string{
   arrow(id,'M835 105H880V50H920')+arrow(id,'M835 175H880V230H920',0,green),285);
  if(name==='alpha-detail')return frame(id,'OpenWAM-alpha attention bridge with stream-owned parameters and context paths',
   box(915,0,290,62,'Text + state token c','文本＋当前状态 token c','gray')+
-  box(10,105,225,90,'World states|Nᵥ × 3072','世界流状态|Nᵥ × 3072')+box(10,300,225,90,'Action states|H × 1024','动作流状态|H × 1024','green')+
+  box(10,105,225,90,'World tokens Hᵥ|Nᵥ × 3072','世界 token Hᵥ|Nᵥ × 3072')+box(10,300,225,90,'Action tokens Hₐ|H × 1024','动作 token Hₐ|H × 1024','green')+
   box(300,105,185,90,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(300,300,185,90,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
   arrow(id,'M245 150H290')+arrow(id,'M245 345H290',0,green)+
   box(560,140,280,180,'Concatenate tokens|24 heads × 128|Masked joint attention','沿 token 轴拼接|24 头 × 128 维|掩码联合注意力','gray')+
@@ -40,8 +40,7 @@ export function renderOpenwamDiagram(name:string):string{
   box(915,295,290,105,'Own output projection|Cross-attention(c) + FFN','独立输出投影|交叉注意力(c)＋前馈网络','green')+
   arrow(id,'M850 195H880V150H905')+arrow(id,'M850 275H880V345H905',0,green)+
   arrow(id,'M1060 72V90')+arrow(id,'M1215 31H1240V347H1215',0,green)+
-  text(700,365,'Split by token index','按 token 位置拆回两流',22)+
-  text(630,445,'AdaLN: separate noise times tᵥ and tₐ · observed tokens pinned at tᵥ = 1','AdaLN：各自的噪声时间 tᵥ、tₐ · 观测 token 固定在 tᵥ = 1',22),470);
+  text(700,365,'Split by token index','按 token 位置拆回两流',22),415);
  if(name==='flow-v2')return frame(id,'Joint flow training with independently noised paired targets',
   box(10,5,245,70,'Future latent target z','未来潜变量标签 z')+box(10,120,245,70,'Action target a','动作标签 a','green')+
   box(330,5,240,70,'Noise at tᵥ','在 tᵥ 加噪')+box(330,120,240,70,'Noise at tₐ','在 tₐ 加噪','green')+arrow(id,'M265 40H320')+arrow(id,'M265 155H320',0,green)+

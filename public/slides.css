@@ -454,3 +454,23 @@
 @media(min-width:901px) and (max-height:850px){.infra-layer-body .paper-explainer{min-height:210px;}.infra-layer-body .paper-panel{gap:7px;}}
 @media(max-width:900px){.infra-layer-body .paper-explainer{min-height:0;}}
 @media print{.infra-layer-body .paper-explainer{min-height:0;}}
+
+.encoder-adapter-links{font-size:14px!important;line-height:1.4!important;}
+.representation-evidence-copy{justify-content:center;gap:16px;}
+@media(min-width:901px) and (max-height:850px){.representation-evidence-copy{gap:10px;}.encoder-adapter-links{font-size:13px!important;}}
+
+.infra-training-utilities{border-top:1px dashed #c4d6d6;padding-top:7px;flex-shrink:0;}
+.infra-flow-body{gap:8px;}
+@media(min-width:901px) and (max-height:850px){.infra-flow-body{gap:8px;}.denoising-study-body{gap:10px;}}
+
+.pretraining-data-brief{display:flex;align-items:center;gap:14px;padding-top:6px;border-top:1px dashed #c4d6d6;flex-shrink:0;}
+.pretraining-data-brief>p{flex:1;min-width:0;}
+.pretraining-data-brief>a{white-space:nowrap;font-size:14px;}
+@media(max-width:900px){.pretraining-data-brief{align-items:flex-start;flex-direction:column;gap:6px;}}
+
+.alpha-component-links{font-size:14px!important;line-height:1.4!important;flex-shrink:0;}
+
+.infra-flow-body .paper-explainer{min-height:170px;}
+@media(min-width:901px) and (max-height:850px){.infra-flow-body{gap:5px;margin:7px 0;}.infra-flow-body .paper-explainer{min-height:160px;}}
+@media(max-width:900px){.infra-flow-body .paper-explainer{min-height:0;}}
+@media print{.infra-flow-body .paper-explainer{min-height:0;}}
