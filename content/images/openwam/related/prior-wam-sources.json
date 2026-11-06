@@ -1,0 +1,41 @@
+{
+  "purpose": "Primary-source figures for analysis of design choices in WAM predecessors cited by OpenWAM §1.",
+  "figures": [
+    {
+      "file": "cosmos-policy-overview.webp",
+      "source": "https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_figure1.jpeg",
+      "paperFigure": "https://arxiv.org/html/2601.16163v1#S0.F1",
+      "credit": "Cosmos Policy, Figure 1",
+      "license": "CC BY 4.0",
+      "sourceSha256": "afc920a61a46390cdc65a781d344df369949315b6f088689cf28b5bb0f02230c",
+      "sha256": "a1fc4f79a59391fb278481430be223060ecd7b150d0775c8a91c9f021fe5def6",
+      "width": 1780,
+      "height": 510,
+      "processing": "Lossless WebP conversion; complete original image, no cropping or content edits."
+    },
+    {
+      "file": "cosmos-policy-latent-injection.webp",
+      "source": "https://arxiv.org/html/2601.16163v1/fig/cosmos_policy_diffusion_sequence_v2_main_version.001.jpeg",
+      "paperFigure": "https://arxiv.org/html/2601.16163v1#S3.F2",
+      "credit": "Cosmos Policy, Figure 2",
+      "license": "CC BY 4.0",
+      "sourceSha256": "f02ed92c1e6ef9197d511cb680c26a2235046439831f5a52ef9c919dc7a4675e",
+      "sha256": "ad02d6ef5843f4a78312a0d81b5470ca955138c69ab72818366dddd6cec4ca19",
+      "width": 3100,
+      "height": 1235,
+      "processing": "Lossless WebP conversion; complete original image, no cropping or content edits."
+    },
+    {
+      "file": "motus-architecture.webp",
+      "source": "https://arxiv.org/html/2512.13030v1/block.png",
+      "paperFigure": "https://arxiv.org/html/2512.13030v1#S1.F1",
+      "credit": "Motus, Figure 1",
+      "license": "arXiv non-exclusive distribution license; figure credited to its authors",
+      "sourceSha256": "40c61d49da342ef09d679e0c133c78210b86f096ec788ce78241e5794332af11",
+      "sha256": "04215d86edcd26a27ee1cb3856849d16e809547f88e86c43fade3a31be254d77",
+      "width": 1134,
+      "height": 1035,
+      "processing": "Lossless WebP conversion; complete original image, no cropping or content edits."
+    }
+  ]
+}

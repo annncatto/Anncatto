@@ -202,3 +202,24 @@ Validation: build and internal-reference checks; bilingual desktop/narrow layout
 - The main complete Figure 2 and large architecture-variant panel retain their allotted display space. The numerical backbone plot occupies a smaller column beside the new table. QA artifacts: `/tmp/openwam-revision-20261105/enrich-qa.json` and bilingual screenshots.
 
 Final QA for the expanded deck: 19 pages; no desktop slide overflow at 1280×800, 1366×768, 1440×900 or 1920×1080 in either language; no page-width overflow at 320, 390 or 768 px; full-image viewer Escape, fullscreen entry/exit and first/last keyboard navigation pass. Six existing slide-state tests pass. The Synergy stage now opens the parameter-allocation definitions before the architecture ablation.
+
+
+## Prior WAM design combinations · 2026-11-06
+
+Current deck: 21 pages. The six-dimension table remains on slide 3; its former four-component and initialization-control boxes are replaced by the two concrete predecessors named in OpenWAM §1. Two readable primary-figure pages follow before OpenWAM’s unchanged complete Figure 2.
+
+| Work | Chronology and primary evidence | Supported design relationships |
+| --- | --- | --- |
+| Cosmos Policy | arXiv:2601.16163v1, 2026-01-22; ICLR 2026; §§4.1–4.3, Figs.1–2; official NVlabs/cosmos-policy implementation | Image VAE latents and directly injected normalized non-image modalities occupy one sequence; one unchanged Cosmos-Predict2-2B DiT and diffusion objective; clean/target modality selection expresses policy, world-model and value conditionals; layout supports parallel or autoregressive decoding. The analysis does not equate every planning configuration with one unchanged checkpoint: the paper additionally refines a planning checkpoint on rollout data. |
+| Motus | arXiv:2512.13030v1, 2025-12-15; CVPR 2026 entry in the CVF proceedings and OpenWAM bibliography; §§4.1–4.3, Fig.1; official thu-ml/Motus README | Separate Transformer experts interact through tri-model joint attention; action depth matches Wan2.2-5B; a trainable understanding expert receives frozen Qwen3-VL-2B features. UniDiffuser-style video/action noise conditioning switches five model modes. Optical-flow-derived latent actions connect video data with staged action pretraining and later real-action fine-tuning. |
+
+The word “coupling” maps concrete combinations onto OpenWAM’s design axes; the mapping is explanatory analysis, not a new causal ablation or a claim that these papers contain no ablations or no reusable software. The two works predate OpenWAM’s September 2026 release. No cross-paper benchmark ranking is added.
+
+Source pages:
+- <https://arxiv.org/html/2601.16163v1#S4.SS1>, <https://arxiv.org/html/2601.16163v1#S4.SS2>, <https://arxiv.org/html/2601.16163v1#S4.SS3>.
+- <https://research.nvidia.com/labs/dir/cosmos-policy/> and <https://github.com/NVlabs/cosmos-policy> (official project and implementation).
+- <https://arxiv.org/html/2512.13030v1#S4>, <https://github.com/thu-ml/Motus>, and <https://openaccess.thecvf.com/content/CVPR2026/papers/Bi_Motus_A_Unified_Latent_Action_World_Model_CVPR_2026_paper.pdf>.
+
+Figure provenance, original-file hashes, converted hashes, dimensions and licenses are recorded in `content/images/openwam/related/prior-wam-sources.json`. Cosmos Policy Figs.1–2 and Motus Fig.1 retain the complete original canvases, losslessly converted to WebP; the Motus figure is not mislabeled with OpenWAM’s CC BY license. The original 21 OpenWAM figures and archive remain unchanged. The two main predecessor architectures are visible directly; Cosmos Fig.2 supplies an additional enlarged layout view.
+
+Validation artifacts: `/tmp/openwam-prior-wams-20261106/qa.json` and bilingual screenshots. Build and internal references pass; the 21-page count, old anchors, case links, image loading, viewport containment, figure-viewer close/Escape, fullscreen, no-JavaScript fallback and first/last navigation are checked.
