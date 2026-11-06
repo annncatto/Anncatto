@@ -8,16 +8,16 @@ export function mountOpenwamAttention(root: HTMLElement) {
   const packets = directions.map(key => root.querySelector<SVGCircleElement>(`[data-mask-packet="${key}"]`)!);
   const readouts = {
     en: {
-      isolated: 'No cross-stream connection; each stream attends within itself and to O.',
-      video: 'A → V: the world stream reads action features.',
-      action: 'V → A: the action stream reads world features.',
-      mutual: 'A ↔ V: the world and action streams read each other.',
+      isolated: 'Isolated: Qᵥ cannot read action Kₐ/Vₐ, and Qₐ cannot read video Kᵥ/Vᵥ. Self- and observation attention remain.',
+      video: 'A → V: video Qᵥ matches action Kₐ; attention weights combine action Vₐ to update video tokens.',
+      action: 'V → A: action Qₐ matches video Kᵥ; attention weights combine video Vᵥ to update action tokens.',
+      mutual: 'Mutual: video Qᵥ reads action Kₐ/Vₐ; action Qₐ reads video Kᵥ/Vᵥ. Each output updates its Query stream.',
     },
     zh: {
-      isolated: '无跨流连接；两流各自进行流内注意力并读取 O。',
-      video: 'A → V：世界流读取动作特征。',
-      action: 'V → A：动作流读取世界特征。',
-      mutual: 'A ↔ V：世界流与动作流相互读取。',
+      isolated: '隔离：视频 Qᵥ 不读取动作 Kₐ/Vₐ，动作 Qₐ 不读取视频 Kᵥ/Vᵥ；两流保留流内注意力与观测通路。',
+      video: 'A → V：Qᵥ 来自未来视频 token，匹配动作 Kₐ，并加权汇总 Vₐ；结果更新视频 token。',
+      action: 'V → A：Qₐ 来自动作 token，匹配视频 Kᵥ，并加权汇总 Vᵥ；结果更新动作 token。',
+      mutual: '双向：视频 Qᵥ 读取动作 Kₐ/Vₐ，动作 Qₐ 读取视频 Kᵥ/Vᵥ；两路注意力分别更新各自 token。',
     },
   };
   const stop = () => {cancelAnimationFrame(animation); packets.forEach(p => p.setAttribute('opacity', '0'));};

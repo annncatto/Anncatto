@@ -206,7 +206,7 @@ Final QA for the expanded deck: 19 pages; no desktop slide overflow at 1280×800
 
 ## Prior WAM design combinations · 2026-11-06
 
-Current deck: 19 pages. Slide 3 compares both predecessors on the same six design axes in one aligned table. The two separate predecessor pages have been merged into this table; complete figures remain available through attributed viewers. OpenWAM’s complete Figure 2 follows on slide 4 without reducing its display area.
+At this revision: 19 pages. Slide 3 compares both predecessors on the same six design axes in one aligned table. The two separate predecessor pages have been merged into this table; complete figures remain available through attributed viewers. OpenWAM’s complete Figure 2 follows on slide 4 without reducing its display area.
 
 | Work | Chronology and primary evidence | Supported design relationships |
 | --- | --- | --- |
@@ -260,3 +260,17 @@ Merged-deck validation: 19 slides and six comparison rows; both languages pass d
 Primary supplementary sources: <https://arxiv.org/html/2512.17909v1#S3.SS3>, <https://github.com/OpenWAM-Official/OpenWAM/tree/main/openwam/model/video_backbone/encoder/svae>, <https://arxiv.org/abs/2511.17441>, <https://flagopen.github.io/RoboCOIN/>, <https://sylvestf.github.io/LIBERO-plus/>, <https://arxiv.org/html/2510.13626v1>. New drawings are technical explanations of the cited source mechanisms/protocols; they are not presented as original-paper figures or new measurements.
 
 Final verification for this clarification pass: 19 slides remain; 702 internal references pass. All slides in both languages pass containment and header/table checks at 1280×800,1366×768,1440×900,1920×1080. Updated pages pass 320/390/768px document-width checks. Ten figure openers, old slide aliases, 19-item contents, fullscreen, first/last navigation and no-JavaScript fallback pass. New SVG text remains within each viewBox; rendered diagrams are inspected for module and arrow collisions. Artifacts: `/tmp/openwam-prior-wams-20261106/merged-qa.json`, `svg-qa.mjs`, and screenshots.
+
+
+## Compact 17-slide layout and flow interpretation · 2026-11-06
+
+- Current deck: 17 slides. The standalone generic layer-runtime page is folded into the later α bridge explanation; its old `s-layer-runtime` hash resolves to `s-bridge`. Parameter allocation and architecture ablation now share one page (`s-capacity`, alias `s-parameter-layout`), preserving the complete original architecture panel and the measured score table.
+- The three-question source image follows the Introduction's core-hypothesis paragraph. One pale-green outlined arrow connects the contribution stack as a group to the three findings; it does not invent one-to-one correspondence between Infra/Study/α and the findings.
+- The compositor is described as orchestration without additional neural weights. Stream backbones and projection layers carry learned parameters; architectural alternatives include shared weights, action-specific FFNs, an independent ActionDiT, and an optional understanding stream. This is not a claim that the study swept multiple VLM models or ActionDiT sizes.
+- Joint training retains both interpolation paths, two predicted vector fields, the task-weighted objective and expanded velocity losses. The new explanatory sentence connects linear interpolation, path-derivative supervision and inference integration. Architecture/masks, rather than the arithmetic sum of losses, define cross-stream feature exchange.
+- The acceleration caption sits beneath execution modes: shared text caching and skipped video decoding, controlled compile/field-cache comparisons in Figure 4, and α's approximately170ms/chunk are kept together. The backbone-to-representation transition is aligned at the bottom right of its page.
+- Figure 6 is explicitly labeled as the four-pretrained-video-backbone comparison; Figure 7 as the visual-encoder/S-VAE comparison. The local and published assets were checked: these are distinct complete originals, not duplicate images (2796×2800 versus2800×1447). The representation page provides a Figure-6 opener alongside the controlled-initialization explanation.
+- All four visibility-mode readouts now name the Query stream, source Key/Value stream and destination token updates. Actual mask connections remain isolated/AV/VA/AV+VA as appropriate.
+- The final evaluation page uses a full-width unchanged Figure16b–c above three aligned explanation cards. At1920×1080 fullscreen the plotted image draws approximately1442px wide in both languages. No benchmark values or image content were changed for the layout.
+
+Validation: build and697 internal-reference checks pass. All17 slides pass desktop containment, header and table checks in Chinese/English at1280×800,1366×768,1440×900 and1920×1080. Updated pages pass320/390/768px document-width checks. All four attention modes fit in both languages, ten related-figure viewers and the question-image viewer open/close correctly, old slide aliases resolve, menu/counter show17 pages, fullscreen and no-JavaScript fallback pass. QA artifacts: `/tmp/openwam-prior-wams-20261106/refined17-qa.json`, `refined17-details.json` and bilingual screenshots.
