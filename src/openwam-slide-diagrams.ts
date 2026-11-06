@@ -21,6 +21,17 @@ export function renderOpenwamDiagram(name:string):string{
   box(435,180,360,55,'Evidence-backed recipe','实验支持的设计原则')+arrow(id,'M805 207H850')+
   box(860,180,390,55,'Pretrained model + evaluation','预训练模型与验证','green'),245);
  if(name==='training-contract')return renderOpenwamDiagram('flow-v2').replace(/ data-step="\d+"/g,'');
+ if(name==='self-connection'||name==='cross-connection'){
+  const joint=name==='self-connection';
+  return frame(id,joint?'Dual-system joint self-attention with separate stream projections':'Video-to-action cross-attention with action queries',
+   box(10,5,160,50,joint?'Video Qᵥ Kᵥ Vᵥ':'Video Kᵥ Vᵥ',joint?'视频 Qᵥ Kᵥ Vᵥ':'视频 Kᵥ Vᵥ')+
+   box(10,85,160,50,joint?'Action Qₐ Kₐ Vₐ':'Action Qₐ',joint?'动作 Qₐ Kₐ Vₐ':'动作 Qₐ','green')+
+   box(230,15,190,110,joint?'Join Q/K/V|Masked attention|Split by tokens':'Qₐ with Kᵥ / Vᵥ|Cross-attention',joint?'拼接 Q/K/V|掩码注意力|按 token 拆分':'Qₐ 与 Kᵥ / Vᵥ|交叉注意力','gray')+
+   arrow(id,'M180 30H200V45H220')+arrow(id,'M180 110H200V95H220',0,green)+
+   (joint?box(485,5,135,50,'Video out','更新视频')+box(485,85,135,50,'Action out','更新动作','green')+
+    arrow(id,'M430 45H455V30H475')+arrow(id,'M430 95H455V110H475',0,green):
+    box(485,45,135,50,'Action out','更新动作','green')+arrow(id,'M430 70H475',0,green)),140).replace('viewBox="0 0 1260 140"','viewBox="0 0 630 140"');
+ }
  if(name==='dual-layer')return frame(id,'One dual-system joint self-attention layer with independent stream parameters',
   box(10,15,210,70,'World tokens Hᵥ','世界 token Hᵥ')+box(10,195,210,70,'Action tokens Hₐ','动作 token Hₐ','green')+
   box(285,15,190,70,'Own Qᵥ, Kᵥ, Vᵥ','独立 Qᵥ, Kᵥ, Vᵥ')+box(285,195,190,70,'Own Qₐ, Kₐ, Vₐ','独立 Qₐ, Kₐ, Vₐ','green')+
