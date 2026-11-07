@@ -1,6 +1,6 @@
 # Lightweight source coverage
 
-The eleven article modules follow introduction, classical methods, integrated methods, concept design, inertia and mass, indices, shape, structural efficiency, topology optimization, robot design and functional integration, and mechanics foundations. Source files remain in Obsidian. The concept-design application is separate.
+The first eleven article modules follow introduction, classical methods, integrated methods, concept design, inertia and mass, indices, shape, structural efficiency, topology optimization, robot design and functional integration, and mechanics foundations. Source files remain in Obsidian. The concept-design application is separate.
 
 | Note / attachment | Topic | Article anchor |
 | --- | --- | --- |
@@ -149,3 +149,56 @@ Primary verification includes the tendon–bone paper (DOI 10.1088/1748-3182/7/4
 The next correction restores the source’s row structure rather than consolidating its categories. M/D/F/P/A occupy five separate rows; the traditional/passive/active comparison retains four aspects; quadruped, humanoid and arm matrices contain 5, 5 and 6 case rows respectively, with source method codes. All case matrices use Robot / Key lightweight measures / Methods, without invented scheduling or benefit columns. DLR LWR III is restored to the arm matrix as well as its detailed case. Previously omitted Cassie/Digit and electric Atlas/H1/G1 groupings are restored.
 
 The passive examples also retain all five source rows, including gearbox-housing integration, and the active section retains the three source routes. The four closing trade-offs are extracted explicitly. The secondary uniform-rod numerical extension and independent WAM subsection are removed; WAM remains represented by its source row. Known factual qualifications remain local: Cassie does not place every motor in the pelvis; transmission mechanisms and electric humanoid enclosures vary by model. The codes reproduce the source classification and are not quantitative scores or an exhaustive list of everything each robot uses.
+
+## November 7 continuation
+
+All 27 images embedded in `1107.md` were read visually, including formulas, tables, examples and captions. The note’s separate “凸优化” prompt is developed under `#convex-sizing`. Chapters 12–14 are appended after mechanics foundations, before the shared references. The inventory now covers 118 attachments in 16 notes; source files and hashes are retained in the JSON companion.
+
+| Source image | Topic | Article anchor | Treatment |
+| --- | --- | --- | --- |
+| `1107-1794045012899.webp` | Capacity/self-weight definition | `#load-capacity-selfweight` | Reuse the existing definition; connect it to constraint-specific sizing |
+| `1107-1794045015183.webp` | Strength-constrained tensile bar | `#capacity-under-constraints` | Reuse the derivation and compare the same illustrative materials |
+| `1107-1794045019417.webp` | Strength, stiffness and fixed-geometry material comparisons | `#capacity-under-constraints` | Keep 1 m capacity ratios consistent; normalize each criterion separately |
+| `1107-1794045022961.webp` | Stiffness-controlled capacity learning objectives | `#capacity-under-constraints` | Merge into the axial-extension derivation |
+| `1107-1794045026833.webp` | Axial extension and stiffness index | `#capacity-under-constraints` | Derive minimum area and E/rho index; combine strength and extension limits |
+| `1107-1794045029855.webp` | Material ranking and wing-skin exercise | `#capacity-under-constraints` | Preserve the question; distinguish in-plane extension and plate bending |
+| `1107-1794045039802.webp` | Energy-absorption learning objectives | `#specific-energy-absorption` | Merge into the definition and force-displacement integral |
+| `1107-1794045044071.webp` | Work and specific energy absorption | `#specific-energy-absorption` | Derive engineering stress-strain work per reference volume and mass |
+| `1107-1794045047934.webp` | Elastic/plastic absorption and aluminium exercise | `#aluminium-sea-example` | Retain 300 MPa, .12 strain, 2.7 g/cm3; compute 13.33 kJ/kg and separate recoverable energy |
+| `1107-1794045050892.webp` | Strain-energy learning objectives | `#elastic-energy` | Merge into the energy-method introduction |
+| `1107-1794045058342.webp` | Four basic strain-energy terms | `#elastic-energy` | Define torsion constant and shear correction; distinguish stored and total potential energy |
+| `1107-1794045061951.webp` | Castigliano, cantilever and simply supported exercise | `#castigliano-displacement` | Derive both displacements and explain virtual loading and linear-elastic assumptions |
+| `1107-1794045066882.webp` | Shape-optimization learning objectives | `#i-section-sizing` | Merge into the equal-area section comparison |
+| `1107-1794045088032.webp` | I-section efficiency | `#i-section-sizing` | Replace unsupported 6.8 ratio with a dimensioned, reproducible equal-area example |
+| `1107-1794045092891.webp` | Optimum aspect ratio | `#i-section-sizing` | Explain missing constraints; do not repeat unsupported 5.7 optimum |
+| `1107-1794045096540.webp` | Sizing-optimization learning objectives | `#sizing-problem` | Define variables, objective and constraints |
+| `1107-1794045100951.webp` | Feasible region and objective contours | `#sizing-problem` | Explain active constraints and nonunique optima; compute the actual feasible region |
+| `1107-1794045104483.webp` | Minimum-mass tensile pipe | `#tensile-tube-optimization` | Use exact mean-diameter area, omit axial-compression buckling in pure tension; add extension and log-convex reformulation |
+| `1107-1794045242278.webp` | Sandwich learning objectives | `#sandwich-structures` | Merge into face/core load-sharing introduction |
+| `1107-1794045245212.webp` | Face/core load paths and layered fields | `#sandwich-structures` | Redraw section, face force couple, continuous strain and discontinuous stress |
+| `1107-1794045502575.webp` | Layered stiffness and 1 mm/20 mm exercise | `#sandwich-rigidity` | Preserve stated dimensions and derive the core-to-face rigidity ratio without inventing original inputs |
+| `1107-1794045505382.webp` | Shear-flexible column buckling | `#sandwich-shear-buckling` | Define effective shear rigidity and effective-length factors |
+| `1107-1794045507969.webp` | Sandwich failure learning objectives | `#sandwich-failure-modes` | Merge into four local/material failure checks |
+| `1107-1794045514319.webp` | Four distinct failure mechanisms | `#sandwich-failure-modes` | Redraw face yield, core shear, face wrinkling and intracell dimpling correctly |
+| `1107-1794045517447.webp` | Wrinkling stress and doubled core-modulus exercise | `#sandwich-wrinkling-example` | Use normal and shear core moduli; derive 58.74% for fixed-Poisson isotropic core |
+| `1107-1794045521557.webp` | Sandwich-optimization learning objectives | `#sandwich-sizing` | Merge into minimum-mass constrained sizing |
+| `1107-1794045525132.webp` | Face/core thickness optimization | `#sandwich-sizing` | Replace undefined curves with explicit numerical inputs and calculated optimum; separate strength and deflection constraints |
+
+### Sources and corrections
+
+- The new slides identify Andreas Öchsner’s *Lightweight Design: An Introduction Based on One-Dimensional Structures* (Springer Vieweg, 2025, DOI [10.1007/978-3-658-48162-9](https://link.springer.com/book/10.1007/978-3-658-48162-9)). Material selection is chapter 3, shape optimization chapter 4, and sandwich theory, limit states and optimization chapters 5–7. Springer’s public contents and abstracts were checked; full exercise text was not available through those abstracts. Klein’s *Leichtbau-Konstruktion*, 10th edition (2013), remains a separate foundational reference.
+- The source strength-capacity values are ten times the values for the stated 1 m bar. Retain the existing correct 5,136 / 13,493 / 16,267 results at n = 1. Fixed geometry and a common design load permit a density comparison only among feasible materials; they do not define a buckling material index.
+- SEA uses the force–displacement integral divided by mass, or the engineering stress–strain integral divided by initial density. The ideal elastic–perfectly-plastic diagram accounts separately for input work, recovered elastic energy and dissipated plastic work. The aluminium exercise supplies no modulus; its 13.33 kJ/kg result is the stated rigid-plastic approximation. [MIT stress–strain notes](https://ocw.mit.edu/courses/3-11-mechanics-of-materials-fall-1999/d4ea545640f151bb66e6d8bc0ba55ed4_MIT3_11F99_ss.pdf) support the loading/unloading interpretation.
+- Castigliano’s load derivative strictly uses complementary energy, equal to strain energy for the stated linear-elastic model. Define the Saint-Venant torsion constant rather than substitute a polar area moment for any section. The cantilever and simply supported midpoint examples yield FL³/(3EI) and FL³/(48EI). [Schoeftner 2020](https://link.springer.com/article/10.1007/s00707-020-02762-z) and [Jönköping University energy methods](https://mechanics.ju.se/SolidMechanics/EnergyMethods.html) were used for method checks.
+- The source’s I-section ratios 6.8 and optimum h/b = 5.7 have no reproducible geometry or constraint set. The explicit added example uses a 20 × 20 mm square and an I-section b/h/tf/tw = 30/48/4/4 mm, both 400 mm². Its calculated rigidity ratio is 10.336 and elastic moment-capacity ratio 4.3067.
+- Use A = π(D−t)t = πdₘt exactly for the tensile tube. At t/D = .1, πDt overestimates area by 11.1%. The pure-tension model has no axial-compression buckling constraint. The numerical illustration gives .135 kg under strength alone and .192857 kg with a .5 mm extension limit. Raw diameter–thickness mass is bilinear; dimensionless logarithmic variables yield a linear program for these stated constraints, following [Boyd and Vandenberghe](https://web.stanford.edu/~boyd/cvxbook/).
+- The sandwich section uses total thickness h = hc + 2tf and face-centroid spacing d = hc + tf. For the original 1 mm faces and 20 mm core, the core/face bending-rigidity ratio is 3.02115 Ec/Ef. Small core bending contribution does not imply negligible shear deformation.
+- The source image’s four drawn failure modes do not match its four text labels. Redraw face yielding, core shear failure, face wrinkling and intracell dimpling separately; dimpling is local face instability over a cell, not core crushing. [Hexcel AGU075b](https://www.hexcel.com/wp-content/uploads/2026/01/Honeycomb_Sandwich_Design_Technology.pdf), December 2000, pp. 3, 7–9, 18–19 and 27, supports the load sharing, shear correction and failure checks. The 2026 website path is not the document’s publication year.
+- Wrinkling uses C(Ef Ez,c Gxz,c)^(1/3); isotropic core and fixed Poisson ratio give B Ef^(1/3)Ec^(2/3), with a changed coefficient. Doubling both linked core moduli increases the estimate by 58.74%; doubling only the normal modulus at fixed shear modulus gives 25.99%. Modulus exponents do not describe face/core thickness effects. [NASA/CR-1999-208994](https://ntrs.nasa.gov/citations/19990017863) distinguishes model and boundary-condition dependence.
+- The original sandwich optimization curves have no defined scales or material/load data. The added, fully specified 500 N, 1 m simply supported example has a strength-constrained optimum at hc = 23.187 mm, tf = .354 mm, mass .376652 kg. This is a smooth-boundary tangency, not the minimum-face-thickness intersection at hc = 27.478 mm. Bending plus shear deflection is about 16.8 mm; an added 10 mm requirement would change the feasible set and optimum.
+
+### Implementation and review
+
+The seven new bilingual SVGs use shared article colors and the existing figure viewer. Curve points, regions and markers come from the same calculation functions. Numerical checks use independent integration, force/work balances, area identities, equivalent constraint formulations and constrained optimum comparisons. Public prose contains the resulting definitions and derivations; screenshot errors and audit history stay in this document.
+
+Verification on 2026-11-07: 26 scoped numerical/content tests pass; production build and 721 internal references pass; English/Chinese at 1440 and 390 px have no page overflow or math-rendering errors. Seven new diagrams per language have no text collisions or out-of-viewBox labels. The figure viewer and collapsed references passed actual browser interaction checks.

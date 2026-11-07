@@ -1,6 +1,6 @@
 {
-  "checked": "2026-11-01",
-  "scope": "Screenshots embedded in the 15 user-selected course notes; original Obsidian files remain unchanged. November additions follow topology, robot integration and mechanics foundations.",
+  "checked": "2026-11-07",
+  "scope": "Screenshots embedded in 16 user-selected course notes; original Obsidian files remain unchanged. The 1107 continuation appends load efficiency and absorption, energy methods and sizing, and sandwich structures.",
   "notes": [
     {
       "file": "优化目标.md",
@@ -61,6 +61,10 @@
     {
       "file": "轻量化设计（新增，放在最后，基本功）.md",
       "sha256": "9fadcc43a3788548a481b103ed99f9b846725ff53db1d1fc24df2417abfffcd7"
+    },
+    {
+      "file": "1107.md",
+      "sha256": "eaae8fc3a754f4bded30500818b00eaa596540f1ccad360e3a54ea76ede8e50f"
     }
   ],
   "attachments": [
@@ -791,6 +795,222 @@
       "anchor": "constraint-dependent-ranking",
       "topic": "Strength, stiffness and buckling comparison",
       "treatment": "Extracted into bilingual prose, equations, tables or native SVG; duplicate learning objectives merged into technical exposition."
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045012899.webp",
+      "sha256": "3acfa7caf6fbcc7cbcd601b758d43aa12ea41fda248122f92a1fea35af1919ad",
+      "anchor": "load-capacity-selfweight",
+      "topic": "Capacity/self-weight definition",
+      "treatment": "Reuse the existing definition; connect it to constraint-specific sizing"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045015183.webp",
+      "sha256": "b7f832b671bfb671a9ea68cc075fc86537d1e56625e8efe380a59f70a34361c6",
+      "anchor": "capacity-under-constraints",
+      "topic": "Strength-constrained tensile bar",
+      "treatment": "Reuse the derivation and compare the same illustrative materials"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045019417.webp",
+      "sha256": "be232eb4e6aa42b2dbf3febda2b9c5ddf258a88393db8c148d814405309da68d",
+      "anchor": "capacity-under-constraints",
+      "topic": "Strength, stiffness and fixed-geometry material comparisons",
+      "treatment": "Keep 1 m capacity ratios consistent; normalize each criterion separately"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045022961.webp",
+      "sha256": "5bb85e3fc04ad71f7ddab5c890ed53acdcd139315aea3069232a1b183bd576c1",
+      "anchor": "capacity-under-constraints",
+      "topic": "Stiffness-controlled capacity learning objectives",
+      "treatment": "Merge into the axial-extension derivation"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045026833.webp",
+      "sha256": "b8fc2cf56873fc0ae2bceb2402c3ffa59bd3e33943967a5ff4d89eb0dddef7bb",
+      "anchor": "capacity-under-constraints",
+      "topic": "Axial extension and stiffness index",
+      "treatment": "Derive minimum area and E/rho index; combine strength and extension limits"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045029855.webp",
+      "sha256": "56d432ccec23af69f0533de58a8798d41908979273479e9399f281d8234986fd",
+      "anchor": "capacity-under-constraints",
+      "topic": "Material ranking and wing-skin exercise",
+      "treatment": "Preserve the question; distinguish in-plane extension and plate bending"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045039802.webp",
+      "sha256": "6eb7018592279ea7ddb4f9d13de2252f6403b024860bc5e3be94bdbccc2e562d",
+      "anchor": "specific-energy-absorption",
+      "topic": "Energy-absorption learning objectives",
+      "treatment": "Merge into the definition and force-displacement integral"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045044071.webp",
+      "sha256": "29cb96d0d7a07cef5148b92fdefa6cef4e8197815684ef2dbd2fa0d67a655ebc",
+      "anchor": "specific-energy-absorption",
+      "topic": "Work and specific energy absorption",
+      "treatment": "Derive engineering stress-strain work per reference volume and mass"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045047934.webp",
+      "sha256": "2ab52123b15ecbd5c89f004c8e47ea843a900dfa8f6438d05bfc1de3f629a13b",
+      "anchor": "aluminium-sea-example",
+      "topic": "Elastic/plastic absorption and aluminium exercise",
+      "treatment": "Retain 300 MPa, .12 strain, 2.7 g/cm3; compute 13.33 kJ/kg and separate recoverable energy"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045050892.webp",
+      "sha256": "933935a8ec5170758bf053c7d01558d2e81a1bdcf2528a7b4f32f1e41f23d484",
+      "anchor": "elastic-energy",
+      "topic": "Strain-energy learning objectives",
+      "treatment": "Merge into the energy-method introduction"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045058342.webp",
+      "sha256": "e6655480c5e59bd680f1d76f372bc4e6d47577664372663aae1a4ef5a74937ee",
+      "anchor": "elastic-energy",
+      "topic": "Four basic strain-energy terms",
+      "treatment": "Define torsion constant and shear correction; distinguish stored and total potential energy"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045061951.webp",
+      "sha256": "154b06c86964f824fb699345f8d5a8d206656f53bc3a57c64688d940f60b6c27",
+      "anchor": "castigliano-displacement",
+      "topic": "Castigliano, cantilever and simply supported exercise",
+      "treatment": "Derive both displacements and explain virtual loading and linear-elastic assumptions"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045066882.webp",
+      "sha256": "163517f762cfa7438ca122ab7eb726d0bcfca0df0d2c2315b510d8e453c76119",
+      "anchor": "i-section-sizing",
+      "topic": "Shape-optimization learning objectives",
+      "treatment": "Merge into the equal-area section comparison"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045088032.webp",
+      "sha256": "61337bc5a44de9e09298cd1f64ccdfb0ec085b1815dbe6af3a88ee369acee342",
+      "anchor": "i-section-sizing",
+      "topic": "I-section efficiency",
+      "treatment": "Replace unsupported 6.8 ratio with a dimensioned, reproducible equal-area example"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045092891.webp",
+      "sha256": "d314b4203d1a0ef4a25750862406ce75a149e9abb09b2534ca4c54c32bd435e9",
+      "anchor": "i-section-sizing",
+      "topic": "Optimum aspect ratio",
+      "treatment": "Explain missing constraints; do not repeat unsupported 5.7 optimum"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045096540.webp",
+      "sha256": "bca3dca730d792ae9b10a4e35c746e9e4e69ab3f7b1f7ae6b0cf289a8b6fd68f",
+      "anchor": "sizing-problem",
+      "topic": "Sizing-optimization learning objectives",
+      "treatment": "Define variables, objective and constraints"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045100951.webp",
+      "sha256": "642de0ed91da5f0f9ebf013b85060b6c0b68ee6ad176c9aad4cbd8a24aa4b86e",
+      "anchor": "sizing-problem",
+      "topic": "Feasible region and objective contours",
+      "treatment": "Explain active constraints and nonunique optima; compute the actual feasible region"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045104483.webp",
+      "sha256": "5f0f5d9d4075e5118c4121d7a898cdfdc3418178d69fd143f2cddb6da35f2369",
+      "anchor": "tensile-tube-optimization",
+      "topic": "Minimum-mass tensile pipe",
+      "treatment": "Use exact mean-diameter area, omit axial-compression buckling in pure tension; add extension and log-convex reformulation"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045242278.webp",
+      "sha256": "aa9c024e6257f71fee76612aabbaedeab6003d9d62c2e4a877b6be06f53fb7be",
+      "anchor": "sandwich-structures",
+      "topic": "Sandwich learning objectives",
+      "treatment": "Merge into face/core load-sharing introduction"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045245212.webp",
+      "sha256": "09e4672e3452300fafb63fbee449704034ec63dc551999ce6b151095b35f77dd",
+      "anchor": "sandwich-structures",
+      "topic": "Face/core load paths and layered fields",
+      "treatment": "Redraw section, face force couple, continuous strain and discontinuous stress"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045502575.webp",
+      "sha256": "8713fa01338ee902188a47c8e3381a7da31db8b19d4131488fb22fc9f9b431fd",
+      "anchor": "sandwich-rigidity",
+      "topic": "Layered stiffness and 1 mm/20 mm exercise",
+      "treatment": "Preserve stated dimensions and derive the core-to-face rigidity ratio without inventing original inputs"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045505382.webp",
+      "sha256": "1cdb679261e091ea90371acb73b7ff9c27b7721375cdd7298cb11819d081d81a",
+      "anchor": "sandwich-shear-buckling",
+      "topic": "Shear-flexible column buckling",
+      "treatment": "Define effective shear rigidity and effective-length factors"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045507969.webp",
+      "sha256": "6c3fe603d5c60885d226a93396fbebc4462b81d5395a593e3872a4059c902377",
+      "anchor": "sandwich-failure-modes",
+      "topic": "Sandwich failure learning objectives",
+      "treatment": "Merge into four local/material failure checks"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045514319.webp",
+      "sha256": "00696a0012a972d186f27d86896e8b4f0b60f0789ccc539bae6d1990bf7f09ce",
+      "anchor": "sandwich-failure-modes",
+      "topic": "Four distinct failure mechanisms",
+      "treatment": "Redraw face yield, core shear, face wrinkling and intracell dimpling correctly"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045517447.webp",
+      "sha256": "0ffa603fb94136f4c5d450b65ef4c29d9d5b4b7ac82a0821c55a1979d82692d3",
+      "anchor": "sandwich-wrinkling-example",
+      "topic": "Wrinkling stress and doubled core-modulus exercise",
+      "treatment": "Use normal and shear core moduli; derive 58.74% for fixed-Poisson isotropic core"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045521557.webp",
+      "sha256": "c9ebe4796f8b3cc4e5f5445c427cabe2db2045285333cf9a1f5e07d348e3c7c0",
+      "anchor": "sandwich-sizing",
+      "topic": "Sandwich-optimization learning objectives",
+      "treatment": "Merge into minimum-mass constrained sizing"
+    },
+    {
+      "note": "1107",
+      "attachment": "1107-1794045525132.webp",
+      "sha256": "3ee6a2416ef188f65168c599f9c5426efef488db720939130f7638b3533f8c07",
+      "anchor": "sandwich-sizing",
+      "topic": "Face/core thickness optimization",
+      "treatment": "Replace undefined curves with explicit numerical inputs and calculated optimum; separate strength and deflection constraints"
     }
   ]
 }

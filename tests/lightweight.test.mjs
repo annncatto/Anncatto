@@ -67,7 +67,7 @@ test('material-index comparisons and scientific plots stay finite in both langua
 
 test('course chapter sequence preserves source scope and excludes the independent studio',async()=>{
  const source=await readArticleSource('轻量化结构设计.html');
- assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','classical-methods','functional-integration','concept-design','inertia-mass','lightweight-indices','shape','structural-efficiency','optimization','robot-design-integration','mechanics-foundations']);
+ assert.deepEqual([...source.matchAll(/<h2 id="([^"]+)"/g)].map(m=>m[1]),['introduction','classical-methods','functional-integration','concept-design','inertia-mass','lightweight-indices','shape','structural-efficiency','optimization','robot-design-integration','mechanics-foundations','capacity-and-absorption','energy-sizing','sandwich-structures']);
  assert.ok(source.includes('<div class="formula">$$'));
  assert.equal((source.match(/\$\$/g)||[]).length%2,0);
  assert.doesNotMatch(source,/<iframe|data-studio|labs\/lightweight-robot|workbench|K_I|Paris law|14-bit|14 位|\\mathbb C/);

@@ -1,4 +1,7 @@
 import {foundationFigures,foundationFigure} from './lightweight-foundations.js';
+import {absorptionFigures,absorptionFigure} from './lightweight-absorption.js';
+import {energyFigures,energyFigure} from './lightweight-energy.js';
+import {sandwichFigures,sandwichFigure} from './lightweight-sandwich.js';
 import {FONT} from './theme.js';
 import {frameworkDrawing} from './lightweight-frameworks.js';
 const bi=(en:string,zh:string)=>`<span lang="en">${en}</span><span lang="zh-CN">${zh}</span>`;
@@ -10,10 +13,10 @@ function plot(id:string,height:number,en:string,zh:string,draw:(l:'en'|'zh')=>st
  return `<svg viewBox="0 0 680 ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${en}" style="font-family:${FONT}"><title>${en}</title><defs><marker id="course-${id}-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#648795"/></marker></defs><g lang="en">${draw('en')}</g><g lang="zh-CN">${draw('zh')}</g></svg>`;
 }
 const label=(x:number,y:number,en:string,zh:string,l:'en'|'zh',size=14,anchor='middle')=>`<text x="${x}" y="${y}" font-size="${size}" text-anchor="${anchor}" fill="#3e5d6a">${l==='en'?en:zh}</text>`;
-export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload','indexbars','forcepaths',...foundationFigures] as const;
+export const courseFigures=['framework','cost','verification','workflow','virtual','modeling','materials','selection','stressstrain','energy','loadpaths','sandwich','rtm','integration','storage','monitoring','guidedwave','stages','topology','spiral','placement','transmission','payload','indexbars','forcepaths',...foundationFigures,...absorptionFigures,...energyFigures,...sandwichFigures] as const;
 export type CourseFigure=typeof courseFigures[number];
 export function renderCourseFigure(id:CourseFigure){
- const supplement=foundationFigure(id);if(supplement)return supplement;
+ const supplement=foundationFigure(id)??absorptionFigure(id)??energyFigure(id)??sandwichFigure(id);if(supplement)return supplement;
  let body='',title=['',''],desc=['',''];
  const c=card;
  if(id==='framework'){
@@ -25,7 +28,7 @@ export function renderCourseFigure(id:CourseFigure){
   title=['The structural verification framework','结构验算框架'];
   body=note('Static and dynamic force transfer → structural verification','静态与动态传力 → 结构验算')+`<div class="course-triple">${c('Capacity and deformation','承载与变形','Stiffness · load capacity · remaining strength','刚度 · 承载能力 · 残余强度')}${c('Durability','耐久性','Service life · crack growth','使用寿命 · 裂纹扩展')}${c('Reliability','可靠性','Scatter, defects and failure probability','离散性、缺陷与失效概率')}</div><div class="course-inputs">${c('Construction','构造','Geometry · structural stiffness','几何形状 · 结构刚度')}${c('Material','材料','Strength · fracture toughness','强度 · 断裂韧性')}${c('Technology','技术','Manufacturing · surface condition','制造 · 表面状态')}${c('Environment','环境','Climate · temperature','气候 · 温度')}</div>`+note('The four input groups affect the verification together.','四组输入共同影响上述验算。');
  }else if(id==='workflow'||id==='stages'){
-  title=id==='workflow'?['From requirements to delivery','从要求到交付']:['Decisions at each design stage','各设计阶段的决策'];
+  title=id==='workflow'?['Design and verification stages','设计与验证阶段']:['Decisions at each design stage','各设计阶段的决策'];
   body=flow([c('Requirements','设计要求','Loads, life, space, cost','载荷、寿命、空间、成本'),c('Concept and scheme','概念与方案','Functions, materials, load paths','功能、材料、传力'),c('Detail and production','详细与生产','Dimensions, process, tolerances','尺寸、工艺、公差'),c('Prototype and test','原型与试验','Check, update, deliver','检查、更新、交付')])+note('↶ Test evidence can revise the model, dimensions or the concept itself.','↶ 试验结果可以反馈到模型、尺寸，乃至概念本身。');
  }else if(id==='modeling'){
   title=['Engineering problem and numerical model','工程问题与数值模型'];
@@ -37,7 +40,7 @@ export function renderCourseFigure(id:CourseFigure){
   title=['Processing, structure, properties and performance','工艺、组织、性能与使用'];
   body=`<div class="course-material-map">${c('Composition and structure','成分与结构','Microstructure, fibres, pores, interfaces','组织、纤维、孔隙、界面')}${c('Synthesis and processing','合成与加工','Forming, casting, heat treatment, consolidation','成形、铸造、热处理、固结')}${c('Properties','性能','Mechanical, physical, chemical','力学、物理、化学')}${c('Service behavior','使用行为','Static, cyclic, thermal and environmental','静态、循环、热与环境')}</div>`+note('↔ Each choice constrains the others: processing changes structure and properties; service requirements guide composition and process.','↔ 各项相互约束：工艺改变组织与性能，使用要求又指导成分与加工选择。');
  }else if(id==='selection'){
-  title=['From a requirement to a material index','从设计要求到材料指数'];
+  title=['Deriving a material index','材料指数的推导'];
   body=flow([c('Requirement','要求','Load and allowable response','载荷与允许响应'),c('Free dimension','自由尺寸','Area, depth, wall or thickness','面积、高度、壁厚或板厚'),c('Mass expression','质量表达式','Substitute the minimum required size','代入满足约束的最小尺寸'),c('Material term','材料相关项','Rank the remaining property group','比较剩余的性能组合')]);
  }else if(id==='stressstrain'){
   title=['Elastic slope, yield and fracture','弹性斜率、屈服与断裂'];desc=['Qualitative tensile curve for a ductile material; no grade-specific data.','延性材料的定性拉伸曲线，不对应某一牌号的实测数据。'];
@@ -50,7 +53,7 @@ export function renderCourseFigure(id:CourseFigure){
   body=`<div class="course-triple">${c('Efficient section','高效截面','Place material away from the neutral axis where useful.','在有效方向上，将材料移离中性轴。')}${c('Direct load path','直接传力','Reduce unnecessary offsets and load detours.','减少不必要的偏置与传力绕行。')}${c('Appropriate utilization','合理利用材料','Size for all governing cases, including stability.','按完整主导工况设计，也包括稳定性。')}</div>`;
  }else if(id==='sandwich'){
   title=['Faces and core in a sandwich','夹层结构中的面板与芯材'];
-  body=plot(id,215,...title as [string,string],l=>'<rect x="65" y="70" width="420" height="15" fill="#3c86a3"/><rect x="65" y="85" width="420" height="65" fill="#dceee5"/><path d="M65 150L85 85L105 150L125 85L145 150L165 85L185 150L205 85L225 150L245 85L265 150L285 85L305 150L325 85L345 150L365 85L385 150L405 85L425 150L445 85L465 150L485 85" stroke="#8cbfa9" fill="none"/><rect x="65" y="150" width="420" height="15" fill="#3c86a3"/>'+label(520,83,'Faces: bending','面板：抗弯',l,14,'start')+label(520,121,'Core: shear','芯材：剪切',l,14,'start')+label(275,195,'Separation increases bending leverage','间距增大抗弯力臂',l));
+  body=plot(id,215,...title as [string,string],l=>'<rect x="65" y="70" width="420" height="15" fill="#3c86a3"/><rect x="65" y="85" width="420" height="65" fill="#dceee5"/><path d="M65 150L85 85L105 150L125 85L145 150L165 85L185 150L205 85L225 150L245 85L265 150L285 85L305 150L325 85L345 150L365 85L385 150L405 85L425 150L445 85L465 150L485 85" stroke="#8cbfa9" fill="none"/><rect x="65" y="150" width="420" height="15" fill="#3c86a3"/>'+label(520,83,'Faces: bending','面板：抗弯',l,14,'start')+label(520,121,'Core: shear','芯材：剪切',l,14,'start')+label(275,195,'Face separation increases the force-couple arm','面板间距增大拉压力偶的力臂',l));
  }else if(id==='rtm'){
   title=['The RTM manufacturing chain','RTM 制造工艺链'];
   body=`<ol class="course-process"><li>${bi('Cut and store reinforcement','裁切与储存')}</li><li>${bi('Drape, tack, pre-consolidate','铺覆、定位、预压实')}</li><li>${bi('Place preform and close mold','放置预成形体、合模')}</li><li>${bi('Inject resin and cure','树脂注射与固化')}</li><li>${bi('Demold and trim','脱模与修边')}</li><li>${bi('Inspect geometry and quality','检测几何与质量')}</li></ol>`+note('Fibre placement + wetting + consolidation determine the resulting material.','纤维布置、浸润与固结共同决定制成材料的性能。');
@@ -88,7 +91,7 @@ export function renderCourseFigure(id:CourseFigure){
   });
  }else if(id==='spiral'){
   title=['The mass spiral','质量螺旋'];
-  body=flow([c('Lighter distal member','末端构件更轻','Less moving mass at a long lever arm','较长力臂处的运动质量减少'),c('Lower joint demand','关节需求下降','Required torque can decrease.','所需力矩可能降低。'),c('Smaller drive and support','驱动与支承更轻','Resize to realize the second saving.','重新选型，兑现第二轮收益。')])+note('↶ Upstream links, base and energy system can then be reconsidered.','↶ 随后重新考虑上游连杆、基座与供能系统。');
+  body=flow([c('Lighter distal member','末端构件更轻','Less moving mass at a long lever arm','较长力臂处的运动质量减少'),c('Lower joint demand','关节需求下降','Required torque can decrease.','所需力矩可能降低。'),c('Smaller drive and support','驱动与支承更轻','Resize the drive and supporting parts.','重新确定驱动和支承尺寸。')])+note('↶ Upstream links, base and energy system can then be reconsidered.','↶ 随后重新考虑上游连杆、基座与供能系统。');
  }else if(id==='payload'){
   title=['Published payload relative to arm mass','公布负载与臂体质量之比'];desc=['Model versions and load conditions are listed below. Filled and outlined bars retain different published load conditions.','具体型号和工况列于下表，实心与空心柱保留不同的公布负载条件。'];
   body=plot(id,390,...title as [string,string],l=>{
