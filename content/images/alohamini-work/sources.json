@@ -102,40 +102,17 @@
     "sha256": "7d8d231009bb5d5e30f9398129841e1fd7bbc3ac965db7f175c394043b324ba7"
   },
   {
-    "asset": "robot-render.png",
-    "source": "User-provided AlohaMini system-design presentation, 2026-11-02",
-    "sha256": "194e94bd167307a804af07207db65bc3a92d8631404c616f147d2fc0d9d87449",
-    "bytes": 108264
-  },
-  {
     "asset": "lbm-paper-architecture.jpg",
     "source": "https://arxiv.org/html/2507.05331v1#S4.F9",
     "sha256": "f291be54f4929f8a3af8d33ce0672f19fe7db336f9d20551e828dc82f86cda75",
     "bytes": 366420
   },
   {
-    "asset": "overview.svg",
-    "source": "AlohaMini platform interfaces and reported experiment configurations",
-    "sha256": "42ddd843b0fc336cb0e182f4d16da89e6559d458d876367abfd4712956411360",
-    "bytes": 10178
-  },
-  {
-    "asset": "host.svg",
-    "source": "AlohaMini platform interfaces and reported experiment configurations",
-    "sha256": "08cfaa382baa37454ef206fbb7327052b38d62d435a6f9f762f578f3b0fda496",
-    "bytes": 9604
-  },
-  {
-    "asset": "lifecycle.svg",
-    "source": "AlohaMini platform interfaces and reported experiment configurations",
-    "sha256": "0d2c2d3fe4be09060a258d05d3148362d995647a45d32c84fc46a3ed687dc7ce",
-    "bytes": 9997
-  },
-  {
     "asset": "sampling.svg",
-    "source": "AlohaMini platform interfaces and reported experiment configurations",
-    "sha256": "3b557044152377611627d87d034c55f83a17c91570896762d5026b355fc34cb0",
-    "bytes": 9497
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/SfdrwymJciFXkOkHm9UcVxp8nDv",
+    "sha256": "46849611f9f6f70606ea58f10168af70900d7dfcf47280b816aa1ac20d0e2858",
+    "bytes": 10253,
+    "derived": "First 86 episodes median 11.09 Hz and selected 39 median 29.49 Hz; span = 49/f seconds, uniform-spacing illustration"
   },
   {
     "asset": "state-ablation.svg",
@@ -150,5 +127,47 @@
     "derived": "Three recorded state-input interventions; log-magnitude plot retains signed labels",
     "bytes": 236,
     "sha256": "28fd94056ad12ed3f12ce3f48bd924e7189bbe5393b424a5219f1a663a6b4102"
+  },
+  {
+    "asset": "product-official.png",
+    "source": "https://www.alohamini.cn/imgs/bg3.png",
+    "derived": "Official product photograph; original pixels retained, SVG viewport removes transparent margin",
+    "bytes": 203312,
+    "sha256": "3560dd2c28cd5beb0f1442b743b6dbf9df22ddab4d182fc7e4b0ffae6f6a646b"
+  },
+  {
+    "asset": "arm-urdf.png",
+    "source": "User-provided AlohaMini_系统设计与实验验证.pptx, slide 3, image3.png",
+    "derived": "Original URDF arm render",
+    "bytes": 132037,
+    "sha256": "4ae3ea54d3f13c94b96d3eec0794afd4faaad49e6df8129100e2ae19814aafee"
+  },
+  {
+    "asset": "workspace.png",
+    "source": "User-provided AlohaMini_系统设计与实验验证.pptx, slide 4, image6.png",
+    "derived": "Original sampled-workspace chart",
+    "bytes": 1800542,
+    "sha256": "1515605d4085cf8aa167d77e5d4fbad09501a1c6255d42611b2181b271db68bb"
+  },
+  {
+    "asset": "arm-joints.svg",
+    "source": "User-provided AlohaMini_系统设计与实验验证_预览.pdf, p.3",
+    "derived": "Black fine-line joint callouts on original arm render",
+    "bytes": 1908,
+    "sha256": "9c7ff65ba606d43d6fc2d043c57a3639cd5965c14c8f0c0fb959c05ccbda011e"
+  },
+  {
+    "asset": "base-kinematics.svg",
+    "source": "AlohaMini PDF p.7 and src/alohamini/kinematics/base.py",
+    "derived": "Wheel centers at beta+90 degrees; arrows match the signs in the actual velocity map",
+    "bytes": 3114,
+    "sha256": "939f6ecec501375aa9c438d8e267005deb4d661cb297954146407656fdab8d4f"
+  },
+  {
+    "asset": "system-runtime.svg",
+    "source": "AlohaMini docs/host-protocol.md and docs/ros2.md",
+    "derived": "PC interfaces, Host command validation and dual TTL buses",
+    "bytes": 6497,
+    "sha256": "fdf42552a35dfa04ba4c195ca246961560dd00ce9cbe2942d5b1bc66a672f1ec"
   }
 ]
