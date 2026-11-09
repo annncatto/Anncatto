@@ -1,5 +1,16 @@
 [
   {
+    "slug": "alohamini-work",
+    "title": "AlohaMini · 平台建设与算法实验",
+    "titleEn": "AlohaMini · Platform & Experiments",
+    "description": "移动双臂平台的控制、数据、训练和部署，以及玩偶收集、精细操作与擦白板实验中的实机结果和诊断。",
+    "descriptionEn": "Control, data, training and deployment for a mobile-bimanual platform, with real-robot results and diagnosis in toy collection, precision manipulation and wiping.",
+    "date": "2026-11-09",
+    "source": "AlohaMini工作介绍.html",
+    "presentation": "alohamini-work/presentation.html",
+    "sections": []
+  },
+  {
     "slug": "openwam-action-slots",
     "title": "OpenWAM & 动作表示",
     "titleEn": "OpenWAM & Action Representations",

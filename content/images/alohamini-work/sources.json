@@ -1,0 +1,154 @@
+[
+  {
+    "asset": "tangram-smol-low.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/SfdrwymJciFXkOkHm9UcVxp8nDv",
+    "bytes": 7022720,
+    "sha256": "31ffb7a7fca7f228db8e5609e02090b1346bf923c850eb7711342db779c1fc18"
+  },
+  {
+    "asset": "tangram-smol-high.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/SfdrwymJciFXkOkHm9UcVxp8nDv",
+    "bytes": 28783413,
+    "sha256": "c8794770b9a84aa49f0ed7b7913f14010e3d214bdcfe9290980fbfeea2434b60"
+  },
+  {
+    "asset": "tangram-openwam.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/MWshwDovgiUEcSklfG9cZDMEnse",
+    "bytes": 9318001,
+    "sha256": "3ae3727bc6f8c00701c28b727854919396282310cf7212688bebf6a3dfdadec1"
+  },
+  {
+    "asset": "tangram-pi05.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/MWshwDovgiUEcSklfG9cZDMEnse",
+    "bytes": 5742952,
+    "sha256": "ccb9c080309947dcd9bdea89edbb2352a72d17c09381920e55801629502a1342"
+  },
+  {
+    "asset": "tangram-pi05-fail.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/MWshwDovgiUEcSklfG9cZDMEnse",
+    "bytes": 3004155,
+    "sha256": "f3d493990eaebcd89dec49ecc46d14715b9aa1afdda3a31194febd488fdd73e5"
+  },
+  {
+    "asset": "wipe-pi05.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 18792721,
+    "sha256": "6165f2c59c9afb4e5fc819164e88de02a049a90844a23071b24f86ef8246154c"
+  },
+  {
+    "asset": "wipe-openwam-before.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 1754835,
+    "sha256": "c2977842ba8e8ea42fbe79a3618e9da620019df5c3cefad0836080d835d5e8d4"
+  },
+  {
+    "asset": "wipe-openwam-front.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 3257397,
+    "sha256": "f33abe4edf2fb95862e729a445053e2fb0770d3986068725cfd4092a9912eee4"
+  },
+  {
+    "asset": "wipe-openwam-side.mp4",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 5819014,
+    "sha256": "09a4075f3ffdf17c26610a73f152936d8bfdaca13d5c7e8441338f994389160c"
+  },
+  {
+    "asset": "wipe-figure-1.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 374960,
+    "width": 1280,
+    "height": 984,
+    "sha256": "97eae18c17a358755684a8c50292e04bfc1ee3ff36e343fb40e01ab52aaea836"
+  },
+  {
+    "asset": "wipe-figure-2.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 237778,
+    "width": 1280,
+    "height": 902,
+    "sha256": "d08dc3f3eb20ada46018dc420d0efc79ffd7c5aa0ff4f8bf9494465874e68ebc"
+  },
+  {
+    "asset": "wipe-figure-3.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 225383,
+    "width": 1280,
+    "height": 827,
+    "sha256": "b7adb7a8b905ebc17410ea2f4731de83774415a3bf9fdfc8aeea13237d088ba7"
+  },
+  {
+    "asset": "wipe-figure-4.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 272060,
+    "width": 1280,
+    "height": 827,
+    "sha256": "df58b6ae3116f306cfb978d5a272b2df3bc06ebede0dd7fa4455b860d6a6533f"
+  },
+  {
+    "asset": "wipe-figure-5.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 69336,
+    "width": 1280,
+    "height": 606,
+    "sha256": "349c0012843271e1f5aa9f17fb153df5a6d4e273c4133f8d2a7666e1e0ba0abf"
+  },
+  {
+    "asset": "wipe-figure-6.png",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "bytes": 88916,
+    "width": 1280,
+    "height": 590,
+    "sha256": "7d8d231009bb5d5e30f9398129841e1fd7bbc3ac965db7f175c394043b324ba7"
+  },
+  {
+    "asset": "robot-render.png",
+    "source": "User-provided AlohaMini system-design presentation, 2026-11-02",
+    "sha256": "194e94bd167307a804af07207db65bc3a92d8631404c616f147d2fc0d9d87449",
+    "bytes": 108264
+  },
+  {
+    "asset": "lbm-paper-architecture.jpg",
+    "source": "https://arxiv.org/html/2507.05331v1#S4.F9",
+    "sha256": "f291be54f4929f8a3af8d33ce0672f19fe7db336f9d20551e828dc82f86cda75",
+    "bytes": 366420
+  },
+  {
+    "asset": "overview.svg",
+    "source": "AlohaMini platform interfaces and reported experiment configurations",
+    "sha256": "42ddd843b0fc336cb0e182f4d16da89e6559d458d876367abfd4712956411360",
+    "bytes": 10178
+  },
+  {
+    "asset": "host.svg",
+    "source": "AlohaMini platform interfaces and reported experiment configurations",
+    "sha256": "08cfaa382baa37454ef206fbb7327052b38d62d435a6f9f762f578f3b0fda496",
+    "bytes": 9604
+  },
+  {
+    "asset": "lifecycle.svg",
+    "source": "AlohaMini platform interfaces and reported experiment configurations",
+    "sha256": "0d2c2d3fe4be09060a258d05d3148362d995647a45d32c84fc46a3ed687dc7ce",
+    "bytes": 9997
+  },
+  {
+    "asset": "sampling.svg",
+    "source": "AlohaMini platform interfaces and reported experiment configurations",
+    "sha256": "3b557044152377611627d87d034c55f83a17c91570896762d5026b355fc34cb0",
+    "bytes": 9497
+  },
+  {
+    "asset": "state-ablation.svg",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "derived": "Three recorded state-input interventions; log-magnitude plot retains signed labels",
+    "bytes": 6206,
+    "sha256": "0752c1d73d85dfa4b8ab408a06e83469cb50b0be2c36d7fb75a1448be2498317"
+  },
+  {
+    "asset": "state-ablation.json",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/D80bwEyvAiSOKZkNHPpcyh8xn1e",
+    "derived": "Three recorded state-input interventions; log-magnitude plot retains signed labels",
+    "bytes": 236,
+    "sha256": "28fd94056ad12ed3f12ce3f48bd924e7189bbe5393b424a5219f1a663a6b4102"
+  }
+]
