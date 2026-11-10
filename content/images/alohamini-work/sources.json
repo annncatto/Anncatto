@@ -166,8 +166,8 @@
   {
     "asset": "system-runtime.svg",
     "source": "AlohaMini docs/host-protocol.md, docs/ros2.md and src/alohamini/runtime/host.py",
-    "derived": "PC HostClient; 5555 PUSH/PULL targets, 5556 DEALER/ROUTER state/JPEG, Host validation, TTL buses and cameras",
-    "bytes": 8853,
-    "sha256": "b203db2eb3c47ae6a34badf592182e1681c5ae34ca16e3c7775fb058a6bb4705"
+    "derived": "Parallel 5555 command and 5556 state/JPEG panels; explicit PC/Host socket roles; single localized SVG label per item; Host validation and device interfaces",
+    "bytes": 8729,
+    "sha256": "6ff3a039fdb00010d1caa7f5bfc7e1573fdbea7dda128eaf6b0f3e04f914f3bb"
   }
 ]

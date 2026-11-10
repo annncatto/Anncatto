@@ -1,5 +1,5 @@
 import {mountWorkVideoViewer} from './work-video-viewer.js';
-import {onLanguageChange,setLanguage} from './language.js';
+import {language,onLanguageChange,setLanguage} from './language.js';
 const requestedLanguage=new URLSearchParams(location.search).get('lang');
 if(requestedLanguage==='zh'||requestedLanguage==='en')setLanguage(requestedLanguage);
 for (const group of document.querySelectorAll<HTMLElement>('[data-work-tabs]')) {
@@ -27,7 +27,13 @@ for (const controls of document.querySelectorAll<HTMLElement>('[data-work-path-c
   });
 }
 window.addEventListener('slidechange',()=>{for(const v of document.querySelectorAll<HTMLVideoElement>('.work-deck .slide:not(.is-active) video'))v.pause();});
-onLanguageChange(()=>window.dispatchEvent(new Event('resize')));
+const localizeWorkDiagrams=()=>{
+  for(const node of document.querySelectorAll<SVGTextElement>('[data-work-diagram-en]')){
+    node.textContent=language==='zh'?node.dataset.workDiagramZh!:node.dataset.workDiagramEn!;
+  }
+};
+localizeWorkDiagrams();
+onLanguageChange(()=>{localizeWorkDiagrams();window.dispatchEvent(new Event('resize'));});
 
 const workDeck=document.querySelector<HTMLElement>('.work-deck');
 if(workDeck)mountWorkVideoViewer(workDeck);

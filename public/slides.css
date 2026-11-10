@@ -657,27 +657,38 @@
 .work-mechanism-step>strong{line-height:1.3;}
 @media(max-width:900px){.work-wipe-plots .work-figure:has(.work-diagram){overflow-x:auto;}}
 
-/* Engineering-report revision: flat white, square fine-line diagrams, open modules. */
-.presentation-page:has(.work-deck){background:#fff;color:#222;}
-.work-deck .work-slide{color:#222;}
-.work-deck .work-lead,.work-deck h3,.work-deck p{color:inherit;}
+/* AlohaMini research report: white canvas, neutral panels and one blue accent. */
+.presentation-page:has(.work-deck){background:#fff;color:#243342;}
+.work-deck{--work-ink:#243342;--work-accent:#365f98;--work-panel:#f4f6f8;--work-line:#d5dce3;}
+.work-deck .work-slide{color:var(--work-ink);}
+.work-deck .work-slide:not(.work-title-page) h2{font-size:36px;line-height:1.2;letter-spacing:-.4px;}
+.work-slide .slide-header{border:0;padding-bottom:2px;}
+.work-deck .work-lead{color:#536273;}
+.work-deck h3,.work-deck p{color:inherit;}
 .work-slide .work-column,.work-slide .work-card,.work-slide .work-video-choices{background:transparent;border:0;border-radius:0;padding:0;}
-.work-slide .work-card{border-top:1px solid #aaa;padding-top:8px;}
-.work-slide .work-table{border:0;border-top:1px solid #555;border-bottom:1px solid #999;border-radius:0;background:#fff;}
-.work-slide .work-table thead th{background:#f2f2f2;color:#222;}
-.work-slide .work-table tbody th{background:transparent;color:#222;}
-.work-slide .work-table th,.work-slide .work-table td{border-color:#ddd;}
-.work-slide .work-takeaway{background:#f4f4f4;color:#222;border:0;border-left:3px solid #555;border-radius:0;}
-.work-slide .work-tablist button,.work-slide .work-path-controls button{color:#333;border:1px solid #aaa;border-radius:0;background:white;}
-.work-slide .work-tablist button[aria-selected=true],.work-slide .work-path-controls button[aria-pressed=true]{color:#111;border-color:#444;background:#eee;}
-.work-slide .section-path-stage[aria-current=step]{background:#eee;color:#222;border-radius:0;}
-.work-slide .work-figure,.work-slide .work-video,.work-slide video{border-radius:0;}
-.work-slide .work-mechanism-step,.work-slide .work-mechanism-step.violet,.work-slide .work-mechanism-step.green{background:#f4f4f4;border-color:#777;}
+.work-slide .work-card{background:var(--work-panel);padding:9px 12px;border-radius:6px;}
+.work-slide .work-table{border:1px solid var(--work-line);border-radius:5px;background:#fff;}
+.work-slide .work-table thead th{background:#edf1f5;color:#34485b;}
+.work-slide .work-table tbody th{background:#f7f9fb;color:#34485b;}
+.work-slide .work-table th,.work-slide .work-table td{border-color:#e1e6eb;}
+.work-slide .work-takeaway{font-size:var(--slide-font);line-height:1.4;background:#eaf0f7;color:#294c7a;border:0;border-radius:6px;padding:10px 14px;}
+.work-slide .work-tablist button,.work-slide .work-path-controls button{color:#4c6072;border:0;border-radius:5px;background:#eef1f4;}
+.work-slide .work-tablist button[aria-selected=true],.work-slide .work-path-controls button[aria-pressed=true]{color:#fff;background:var(--work-accent);}
+.work-slide .section-path-stage[aria-current=step]{background:#e9eef6;color:#2d568b;border-radius:4px;}
+.work-slide .work-figure,.work-slide .work-video,.work-slide video{border-radius:4px;}
+.work-slide .work-mechanism-step,.work-slide .work-mechanism-step.violet,.work-slide .work-mechanism-step.green{background:var(--work-panel);border:0;border-radius:5px;}
+.work-slide .work-mechanism-step>strong{color:var(--work-accent);}
+.work-slide .work-module{border-color:var(--work-line);}
+.work-slide .work-ecosystem-chain{border-color:var(--work-line);}
+.work-slide .work-ecosystem-chain h3{color:var(--work-accent);}
+@media(min-width:1750px){.work-deck .work-slide:not(.work-title-page) h2{font-size:42px;}}
+@media(min-width:901px) and (max-height:850px){.work-deck .work-slide:not(.work-title-page) h2{font-size:32px;}}
+@media(max-width:900px){.work-deck .work-slide:not(.work-title-page) h2{font-size:30px;}}
 .work-slide .work-title-layout{display:grid;grid-template-columns:1.25fr 1fr;gap:50px;flex:1;min-height:0;align-items:center;}
 .work-title-page .work-body{margin:0;}
 .work-title-page .work-title-copy{padding-left:20px;}
-.work-title-page h1{font-size:70px;line-height:1.1;margin:0 0 22px;}
-.work-title-page h2{font-size:36px;line-height:1.35;margin:0 0 20px;}
+.work-title-page h1{color:#243c55;font-size:64px;line-height:1.1;margin:0 0 22px;}
+.work-title-page h2{font-size:32px;line-height:1.35;margin:0 0 20px;}
 .work-slide .work-eyebrow{font-size:14px;letter-spacing:.12em;margin-bottom:28px;color:#666;}
 .work-title-sub{max-width:650px;}
 .work-title-page .work-cover-outline{margin:40px 0 0;padding-left:26px;line-height:1.9;}
@@ -738,21 +749,23 @@
 @media(min-width:1750px){.work-slide .placement-data-videos video{height:220px;max-height:220px;}}
 @media(max-width:900px){.work-slide .placement-data-videos video{height:auto;max-height:420px;}.work-interface-fields{grid-template-columns:1fr;gap:12px;}.work-slide .placement-data-top .work-sampling-figure{min-height:200px;}}
 /* Compact mechanics: one large workspace, adjacent DH table, concise model notes. */
-.work-slide.work-mechanics .mechanics-overview{display:flex;flex-direction:column;gap:13px;flex:1;min-height:0;}
-.work-slide.work-mechanics .mechanics-block{display:flex;flex-direction:column;gap:7px;min-height:0;min-width:0;}
+.work-slide.work-mechanics .mechanics-overview{display:flex;flex-direction:column;gap:12px;flex:1;min-height:0;}
+.work-slide.work-mechanics .mechanics-block{display:flex;flex-direction:column;gap:7px;min-height:0;min-width:0;padding:10px 12px;border:1px solid #d5dce3;border-radius:7px;background:#f6f8fa;}
+.work-slide.work-mechanics .mechanics-space-block{background:#fff;}
+.work-slide.work-mechanics .mechanics-block h3{color:#334d68;}
 .work-slide.work-mechanics .mechanics-overview :is(p,table,th,td,figcaption,h3){font-size:var(--slide-font);line-height:1.25;}
-.work-slide.work-mechanics .mechanics-main-band{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;flex:1.55;min-height:0;}
+.work-slide.work-mechanics .mechanics-main-band{display:grid;grid-template-columns:1.7fr 1fr;gap:12px;flex:1.4;min-height:0;}
 .work-slide.work-mechanics .mechanics-space-block{min-height:0;}
 .work-slide.work-mechanics .mechanics-space-figure{min-height:0;}
 .work-slide.work-mechanics .mechanics-workspace-display{height:100%;min-height:0;}
 .work-slide.work-mechanics .work-dh-table th,.work-slide.work-mechanics .work-dh-table td{padding:2px 5px;line-height:1.15;white-space:nowrap;}
-.mechanics-detail-band{display:grid;grid-template-columns:.95fr 1.25fr 1.25fr;gap:22px;flex:1;min-height:0;border-top:1px solid #aaa;padding-top:10px;}
+.mechanics-detail-band{display:grid;grid-template-columns:.95fr 1.25fr 1.25fr;gap:12px;flex:1.1;min-height:0;}
 .work-slide.work-mechanics .mechanics-arm-row{display:grid;grid-template-columns:1.1fr 1fr;gap:8px;min-height:0;flex:1;}
 .work-slide.work-mechanics .mechanics-arm-figure{min-height:0;}
 .work-slide.work-mechanics .mechanics-arm-notes{display:flex;justify-content:center;flex-direction:column;}
 .work-slide.work-mechanics :is(.mechanics-frames-block,.mechanics-base-summary)>div{font-size:var(--slide-font);line-height:1.25;}
 .work-slide.work-mechanics .katex{font-size:1em;}
-@media(min-width:901px) and (max-height:850px){.work-slide.work-mechanics .mechanics-overview{gap:10px;}.work-slide.work-mechanics .mechanics-main-band{gap:17px;}.mechanics-detail-band{gap:17px;padding-top:8px;}.work-slide.work-mechanics .mechanics-block{gap:5px;}}
+@media(min-width:901px) and (max-height:850px){.work-slide.work-mechanics .mechanics-overview{gap:10px;}.work-slide.work-mechanics .mechanics-main-band{gap:10px;}.mechanics-detail-band{gap:10px;}.work-slide.work-mechanics .mechanics-block{padding:8px 10px;}.work-slide.work-mechanics .mechanics-block{gap:5px;}}
 @media(max-width:900px){.work-slide.work-mechanics .mechanics-main-band{display:flex;flex-direction:column;gap:20px;}.work-slide.work-mechanics .mechanics-space-figure{height:290px;flex:none;}.work-slide.work-mechanics .work-dh-table table{min-width:460px;}.mechanics-detail-band{display:flex;flex-direction:column;gap:22px;}.work-slide.work-mechanics .mechanics-arm-row{min-height:230px;}}
 /* Runtime connections and the software modules occupy the same shared content row. */
 .work-system-main{display:grid;grid-template-columns:1.2fr 1fr;gap:27px;flex:1;min-height:0;}
@@ -761,7 +774,8 @@
 .work-system .work-module{padding-top:8px;}
 .work-system .work-module ul{margin-top:6px;line-height:1.4;}
 .work-system .work-module li+li{margin-top:7px;}
-.work-system .work-interface-fields{gap:22px;}
+.work-system .work-interface-fields{gap:22px;border:0;background:#f3f5f7;border-radius:6px;padding:8px 12px;}
+.work-system .work-interface-fields dt{color:#365779;}
 @media(min-width:901px) and (max-height:850px){.work-system-main{gap:22px;}.work-system-main .work-module-grid{gap:11px!important;}.work-system .work-module{padding-top:6px;}}
 @media(max-width:900px){.work-system-main{grid-template-columns:1fr;gap:22px;}.work-system .work-runtime-diagram svg{min-width:690px;}.work-system-main .work-module-grid{gap:20px!important;}}
 /* Modal video playback reuses the inline player and preserves its timeline. */
