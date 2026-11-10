@@ -169,5 +169,19 @@
     "derived": "Parallel 5555 command and 5556 state/JPEG panels; explicit PC/Host socket roles; single localized SVG label per item; Host validation and device interfaces",
     "bytes": 8729,
     "sha256": "6ff3a039fdb00010d1caa7f5bfc7e1573fdbea7dda128eaf6b0f3e04f914f3bb"
+  },
+  {
+    "asset": "frame-timing.svg",
+    "source": "https://bcnz96us0h7n.feishu.cn/wiki/SfdrwymJciFXkOkHm9UcVxp8nDv",
+    "derived": "50 points per dataset; 49 intervals at the measured episode-median rates 11.09 Hz and 29.49 Hz",
+    "bytes": 9118,
+    "sha256": "1345d953185df70f8cb7578fa727d675c2b3edacb94a053c7539aa6ef5c915f7"
+  },
+  {
+    "asset": "tcp-action-adapter.svg",
+    "source": "AlohaMini efff12f: datasets/kinematic_fields.py, datasets/action_transforms.py, datasets/rotations.py and docs/training.md",
+    "derived": "Optional calibrated TCP/tool-frame delta and row-6D transform for GR00T N1.7; recorded actions remain the default",
+    "bytes": 8347,
+    "sha256": "39fcfc2fc33cc6bad138bc687f2f92bb3886bede1933975394b881481de9b575"
   }
 ]
