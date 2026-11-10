@@ -737,34 +737,33 @@
 @media(min-width:901px) and (max-height:850px){.work-slide .placement-data-videos video{height:135px;max-height:135px;}.work-slide .placement-data-top .work-table th,.work-slide .placement-data-top .work-table td{padding:4px 6px;}.work-slide .placement-data-top .work-column{gap:6px;}}
 @media(min-width:1750px){.work-slide .placement-data-videos video{height:220px;max-height:220px;}}
 @media(max-width:900px){.work-slide .placement-data-videos video{height:auto;max-height:420px;}.work-interface-fields{grid-template-columns:1fr;gap:12px;}.work-slide .placement-data-top .work-sampling-figure{min-height:200px;}}
-/* Single-page mechanics: compact upper evidence, full-width workspace, one reading size. */
-.work-slide.work-mechanics .mechanics-overview{display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;}
-.mechanics-upper{display:grid;grid-template-columns:.2fr .4fr .4fr;gap:20px;flex-shrink:0;min-width:0;}
-.work-slide.work-mechanics .mechanics-block{display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0;}
+/* Compact mechanics: one large workspace, adjacent DH table, concise model notes. */
+.work-slide.work-mechanics .mechanics-overview{display:flex;flex-direction:column;gap:13px;flex:1;min-height:0;}
+.work-slide.work-mechanics .mechanics-block{display:flex;flex-direction:column;gap:7px;min-height:0;min-width:0;}
 .work-slide.work-mechanics .mechanics-overview :is(p,table,th,td,figcaption,h3){font-size:var(--slide-font);line-height:1.25;}
-.work-slide.work-mechanics .mechanics-block h3{font-weight:600;}
-.work-slide.work-mechanics .work-figure figcaption{gap:6px;}
-.work-slide.work-mechanics .mechanics-arm-row{display:flex;flex-direction:column;gap:6px;min-height:0;}
-.work-slide.work-mechanics .mechanics-arm-figure{height:140px;min-height:0;flex:none;}
-.work-slide.work-mechanics .mechanics-arm-figure>svg{height:100%;max-height:105px;}
-.work-slide.work-mechanics .mechanics-arm-notes{display:block;}
-.work-slide.work-mechanics .work-dh-table th,.work-slide.work-mechanics .work-dh-table td{padding:2px 5px;line-height:1.15;white-space:nowrap;}
-.work-slide.work-mechanics .mechanics-base-row{display:grid;grid-template-columns:85px minmax(0,1fr);gap:10px;min-height:0;}
-.work-slide.work-mechanics .mechanics-base-figure{min-height:0;}
-.work-slide.work-mechanics .mechanics-base-figure>svg{height:130px;}
-.work-slide.work-mechanics .mechanics-base-copy{display:flex;flex-direction:column;gap:6px;min-width:0;min-height:0;}
-.work-slide.work-mechanics :is(.work-base-formula,.work-lift-formula,.mechanics-fk-strip){font-size:var(--slide-font);line-height:1.25;}
-.work-slide.work-mechanics .katex{font-size:1em;}
-.work-slide.work-mechanics .mechanics-base-copy th,.work-slide.work-mechanics .mechanics-base-copy td{padding:2px 4px;line-height:1.15;}
-.work-slide.work-mechanics .mechanics-fk-strip{display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid #aaa;border-bottom:1px solid #aaa;padding:6px 0;flex-shrink:0;min-width:0;}
-.work-slide.work-mechanics .mechanics-fk-strip>p{white-space:nowrap;}
-.work-slide.work-mechanics .mechanics-space-block{flex:1;min-height:0;}
-.mechanics-space-row{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:20px;flex:1;min-height:0;}
+.work-slide.work-mechanics .mechanics-main-band{display:grid;grid-template-columns:1.7fr 1fr;gap:22px;flex:1.55;min-height:0;}
+.work-slide.work-mechanics .mechanics-space-block{min-height:0;}
 .work-slide.work-mechanics .mechanics-space-figure{min-height:0;}
-.mechanics-space-notes{display:flex;flex-direction:column;justify-content:space-between;gap:7px;min-width:0;}
-@media(min-width:1750px){.mechanics-upper{gap:25px;}.work-slide.work-mechanics .mechanics-arm-figure{height:190px;}.work-slide.work-mechanics .mechanics-arm-figure>svg{height:100%;max-height:148px;}.mechanics-space-row{grid-template-columns:minmax(0,1fr) 325px;}}
-@media(min-width:901px) and (max-height:850px){.work-slide.work-mechanics .mechanics-overview{gap:8px;}.mechanics-upper{gap:16px;}.work-slide.work-mechanics .mechanics-arm-figure{height:125px;}.work-slide.work-mechanics .mechanics-arm-figure>svg{height:100%;max-height:90px;}.work-slide.work-mechanics .mechanics-base-row{grid-template-columns:75px minmax(0,1fr);gap:8px;}.work-slide.work-mechanics .mechanics-fk-strip{padding:4px 0;}.mechanics-space-row{grid-template-columns:minmax(0,1fr) 245px;gap:15px;}}
-@media(max-width:900px){.mechanics-upper{grid-template-columns:1fr;gap:22px;}.work-slide.work-mechanics .mechanics-arm-figure{height:270px;}.work-slide.work-mechanics .mechanics-arm-figure>svg{height:100%;max-height:235px;}.work-slide.work-mechanics .work-dh-table table{min-width:480px;}.work-slide.work-mechanics .mechanics-base-row{grid-template-columns:100px minmax(0,1fr);}.work-slide.work-mechanics .mechanics-base-copy{overflow-x:auto;}.work-slide.work-mechanics .mechanics-base-copy table{min-width:300px;}.work-slide.work-mechanics .mechanics-fk-strip{display:flex;flex-direction:column;align-items:flex-start;overflow-x:auto;}.mechanics-space-row{grid-template-columns:1fr;}.work-slide.work-mechanics .mechanics-space-figure{min-height:230px;}.mechanics-space-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}}
+.work-slide.work-mechanics .mechanics-workspace-display{height:100%;min-height:0;}
+.work-slide.work-mechanics .work-dh-table th,.work-slide.work-mechanics .work-dh-table td{padding:2px 5px;line-height:1.15;white-space:nowrap;}
+.mechanics-detail-band{display:grid;grid-template-columns:.95fr 1.25fr 1.25fr;gap:22px;flex:1;min-height:0;border-top:1px solid #aaa;padding-top:10px;}
+.work-slide.work-mechanics .mechanics-arm-row{display:grid;grid-template-columns:1.1fr 1fr;gap:8px;min-height:0;flex:1;}
+.work-slide.work-mechanics .mechanics-arm-figure{min-height:0;}
+.work-slide.work-mechanics .mechanics-arm-notes{display:flex;justify-content:center;flex-direction:column;}
+.work-slide.work-mechanics :is(.mechanics-frames-block,.mechanics-base-summary)>div{font-size:var(--slide-font);line-height:1.25;}
+.work-slide.work-mechanics .katex{font-size:1em;}
+@media(min-width:901px) and (max-height:850px){.work-slide.work-mechanics .mechanics-overview{gap:10px;}.work-slide.work-mechanics .mechanics-main-band{gap:17px;}.mechanics-detail-band{gap:17px;padding-top:8px;}.work-slide.work-mechanics .mechanics-block{gap:5px;}}
+@media(max-width:900px){.work-slide.work-mechanics .mechanics-main-band{display:flex;flex-direction:column;gap:20px;}.work-slide.work-mechanics .mechanics-space-figure{height:290px;flex:none;}.work-slide.work-mechanics .work-dh-table table{min-width:460px;}.mechanics-detail-band{display:flex;flex-direction:column;gap:22px;}.work-slide.work-mechanics .mechanics-arm-row{min-height:230px;}}
+/* Runtime connections and the software modules occupy the same shared content row. */
+.work-system-main{display:grid;grid-template-columns:1.2fr 1fr;gap:27px;flex:1;min-height:0;}
+.work-system .work-runtime-diagram{min-height:0;flex:auto;}
+.work-system-main .work-module-grid{display:flex!important;flex-direction:column;gap:15px!important;min-height:0;justify-content:space-between;}
+.work-system .work-module{padding-top:8px;}
+.work-system .work-module ul{margin-top:6px;line-height:1.4;}
+.work-system .work-module li+li{margin-top:7px;}
+.work-system .work-interface-fields{gap:22px;}
+@media(min-width:901px) and (max-height:850px){.work-system-main{gap:22px;}.work-system-main .work-module-grid{gap:11px!important;}.work-system .work-module{padding-top:6px;}}
+@media(max-width:900px){.work-system-main{grid-template-columns:1fr;gap:22px;}.work-system .work-runtime-diagram svg{min-width:690px;}.work-system-main .work-module-grid{gap:20px!important;}}
 /* Modal video playback reuses the inline player and preserves its timeline. */
 .work-video-enlarge{white-space:nowrap;}
 .work-video-viewer{width:min(1500px,calc(100vw - 28px));height:calc(100dvh - 28px);max-width:none;max-height:none;padding:0;border:1px solid #777;border-radius:0;background:#111;color:#222;}

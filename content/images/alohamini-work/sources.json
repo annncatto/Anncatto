@@ -165,9 +165,9 @@
   },
   {
     "asset": "system-runtime.svg",
-    "source": "AlohaMini docs/host-protocol.md and docs/ros2.md",
-    "derived": "PC interfaces, Host command validation and dual TTL buses",
-    "bytes": 6497,
-    "sha256": "fdf42552a35dfa04ba4c195ca246961560dd00ce9cbe2942d5b1bc66a672f1ec"
+    "source": "AlohaMini docs/host-protocol.md, docs/ros2.md and src/alohamini/runtime/host.py",
+    "derived": "PC HostClient; 5555 PUSH/PULL targets, 5556 DEALER/ROUTER state/JPEG, Host validation, TTL buses and cameras",
+    "bytes": 8853,
+    "sha256": "b203db2eb3c47ae6a34badf592182e1681c5ae34ca16e3c7775fb058a6bb4705"
   }
 ]
