@@ -7,4 +7,12 @@
 - For research-paper presentations and web PPT articles, follow [the presentation workflow](docs/presentation-workflow.md). Keep paper-led reasoning, readable primary figures, shared alignment grids, the current title/navigation/source header, and meaningful interactions; apply the bilingual layout and overlap checks before delivery.
 - For course notes and screenshot-based technical blogs, follow [the course-note workflow](docs/course-note-workflow.md), derived from the lightweight-design revisions. Keep source coverage, complete derivations, concrete case benefits and meaningful computed figures; exclude drafting instructions from public prose.
 - Before continuing the lightweight-design tool, read [its handoff](docs/lightweight-tool-handoff.md). Publication was authorized on 2026-11-05. Maintain the tool and articles together in the main workspace; exclude the local RP1 source meshes from public builds until redistribution permission is established.
-- Workflow and handoff documents have one canonical user-facing location: `/home/anncatto/Anncatto/docs/`. Start from [the documentation index](docs/README.md), keep those files current when working in isolated worktrees, and link users to the main-directory paths.
+- Before continuing the RP1 course project, read [the study workflow](docs/rp1-study-workflow.md) and [current project state](docs/rp1-leg-project.md). Optimize the right leg through whole-leg parameter rounds, reuse Infra calculations, keep fixed scoring and independent verification, and write Alpha only after Study selection. Do not drift into repeated isolated foot-plate optimization.
+- Workflow and handoff documents have one canonical user-facing location: `/home/ann/Anncatto/docs/`. Start from [the documentation index](docs/README.md), keep those files current when working in isolated worktrees, and link users to the main-directory paths.
+
+## Workspace and branches
+
+- The primary checkout is `/home/ann/Anncatto`; workflow and handoff documents are indexed by `docs/README.md`. See `docs/repository-workflow.md` for branch roles and migration recovery.
+- Keep one primary checkout and use task branches. Preserve `buck/*` references as imported history; keep unpublished tools, D20 work, exports, and raw experiment records separate from article releases.
+- Group findings that answer the same question. Prefer parallel bullet points and one or two sentences per paragraph; explain the reasoning fully rather than compressing several steps into one sentence. Figures and experiment data may need longer explanations.
+- For experiment updates, connect the observed failure, the intervention, and the metric used to choose between alternatives. Distinguish a proposed training route from a measured task-success result.

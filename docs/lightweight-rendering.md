@@ -2,7 +2,7 @@
 
 后续修正见[运动载荷与闭环验证](lightweight-control.md)：早期质心追逐支撑中心的步态和相机跟随已替换；新增真实闭环测试与原 URDF 圆轨迹。下文保留早期渲染核对依据，涉及旧运动／验证能力时以新文档为准。
 
-2026-11-02。工作位置为 `/home/anncatto/Anncatto`，分支为 `draft/lightweight-design-workbench`。继续本地调试，不发布工具。材料与计算口径见 [材料选型文档](lightweight-materials.md)。
+2026-11-02。工作位置为 `/home/ann/Anncatto`，分支为 `draft/lightweight-design-workbench`。继续本地调试，不发布工具。材料与计算口径见 [材料选型文档](lightweight-materials.md)。
 
 ## 开源方案
 

@@ -73,7 +73,7 @@ RP1 默认参数来自[六组局部参数扫描](lightweight-source-sweep.json)�
 
 ## Alohamini 原模型
 
-只读 `/home/anncatto/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf`，提取 `left_Base` 子树；不改 Alohamini 仓库。导入脚本为 `scripts/models/import-alohamini.py`，使用既有 `alohamini` 环境中的 NumPy。原始来源信息、URDF、FK 样例、许可证与资产清单位于 `public/models/alohamini-left/`。
+只读 `/home/ann/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf`，提取 `left_Base` 子树；不改 Alohamini 仓库。导入脚本为 `scripts/models/import-alohamini.py`，使用既有 `alohamini` 环境中的 NumPy。原始来源信息、URDF、FK 样例、许可证与资产清单位于 `public/models/alohamini-left/`。
 
 - 10 个节点，6 个机械臂转轴和 1 个夹爪转轴；源固定相机及 TCP 均保留。夹爪不是移动副，也不进入 TCP IK 祖先链。
 - 保留原关节原点旋转、局部轴、上下限、effort、velocity、质心及完整惯量；URDF 与 MJCF 导出使用相同变换。

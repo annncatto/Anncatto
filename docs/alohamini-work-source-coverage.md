@@ -2,7 +2,7 @@
 
 网页路径：`/notes/alohamini-work/slides/`。主文件为 `content/alohamini-work/presentation.html`，9 个页面片段位于 `content/alohamini-work/slides/`。材料核对与制作日期：2026-11-09；机械与软件页面修订：2026-11-10。
 
-本地分支为 `article/alohamini-work`，工作目录 `/home/anncatto/Anncatto-work-presentation`。本轮为本地预览，制作和构建未混入主目录的 RP1 与交互工具改动。
+本地分支为 `article/alohamini-work`，工作目录 `/home/ann/Anncatto-work-presentation`。本轮为本地预览，制作和构建未混入主目录的 RP1 与交互工具改动。
 
 ## 页面与论述链
 
@@ -22,7 +22,7 @@
 
 ## 平台资料
 
-- `/home/anncatto/Alohamini/README.md` 与 `docs/host-protocol.md`、`docs/training.md`、`docs/lerobot.md`、`docs/ros2.md`、`docs/simulation.md`。核对时 Git HEAD 为 `efff12f`。
+- `/home/ann/Alohamini/README.md` 与 `docs/host-protocol.md`、`docs/training.md`、`docs/lerobot.md`、`docs/ros2.md`、`docs/simulation.md`。核对时 Git HEAD 为 `efff12f`。
 - `src/alohamini/learning/processor.py` 的 MIN_MAX 正反变换：跨度小于 `1e-4` 时中心取 min，span 回退2；反变换为 `tensor*(span/2)+center`。擦板底盘常量维的解释来自这一实际路径。
 - 用户提供的《AlohaMini_系统设计与实验验证_预览.pdf》及对应PPTX：第3页机械臂关节图、DH参数及校核，第4页工作空间，第7页底盘映射，第9页升降换算。原图资产从PPTX提取；DH数值、校核精度与右臂YAML交叉核对，底盘半径和速度符号与model.json及kinematics/base.py核对。
 - 官网产品照片来自 <https://www.alohamini.cn/imgs/bg3.png>；保留原始像素，由SVG视口去除透明外边距，页面链接原官网。

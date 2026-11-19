@@ -45,7 +45,7 @@ JSON 导出增加 `cadStructure`，保留零件、材料参考、输入条件、
 - `src/design-analysis.ts`、`src/design-member-loads.ts`：参数化梁及已显式定义的等效梁。
 - `tests/source-structure.test.mjs` 与结构审计回归测试：独立公式和数据边界检查。
 
-原件提取使用已有 `/home/anncatto/miniconda3/envs/alohamini/bin/python`，未安装新依赖。理论出处、原工程文件和生成误差均保留在结构数据及来源文档中。
+原件提取使用已有 `/home/ann/miniconda3/envs/alohamini/bin/python`，未安装新依赖。理论出处、原工程文件和生成误差均保留在结构数据及来源文档中。
 
 最终验证：完整 `npm test` **89 项通过**（20.69 s，`/tmp/lightweight-cad-full-tests.log`）；构建与 134 项内部引用检查通过。九个刚体运动案例已重新执行，七个名义通过、两个既定反例仍未通过，数值与前一基线一致。固定数据文件哈希、三种默认截段输入及结果见[结构验证快照](lightweight-structure-validation.json)。
 

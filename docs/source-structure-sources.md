@@ -24,9 +24,9 @@ M447／M448 的“左、右”指一个小腿总成的两个零件；不是左�
 生成脚本为 [`scripts/models/import-rp1-structure.py`](../scripts/models/import-rp1-structure.py)，输出 [`m447-sections.json`](../public/models/rp1-24/structural/m447-sections.json)。原工程文件、材料 BOM 和许可保留在同目录 `source/`。使用现有 OCP 环境，不安装依赖：
 
 ```sh
-/home/anncatto/miniconda3/envs/alohamini/bin/python scripts/models/import-rp1-structure.py
+/home/ann/miniconda3/envs/alohamini/bin/python scripts/models/import-rp1-structure.py
 # 已有原件后的离线再生成
-/home/anncatto/miniconda3/envs/alohamini/bin/python scripts/models/import-rp1-structure.py --offline
+/home/ann/miniconda3/envs/alohamini/bin/python scripts/models/import-rp1-structure.py --offline
 ```
 
 脚本绑定当前 URDF 原字节 SHA-256 `d0c86d45773974d91445b728d148ecec965267746ec73e71afc6a7ffbce708d5` 和 `right_knee_link.STL` SHA-256 `ffe17fc9ba1614ae86610dc1b657461a3d1d70350729296c9210f68f3934d01d`。任何变化均须重新检查注册。

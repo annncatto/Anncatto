@@ -4,7 +4,7 @@
 
 ## 状态与工作空间
 
-- 用户于 2026-11-06 明确要求修正“更新耗时”的分析结论并发布本文。文章与发布操作均在 `/home/anncatto/Anncatto` 主工作目录进行，沿用同一工作空间，不创建新 worktree。
+- 用户于 2026-11-06 明确要求修正“更新耗时”的分析结论并发布本文。文章与发布操作均在 `/home/ann/Anncatto` 主工作目录进行，沿用同一工作空间，不创建新 worktree。
 - 本次发布范围为《OpenWAM & 动作表示》、配套图表/视频/交互及复现与写作流程文档。下文历次校验中“本地未发布稿”描述的是此次发布授权前的状态。
 - 工作期间检测到其他会话在维护 OpenWAM 演示及来源记录；未修改、暂存或回退那些文件。
 - 当前视频、误差与 517 帧实机记录都属于 recorded18，不属于 alpha80。
@@ -129,7 +129,7 @@ joint_self_attn.py 将合并序列同时交给视频 prepare 与动作 prepare_s
 
 ### 原始材料
 
-只读采集 GPU 服务器的配置、逐步 JSONL、日志和 safetensors 头部，没有加载完整模型、启动训练或占用额外 GPU。原件存放于 `/home/anncatto/Alohamini_workspace/reports/openwam_training_comparison_20261106/sources/`；服务器连接凭据不写入文件。四组完整全参训练按以下原始目录识别，正文仅使用相机数、示教规模和计算配置：
+只读采集 GPU 服务器的配置、逐步 JSONL、日志和 safetensors 头部，没有加载完整模型、启动训练或占用额外 GPU。原件存放于 `/home/ann/Alohamini_workspace/reports/openwam_training_comparison_20261106/sources/`；服务器连接凭据不写入文件。四组完整全参训练按以下原始目录识别，正文仅使用相机数、示教规模和计算配置：
 
 - `openwam_color_sort_4gpu_20261028_b8`：取初始 metrics 的 1–300 步，加 `metrics-from-300-1793180460080378383.jsonl` 的 301–10000；舍弃回退覆盖的 301–340 和失败恢复记录。
 - `pi05_full_flow_230_4gpu_b32_20261028`：原始目录位于 xyc，下有完整 1–10000 步指标。
@@ -148,7 +148,7 @@ token 计数由实际配置推导：OpenWAM 9 帧 384×320 画布，VAE 时间�
 
 ### 腕部统计
 
-来源 `/home/anncatto/Alohamini_workspace/diagnostics/openwam-live-20261102/grasp/`：findings.json、closing-events.json、replay-transition-results.npz、tracking-pose-summary.json。使用的是 11 月 2 日 4938 帧固定底盘回合，与正文原有 11 月 3 日 517 帧轨迹不同，已在新节明确标识。
+来源 `/home/ann/Alohamini_workspace/diagnostics/openwam-live-20261102/grasp/`：findings.json、closing-events.json、replay-transition-results.npz、tracking-pose-summary.json。使用的是 11 月 2 日 4938 帧固定底盘回合，与正文原有 11 月 3 日 517 帧轨迹不同，已在新节明确标识。
 
 10 个示教状态各 3 种子；图选 episode 0/frame 50 的完整 32 步预测。坐标 10 为 arm_right_wrist_flex.pos，示教端点 42.7751→15.0239；三种子均值 41.5682→17.3239。阴影为 3 个种子的逐步 min/max，不是置信区间。
 
@@ -159,7 +159,7 @@ token 计数由实际配置推导：OpenWAM 9 帧 384×320 画布，VAE 时间�
 运行：
 
 ```sh
-/home/anncatto/miniconda3/envs/alohamini/bin/python scripts/figures/openwam-training-analysis.py /home/anncatto/Alohamini_workspace/reports/openwam_training_comparison_20261106 /home/anncatto/Alohamini_workspace/diagnostics/openwam-live-20261102/grasp
+/home/ann/miniconda3/envs/alohamini/bin/python scripts/figures/openwam-training-analysis.py /home/ann/Alohamini_workspace/reports/openwam_training_comparison_20261106 /home/ann/Alohamini_workspace/diagnostics/openwam-live-20261102/grasp
 ```
 
 输出 training-cost.svg、wrist-pose-analysis.svg 和白名单 training-pose-summary.json。摘要保留统计口径、有效范围、参数分组与匿名来源标签的 SHA-256，不复制训练配置的私人路径、模型权重或连接凭据。

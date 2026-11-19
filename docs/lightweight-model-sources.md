@@ -14,9 +14,9 @@
 脚本 [`scripts/models/import-source-robots.py`](../scripts/models/import-source-robots.py) 使用现有 `alohamini` 环境的 NumPy，不安装新依赖。固定文件清单、字节数和 Git blob SHA 记录在 [`source-robots.lock.json`](../scripts/models/source-robots.lock.json)，只获取原 URDF 及实际引用资源，不下载整个仓库。GitHub API 返回固定提交原字节，每个文件校验后才写入；已有文件哈希不符时拒绝覆盖。
 
 ```sh
-/home/anncatto/miniconda3/envs/alohamini/bin/python scripts/models/import-source-robots.py
+/home/ann/miniconda3/envs/alohamini/bin/python scripts/models/import-source-robots.py
 # 已取得源文件后，无网络复现：
-/home/anncatto/miniconda3/envs/alohamini/bin/python scripts/models/import-source-robots.py --offline
+/home/ann/miniconda3/envs/alohamini/bin/python scripts/models/import-source-robots.py --offline
 ```
 
 每个 `public/models/{go2,rp1-24}/` 包含：原目录结构的 `source/`、原字节 `source.urdf`、`robot.glb`、`description.json`、`provenance.json`、`NOTICE`；Go2 另保留上游 `LICENSE`。生成的 [`src/source-robot-data.ts`](../src/source-robot-data.ts) 导出 `go2Description`、`rp1Description`。
@@ -137,13 +137,13 @@ rp1.urdf        c5874f0f324d4780a3d666d5924b3cd2d7bb83e02eb0437828f705af81e9616e
 
 ### AlohaMini：本地资料能补到什么程度
 
-2026-11-03 核对本地 `/home/anncatto/Alohamini` 的 `feat/libero-dynamics`，HEAD **`7d9b4b64efa4a160e415c81292d138632f69410b`**。保留该仓库未提交工作，没有切分支或修改源仓库。其 [`models/alohamini2pro/provenance.json`](/home/anncatto/Alohamini/models/alohamini2pro/provenance.json) 记录描述源为 `alohamini_ros2` **`8bd733cef109156ad5e2efe3890d154afdf94b39`**、Apache-2.0；当前完整 URDF SHA-256 为 `8459353ebc6af5800d809b96566b5073a7fcff880c67171ab07a0bd2f98ffee6`。工具使用 `left_Base` 子树。
+2026-11-03 核对本地 `/home/ann/Alohamini` 的 `feat/libero-dynamics`，HEAD **`7d9b4b64efa4a160e415c81292d138632f69410b`**。保留该仓库未提交工作，没有切分支或修改源仓库。其 [`models/alohamini2pro/provenance.json`](/home/ann/Alohamini/models/alohamini2pro/provenance.json) 记录描述源为 `alohamini_ros2` **`8bd733cef109156ad5e2efe3890d154afdf94b39`**、Apache-2.0；当前完整 URDF SHA-256 为 `8459353ebc6af5800d809b96566b5073a7fcff880c67171ab07a0bd2f98ffee6`。工具使用 `left_Base` 子树。
 
 | 本地证据 | 已核对内容 | 工具状态／接入条件 |
 | --- | --- | --- |
-| [`model.json`](/home/anncatto/Alohamini/models/alohamini2pro/model.json)，asset_revision 4，SHA-256 `7de62801e6b21eeb611778fd10ac83a7710871d75e7c886c0c6c37c4d8471df6` | 每臂肩转、三腕轴、夹爪为 5 个 STS3250；肩抬与肘为 2 个 STS3095 | 型号映射可补，文件未指定 STS3095 的电压／C001、C002 后缀；不能套用标准版 AlohaMini2 的电机 BOM |
-| [`physical_parameters.yaml`](/home/anncatto/Alohamini/models/alohamini2pro/config/kinematics/physical_parameters.yaml) | 当前单臂 2.0 kg 含暂估摄像头 0.2 kg；其余 CAD 相对质量缩放到 1.8 kg，惯量随质量比例缩放 | 保留为 `armInertia: 'urdf'` 旧选项；默认已采用下行CAD包。文件明确 `calibrated: false` |
-| [`20261102 活动链惯量包`](/home/anncatto/Alohamini_workspace/simulation/cad/alohamini2pro_active_inertias_20261102/inertia.json)，SHA-256 `b22a27a4981a026c4891fbe9b79014cf9376c5a1f54c85b27b22ffc89cd7f23e` | 绑定上述同一 URDF／SRDF；18 组刚体，含部件归属、质量、COM、完整张量和源坐标变换；左臂含摄像头共 **1.84962 kg** | 已作为默认物性导入。数据来自 SolidWorks 属性、用户质量覆盖及局部名义密度；摄像头已并入夹爪，原camera Link质量置0避免重复 |
+| [`model.json`](/home/ann/Alohamini/models/alohamini2pro/model.json)，asset_revision 4，SHA-256 `7de62801e6b21eeb611778fd10ac83a7710871d75e7c886c0c6c37c4d8471df6` | 每臂肩转、三腕轴、夹爪为 5 个 STS3250；肩抬与肘为 2 个 STS3095 | 型号映射可补，文件未指定 STS3095 的电压／C001、C002 后缀；不能套用标准版 AlohaMini2 的电机 BOM |
+| [`physical_parameters.yaml`](/home/ann/Alohamini/models/alohamini2pro/config/kinematics/physical_parameters.yaml) | 当前单臂 2.0 kg 含暂估摄像头 0.2 kg；其余 CAD 相对质量缩放到 1.8 kg，惯量随质量比例缩放 | 保留为 `armInertia: 'urdf'` 旧选项；默认已采用下行CAD包。文件明确 `calibrated: false` |
+| [`20261102 活动链惯量包`](/home/ann/Alohamini_workspace/simulation/cad/alohamini2pro_active_inertias_20261102/inertia.json)，SHA-256 `b22a27a4981a026c4891fbe9b79014cf9376c5a1f54c85b27b22ffc89cd7f23e` | 绑定上述同一 URDF／SRDF；18 组刚体，含部件归属、质量、COM、完整张量和源坐标变换；左臂含摄像头共 **1.84962 kg** | 已作为默认物性导入。数据来自 SolidWorks 属性、用户质量覆盖及局部名义密度；摄像头已并入夹爪，原camera Link质量置0避免重复 |
 
 新惯量包说明了可以从 CAD 进一步求解的范围，也保留限制：内部转子／齿轮、摩擦、柔顺与延迟仍未标定；肩转的 `0.000387405609146 kg·m²` 是整只轴承给出的转动惯量上界，敏感性范围为 0 至该值，**不是电机转子测量值**。舵盘采用封闭网格及名义铝密度 2700 kg/m³；全机底座还缺固定 Pi 塔质量、升降安装面有待独立复核，因此全机包要求锁定底座与轮子。固定单臂接入应只采用核对过坐标的左臂分组，不把全机限制或未验证坐标掩去。
 

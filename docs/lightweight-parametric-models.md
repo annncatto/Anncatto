@@ -171,7 +171,7 @@ node scripts/evaluate-lightweight-motion.mjs --derived --out docs/lightweight-de
 - RP1：原安装间距与五段关节原点距；新增根髋 X/Z，以及髋两级、大腿、小腿、踝连接的 XYZ。根髋 X/Z 只移动两条腿的安装点，不移动腰或改写基座惯量。
 - Alohamini：基座、肩、上臂、前臂、两级腕部和 TCP；新增肩 X 与上述关节连接的 XYZ。TCP 输入仍表示以 TCP 为基准的末端总成平移，不是夹爪与摄像头的独立零件重装配。
 
-Alohamini2Pro 左臂的原始值直接核对 `/home/anncatto/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf`：
+Alohamini2Pro 左臂的原始值直接核对 `/home/ann/Alohamini/models/alohamini2pro/urdf/alohamini2pro.urdf`：
 
 | 连接 | 父连杆局部 XYZ / mm | 原点直线距离 / mm |
 | --- | --- | ---: |
