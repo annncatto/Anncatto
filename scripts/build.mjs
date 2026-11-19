@@ -204,7 +204,7 @@ for (const p of posts) {
     ),
   );
   if (p.presentation) {
-    const slides = math((await readArticleSource(p.presentation))
+    const slides = (p.slug === 'gr00t2' ? '<link rel="stylesheet" href="/assets/gr00t2.css">' : '') + math((await readArticleSource(p.presentation))
       .replace(/\{\{openwam:([\w-]+)\}\}/g, (_, id) => renderOpenwamDiagram(id)));
     await write(`notes/${p.slug}/slides/index.html`, shell(p.title, p.descriptionEn, slides, true, 'slides', true));
   }

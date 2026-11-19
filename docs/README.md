@@ -24,3 +24,5 @@
 - [网页幻灯片实现与迭代记录](presentation-articles.md)。当前排版与验收规则以 PPT 工作流为准。
 
 2026-11-05：用户授权发布轻量化工具；公开构建与本地 RP1 资源的具体范围见[工具交接](lightweight-tool-handoff.md)。工具与实验文章继续在主目录维护。
+
+- [GR00T 2 网页 PPT 来源与编排](gr00t2-presentation.md) · [逐页演讲提示稿](gr00t2-speaker-notes.md)。

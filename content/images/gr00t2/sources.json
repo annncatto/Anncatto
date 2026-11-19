@@ -1,0 +1,379 @@
+[
+  {
+    "asset": "figure-01.webp",
+    "figure": 1,
+    "pdfPage": 4,
+    "cropPoints": [
+      60,
+      88,
+      536,
+      522
+    ],
+    "width": 1904,
+    "height": 1736,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "88149396f0a720a81ccb0161393ef44bd1319c6bcd7ad8e69c003419bf757f1d",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-02.webp",
+    "figure": 2,
+    "pdfPage": 6,
+    "cropPoints": [
+      60,
+      83,
+      536,
+      219
+    ],
+    "width": 1904,
+    "height": 544,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "3a1a6d195fb88b6fad5f22dd4697e9a9e9914d58f506603734a14b7ebab1f8b4",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-03.webp",
+    "figure": 3,
+    "pdfPage": 7,
+    "cropPoints": [
+      60,
+      530,
+      536,
+      629
+    ],
+    "width": 1904,
+    "height": 396,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "a9978c922fe1aa79b4c8b59c32f9be3d700accefad0654ccf38ea7bd726745d1",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-04.webp",
+    "figure": 4,
+    "pdfPage": 8,
+    "cropPoints": [
+      60,
+      86,
+      536,
+      339
+    ],
+    "width": 1904,
+    "height": 1012,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "7e102afc80e03a9a82766a69cbf0a92731a941aff07ab15d4413a76519a7670f",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-05.webp",
+    "figure": 5,
+    "pdfPage": 10,
+    "cropPoints": [
+      60,
+      83,
+      536,
+      227
+    ],
+    "width": 1904,
+    "height": 576,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "dafab6e91b3de0efe9da8499f7df472c22ddb637f07206c1dcc02ccd06566616",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-06.webp",
+    "figure": 6,
+    "pdfPage": 10,
+    "cropPoints": [
+      60,
+      330,
+      536,
+      484
+    ],
+    "width": 1904,
+    "height": 616,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "85fce6a63a8682ec2d777ac335d89ef6bc8d232d4e552313f2ebba7ed544e74e",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-07.webp",
+    "figure": 7,
+    "pdfPage": 11,
+    "cropPoints": [
+      60,
+      86,
+      536,
+      251
+    ],
+    "width": 1904,
+    "height": 660,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "1ca60e1a1930676c7581fe5a1b155c9a3215333d787f33fe2b705374c1ba3960",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-08.webp",
+    "figure": 8,
+    "pdfPage": 12,
+    "cropPoints": [
+      60,
+      320,
+      536,
+      501
+    ],
+    "width": 1904,
+    "height": 724,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "5074d7a6e6a1b524bfd685de34ede89561b634cc1fe1c93bc1a3989a8df4d39f",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-09.webp",
+    "figure": 9,
+    "pdfPage": 13,
+    "cropPoints": [
+      60,
+      86,
+      536,
+      281
+    ],
+    "width": 1904,
+    "height": 780,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "9bcb62e1e556501877f692afe888dc72511a3d1a5d1e51a62e2c29616c8576f7",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-10.webp",
+    "figure": 10,
+    "pdfPage": 15,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      260
+    ],
+    "width": 1904,
+    "height": 704,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "00bfff34d46bb78a61703031e67f1540025aefd1b6dcb4679b102508b2f343dc",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-11.webp",
+    "figure": 11,
+    "pdfPage": 17,
+    "cropPoints": [
+      60,
+      86,
+      273,
+      268
+    ],
+    "width": 852,
+    "height": 728,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "e4329961832046d833589ef38f5a736e7a28ad5ccf34113f8b98b89a8b242ea5",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-12.webp",
+    "figure": 12,
+    "pdfPage": 18,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      281
+    ],
+    "width": 1904,
+    "height": 788,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "0020f79d5f59459c8fd95b93cfc5e7c5cdc73608041f244163eab8660f9f7a30",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-13.webp",
+    "figure": 13,
+    "pdfPage": 18,
+    "cropPoints": [
+      60,
+      450,
+      536,
+      700
+    ],
+    "width": 1904,
+    "height": 1000,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "7514b0d83cbd734a75cc7ca72f91237cdfc60102844d62e1fe05589d7f169fda",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-14.webp",
+    "figure": 14,
+    "pdfPage": 19,
+    "cropPoints": [
+      60,
+      85,
+      536,
+      251
+    ],
+    "width": 1904,
+    "height": 664,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "44ce8e315686354582b3576db59cfd8b760df446f0317d89f3e6ac3bcdafaf30",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-15.webp",
+    "figure": 15,
+    "pdfPage": 19,
+    "cropPoints": [
+      60,
+      345,
+      536,
+      446
+    ],
+    "width": 1904,
+    "height": 404,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "b1631ad23ce030281d1f56ffe267c6e3b549e24914ed2fff4e6a2fc4f235eb83",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-16.webp",
+    "figure": 16,
+    "pdfPage": 20,
+    "cropPoints": [
+      60,
+      85,
+      536,
+      218
+    ],
+    "width": 1904,
+    "height": 532,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "048eac3b8e11e7c0d7aa702c722b8e42f889732406bd621b22a029cc79102e7d",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-17.webp",
+    "figure": 17,
+    "pdfPage": 21,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      236
+    ],
+    "width": 1904,
+    "height": 608,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "05e79d95d4d8ed7c01ba50fa667a6c1e45531acfaa64ce694f39ef7d1f3dc3fe",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-18.webp",
+    "figure": 18,
+    "pdfPage": 21,
+    "cropPoints": [
+      60,
+      300,
+      536,
+      457
+    ],
+    "width": 1904,
+    "height": 628,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "bacebc2230a3f9b045c34f1e621de13aab46e8f64c7c7270dbe28b1b09f55e7c",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-19.webp",
+    "figure": 19,
+    "pdfPage": 23,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      233
+    ],
+    "width": 1904,
+    "height": 596,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "778ed705e4a81efb36b2faf7f4f5b06a923042e097f2ee0883641f0cd541faaf",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-20.webp",
+    "figure": 20,
+    "pdfPage": 24,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      216
+    ],
+    "width": 1904,
+    "height": 528,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "d771f779a7335c257cca9f6fb2180760971477f2c4e4a50833636bac07c042a1",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-28.webp",
+    "figure": 28,
+    "pdfPage": 47,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      296.63392
+    ],
+    "width": 1904,
+    "height": 850,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "b540f2bbff00118cbe269ff51b94717dc2bea3ee8c978464ac5e913c8f2b190f",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-46.webp",
+    "figure": 46,
+    "pdfPage": 85,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      245.84692
+    ],
+    "width": 1904,
+    "height": 647,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "18176718aad7885f6d2d5aa3677c52d0d345237fb04ce1b5ef4a35be355c27d2",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-60.webp",
+    "figure": 60,
+    "pdfPage": 114,
+    "cropPoints": [
+      60,
+      84,
+      536,
+      298.37892
+    ],
+    "width": 1904,
+    "height": 857,
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "sha256": "af3713c7fd568dce899beeeab5e0053454b79f6ce226567fb3f8b5b0ef39e12a",
+    "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
+  },
+  {
+    "asset": "figure-01-io.webp",
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
+    "figure": 1,
+    "pdfPage": 4,
+    "derived": "Inputs/outputs panel cropped from the original Figure 1; full Figure 1 retained in the figure archive.",
+    "sha256": "ed63675c3cddb6a87d6e6bee1e0c2f817c056381543069b981c427c2e4c0c902",
+    "license": "© 2026 NVIDIA. All rights reserved."
+  }
+]
