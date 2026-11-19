@@ -19,7 +19,7 @@
 | `article/<主题>` | 一篇文章及其图表、复核脚本、来源说明 |
 | `tool/<主题>` | 未完成的交互工具或功能，独立验收 |
 | `local/d20-homepage` | 保留原 D20 首页工作，按原约定单独发布 |
-| `buck/*` | 从 buck 取回的历史引用；用于核查和恢复 |
+| `refs/archive/buck/*` | 从 buck 取回的历史引用；用于核查和恢复 |
 
 日常使用一个主要检出，以任务分支组织修改。完成的文章只合并该文章及必要公共改动；工具实验和原始数据分别保留。
 
@@ -43,9 +43,11 @@ git switch -c article/<主题>
 
 2026-11-19 核对：GitHub 仅有 `main`，没有打开的 PR；公共基线为 `19c9393`。buck 的主要检出落后 7 个提交，其未提交内容以工具与 RP1 工作为主。
 
-- 12 个原分支已读取到本机 `buck/*`。`local/d20-homepage` 有 3 个独有补丁；其余引用已进入主线，或提交与主线补丁等价。
+- 12 个原分支已读取到本机 `refs/archive/buck/*`。`local/d20-homepage` 有 3 个独有补丁；其余引用已进入主线，或提交与主线补丁等价。
 - 原 `article/gr00t2` 与主线提交相同，但工作目录还有 8 项未提交内容，已随迁移快照保留。
 - 原主要检出中的 65 项状态记录，以及全部工作流和未跟踪导出，已保存到 `/home/ann/Anncatto_workspace/migration-20261119/buck-unpublished.tar.gz`。
 - 本机迁移前的文档另存于同目录 `preexisting-local/`。两台机器的工作流内容相同，已保留本机 `/home/ann` 路径。
 
 旧检出和历史引用作为恢复来源保留。清理分支前，分别检查提交可达性、补丁等价、工作目录和忽略文件，不能只按分支名称或 ahead/behind 判断。
+
+本机当前只以 `origin` 同步 GitHub。历史引用使用 `git for-each-ref refs/archive/buck` 查看，D20 的三个独有补丁另保留在本地 `local/d20-homepage` 分支；所有引用的完整对象备份位于迁移目录 `repository-history.bundle`。

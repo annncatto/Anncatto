@@ -13,6 +13,6 @@
 ## Workspace and branches
 
 - The primary checkout is `/home/ann/Anncatto`; workflow and handoff documents are indexed by `docs/README.md`. See `docs/repository-workflow.md` for branch roles and migration recovery.
-- Keep one primary checkout and use task branches. Preserve `buck/*` references as imported history; keep unpublished tools, D20 work, exports, and raw experiment records separate from article releases.
+- Keep one primary checkout and use task branches. Preserve `refs/archive/buck/*` references as imported history; keep unpublished tools, D20 work, exports, and raw experiment records separate from article releases.
 - Group findings that answer the same question. Prefer parallel bullet points and one or two sentences per paragraph; explain the reasoning fully rather than compressing several steps into one sentence. Figures and experiment data may need longer explanations.
 - For experiment updates, connect the observed failure, the intervention, and the metric used to choose between alternatives. Distinguish a proposed training route from a measured task-success result.
