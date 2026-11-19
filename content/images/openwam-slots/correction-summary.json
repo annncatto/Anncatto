@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "verified_on": "2026-11-19",
+  "dataset": {
+    "total_episodes": 155,
+    "original_episodes": 115,
+    "added_episodes": 40,
+    "train_episodes": 149,
+    "validation_episodes": 6,
+    "train_frames": 79088,
+    "validation_frames": 3815,
+    "added_train_frames": 22338,
+    "added_train_fraction": 0.28244487153550474,
+    "validation_source": "original demonstrations",
+    "task_prompt_count": 1,
+    "task_prompt": "Clear the tabletop by placing all blue objects into the basket on the robot's left and all green objects into the basket on the robot's right. Both baskets are in front of the robot."
+  },
+  "runs": {
+    "task_finetune": {
+      "initialization": "115-demonstration task model, 10k updates",
+      "new_optimizer": true,
+      "current_steps": 10000,
+      "cumulative_task_steps": 20000,
+      "learning_rate": 1e-05,
+      "batch_size": 32,
+      "seed": 42,
+      "parameter_dtype": "bfloat16",
+      "compute_dtype": "bfloat16",
+      "optimizer_moment_dtype": "bfloat16",
+      "first_100_action_loss": 0.028712323641520925,
+      "final_1000_video_fraction": 0.957280540517724,
+      "validation": [
+        {
+          "step": 2000,
+          "loss_video": 0.1641543118089839,
+          "loss_action": 0.01819535064509895
+        },
+        {
+          "step": 4000,
+          "loss_video": 0.1657769920622996,
+          "loss_action": 0.01969704792169321
+        },
+        {
+          "step": 6000,
+          "loss_video": 0.164381566357971,
+          "loss_action": 0.017383524983812966
+        },
+        {
+          "step": 8000,
+          "loss_video": 0.16368406812067182,
+          "loss_action": 0.018313584057213696
+        },
+        {
+          "step": 10000,
+          "loss_video": 0.16507452370081374,
+          "loss_action": 0.018912185071106632
+        }
+      ],
+      "offline_mae": {
+        "arm_joints12": 4.134991820698098,
+        "left_gripper": 5.147824837047505,
+        "right_gripper": 5.266740059343951,
+        "valid_action_positions": 119104
+      }
+    },
+    "foundation_restart": {
+      "initialization": "official foundation, step 154000",
+      "new_optimizer": true,
+      "current_steps": 10000,
+      "cumulative_task_steps": 10000,
+      "learning_rate": 5e-05,
+      "batch_size": 32,
+      "seed": 42,
+      "parameter_dtype": "bfloat16",
+      "compute_dtype": "bfloat16",
+      "optimizer_moment_dtype": "bfloat16",
+      "first_100_action_loss": 1.3841213147342204,
+      "final_1000_video_fraction": 0.9593166575362229,
+      "validation": [
+        {
+          "step": 2000,
+          "loss_video": 0.17215602558095808,
+          "loss_action": 0.02231717510558549
+        },
+        {
+          "step": 4000,
+          "loss_video": 0.1675578673294505,
+          "loss_action": 0.018769796965270716
+        },
+        {
+          "step": 6000,
+          "loss_video": 0.1635218781373936,
+          "loss_action": 0.015791810945595362
+        },
+        {
+          "step": 8000,
+          "loss_video": 0.16282894762890807,
+          "loss_action": 0.01660330081131977
+        },
+        {
+          "step": 10000,
+          "loss_video": 0.16395363512541733,
+          "loss_action": 0.017087553078882385
+        }
+      ],
+      "offline_mae": {
+        "arm_joints12": 4.260900005629289,
+        "left_gripper": 5.099804572867653,
+        "right_gripper": 5.200170292801783,
+        "valid_action_positions": 119104
+      }
+    }
+  },
+  "weight_comparisons": {
+    "old_to_ft": {
+      "action_dit": {
+        "n": 1020870656,
+        "changed_fraction": 0.07518132346043258,
+        "relative_l2": 0.007056615186937569
+      },
+      "video_dit": {
+        "n": 4999787712,
+        "changed_fraction": 0.05885544406090176,
+        "relative_l2": 0.006572771304341694
+      }
+    },
+    "official_to_base": {
+      "action_dit": {
+        "n": 1020870656,
+        "changed_fraction": 0.39383797999969156,
+        "relative_l2": 0.05388032578845762
+      },
+      "video_dit": {
+        "n": 4999787712,
+        "changed_fraction": 0.3748470911078554,
+        "relative_l2": 0.04149077664819682
+      }
+    },
+    "ft_to_base": {
+      "action_dit": {
+        "n": 1020870656,
+        "changed_fraction": 0.43067804076445115,
+        "relative_l2": 0.03484135260561775
+      },
+      "video_dit": {
+        "n": 4999787712,
+        "changed_fraction": 0.4085936129041792,
+        "relative_l2": 0.04176063012559777
+      }
+    }
+  },
+  "state_projection": {
+    "old_train": {
+      "windows": 872,
+      "normalization_only_relative_l2": 0.24351843922802033,
+      "normalization_by_group_relative_l2": {
+        "arms14": 0.1811933293981709,
+        "base3": 0.0,
+        "lift": 0.16289287530287988
+      },
+      "ft_weights_only_relative_l2": 0.0005292262367472689,
+      "ft_combined_relative_l2": 0.24350801578108316,
+      "ft_to_base_same_normalization_relative_l2": 0.0014577314637365011
+    },
+    "new_train": {
+      "windows": 320,
+      "normalization_only_relative_l2": 0.5132557554729661,
+      "normalization_by_group_relative_l2": {
+        "arms14": 0.13557069144407627,
+        "base3": 0.0,
+        "lift": 0.4946625088613626
+      },
+      "ft_weights_only_relative_l2": 0.0005265009712868163,
+      "ft_combined_relative_l2": 0.5132548538312077,
+      "ft_to_base_same_normalization_relative_l2": 0.0014849171636124728
+    },
+    "old_val": {
+      "windows": 48,
+      "normalization_only_relative_l2": 0.25595015085744904,
+      "normalization_by_group_relative_l2": {
+        "arms14": 0.1747653081505956,
+        "base3": 0.0,
+        "lift": 0.18673785941676974
+      },
+      "ft_weights_only_relative_l2": 0.0005235273584378717,
+      "ft_combined_relative_l2": 0.25593960033473573,
+      "ft_to_base_same_normalization_relative_l2": 0.0014743766043699836
+    },
+    "method": "FP32 linear projection of exact BF16 stored weights; 8 uniformly spaced real states per episode, endpoints included; normalization exactly follows saved source processor; each comparison keeps states fixed"
+  },
+  "source_sha256": {
+    "task_finetune/train.json": "1948106dd96513378cf3cb08615055ba252ac4297221863c0a290bab83e28f71",
+    "task_finetune/metrics.jsonl": "46ac55ddee1ce75799530813a130bedc7f6aa69ae25ad0657089fb6eb699f2f5",
+    "task_finetune/validation-metrics.jsonl": "524c71ff8ed502a7fc978448eab1d8d53e9bbfec42e48417475758e499ec937c",
+    "task_finetune/offline-evaluation.json": "b7e3e33a63a7a1f3808ce4287844dea6ed27d5297de0eba9574a77a11b6231e8",
+    "foundation_restart/train.json": "27060ff065038188119b78ae1e1d8befa2c68886bed587f8d7d0fbd86faefd76",
+    "foundation_restart/metrics.jsonl": "4afd942dbee199ac15707b7e84f26a93e98587da187a28e8e7f059480c8785e3",
+    "foundation_restart/validation-metrics.jsonl": "d9380c7ae3991d87e7fb855b17c6aab1a274d88c3438c62f89a1dd3ef055a3c3",
+    "foundation_restart/offline-evaluation.json": "2da4311d1fbe8b1b12becc65f8579eb22c1ecc3ef46a22767281316f97b2c381",
+    "task_table": "58cea816e3e5f4dc72ef5ae1456611873af0e18c75f8c9fbe5cdb06876ab2f2d",
+    "weight_headers": {
+      "official": "e6704002bdf1657e87df983f10adf3e20381972455f92bd347a9c2bb151462f0",
+      "old": "fad934e6fa44333cff6e7b218753d1fb5e05334f50484c9cc4e66aec397ed8f9",
+      "ft": "fad934e6fa44333cff6e7b218753d1fb5e05334f50484c9cc4e66aec397ed8f9",
+      "base": "fad934e6fa44333cff6e7b218753d1fb5e05334f50484c9cc4e66aec397ed8f9"
+    }
+  }
+}
