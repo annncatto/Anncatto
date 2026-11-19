@@ -85,14 +85,14 @@
     "pdfPage": 10,
     "cropPoints": [
       60,
-      330,
+      286,
       536,
       484
     ],
     "width": 1904,
-    "height": 616,
+    "height": 792,
     "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
-    "sha256": "85fce6a63a8682ec2d777ac335d89ef6bc8d232d4e552313f2ebba7ed544e74e",
+    "sha256": "262664160ed354ccde75ea6221d029ff7fa2e24b78a4c6abb159aaadf80c3de1",
     "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
   },
   {
@@ -117,14 +117,14 @@
     "pdfPage": 12,
     "cropPoints": [
       60,
-      320,
+      277,
       536,
       501
     ],
     "width": 1904,
-    "height": 724,
+    "height": 896,
     "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf",
-    "sha256": "5074d7a6e6a1b524bfd685de34ede89561b634cc1fe1c93bc1a3989a8df4d39f",
+    "sha256": "044a39a8221d46ca245383d6ed7230ea3b0615f0d152061d15eb0c54ff7b124d",
     "license": "© 2026 NVIDIA. All rights reserved. Source attribution retained."
   },
   {
