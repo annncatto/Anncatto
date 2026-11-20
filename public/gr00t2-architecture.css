@@ -1,0 +1,182 @@
+/* Native NVIDIA architecture component; see sources.json for provenance. */
+.g-architecture-root{--bg:#fff;--text:#3a3a3a;--text-2:#6b7280;--text-3:#818b94;--green:#76b900;--green-ink:#4a7a00;--rule:#d1d5db;--tok-video:#8b5cf6;--tok-text:#2563eb;--tok-state:#9ca3af;--tok-act:#f59e0b;--font:inherit;font-family:inherit;font-size:16px;line-height:1.6;}
+.g-architecture-frame,.g-architecture-viewer-content{container-type:inline-size;container-name:gr00t-architecture;min-width:0;}
+/* GR00T 2 animated architecture figure (#archfig). Built by js/archfig.js inside <div id="archfig">.
+   Desktop: inputs | one video-action diffusion transformer | outputs, a step row + rollout-time tape under the model,
+   and a return loop (execute the chunk -> new observation). Phones: the same pieces stacked. Sits on the page color. */
+
+.archfig { --af-gap: 52px; --af-r: 10px; position: relative; padding: 6px 0 4px; color: var(--text); }
+.af-stage { position: relative; padding-bottom: 46px; }
+.af-grid {
+  position: relative; z-index: 1; display: grid; column-gap: var(--af-gap); row-gap: 14px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr);
+  grid-template-areas: "in core out" ". foot .";
+}
+.af-in { grid-area: in; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.af-core { grid-area: core; min-width: 0; }
+.af-out { grid-area: out; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.af-foot { grid-area: foot; min-width: 0; }
+.af-wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
+
+/* labels */
+.af-lab {
+  display: flex; align-items: baseline; flex-wrap: wrap; gap: 0 8px; margin: 0 0 6px;
+  font-size: 12px; line-height: 1.35; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-2);
+}
+.af-lab em { font-style: normal; letter-spacing: .02em; text-transform: none; font-weight: 400; color: var(--text-3); }
+.af-lab .af-dot { width: 7px; height: 7px; border-radius: 2px; align-self: center; flex: none; }
+
+/* video panels */
+.af-media { position: relative; aspect-ratio: 964 / 452; border-radius: var(--af-r); overflow: hidden; background: #1d1d1b; isolation: isolate; }
+.af-media img, .af-media video, .af-media canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; max-width: none;
+}
+.af-media video { opacity: 0; transition: opacity .45s ease; }
+.af-media video.on { opacity: 1; }
+.af-media::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 4; box-shadow: inset 0 0 0 1.5px var(--af-edge, rgba(0,0,0,.12)); }
+.af-hist .af-media { --af-edge: rgba(139, 92, 246, .75); }
+.af-fut .af-media { --af-edge: rgba(139, 92, 246, .75); }
+.af-noise { z-index: 3; opacity: 0; image-rendering: auto; filter: saturate(.6) contrast(1.1); }
+.af-tag {
+  position: absolute; z-index: 5; left: 8px; bottom: 8px; padding: 3px 7px; border-radius: 999px;
+  background: rgba(20, 20, 20, .58); color: #fff; font-size: 11px; line-height: 1.2; letter-spacing: .03em;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+
+/* the 3-view frame (head 2x at left, left over right wrist at right): view labels, and the badge on the generated clip */
+.af-vl { position: absolute; z-index: 5; top: 5px; padding: 1px 5px; border-radius: 4px; background: rgba(20, 20, 20, .5);
+         color: rgba(255, 255, 255, .92); font-size: 9.5px; line-height: 1.3; letter-spacing: .02em; pointer-events: none; }
+.af-vl.e { left: 5px; }
+.af-vl.l, .af-vl.r { left: calc(644 / 964 * 100% + 4px); }
+.af-vl.r { top: calc(228 / 452 * 100% + 4px); }
+.af-tag.af-gen { background: var(--green, #76b900); color: #101400; font-weight: 700; letter-spacing: .02em; }
+.af-media .af-tag { left: auto; bottom: auto; top: 5px; right: calc(324 / 964 * 100% + 5px); }   /* over the head view's empty top, not the table */
+
+/* playback progress under each clip: -0.8 s -> now (history), now -> +2.5 s (generated) */
+.af-clip { display: flex; align-items: center; gap: 6px; margin-top: 6px; font-size: 10px; line-height: 1; color: var(--text-3);
+           font-variant-numeric: tabular-nums; white-space: nowrap; }
+.af-hist .af-clip { margin-left: 10px; }
+.af-clip i { flex: 1 1 auto; height: 3px; border-radius: 2px; background: rgba(139, 92, 246, .16); overflow: hidden; }
+.af-clip b { display: block; width: 100%; height: 100%; transform-origin: 0 50%; transform: scaleX(0); background: rgba(139, 92, 246, .85); }
+.af-fut .af-clip b { background: var(--green, #76b900); }
+
+/* history: a short stack of past frames behind the clip */
+.af-frames { position: relative; margin: 10px 0 0 10px; }
+.af-ghost { position: absolute; inset: 0; border-radius: var(--af-r); border: 1.5px solid rgba(139, 92, 246, .35); background: rgba(139, 92, 246, .06); }
+.af-ghost.g1 { transform: translate(-5px, -5px); }
+.af-ghost.g2 { transform: translate(-10px, -10px); opacity: .6; }
+.af-frames .af-media { z-index: 1; }
+
+/* instruction */
+.af-quote {
+  border: 1.5px solid rgba(37, 99, 235, .55); border-radius: 999px; padding: 8px 14px;
+  font-size: 15px; line-height: 1.3; color: #1f2a44; text-align: center; transition: background-color .5s, box-shadow .5s; text-wrap: balance; }
+.archfig[data-ph="obs"] .af-quote { background: rgba(37, 99, 235, .07); }
+
+/* robot state: joint positions at time t, one bar per joint */
+.af-bars { display: flex; align-items: flex-end; gap: 2px; height: 46px; padding: 0 1px; border-bottom: 1.5px solid #c9c9c9; }
+.af-bars i { flex: 1 1 0; min-width: 2px; height: 100%; border-radius: 2px 2px 0 0; background: #9ca3af; transform-origin: 50% 100%; transform: scaleY(var(--v, .5)); transition: transform .25s ease-out; }
+.af-bars i.h { background: #b9bec6; }
+
+/* model */
+.af-box {
+  position: relative; height: 100%; min-height: 300px; border-radius: 18px; padding: 16px 16px 14px;
+  border: 1.5px solid var(--green); background: rgba(118, 185, 0, .045);
+  transition: box-shadow .6s ease, background-color .6s ease;
+}
+.archfig[data-ph="den"] .af-box { box-shadow: 0 0 0 4px rgba(118, 185, 0, .14); background: rgba(118, 185, 0, .07); }
+.af-title { display: flex; flex-direction: column; gap: 1px; }
+.af-title b { font-size: 21px; line-height: 1.15; font-weight: 700; color: #222; letter-spacing: .01em; }
+.af-title span { font-size: 13px; line-height: 1.3; color: var(--text-2); }
+.af-layers { position: absolute; left: 16px; right: 16px; top: var(--af-top, 74px); bottom: 16px; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 21px, rgba(0,0,0,.045) 21px 22px); border-radius: 6px; }
+.af-split { position: absolute; top: var(--af-top, 74px); bottom: 16px; left: 50%; border-left: 1px dashed rgba(0,0,0,.14); }
+.af-hdr { position: absolute; top: calc(var(--af-top, 74px) + 2px); white-space: nowrap; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); }
+.af-hdr.l { left: 16px; } .af-hdr.r { left: calc(50% + 10px); }
+
+.af-row { position: absolute; left: 16px; right: 16px; display: flex; align-items: center; transform: translateY(-50%); }
+.af-g { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.af-g.r { padding-left: 10px; }
+.af-g > span { font-size: 11px; line-height: 1.2; color: var(--text-2); white-space: nowrap; }
+.af-toks { display: flex; gap: 4px; }
+.af-toks i { position: relative; width: 15px; height: 15px; border-radius: 4px; overflow: hidden; background: #e7e5df; }
+.af-toks i::before, .af-toks i::after { content: ""; position: absolute; inset: 0; }
+.af-toks i::before { background: var(--tc); opacity: var(--c, 1); }
+.af-toks i::after { background: var(--af-noise) 0 0 / 30px 30px; opacity: calc(1 - var(--c, 1)); mix-blend-mode: multiply; }
+.af-g.v i { --tc: var(--tok-video); }
+.af-g.s i { --tc: var(--tok-state); }
+.af-g.a i { --tc: var(--tok-act); }
+.af-xattn { display: flex; align-items: center; gap: 8px; width: 100%; }
+.af-xattn .af-tt { display: flex; gap: 3px; flex: none; }
+.af-xattn .af-tt i { width: 7px; height: 7px; border-radius: 50%; background: var(--tok-text); opacity: .85; }
+.af-xattn span { font-size: 11px; line-height: 1.25; color: var(--text-2); }
+.af-xattn::after { content: ""; flex: 1; height: 0; border-top: 1.5px dotted rgba(37, 99, 235, .5); }
+
+/* step row + rollout-time tape (under the model on desktop, at the end on phones) */
+.af-steps { display: flex; justify-content: space-between; gap: 4px; margin: 2px 0 6px; padding: 0 2px; }
+.af-steps span { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); transition: color .3s; white-space: nowrap; }
+.af-steps span b { font-weight: 500; }
+.af-steps span.on { color: var(--green-ink); }
+.af-steps i { flex: 1; align-self: center; height: 0; border-top: 1px solid var(--rule); margin: 0 2px; }
+.af-tape svg { display: block; width: 100%; height: 46px; overflow: visible; }
+.af-tape text { font-family: var(--font); font-size: 10.5px; fill: var(--text-3); }
+.af-tape .now text { fill: var(--green-ink); font-weight: 500; }
+
+/* action chunk */
+.af-act { flex: 1 1 auto; display: flex; flex-direction: column; min-height: 0; }
+.af-chart { position: relative; flex: 1 1 auto; min-height: 92px; }
+.af-chart svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.af-heads { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: -4px; font-size: 10.5px; color: var(--text-3); }
+.af-heads b { font-weight: 500; letter-spacing: .07em; text-transform: uppercase; margin-right: 2px; }
+.af-heads span { border: 1px dashed #c9c9c9; border-radius: 999px; padding: 1px 7px; line-height: 1.3; }
+.af-heads i { font-style: normal; padding: 0 2px; }
+.af-heads span.on { border: 1.5px solid var(--tok-act); color: #6b4a00; background: rgba(245, 158, 11, .08); }
+
+.af-loop-l { position: absolute; z-index: 3; transform: translate(-50%, -50%); padding: 0 8px; background: var(--bg);
+  font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
+.archfig[data-ph="act"] .af-loop-l { color: #8a5a00; }
+
+/* wires */
+.af-wires path { fill: none; stroke-width: 1.5; stroke-linecap: round; }
+.af-wires .w-v { stroke: rgba(139, 92, 246, .55); }
+.af-wires .w-t { stroke: rgba(37, 99, 235, .5); }
+.af-wires .w-s { stroke: rgba(107, 114, 128, .5); }
+.af-wires .w-a { stroke: rgba(245, 158, 11, .7); }
+.af-wires .w-loop { stroke: rgba(245, 158, 11, .55); stroke-dasharray: 3 5; }
+.af-wires .w-att { mask: url(#af-m); stroke: rgba(245, 158, 11, .45); stroke-width: 1.2; stroke-dasharray: 2 4; transition: stroke .5s; }
+.af-wires .w-att.h { stroke-dasharray: none; }
+.archfig[data-ph="den"] .af-wires .w-att { stroke: rgba(217, 119, 6, .9); }
+.af-att-l { position: absolute; z-index: 3; transform: translateY(-50%); font-size: 10.5px; line-height: 1.3; color: var(--text-3); white-space: nowrap; transition: color .5s; }
+.archfig[data-ph="den"] .af-att-l { color: #8a5a00; }
+.af-wires circle { stroke: none; }
+
+/* phones: inputs (clip | instruction + state) -> model -> outputs (clip | action chunk) -> steps + tape */
+@container gr00t-architecture (max-width: 860px) {
+  .archfig { --af-gap: 0px; --af-r: 8px; }
+  .af-stage { padding-bottom: 0; max-width: 560px; margin: 0 auto; }
+  .af-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "in" "core" "out" "foot"; row-gap: 28px; }
+  .af-in, .af-out { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 14px; row-gap: 12px; align-items: start; }
+  .af-in { grid-template-areas: "hist hist" "instr state"; }   /* 3-view clips need the full width */
+  .af-out { grid-template-areas: "fut fut" "act act" "heads heads"; }
+  .af-hist { grid-area: hist; } .af-instr { grid-area: instr; align-self: end; } .af-state { grid-area: state; }
+  .af-fut { grid-area: fut; } .af-act { grid-area: act; align-self: stretch; } .af-heads { grid-area: heads; margin-top: 0; }
+  .af-lab { font-size: 10.5px; gap: 0 6px; }
+  .af-lab em { display: none; }
+  .af-frames { margin: 8px 0 0 8px; }
+  .af-hist .af-clip { margin-left: 8px; }
+  .af-ghost.g1 { transform: translate(-4px, -4px); } .af-ghost.g2 { transform: translate(-8px, -8px); }
+  .af-tag { font-size: 10px; padding: 2px 6px; }
+  .af-quote { border-radius: 14px; padding: 7px 10px; font-size: 14px; }
+  .af-bars { height: 38px; gap: 1.5px; }
+  .af-box { min-height: 0; height: auto; padding-bottom: 16px; }
+  .af-layers, .af-split, .af-hdr { display: none; }
+  .af-rows { display: flex; flex-direction: column; gap: 12px; margin-top: 14px; }
+  .af-row { position: static; transform: none; left: auto; right: auto; }
+  .af-act { display: flex; flex-direction: column; height: 100%; }
+  .af-chart { min-height: 96px; flex: 1 1 auto; }   /* its own row under the full-width clip, so it needs its own height */
+  .af-loop-l, .af-att-l { display: none; }
+}
+@container gr00t-architecture (max-width: 380px) {
+  .af-toks i { width: 13px; height: 13px; }
+  .af-toks { gap: 3px; }
+}

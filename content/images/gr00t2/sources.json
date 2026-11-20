@@ -377,47 +377,8 @@
     "license": "© 2026 NVIDIA. All rights reserved."
   },
   {
-    "asset": "architecture-official.mp4",
-    "kind": "rendered-official-animation",
-    "width": 1384,
-    "height": 580,
-    "source": "https://research.nvidia.com/labs/gear/gr00t-2/#model",
-    "sourceResources": [
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/js/archfig.js?v=11",
-        "sha256": "4a126aa70aca7f3e524c9da61968652aeb7704b2edb71e7b4fd936ea2f306923"
-      },
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/css/archfig.css?v=10",
-        "sha256": "9912b0557871c5131c1c334d9addd13d92063eb88b854309e1bcc7334adf8744"
-      },
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/hist_mv.mp4",
-        "sha256": "edf678efe5733033caa2ed38d2c701cf21fc80d00f4c86d53d343ed8e2f0f81f"
-      },
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/fut_mv_flip.mp4",
-        "sha256": "d251fc7b9b57f33ac72a9bc9293dc6ff19e026465be07932df66b8e7472e4d01"
-      },
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/hist_mv.jpg",
-        "sha256": "e38891c4a3876774ec7e456531a03745a75a59f982f49b8e4d40d12fa6edaae9"
-      },
-      {
-        "url": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/fut_mv_flip.jpg",
-        "sha256": "e544cf5a4e157648a9f28edec2a60ce18d0543292e1ca1198e427f523fd2d580"
-      }
-    ],
-    "sha256": "4c971e0eb9b05537f4634f7271d60fa11c74392a3bc85ff8ce7cfb0ef1411379",
-    "bytes": 3546428,
-    "license": "© 2026 NVIDIA. Source attribution retained.",
-    "durationSeconds": 14.4,
-    "frameRate": 25,
-    "method": "Browser-rendered capture of the official component, source clips and trace arrays; white background and system sans-serif; two cycles with bottom padding for player controls."
-  },
-  {
     "asset": "architecture-official.webp",
-    "kind": "animation-poster",
+    "kind": "native-animation-static-fallback",
     "width": 2768,
     "height": 1160,
     "source": "https://research.nvidia.com/labs/gear/gr00t-2/#model",
@@ -449,6 +410,45 @@
     ],
     "sha256": "72bd98517762ff7cf199022e45c5e14886d596ee0ba8dc63b10eef9e1725fa28",
     "bytes": 233776,
+    "license": "© 2026 NVIDIA. Source attribution retained.",
+    "nativeComponent": {
+      "script": "/assets/gr00t2-architecture-vendor.js",
+      "stylesheet": "/assets/gr00t2-architecture.css",
+      "originalScript": "https://research.nvidia.com/labs/gear/gr00t-2/js/archfig.js?v=11",
+      "originalScriptSha256": "4a126aa70aca7f3e524c9da61968652aeb7704b2edb71e7b4fd936ea2f306923",
+      "localScriptSha256": "3261db12fbb4e6bea312339a6c3455eb61b35293a40eea2d333ccab87f30dd2a"
+    }
+  },
+  {
+    "asset": "architecture/hist_mv.jpg",
+    "kind": "official-architecture-source-media",
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/hist_mv.jpg",
+    "sha256": "e38891c4a3876774ec7e456531a03745a75a59f982f49b8e4d40d12fa6edaae9",
+    "bytes": 78958,
+    "license": "© 2026 NVIDIA. Source attribution retained."
+  },
+  {
+    "asset": "architecture/hist_mv.mp4",
+    "kind": "official-architecture-source-media",
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/hist_mv.mp4",
+    "sha256": "edf678efe5733033caa2ed38d2c701cf21fc80d00f4c86d53d343ed8e2f0f81f",
+    "bytes": 250057,
+    "license": "© 2026 NVIDIA. Source attribution retained."
+  },
+  {
+    "asset": "architecture/fut_mv_flip.mp4",
+    "kind": "official-architecture-source-media",
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/fut_mv_flip.mp4",
+    "sha256": "d251fc7b9b57f33ac72a9bc9293dc6ff19e026465be07932df66b8e7472e4d01",
+    "bytes": 505466,
+    "license": "© 2026 NVIDIA. Source attribution retained."
+  },
+  {
+    "asset": "architecture/fut_mv_flip.jpg",
+    "kind": "official-architecture-source-media",
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/arch/fut_mv_flip.jpg",
+    "sha256": "e544cf5a4e157648a9f28edec2a60ce18d0543292e1ca1198e427f523fd2d580",
+    "bytes": 62796,
     "license": "© 2026 NVIDIA. Source attribution retained."
   }
 ]

@@ -48,9 +48,6 @@
 .g-step-control button[aria-pressed=true]{background:#e4f0e9;border-color:#8fb6a4;color:#24624a;}
 .g-step-control p{flex:1;min-width:270px;padding-left:10px;}
 .g-architecture{min-height:250px;}
-.g-architecture-video{display:flex;flex-direction:column;gap:8px;}
-.g-architecture-video video{display:block;width:100%;height:100%;flex:1;min-height:0;object-fit:contain;background:#fff;}
-.g-architecture-video figcaption{flex:none;}
 .g-static-architecture[hidden]{display:none!important;}
 .g-title .slide-header{display:flex;justify-content:space-between;align-items:baseline;}
 .g-title .g-body{display:grid;grid-template-columns:.75fr 1.4fr;grid-template-rows:1fr auto;column-gap:30px;}
@@ -106,3 +103,33 @@
 #g-agent .g-agent-bottom{align-items:stretch;}
 #g-agent .g-agent-bottom>.g-figure{height:100%;min-height:0;}
 #g-agent .g-agent-bottom>.g-stack{justify-content:center;}
+
+.g-native-architecture{display:flex;flex-direction:column;gap:4px;min-width:0;flex:none;}
+.g-architecture-fallback{display:block;width:100%;height:auto;}
+.g-architecture-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.g-slide .g-architecture-bar p{font-size:12px;line-height:1.35;margin:0;color:#6b7f85;}
+.g-architecture-buttons{display:flex;gap:6px;flex:none;}
+.g-architecture-buttons button{font:inherit;font-size:12px;padding:4px 9px;border:1px solid #cbd9dd;border-radius:4px;background:white;color:#386578;cursor:pointer;}
+.g-architecture-viewer-content{padding:18px;}
+.g-architecture-viewer-content>.g-architecture-root{width:100%;}
+.g-model-encoding{margin:0;padding:0;border:0;flex:none;}
+.g-model-encoding p{margin:0;}
+.g-model-encoding>summary{display:none;}
+@media(min-width:901px) and (max-height:850px){.g-model-encoding>summary{display:list-item;font-size:16px;color:#386578;cursor:pointer;}.g-model-encoding[open]>.g-reading-text{margin-top:8px;}}
+.g-ablation-grid{display:grid;grid-template-columns:minmax(0,1.95fr) minmax(270px,1fr);gap:24px;flex:1;min-height:0;}
+.g-ablation-copy{display:flex;flex-direction:column;justify-content:center;gap:18px;}
+.g-chart-note,.g-slide .g-chart-note{font-size:13px;line-height:1.4;color:#75858a;margin:0;}
+.g-compat-anchor{display:none;}
+@media(min-width:901px) and (max-height:950px){.g-architecture-root .af-in,.g-architecture-root .af-out{gap:9px;}.g-architecture-root .af-lab{margin-bottom:4px;line-height:1.25;}.g-architecture-root .af-bars{height:36px;}.g-architecture-root .af-quote{padding:6px 12px;font-size:14px;}.g-architecture-root .af-stage{padding-bottom:36px;}.g-architecture-root .af-tape svg{height:36px;}.g-architecture-root .af-box{min-height:260px;}}
+@media(max-width:900px){.g-architecture-bar{align-items:flex-start;flex-wrap:wrap;}.g-architecture-buttons{margin-left:auto;}}
+.g-transfer-main{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);grid-template-rows:minmax(0,1fr) auto;gap:14px 24px;flex:1;min-height:0;}
+.g-transfer-main>.g-figure{grid-column:1;grid-row:1;min-height:200px;}
+.g-transfer-alignment{grid-column:2;grid-row:1/3;align-self:center;display:flex;flex-direction:column;gap:12px;}
+.g-transfer-alignment th,.g-transfer-alignment td{font-size:20px;line-height:1.35;padding:8px;}
+.g-slide .g-transfer-alignment p{font-size:19px;line-height:1.4;}
+.g-transfer-supports{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;grid-column:1;grid-row:2;}
+.g-transfer-supports figure{margin:0;}
+.g-transfer-supports img{width:100%;height:62px;object-fit:contain;}
+.g-transfer-supports figcaption,.g-transfer-supports .figure-enlarge{font-size:11px;line-height:1.3;}
+@media(min-width:901px) and (max-height:850px){.g-transfer-alignment th,.g-transfer-alignment td{font-size:18px;padding:6px;}.g-slide .g-transfer-alignment p{font-size:17px;}.g-transfer-supports img{height:48px;}.g-ablation-copy{gap:12px;}}
+@media(max-width:900px){.g-ablation-grid,.g-transfer-main{grid-template-columns:1fr;}.g-ablation-grid>.g-figure{min-height:210px;}.g-ablation-copy{gap:16px;}.g-transfer-main>.g-figure,.g-transfer-alignment,.g-transfer-supports{grid-column:1;grid-row:auto;}.g-transfer-supports img{height:52px;}}

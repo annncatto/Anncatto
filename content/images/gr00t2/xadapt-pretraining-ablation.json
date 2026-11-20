@@ -1,0 +1,41 @@
+{
+  "source": "https://research.nvidia.com/labs/gear/gr00t-2/#h2r",
+  "script": "https://research.nvidia.com/labs/gear/gr00t-2/js/gr00t2.js?v=68",
+  "scriptSha256": "3fae9552f6116e72412b08bf4af7b42b43aaed15780a0069792d7ec3cd0d2840",
+  "trials_per_task": 20,
+  "target_task_teleoperation_demos": 0,
+  "tasks": [
+    "Filter paper setup",
+    "Dropper to beaker",
+    "Microscope slide dabbing",
+    "Conveyor package tossing"
+  ],
+  "series": {
+    "GR00T 1.7": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "GR00T 2 without cross-embodiment pretraining": [
+      0,
+      0,
+      0,
+      20
+    ],
+    "GR00T 2": [
+      65,
+      30,
+      10,
+      50
+    ]
+  },
+  "paper_difference": {
+    "source": "https://research.nvidia.com/labs/gear/gr00t-2/assets/gr00t2_whitepaper.pdf#page=46",
+    "GR00T_1_7_tossing_pct": 5
+  },
+  "comparison": {
+    "pretraining": "Full mixture vs target-robot-only at matched budget",
+    "post_training": "Identical retargeted human demonstrations / robot play at 1:1 and identical step budgets"
+  }
+}
