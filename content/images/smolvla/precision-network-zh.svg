@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1020" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans CJK JP',sans-serif">
+<title id="smol-swap-title">SmolVLA trained modules, sampling, and parameter swaps</title><desc id="smol-swap-desc">Frozen vision-language prefix, trainable state/action/time projections and a sixteen-layer expert. Memory-only module swaps use identical FP32 replay. The sampler integrates 32 dimensions; loss supervises 18.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
+<marker id="smol-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3263d9"/></marker>
+<marker id="smol-arrow-79a948" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#79a948"/></marker>
+<marker id="smol-arrow-8798aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8798aa"/></marker>
+</defs><rect width="1200" height="1020" fill="white"/>
+<text lang="zh-CN" x="35" y="42" font-size="25" fill="#19364b" font-weight="650" text-anchor="start">SmolVLA：实际更新模块与交换位置</text>
+<text lang="zh-CN" x="35" y="78" font-size="17" fill="#8798aa" font-weight="400" text-anchor="start">① 数据流：冻结 VLM，更新动作专家和投影；采样 32 维，监督 18 维</text>
+<rect x="30" y="120" width="190" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="125.0" y="158.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">四路图像 + 指令</text>
+<rect x="270" y="120" width="210" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="375.0" y="158.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">视觉 / 文字嵌入</text>
+<rect x="550" y="120" width="250" height="80" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="675.0" y="166.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">冻结 VLM 前缀层</text>
+<rect x="30" y="225" width="190" height="60" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="125.0" y="261.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">状态 18 → 补齐 32</text>
+<rect x="270" y="225" width="210" height="60" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
+<text lang="zh-CN" x="375.0" y="261.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">状态投影 Pₛ</text>
+<rect x="30" y="335" width="190" height="70" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="125.0" y="376.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">噪声动作 + 时间 t</text>
+<rect x="270" y="335" width="210" height="70" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
+<text lang="zh-CN" x="375.0" y="376.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">动作输入 / 时间投影</text>
+<rect x="550" y="310" width="250" height="100" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
+<text lang="zh-CN" x="675.0" y="366.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">动作专家 E · 16 层</text>
+<rect x="870" y="330" width="260" height="65" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
+<text lang="zh-CN" x="1000.0" y="368.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">输出投影 Pₒ：vₜ[50,32]</text>
+<rect x="870" y="445" width="260" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="1000.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Euler 10 步：z[50,32]</text>
+<rect x="550" y="445" width="250" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="675.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">取前 18 维：a = μ + σz</text>
+<rect x="270" y="445" width="210" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="375.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Host 各字段接口约束</text>
+<text lang="zh-CN" x="675" y="186" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">冻结部分合计 350.17M</text>
+<path d="M220 153 L267 153" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M480 153 L547 153" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M220 255 L267 255" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M480 255 L520 255 L520 165 L547 165" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<path d="M675 200 L675 307" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="690" y="260" font-size="16" fill="#19364b" font-weight="400" text-anchor="start">条件 K/V</text>
+<path d="M220 370 L267 370" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M480 370 L547 370" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<path d="M800 362 L867 362" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<path d="M1000 395 L1000 442" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M870 478 L803 478" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<path d="M550 478 L483 478" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<rect x="870" y="210" width="260" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
+<text lang="zh-CN" x="1000" y="238" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">训练 loss 只监督前 18 维</text>
+<text lang="zh-CN" x="1000" y="260" font-size="14" fill="#8798aa" font-weight="400" text-anchor="middle">其余 14 维为特征补零区</text>
+<path d="M1000 330 L1000 278" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="35" y="553" font-size="18" fill="#19364b" font-weight="550" text-anchor="start">可训练合计 99.88M：专家 98.25M + 外部投影 1.64M</text>
+<text lang="zh-CN" x="35" y="584" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">线性速度头、Euler 更新与仿射还原本身保留连续输出；Host 再按字段约束</text>
+<text lang="zh-CN" x="35" y="633" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">② 参数交换：同一观测和噪声，统一 FP32 计算，不重新训练</text>
+<text lang="zh-CN" x="440" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">投影组 P：状态、动作输入/输出、时间</text>
+<text lang="zh-CN" x="790" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">16 层动作专家 E</text>
+<text lang="zh-CN" x="1100" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Flow loss</text>
+<text lang="zh-CN" x="35" y="721" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">A 原配</text>
+<rect x="320" y="690" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="zh-CN" x="442.5" y="721" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">P · A</text>
+<rect x="665" y="690" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="zh-CN" x="787.5" y="721" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">E · A</text>
+<path d="M565 714 L662 714" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="1100" y="721" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.026730</text>
+<text lang="zh-CN" x="35" y="786" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">B 原配</text>
+<rect x="320" y="755" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
+<text lang="zh-CN" x="442.5" y="786" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">P · B</text>
+<rect x="665" y="755" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
+<text lang="zh-CN" x="787.5" y="786" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">E · B</text>
+<path d="M565 779 L662 779" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="1100" y="786" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.012758</text>
+<text lang="zh-CN" x="35" y="851" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">A 投影 + B 专家</text>
+<rect x="320" y="820" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="zh-CN" x="442.5" y="851" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">P · A</text>
+<rect x="665" y="820" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
+<text lang="zh-CN" x="787.5" y="851" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">E · B</text>
+<path d="M565 844 L662 844" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="1100" y="851" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.073255</text>
+<text lang="zh-CN" x="35" y="916" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">B 投影 + A 专家</text>
+<rect x="320" y="885" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
+<text lang="zh-CN" x="442.5" y="916" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">P · B</text>
+<rect x="665" y="885" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="zh-CN" x="787.5" y="916" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">E · A</text>
+<path d="M565 909 L662 909" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
+<text lang="zh-CN" x="1100" y="916" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.060578</text>
+<text lang="zh-CN" x="35" y="987" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">A/B 均为 150 回合阶段的 100k 模型；四个组合共用冻结 VLM 和相同的 16 窗口 × 2 抽样</text>
+</svg>

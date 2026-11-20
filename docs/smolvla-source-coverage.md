@@ -1,8 +1,9 @@
 # SmolVLA & 数值类型 — source coverage and release checks
 
 Article route: `/notes/smolvla-numerical-types/`. Maintained as bilingual HTML
-chapter includes in an article-only worktree. Keep the unpublished robot
-workbench and D20 homepage separate from article maintenance releases.
+chapter includes in `/home/ann/Anncatto`, on `article/smolvla-experiment-review`.
+The November 20 revision is a local draft, not merged into main or published.
+Keep the unpublished robot workbench and D20 homepage separate from article releases.
 
 ## Structure
 
@@ -12,8 +13,11 @@ workbench and D20 homepage separate from article maintenance releases.
 - Model order follows the source note: architecture,
   observation features, attention, flow training, sampling, π0.5 comparison,
   SmolVLM, asynchronous inference.
-- Dataset-specific normalization is now Data preprocessing under Experimental
-  record, after the dataset/camera description and before training settings.
+- The experiment chapter follows task/question, grouped findings, case evidence,
+  precision and internal mechanisms, execution, implications, next tests, and
+  experimental conditions. Full setup is the last H3; references remain collapsed.
+- Dataset-specific normalization is Data preprocessing under Experimental
+  conditions, after the dataset/camera description and before training settings.
   The dataflow disclosure is colocated there; changing120/150-demo statistics
   belongs to the continued-training experiment.
 - Trajectory introductions define action as a postprocessed policy-side control
@@ -39,9 +43,12 @@ The user confirmed on 2026-10-29:
 
 - Use the experimental report's two SmolVLA stages: 120 demonstrations / 100k
   steps, then 150 demonstrations / another 100k steps.
-- Both stages update the full model, including VLM. This overrides the report's
-  frozen-VLM description. It is separate from the algorithm preset's expert-only
-  default and the published numerical paper's expert/projector experiment.
+- The October description said both stages updated the VLM. The archived
+  parameter inventories and checkpoints inspected in November establish a
+  different scope for the 150-demonstration precision runs: 99,880,992 trainable
+  elements (98,245,840 expert + 1,635,152 external projections), with 350,165,184
+  frozen elements. Current prose uses this measured scope for A/B/C. The
+  earlier 120-demonstration run's exact update scope is not inferred from it.
 - π0.5 uses four views: forward, chest, left wrist, right wrist.
 - The form's red-module task label was incorrect; its dataset corresponds to the
   toy task. Its alternate SmolVLA run settings are superseded by the report's
@@ -108,8 +115,9 @@ that correction; the earlier excessive-retreat interpretation is superseded.
 
 ## Validation
 
-Build, local-reference/MathML checks, 28 unit tests; browser review in both
-languages at mobile/tablet/desktop widths. Check disclosures, nested TOC, hidden
+Earlier release checks included build, local-reference/MathML checks, 28 unit
+tests, and browser review in both languages at mobile/tablet/desktop widths.
+For maintenance, check disclosures, nested TOC, hidden
 headings, numerical controls, video/poster loading, viewer dismissal, no viewport
 or SVG text overflow, and the empty homepage tools section. Verify the published
 article after a successful Pages deployment.
@@ -188,6 +196,94 @@ article after a successful Pages deployment.
   not a measured physical resonance or a recovered chunk-ID log.
 - Two-toy A/B videos use width ratio 1:1.775 to align their square/landscape
   formats at equal height on desktop and mobile.
-- Current full-model trainable scope, BF16 autocast and preserve storage are
-  listed directly after the modular-storage explanation. ULP and AdamW links
+- The audited expert/projector scope and the precision recipes are linked
+  directly after the modular-storage explanation. ULP and AdamW links
   sit at their first relevant explanation.
+
+## November 20 precision and execution revision
+
+### Source records
+
+- The SmolVLA chapters and coverage file in the remote Anncatto repository on
+  `buck` matched the local baseline byte for byte before editing. Remote files
+  were read without modifying that repository.
+- Latest archived source copied locally:
+  `/home/ann/Alohamini_workspace/reports/smolvla-review-20261120/source/smolvla_result_20261119`.
+  It contains the November 19 120k replay, endpoint-weight comparisons, source
+  boundary audit and previous precision/execution findings. Staged inputs for
+  reproducible figures are under the sibling `evidence/` directory.
+- Original Obsidian reports are preserved in
+  `具身智能算法/Alohamin/实验报告keyfinding/SmolVLA精度对照附件/详细精度分析.md`
+  and `详细评估分析.md`. The two primary notes now summarize grouped findings
+  and retain linked evidence and figures.
+
+### Comparison and denominators
+
+- A = mixed precision 100k; B = FP32 100k; C = B continued to 120k with another
+  20k updates at constant 5e-7. All use the same 150-episode stage, initialized
+  from the earlier 120-episode task checkpoint. Counts refer to this stage.
+  The 150 episodes contain 155,727 frames; validation episodes = 0.
+- A/B change parameter storage, optimizer-moment storage and compute recipe
+  together. Native A has 96,607,440 BF16 trainable matrix elements and
+  3,273,552 FP32 trainable elements. B/C trainable parameters and Adam moments
+  are FP32; no autocast/TF32 in the audited FP32 protocol.
+- Endpoint-change fractions use the same 129 matrix names / 96,607,440
+  elements: A 95k→100k 0.0826675%, B 95k→100k 99.99785%,
+  C 115k→120k 99.99773%. They count unequal elements, not update amplitudes.
+- The paired loss comparison converts all models to FP32 and fixes 16 training
+  windows, 32 noise/time draws and 18 supervised real dimensions. Loss:
+  A 0.026730026, B 0.012758, C 0.012838256. This measures training-window fit;
+  C has a larger update budget and is separate from equal-budget A/B.
+- Expert/projection swaps yield two unique hybrid combinations (four swap
+  directions): B expert + A projections 0.073255248; A expert + B projections
+  0.060578466. The 16 expert layers are swapped in both directions. A receiving
+  B layer 6 reduces paired loss by 7.43%; retain the complete 32-case plot.
+- The 90-window A/C prediction comparison uses uniform FP32, 50 steps/window,
+  and 4,500 shoulder positions/model. Below −100: A 390, C 153, all in start
+  windows. Offline clipping of C's shoulder reduces MAE by 0.64%.
+- Frozen runtime source confirms linear output, 32-dimensional Euler sampling,
+  18-dimensional training loss, real-dimension cropping and affine restoration.
+  The 14 padded dimensions are a proposed controlled intervention, with no
+  new inference ablation performed in this revision.
+
+### Execution and input interventions
+
+- B's November 9 robot record: 5,832 frames, 299.87979 s, effective 19.444 Hz;
+  nominal exported video rate is 30 fps. It predicts 50 actions and executes 25.
+  This is separate from the October 23 2,936-frame / 120-demo record.
+- Requested, Host-accepted and pre-request-feedback values remain distinct.
+  Shoulder request below −100: 320/5832; requests span −119.6287…84.2500,
+  accepted targets −100…84.1689. The fitted 0.95 s shift is estimated on the
+  same trajectory, not an independent actuator-latency measurement.
+- Input intervention results use three saved observations, 39 combinations and
+  three matched seeds = 117 predictions. Average absolute shoulder change is
+  measured over the first 25 actions against a freshly regenerated matched
+  baseline; the historical executed request can belong to a cached chunk.
+- Donor selection uses nearest demonstrated arm state with a standard-deviation
+  floor of 1 for matching. Actual inference retains checkpoint normalization.
+  Responses describe each specific donor substitution, not a normalized ranking
+  of modality importance. Brightness-only 0.7/1/1.3 tests preserve geometry/state.
+
+### Reproduction and deliverables
+
+- `scripts/figures/smolvla-experiment-analysis.py EVIDENCE_DIR --note-output IMAGE_DIR`
+  exports five standard scientific SVGs, five Chinese note PNGs and
+  `precision-summary.json`. The JSON contains aggregate results, checkpoint
+  hashes and source hashes, with private paths removed.
+- `scripts/figures/smolvla-intervention-diagram.py` produces the bilingual inline
+  network diagram plus standalone Chinese/English SVGs. The diagram separates
+  frozen/trained modules, 32-dimensional sampling and 18-dimensional loss, and
+  shows exactly which parameter groups are swapped. No model training, robot
+  execution or new GPU inference was launched for this article revision.
+- Validation records and browser screenshots live in
+  `/home/ann/Anncatto_workspace/smolvla-review-20261120/`.
+- November 20 checks: production build passed; 872 internal references and
+  MathML checks passed; all original chapter anchors, media sources/posters and
+  non-chapter figure macros remain present. Three Obsidian notes have 12
+  resolved and decoded image embeds, with their Markdown file links resolved.
+- Browser checks: 44/44 passed, Chinese/English at 1440 px and 390 px,
+  including initially closed theory/references, findings first and conditions
+  last, viewport width, SVG text containment, network enlargement/Escape,
+  all image decoding, five new figure viewers, retained numerical controls and
+  original video playback. The same run checked OpenWAM's updated definitions
+  and mobile formula layout. No browser script errors were recorded.

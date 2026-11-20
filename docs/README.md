@@ -18,6 +18,8 @@
 
 - [OpenWAM 动作表示实验来源](openwam-slots-source-coverage.md)：实验数据、检查点、训练耗时、接口对照、视频及复现。
 
+- [SmolVLA 数值类型实验来源](smolvla-source-coverage.md)：精度训练、模块交换、动作边界、真机轨迹与图表复现。
+
 - [轻量化设计实现记录](lightweight-design.md)、[材料选型与机构示意](lightweight-materials.md)、[渲染与运动学校核](lightweight-rendering.md)、[运动载荷与闭环验证](lightweight-control.md)、[开源模型来源核对](lightweight-model-sources.md)与[素材覆盖表](lightweight-source-coverage.md)。
 - 工具配色参考：[提取色板](lightweight-ui-palette.svg)。
 - RP1 课程项目：[开发与计算依赖](rp1-leg-project.md)、[CAD 与求解器记录](rp1-leg-compute.md)、[六维弹性内核](rp1-elastic-kernel.md)。评审主稿为 Obsidian 大作业目录中的 `RP1腿部轻量化.docx`（《机械工程学报》版式，附 PDF 预览），按开篇、Infra、Study、Alpha 组织；Infra 提供必要基准与验收条件，Study 按设计类别逐轮优选，Alpha 待实际候选计算后撰写。计算工程位于`/home/ann/rp1-leg-work/`，源稿、CAD和求解输出均留在该目录；Obsidian评审目录只保留当前报告与引用图片、图纸。本轮工具改动仅本地。
