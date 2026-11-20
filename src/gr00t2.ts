@@ -1,6 +1,27 @@
 import {language,onLanguageChange,setLanguage} from './language.js';
 const requested=new URLSearchParams(location.search).get('lang');
 if(requested==='en'||requested==='zh')setLanguage(requested);
+const architectureVideo=document.querySelector<HTMLVideoElement>('[data-g-architecture-video]');
+if(architectureVideo){
+ const video=architectureVideo, reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ const saveData=Boolean((navigator as Navigator&{connection?:{saveData?:boolean}}).connection?.saveData);
+ let userPaused=false, automaticPause=false;
+ video.muted=true;
+ const sync=()=>{
+  const active=video.closest('[data-slide]')?.classList.contains('is-active');
+  if(active&&!document.hidden&&!reduced.matches&&!saveData&&!userPaused)void video.play().catch(()=>{});
+  else if(!video.paused){automaticPause=true;video.pause();}
+ };
+ video.addEventListener('pause',()=>{if(automaticPause)automaticPause=false;else userPaused=true;});
+ video.addEventListener('play',()=>{userPaused=false;});
+ video.addEventListener('keydown',event=>{if([' ','ArrowLeft','ArrowRight','Home','End'].includes(event.key))event.stopPropagation();});
+ const label=()=>video.setAttribute('aria-label',language==='zh'?'GR00T 2 官网模型架构动画':'Official GR00T 2 model architecture animation');
+ onLanguageChange(label);label();
+ window.addEventListener('slidechange',sync);
+ document.addEventListener('visibilitychange',sync);
+ reduced.addEventListener('change',sync);
+ sync();
+}
 const controls=document.querySelector<HTMLElement>('[data-denoise-controls]');
 if(controls){
  let step=0;
