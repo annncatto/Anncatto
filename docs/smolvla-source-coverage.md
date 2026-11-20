@@ -1,8 +1,8 @@
 # SmolVLA & 数值类型 — source coverage and release checks
 
 Article route: `/notes/smolvla-numerical-types/`. Maintained as bilingual HTML
-chapter includes in `/home/ann/Anncatto`, on `article/smolvla-experiment-review`.
-The November 20 revision is a local draft, not merged into main or published.
+chapter includes in `/home/ann/Anncatto`, directly on `main`.
+The November 20 revision is integrated into main for the current Pages release.
 Keep the unpublished robot workbench and D20 homepage separate from article releases.
 
 ## Structure

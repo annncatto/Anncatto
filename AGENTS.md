@@ -13,6 +13,6 @@
 ## Workspace and branches
 
 - The primary checkout is `/home/ann/Anncatto`; workflow and handoff documents are indexed by `docs/README.md`. See `docs/repository-workflow.md` for branch roles and migration recovery.
-- Keep one primary checkout and use task branches. Preserve `refs/archive/buck/*` references as imported history; keep unpublished tools, D20 work, exports, and raw experiment records separate from article releases.
+- Maintain blog articles directly on `main` in the primary checkout. Do not create article branches or worktrees for routine writing, figures, or corrections. Unless the user explicitly requests a local draft, complete the relevant checks, commit and push blog updates. Preserve other sessions' unstaged/staged work and commit only this task's files or hunks. Use separate branches only for substantial unfinished tools or changes that require isolation; preserve `refs/archive/buck/*`, unpublished D20 work, exports and raw experiment records separately.
 - Group findings that answer the same question. Prefer parallel bullet points and one or two sentences per paragraph; explain the reasoning fully rather than compressing several steps into one sentence. Figures and experiment data may need longer explanations.
 - For experiment updates, connect the observed failure, the intervention, and the metric used to choose between alternatives. Distinguish a proposed training route from a measured task-success result.

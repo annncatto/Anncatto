@@ -79,7 +79,7 @@ BASE_PATH=/Anncatto PORT=5209 node scripts/serve.mjs
 
 ## 本机同步
 
-- 2026-11-20：从 buck 取回 `8b3877f`、`ddc4265`、`560c0a8` 三个提交，在 `/home/ann/Anncatto` 的 `article/gr00t2` 中集成。此前的 OpenWAM、SmolVLA 草稿继续保留；未合入 `main`，未推送发布。
+- 2026-11-20：从 buck 取回 `8b3877f`、`ddc4265`、`560c0a8` 三个提交，在 `/home/ann/Anncatto` 集成，并与 OpenWAM、SmolVLA 更新一起合入 `main`，纳入本轮 Pages 发布。
 - 47 个文章、配图、目录及专用界面文件与来源提交逐字节一致；来源工作树保持原状。工作流的新规则及来源索引已并入本机 `docs/`。
 - 本机构建与 1,085 项内部引用、MathML 检查通过；119 项浏览器检查通过，覆盖中英文、17 页、1440/390/320px、图像加载、目录、放大退出、全屏、键盘、Joint/Cached、RTC 和讲稿入口。
 - 本机预览：<http://127.0.0.1:5175/Anncatto/notes/gr00t2/slides/?lang=zh>。讲稿在 `/notes/gr00t2/`；私有同步快照和检查记录位于 `/home/ann/Anncatto_workspace/codex-blog-sync-20261120/`。

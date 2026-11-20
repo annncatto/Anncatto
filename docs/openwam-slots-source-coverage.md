@@ -66,7 +66,7 @@ python scripts/figures/openwam-pathway-diagram.py
 
 四张比较图与新网络图可放大、Escape 退出并恢复滚动；网络图两种语言的可见文字节点无裁切，手机放大时保留至少 1100 px 宽度供横向查看。误投片段实际播放及完整记录跳转 252 s 播放通过，页面与资源无错误。浏览器记录位于 `/home/ann/Anncatto_workspace/openwam-structure-20261120/`。
 
-浏览器记录与截图保存于 `/home/ann/Anncatto_workspace/openwam-task-correction-20261119/`。文章在本机 `article/openwam-task-correction` 分支保存；工作流与仓库迁移已进入本机 `main`，文章修订单独保留，尚未推送或发布。
+浏览器记录与截图保存于 `/home/ann/Anncatto_workspace/openwam-task-correction-20261119/`。2026-11-20，补充数据对照、网络拆解和指标定义已合入本机 `main`，与 SmolVLA、GR00T 更新一起纳入本轮 Pages 发布；下文未发布状态属于历次编辑记录。
 
 ## 状态与工作空间
 
