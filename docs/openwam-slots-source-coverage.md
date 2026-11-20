@@ -1,10 +1,10 @@
 # OpenWAM 动作表示实验来源
 
-最近核对：2026-11-20。文章为《OpenWAM & 动作表示》，沿用用户指定的《SmolVLA & 数值类型》和《DiT Heads》以及[实验文章流程](experimental-article-workflow.md)。主文件在 `content/OpenWAM & 动作表示.html`，正文分为 `content/openwam-slots/` 下九个片段。
+最近核对：2026-11-20。文章为《OpenWAM & 动作表示》，沿用用户指定的《SmolVLA & 数值类型》和《DiT Heads》以及[实验文章流程](experimental-article-workflow.md)。主文件在 `content/OpenWAM & 动作表示.html`，正文按主题拆分在 `content/openwam-slots/`。
 
 ## 补充数据与任务纠偏（2026-11-19—20）
 
-本轮围绕既有绿色积木误投案例，更新 `06-next.html`：原“训练中”占位替换为两组完成的 155 回合训练、网络对比与路线选择；保留 alpha80 原有状态和其余实验记录。Obsidian 主笔记仅保留精髓，完整数值另存其附件。
+本轮围绕既有绿色积木误投案例，整合两组完成的 155 回合训练、网络对比与路线选择，并重排整个实验章。115 回合视频、动作与底盘轨迹、训练开销、alpha80 状态继续保留；Obsidian 保留主要发现与中文图，完整数值另存附件。
 
 ### 证据
 
@@ -19,7 +19,9 @@
 
 ### 文章组织与结论
 
-按纠偏监督、语言与颜色、状态漂移、视频—动作交换、网络改写、结果与路线选择组织。网络干预提升为正文发现，完整权重和旧验证数据保留。
+实验章采用“任务与问题—关键发现—分组证据与机制—实验启发—下一轮验证—实验条件”。`04-experiments.html` 放问题、四组前置发现与视频，`06-next.html` 按训练路线、状态漂移、语言颜色、视频—动作耦合展开；原轨迹与开销分析归入同一个实验 H2。
+
+`10-discussion.html` 归并实验启发与后续对照；`11-conditions.html` 集中原模型、A/B、网络探针、真机记录和开销对照条件，位于参考资料之前。原锚点与媒体全部保留，三个理论折叠继续作为全文开头。
 
 当前 B 在三个新增训练诊断窗口中拟合更好，列为优先纠偏实测候选；A 的实测优势是早期适配更快。该判断基于现有两套配置，学习率、累计历史与起点共同改变；配对闭环正确篮子率承担任务验收。
 
@@ -35,18 +37,31 @@
 - 新增窗口基线 MAE：旧模型 12.4515、A 6.1412、B 3.9610。A/B 的反转指令变化 2.5560/1.4807，删除文本 151.0804/144.2495，颜色 3.6257/2.4747，恢复旧升降统计 4.9779/2.9814，仅屏蔽未来视频 16.9195/18.4601。完整聚合值见公开 JSON。
 - 单步 25–29 层组屏蔽使 A/B 速度场相对变化 35.05%/32.50%，5–9 层为 3.61%/3.90%；升降统计替换的末层动作残差变化 31.37%/25.40%。注意力分配、干预作用和任务表现分别解释，避免把注意力分配直接当成因果贡献。
 
+### 层组屏蔽图与解释
+
+- `12-masking-diagram.html` 是双语内嵌 SVG：上半部显示 30 个配对层，25–29 作为选定五层组的示例；下半部显示联合注意力 Q/K/V、原有因果掩码、新增动作 Q→视频 K 子块，以及保留的残差、FFN 和独立文本/状态条件路径。
+- 图按 `probe_network.py::Trace.mixed` 绘制。每层输入 token 排列为视频 0:360、动作 360:392；仅选定组执行 `keep[...,360:392,:360]=False`。其余掩码位置保留，所有 30 层继续运行，权重固定。
+- 再从保存训练快照只读复制 `mot_driver.py`、`mask_modes.py` 至私人来源目录，核对 `mutual` 与 `first_frame_causal` 设置、PyTorch SDPA 的 True=可见语义。图中当前视频 Q 对未来/动作的灰色块为原有限制，最后一行的两块红色才是新增屏蔽。
+- 视频/动作残差宽度 3072/1024，经各自 QKV 投影到 24 头×128 维共同空间；392 位置矩阵仅表示联合视频—动作注意力，文本/状态由独立 cross-attention 进入。
+- 正文新增 `masking-mechanism`、`masking-metric`、`masking-results`、`masking-propagation`、`generated-video-effect`：解释屏蔽步骤，定义每窗口 32×14 速度场相对 L2 后平均四窗，列六个层组的旧/A/B 全部均值，并区分最终输出敏感度和每层残差差异。
+- 结果量测的是该位置的连接被切断后，经后续计算传播的整网响应；末段靠近读出、前段保留更多后续层，这些结构差别与局部通路作用共同进入敏感度。完整去噪的未来视频屏蔽另行列出，保留其仅输入当前观测的协议。
+- 中文 PNG 另存 Obsidian `z图片/OpenWAM纠偏-屏蔽.png`，补入笔记第四组发现。PNG 从同源中文 SVG 渲染；其余四张中文数据图继续保留。
+
 ### 复现
 
 ```bash
 /home/ann/miniconda3/envs/alohamini/bin/python scripts/figures/openwam-correction-analysis.py /home/ann/Alohamini_workspace/reports/openwam-155-20261119
 /home/ann/miniconda3/envs/alohamini/bin/python scripts/figures/openwam-network-analysis.py /home/ann/Alohamini_workspace/reports/openwam-155-20261119
+python scripts/figures/openwam-pathway-diagram.py
 ```
 
-输出四张 `correction-*.svg`，以及 `correction-summary.json`、`correction-network-summary.json`。公开摘要按字段白名单生成，仅包含实验统计、方法和来源指纹；原始输入图像、动作预测、隐藏表征、配置、路径与权重保留在私人工作区，凭据不落盘。
+前两条输出四张数据 SVG 及两个聚合 JSON；第三条输出双语内嵌网络图和英文/中文独立 `correction-attention-mask*.svg`。公开摘要按字段白名单生成，仅包含实验统计、方法和来源指纹；原始输入图像、动作预测、隐藏表征、配置、路径与权重保留在私人工作区，凭据不落盘。
 
 ### 校验与保存
 
-8 篇文章构建成功，851 个内部引用及公式检查通过。中英文各在 1440/390 px 检查：单一 H1、原理论与参考资料默认收起，状态分析在主文可见，各表格无整页横溢出；四张比较图解码、放大、Escape 退出和滚动恢复均通过，页面与资源无错误。
+8 篇文章构建成功，861 个内部引用及公式检查通过。中英文各在 1440/390 px 检查：单一 H1、实验内容集中于一个 H2、前置发现与章末条件顺序正确、理论与参考资料默认收起、所有修改章节无整页横溢出。
+
+四张比较图与新网络图可放大、Escape 退出并恢复滚动；网络图两种语言的可见文字节点无裁切，手机放大时保留至少 1100 px 宽度供横向查看。误投片段实际播放及完整记录跳转 252 s 播放通过，页面与资源无错误。浏览器记录位于 `/home/ann/Anncatto_workspace/openwam-structure-20261120/`。
 
 浏览器记录与截图保存于 `/home/ann/Anncatto_workspace/openwam-task-correction-20261119/`。文章在本机 `article/openwam-task-correction` 分支保存；工作流与仓库迁移已进入本机 `main`，文章修订单独保留，尚未推送或发布。
 
