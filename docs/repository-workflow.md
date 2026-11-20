@@ -51,3 +51,19 @@ git switch -c article/<主题>
 旧检出和历史引用作为恢复来源保留。清理分支前，分别检查提交可达性、补丁等价、工作目录和忽略文件，不能只按分支名称或 ahead/behind 判断。
 
 本机当前只以 `origin` 同步 GitHub。历史引用使用 `git for-each-ref refs/archive/buck` 查看，D20 的三个独有补丁另保留在本地 `local/d20-homepage` 分支；所有引用的完整对象备份位于迁移目录 `repository-history.bundle`。
+
+## GR00T 与博客对话同步
+
+2026-11-20：从 buck 的 `article/gr00t2` 取回三个提交，来源末提交为 `560c0a8`，保存在 `refs/archive/buck/20261120/article/gr00t2`。本机 `article/gr00t2` 同时保留此前的 OpenWAM、SmolVLA 草稿；源机器工作树未改动，文章未合入 `main`、未推送发布。页面与检查入口见 [GR00T 来源记录](gr00t2-presentation.md#本机同步)。
+
+博客历史已导入本机 Codex：2 个主对话、18 个关联子会话，包含 334 个 turn 条目和 33,914 个历史 item。既有本机对话保留；原始 rollout 文件按 SHA256 核对，历史文字保留旧路径，当前工作目录映射为 `/home/ann/Anncatto`。旧的远端托管工作树关联留在原始快照中，本机按普通检出使用。
+
+```bash
+# 网站文章编辑，包含 GR00T 2
+codex -C /home/ann/Anncatto resume 01a14dc6-8029-79a1-8d82-0fea7231537c
+
+# 轻量化工具及相关设计讨论
+codex -C /home/ann/Anncatto resume 01a1975a-982b-7991-ba97-ffa199228061
+```
+
+私有导出、导入前备份、校验记录和同步脚本保存在 `/home/ann/Anncatto_workspace/codex-blog-sync-20261120/`，不进入 Git。Codex 实际接口已验证两个主对话可列出，历史 turn/item 可分页读取；未迁移登录凭据或配置。后续增量同步先核对相同对话 ID 的分歧，避免用旧库覆盖本机历史。

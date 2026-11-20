@@ -1,5 +1,16 @@
 [
   {
+    "slug": "gr00t2",
+    "title": "GR00T 2",
+    "titleEn": "GR00T 2",
+    "description": "世界—动作联合建模、跨本体技能迁移、少样本适应、强化学习及实时控制；附逐页演讲提示稿。",
+    "descriptionEn": "Joint world–action modeling, cross-embodiment transfer, few-shot adaptation, reinforcement learning and real-time control, with speaker notes.",
+    "presentation": "gr00t2/presentation.html",
+    "date": "2026-11-19",
+    "source": "GR00T 2.html",
+    "sections": []
+  },
+  {
     "slug": "alohamini-work",
     "title": "AlohaMini · 平台建设与算法实验",
     "titleEn": "AlohaMini · Platform & Experiments",
