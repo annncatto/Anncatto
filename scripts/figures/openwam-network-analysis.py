@@ -60,6 +60,15 @@ for model in models:
     result = dict(native_equivalence=data['native_equivalence'], baseline_fit={}, interventions={}, bridge_groups={},
                   context_attention={}, joint_attention={})
     baseline = [r for r in data['replay'] if r['variant'] == 'baseline']
+    joints = [i for i in range(14) if i not in [6, 13]]
+    predictions = {(r['window'], r['seed'], r['variant']): np.asarray(r['prediction'])[:, joints] for r in data['replay']}
+    result['between_seed_baseline_change'] = stats([
+        np.abs(predictions[i, 17, 'baseline'] - predictions[i, 29, 'baseline']).mean() for i in range(4)])
+    result['output_ranges'] = {}
+    for variant in ['baseline', 'mask_text', 'reverse_text']:
+        a = np.stack([predictions[i, seed, variant] for i in range(4) for seed in [17, 29]])
+        result['output_ranges'][variant] = dict(minimum=float(a.min()), maximum=float(a.max()),
+            outside_host_joint_range_fraction=float((np.abs(a) > 100).mean()), positions=int(a.size))
     for group, predicate in [('all', lambda r: True), ('original_validation_window', lambda r: r['window'] == 0),
                               ('added_training_windows', lambda r: r['window'] > 0)]:
         result['baseline_fit'][group] = stats([r['arm12_mae'] for r in baseline if predicate(r)])
@@ -89,6 +98,18 @@ for model in models:
 for name in ['plan.json']:
     summary['source_sha256'][name] = hashlib.sha256((source / name).read_bytes()).hexdigest()
 summary['source_sha256']['probe_network.py'] = hashlib.sha256((root / 'probe_network.py').read_bytes()).hexdigest()
+
+def write_summary():
+    target = out / 'correction-network-summary.json'
+    target.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n')
+    assert not any(s in target.read_text() for s in ['/home/', '192.168.', '183.230.', 'Gpu@', 'password'])
+
+
+if '--summary-only' in sys.argv:
+    write_summary()
+    print('Updated aggregate summary with matched-seed scale and output ranges.')
+    raise SystemExit(0)
+
 
 plt.rcParams.update({'font.family': 'DejaVu Sans', 'font.size': 10, 'axes.spines.top': False,
                      'axes.spines.right': False, 'svg.fonttype': 'none', 'axes.titleweight': 'semibold'})
@@ -142,7 +163,5 @@ axes[1].legend(fontsize=8, ncols=2)
 axes[1].grid(alpha=.18)
 save(fig, 'correction-network-layers.svg')
 
-target = out / 'correction-network-summary.json'
-target.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + '\n')
-assert not any(s in target.read_text() for s in ['/home/', '192.168.', '183.230.', 'Gpu@', 'password'])
+write_summary()
 print('Exported two network figures and a public aggregate summary; all native sampler checks exact.')

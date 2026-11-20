@@ -1235,6 +1235,33 @@
           32
         ]
       },
+      "between_seed_baseline_change": {
+        "mean": 3.2535858064075,
+        "median": 2.7590429337384803,
+        "minimum": 1.6920764929770182,
+        "maximum": 5.804180865176022,
+        "count": 4
+      },
+      "output_ranges": {
+        "baseline": {
+          "minimum": -93.55718231201172,
+          "maximum": 98.86363220214844,
+          "outside_host_joint_range_fraction": 0.0,
+          "positions": 3072
+        },
+        "mask_text": {
+          "minimum": -445.3351135253906,
+          "maximum": 688.3820190429688,
+          "outside_host_joint_range_fraction": 0.5276692708333334,
+          "positions": 3072
+        },
+        "reverse_text": {
+          "minimum": -98.71143341064453,
+          "maximum": 102.23944091796875,
+          "outside_host_joint_range_fraction": 0.00390625,
+          "positions": 3072
+        }
+      },
       "environment": {
         "torch": "2.11.0+cu130",
         "cuda": "13.0",
@@ -2421,6 +2448,33 @@
           32
         ]
       },
+      "between_seed_baseline_change": {
+        "mean": 4.6416472533407305,
+        "median": 4.955922417342663,
+        "minimum": 1.6450173680981,
+        "maximum": 7.009726810579498,
+        "count": 4
+      },
+      "output_ranges": {
+        "baseline": {
+          "minimum": -101.41928100585938,
+          "maximum": 102.09650421142578,
+          "outside_host_joint_range_fraction": 0.009765625,
+          "positions": 3072
+        },
+        "mask_text": {
+          "minimum": -413.66357421875,
+          "maximum": 594.7750854492188,
+          "outside_host_joint_range_fraction": 0.48828125,
+          "positions": 3072
+        },
+        "reverse_text": {
+          "minimum": -106.38679504394531,
+          "maximum": 110.4825210571289,
+          "outside_host_joint_range_fraction": 0.041666666666666664,
+          "positions": 3072
+        }
+      },
       "environment": {
         "torch": "2.11.0+cu130",
         "cuda": "13.0",
@@ -3606,6 +3660,33 @@
           240,
           32
         ]
+      },
+      "between_seed_baseline_change": {
+        "mean": 4.022176795483878,
+        "median": 3.0413501830771565,
+        "minimum": 2.172451368222634,
+        "maximum": 7.833555447558562,
+        "count": 4
+      },
+      "output_ranges": {
+        "baseline": {
+          "minimum": -101.41928100585938,
+          "maximum": 100.69883728027344,
+          "outside_host_joint_range_fraction": 0.0022786458333333335,
+          "positions": 3072
+        },
+        "mask_text": {
+          "minimum": -423.59759521484375,
+          "maximum": 628.3191528320312,
+          "outside_host_joint_range_fraction": 0.466796875,
+          "positions": 3072
+        },
+        "reverse_text": {
+          "minimum": -104.96749877929688,
+          "maximum": 103.49417114257812,
+          "outside_host_joint_range_fraction": 0.0419921875,
+          "positions": 3072
+        }
       },
       "environment": {
         "torch": "2.11.0+cu130",
