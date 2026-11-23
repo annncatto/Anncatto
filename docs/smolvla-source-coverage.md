@@ -2,7 +2,7 @@
 
 Article route: `/notes/smolvla-numerical-types/`. Maintained as bilingual HTML
 chapter includes in `/home/ann/Anncatto`, directly on `main`.
-The November 20 revision is integrated into main for the current Pages release.
+The November 23 editorial revision is maintained on main for Pages release.
 Keep the unpublished robot workbench and D20 homepage separate from article releases.
 
 ## Structure
@@ -14,7 +14,8 @@ Keep the unpublished robot workbench and D20 homepage separate from article rele
   observation features, attention, flow training, sampling, π0.5 comparison,
   SmolVLM, asynchronous inference.
 - The experiment chapter follows task/question, grouped findings, case evidence,
-  precision and internal mechanisms, execution, implications, next tests, and
+  historical arm/base trajectories, precision and internal mechanisms, FP32
+  execution, implications, next tests, and
   experimental conditions. Full setup is the last H3; references remain collapsed.
 - Dataset-specific normalization is Data preprocessing under Experimental
   conditions, after the dataset/camera description and before training settings.
@@ -309,3 +310,26 @@ article after a successful Pages deployment.
   43 targeted bilingual browser checks cover 1440/390/320px, the theory link,
   rounding controls and enlarged plot. At 320px, the pre-existing 346px document
   width matches the published baseline; edited text introduces no overflow.
+
+
+## November 23 English-first editorial revision
+
+- Wrote and reviewed a complete English draft before translating 175 copy units
+  into Chinese. Both language branches use the same experiment scope and data.
+- The precision section introduces A/B/C in a comparison table, then presents
+  checkpoint differences and matched replay. Parameter-scope details are folded;
+  arithmetic examples remain in numerical theory. Action MAE and planned tests
+  use compact tables instead of dense enumerations.
+- Behavioral cases are followed by the historical 120-demo arm/base analysis,
+  then the 150-demo precision comparison and the separate FP32 robot record.
+  C is explicitly continued from B; paired flow replay uses two draws for each
+  of 16 windows (32 evaluations). Input-state shifts retain Host units.
+- All original section IDs, source links, image/video sources, media groups,
+  core formulas and aggregate experiment files are retained. The 129-tensor scope
+  includes normalization vectors and remains described as weight elements.
+- Drafts, translations and preservation manifests are private working artifacts
+  under `/home/ann/Anncatto_workspace/smolvla-editorial-20261123/`.
+- Final validation: production build and 1,094 local-reference/MathML checks pass.
+  All 70 browser checks pass in English/Chinese at 1440/768/390px, covering the
+  early five-column recipe table, evidence order, native disclosures, figures,
+  image decoding, original video playback, viewers and numerical controls.
