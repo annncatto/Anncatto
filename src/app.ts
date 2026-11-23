@@ -57,3 +57,14 @@ mountReadingNavigation();
 mountPi07Explainers();
 
 mountArticleNavigation();
+
+for (const menu of document.querySelectorAll<HTMLDetailsElement>('.source-edit-menu')) {
+  document.addEventListener('click', event => {
+    if (!menu.contains(event.target as Node)) menu.open = false;
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key !== 'Escape' || !menu.open) return;
+    menu.open = false;
+    if (menu.contains(document.activeElement)) menu.querySelector<HTMLElement>('summary')?.focus();
+  });
+}

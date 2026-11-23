@@ -12,6 +12,7 @@ if (deck) {
   const prev = document.querySelector<HTMLButtonElement>('[data-slide-prev]')!;
   const next = document.querySelector<HTMLButtonElement>('[data-slide-next]')!;
   const count = document.querySelector<HTMLElement>('[data-slide-count]')!;
+  const editLink = document.querySelector<HTMLAnchorElement>('[data-slide-edit]');
   const buildControls = document.querySelector<HTMLElement>('[data-slide-builds]')!;
   const progress = document.querySelector<HTMLElement>('[data-slide-progress]')!;
   const progressCat = document.createElement('span');
@@ -47,6 +48,12 @@ if (deck) {
     progressCat.style.left = `clamp(14px, ${(state.index + .5) / slides.length * 100}%, calc(100% - 14px))`;
   }
   function render(announce = true) {
+    if (editLink) {
+      editLink.href = slides[state.index].dataset.sourceEdit || editLink.href;
+      const label = language === 'en' ? 'Edit this slide on GitHub (opens in a new tab)' : '在 GitHub 编辑当前页（在新标签页打开）';
+      editLink.title = label;
+      editLink.setAttribute('aria-label', label);
+    }
     slides.forEach((el, i) => {
       const active = i === state.index;
       el.classList.toggle('is-active', active);

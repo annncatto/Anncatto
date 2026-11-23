@@ -7,6 +7,8 @@
 .deck-brand strong{font-size:17px;font-weight:600;}
 .deck-tools{display:flex;align-items:center;gap:12px;}
 .deck-tools>a{white-space:nowrap;}
+.deck-tools .deck-source-edit{padding:5px 0;}
+@media(max-width:720px){.deck-source-edit .source-edit-label{display:none;}.deck-tools .deck-source-edit{padding:6px;}}
 .deck-tools button,.deck-footer button,.slide-overview button{font:inherit;cursor:pointer;color:var(--ink);background:transparent;border:1px solid #cfdddf;border-radius:5px;padding:7px 12px;line-height:1.4;}
 .deck-tools .language-switch{display:flex;margin:0;gap:4px;}
 .deck-tools .language-switch button{border:0;padding:5px 7px;}

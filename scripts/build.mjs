@@ -10,6 +10,7 @@ import { renderPi07Figure } from "../.build/pi07-diagrams.js";
 import { renderCourseFigure } from '../.build/lightweight-course.js';
 import { renderLightweightFigure } from '../.build/lightweight-diagrams.js';
 import { readArticleSource } from './content.mjs';
+import { articleSourceEdit, markSlideSources, addSlideEditLink } from './source-edit.mjs';
 import { renderSmolFigure, renderSmolMedia } from '../.build/smolvla-figures.js';
 import { renderOpenwamDiagram } from '../.build/openwam-slide-diagrams.js';
 import { build as bundle } from 'esbuild';
@@ -185,14 +186,15 @@ function readingSidebar(raw, title, titleEn=title, maxDepth=3) {
 }
 for (const p of posts) {
   let figureNumber = 0;
-  const raw = await readArticleSource(p.source),
+  const sources = new Map();
+  const raw = await readArticleSource(p.source, {transformSource(raw, source) { sources.set(source, raw); return raw; }}),
     content = math(raw.replace(/\{\{figure:(\w+)\}\}/g, (_, id) => figure(id, ++figureNumber))
       .replace(/\{\{pi07:(\w+)\}\}/g, (_, id) => renderPi07Figure(id))
       .replace(/\{\{lightweight:(\w+)\}\}/g, (_, id) => renderLightweightFigure(id))
       .replace(/\{\{course:(\w+)\}\}/g, (_, id) => renderCourseFigure(id))
       .replace(/\{\{smolvla:(\w+)\}\}/g, (_, id) => renderSmolFigure(id))
       .replace(/\{\{svmedia:([\w|\-]+)\}\}/g, (_, ids) => renderSmolMedia(ids)));
-  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><p class="meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` · <a href="/notes/${p.slug}/slides/">${bilingual('Presentation ↗','幻灯片 ↗')}</a>` : ''}</p></header>`;
+  const header = `<header class="article-header"><h1>${p.titleEn?bilingual(esc(p.titleEn),esc(p.title)):esc(p.title)}</h1><div class="article-meta-row"><p class="meta"><time datetime="${p.date}">${p.date}</time>${p.presentation ? ` · <a href="/notes/${p.slug}/slides/">${bilingual('Presentation ↗','幻灯片 ↗')}</a>` : ''}</p>${articleSourceEdit(sources)}</div></header>`;
   const sidebar = readingSidebar(raw, p.title, p.titleEn, p.tocDepth ?? (p.module === "dit-heads" ? 4 : 3));
   await write(
     `notes/${p.slug}/index.html`,
@@ -205,7 +207,8 @@ for (const p of posts) {
     ),
   );
   if (p.presentation) {
-    const slides = (p.slug === 'gr00t2' ? '<link rel="stylesheet" href="/assets/gr00t2.css"><link rel="stylesheet" href="/assets/gr00t2-architecture.css">' : '') + math((await readArticleSource(p.presentation))
+    const slideSource = await readArticleSource(p.presentation, {transformSource: markSlideSources});
+    const slides = (p.slug === 'gr00t2' ? '<link rel="stylesheet" href="/assets/gr00t2.css"><link rel="stylesheet" href="/assets/gr00t2-architecture.css">' : '') + math(addSlideEditLink(slideSource, p.presentation)
       .replace(/\{\{openwam:([\w-]+)\}\}/g, (_, id) => renderOpenwamDiagram(id)));
     await write(`notes/${p.slug}/slides/index.html`, shell(p.title, p.descriptionEn, slides, true, 'slides', true));
   }
