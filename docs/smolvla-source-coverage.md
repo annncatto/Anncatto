@@ -333,3 +333,27 @@ article after a successful Pages deployment.
   All 70 browser checks pass in English/Chinese at 1440/768/390px, covering the
   early five-column recipe table, evidence order, native disclosures, figures,
   image decoding, original video playback, viewers and numerical controls.
+
+
+## November 23 terminology clarification
+
+- Joint suffixes retain their English names. `shoulder_lift` identifies upper-arm
+  elevation; `wrist_roll` identifies rotation about the forearm/tool axis. Values
+  in the archived plots remain Host-calibrated coordinates.
+- The 25-frame group uses the later index of each adjacent pair: 25, 50, 75, …,
+  totaling 117 pairs. TV is the sum of absolute policy-command differences;
+  42.9% is the selected pairs’ share of right-wrist TV, not statistical variance.
+- Images and proprioceptive state are observation inputs. Input-replacement
+  descriptions distinguish original/replacement inputs, fixed weights/prompt/seed
+  and regenerated actions; each saved time uses its own selected training donor.
+- Zero lateral requests mean `y.vel=0`. Nonzero feedback is reported as a measured
+  reading; actual displacement and velocity-estimation error require an independent
+  reference to separate. No physical-motion cause is assigned from that reading.
+- The stopping comparison uses absolute forward-command P95 and normalized-label
+  BF16-rounding/restoration error in the same original x.vel units. Its roughly
+  230–310× ratio compares recorded commands with an isolated processor conversion,
+  separately from the A/B training-recipe comparison.
+- Validation: production build and 1,094 local-reference/MathML checks pass.
+  All 70 full-page and 19 targeted browser checks pass in English/Chinese at
+  1440/768/390px. Original anchors, source/media links and aggregate data remain;
+  no experiment data or figures were changed.

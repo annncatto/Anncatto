@@ -1,7 +1,7 @@
 <span id="experiment-implications"></span>
 <span id="evidence-and-hypotheses"></span>
 <h3 id="implications"><span lang="en">Implications</span><span lang="zh-CN">实验启发</span></h3>
-<ul class="bilingual-list"><li><div class="bilingual"><p lang="en"><strong>Transition coverage:</strong> 54.10% of shoulder labels lie below −95 and 89.22% of gripper labels below 5. Prioritize lift, reopening, deposit and recovery states alongside these frequent low/closed states.</p><p lang="zh-CN"><strong>阶段覆盖：</strong>54.10% 的肩抬标签低于 −95，89.22% 的夹爪标签低于 5。除常见的低位与闭合状态外，优先补充抬升、重新开爪、投放和恢复状态。</p></div></li>
+<ul class="bilingual-list"><li><div class="bilingual"><p lang="en"><strong>Transition coverage:</strong> 54.10% of shoulder labels lie below −95 and 89.22% of gripper labels below 5. Prioritize lift, reopening, deposit and recovery states alongside these frequent low/closed states.</p><p lang="zh-CN"><strong>阶段覆盖：</strong>54.10% 的<code>shoulder_lift</code> 标签低于 −95，89.22% 的夹爪标签低于 5。除常见的低位与闭合状态外，优先补充抬升、重新开爪、投放和恢复状态。</p></div></li>
 <li><div class="bilingual"><p lang="en"><strong>Training configuration:</strong> the FP32 recipe improves matched fit, and swaps show that experts and projectors adapt together. Track weight storage, Adam state and compute precision as separate configuration fields.</p><p lang="zh-CN"><strong>训练配置：</strong>FP32 方案改善配对拟合，模块交换则显示专家与投影共同适配。配置记录分别列出权重存储、Adam 状态和计算精度。</p></div></li>
 <li><div class="bilingual"><p lang="en"><strong>Execution diagnosis:</strong> score demonstration fit, output validity and task completion separately. Align raw predictions, accepted commands and subsequent feedback when locating a failure stage.</p><p lang="zh-CN"><strong>执行诊断：</strong>示范拟合、输出有效性与任务完成分别计分。定位失败阶段时，对齐原始预测、已接收命令和后续反馈。</p></div></li>
 </ul>
