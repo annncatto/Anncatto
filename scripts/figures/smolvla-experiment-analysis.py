@@ -102,11 +102,11 @@ def figure(language,name,note_name):
         values=np.array(list(matrix.values()))*100
         bars=ax[0].bar(range(3),values,color=[GRAY,BLUE,GREEN],width=.6)
         ax[0].bar_label(bars,labels=[f'{x:.5f}%' for x in values],padding=4,fontsize=9)
-        ax[0].set(xticks=range(3),xticklabels=labels,ylim=(0,122),ylabel=tr('末 5k 步端点不同的矩阵元素（%）','Changed matrix elements over final 5k (%)'),title=tr('同名 96,607,440 个矩阵参数','Same 96,607,440 matrix parameters'))
+        ax[0].set(xticks=range(3),xticklabels=[label+'\n'+interval for label,interval in zip(labels,['95k → 100k','95k → 100k','115k → 120k'])],ylim=(0,122),ylabel=tr('两份检查点中数值不同的元素（%）','Unequal checkpoint values (%)'),title=tr('同一组 96,607,440 个权重元素','Same 96,607,440 weight elements'))
         bars=ax[1].bar(range(3),list(flow.values()),color=[GRAY,BLUE,GREEN],width=.6)
         ax[1].bar_label(bars,fmt='%.6f',padding=4,fontsize=9)
         ax[1].set(xticks=range(3),xticklabels=labels,ylim=(0,.034),ylabel=tr('配对 flow loss','Matched flow loss'),title=tr('统一 FP32 回放，16 窗口 × 2 抽样','Uniform FP32 replay · 16 windows × 2 draws'))
-        fig.suptitle(tr('FP32 保留更多更新，固定训练窗口拟合更好','FP32 retains more updates and improves training-window fit'),fontsize=14)
+        fig.suptitle(tr('检查点权重差异与训练窗口拟合','Checkpoint weight differences and matched training fit'),fontsize=14)
         for a in ax:a.grid(axis='y',alpha=.18);a.set_axisbelow(True);a.tick_params(axis='x',labelsize=8)
     elif name=='module-swaps':
         fig,ax=plt.subplots(1,2,figsize=(10.6,4.5),layout='constrained')

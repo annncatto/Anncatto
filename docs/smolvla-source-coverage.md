@@ -287,3 +287,25 @@ article after a successful Pages deployment.
   all image decoding, five new figure viewers, retained numerical controls and
   original video playback. The same run checked OpenWAM's updated definitions
   and mobile formula layout. No browser script errors were recorded.
+
+## November 23 precision clarification
+
+- The 129-name / 96,607,440-element group is A's BF16 trainable weight group,
+  including normalization vectors; use “weight elements” rather than “matrix
+  endpoints”. B/C comparisons retain the same names and element positions.
+- The metric counts unequal saved values at 95k/100k (A/B) or 115k/120k (C).
+  It measures endpoint differences, not per-step update frequency or amplitude.
+- A's FP32 subgroup spans external projections and 16 expert K/V projection
+  tensors. Its last-5k fraction is 3,249,893 / 3,273,552 = 99.27727%; A's BF16
+  subgroup is 79,863 / 96,607,440 = 0.0826675%. Group by storage dtype.
+- Matching frozen-parameter dtypes describes the post-training comparison.
+  Optimizer writeback occurs in memory at each step; checkpoint serialization
+  records already-rounded values. The BF16 1.0 + 0.001 example was checked on
+  CPU: four direct writes retain 1.0, while an FP32 master reaches approximately
+  1.004 and its BF16 copy becomes 1.0078125.
+- Figure labels and checkpoint intervals now name the measured comparison;
+  original aggregate data, source hashes and subsequent replay results remain.
+- November 23 validation: build and 1,090 internal references/MathML pass;
+  43 targeted bilingual browser checks cover 1440/390/320px, the theory link,
+  rounding controls and enlarged plot. At 320px, the pre-existing 346px document
+  width matches the published baseline; edited text introduces no overflow.
