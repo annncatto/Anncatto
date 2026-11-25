@@ -1036,7 +1036,7 @@ z
     <text style="font-size: 8.1px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #19364b" transform="translate(645.361051 64.685322)">MAE 1.2488 → 1.2408（仅降 0.64%）</text>
    </g>
    <g id="text_49">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="615.251169" y="32.251423" transform="rotate(-0 615.251169 32.251423)">按预测步分解：C 大幅压低中段越界，首尾仍残留</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="615.251169" y="32.251423" transform="rotate(-0 615.251169 32.251423)">按预测步分解：C 明显减少中段越界，首尾仍有残留</text>
    </g>
    <g id="legend_2">
     <g id="patch_27">
@@ -1077,7 +1077,7 @@ z
    </g>
   </g>
   <g id="text_52">
-   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">无界连续预测碰到贴边示范：精度提升减少越界，但不能替代边界约束</text>
+   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">贴边起始窗口的越界分布与离线裁剪核对</text>
   </g>
  </g>
  <defs>

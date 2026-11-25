@@ -252,16 +252,16 @@ def figure(language, name, note_name):
         bB = ax[1].barh(y - h / 2, vals_B, height=h, color=BLUE, label=tr('B · FP32 100k', 'B · FP32 100k'))
         ax[1].bar_label(bA, labels=[f'{v:.2f}%' for v in vals_A], padding=4, fontsize=8.5, color=SLATE, fontweight='semibold')
         ax[1].bar_label(bB, labels=[f'{v:.2f}%' for v in vals_B], padding=4, fontsize=8.5, color=BLUE, fontweight='semibold')
-        ax[1].annotate(tr('A 主体变化小，FP32 通道漂移达 B 的 2.5×', 'Small BF16 body shift; 2.5× FP32 K,V drift in A'),
+        ax[1].annotate(tr('A 主体变化小，FP32 K,V 变化达 B 的 2.5×', 'Small BF16 change; 2.5× FP32 K,V change in A'),
                        xy=(17.3, 3.18), xytext=(8.6, 2.48), fontsize=8.1, color=CORAL, fontweight='semibold',
                        arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.1))
         ax[1].set(
             yticks=y, yticklabels=g_labels, xlim=(0, 22.5),
-            xlabel=tr('相对共同初始化的权重 L2 漂移（%）', 'Weight L2 drift from shared init (%)'),
-            title=tr('四类参数分组：A 集中在 FP32 接口，B 集中在专家主体', 'Groups: A shifts FP32; B shifts expert body'),
+            xlabel=tr('相对共同初始化的权重 L2 变化率（%）', 'Relative L2 weight change from init (%)'),
+            title=tr('四类参数分组：A 集中在 FP32 张量，B 集中在专家主体', 'Groups: A updates FP32; B updates expert body'),
         )
         ax[1].legend(fontsize=8.2, loc='lower right', frameon=True, facecolor='white', edgecolor='#e2e8f0')
-        fig.suptitle(tr('低学习率衰减期 A 的停滞过程与两类存储参数的漂移差异', 'Late-stage plateau in A and weight-drift contrast across storage types'), fontsize=13.5, fontweight='semibold')
+        fig.suptitle(tr('学习率衰减期 A 的停滞过程与两类存储参数的 L2 变化', 'Late-stage plateau in A and L2 weight change by storage dtype'), fontsize=13.5, fontweight='semibold')
         ax[0].grid(axis='y', alpha=0.18); ax[0].set_axisbelow(True)
         ax[1].grid(axis='x', alpha=0.18); ax[1].set_axisbelow(True)
 
@@ -286,8 +286,8 @@ def figure(language, name, note_name):
         ax[0].set(
             xticks=layers, xlim=(-0.6, 15.6), ylim=(0, 27.5),
             xlabel=tr('动作专家层号（浅蓝底为奇数 CA 层，白底为偶数 SA 层）', 'Action-expert layer (shaded: odd CA; white: even SA)'),
-            ylabel=tr('相对共同初始化的 L2 漂移（%）', 'L2 drift from init (%)'),
-            title=tr('逐层权重漂移：A 的奇数 CA 层 K,V 随深度增大', 'Layerwise drift: A’s odd CA K,V drift increases with depth'),
+            ylabel=tr('相对共同初始化的 L2 变化率（%）', 'Relative L2 change from init (%)'),
+            title=tr('逐层权重变化：A 的奇数 CA 层 K,V 随深度增大', 'Layerwise change: A’s odd CA K,V grows with depth'),
         )
         ax[0].legend(fontsize=7.6, loc='upper left', frameon=True, facecolor='white', framealpha=0.92, edgecolor='#e2e8f0')
 
@@ -305,7 +305,7 @@ def figure(language, name, note_name):
         ax[1].annotate(tr('L01 首 CA 入口\nB←A 1.97×', 'L01 first CA\nB←A 1.97×'),
                        xy=(1, 1.968), xytext=(2.2, 1.70), fontsize=8.0, color=CORAL, fontweight='semibold',
                        arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
-        ax[1].annotate(tr('L08 突刺\nA←B 1.87×', 'L08 spike\nA←B 1.87×'),
+        ax[1].annotate(tr('L08\nA←B 1.87×', 'L08\nA←B 1.87×'),
                        xy=(8, 1.874), xytext=(9.4, 1.83), fontsize=8.0, color=CORAL, fontweight='semibold',
                        arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
         ax[1].annotate(tr('L15 末 CA\nB←A 1.81×', 'L15 final CA\nB←A 1.81×'),
@@ -318,10 +318,10 @@ def figure(language, name, note_name):
             xticks=layers, xlim=(-0.6, 15.6), ylim=(0.84, 2.32),
             xlabel=tr('被替换的专家层（浅蓝底为奇数 CA 层）', 'Replaced expert layer (shaded: odd CA)'),
             ylabel=tr('换层 loss / 本模型基线 loss', 'Swap loss / native baseline loss'),
-            title=tr('16 层双向替换：首尾 CA 与 L08 最敏感，中段层可改善 A', '16 swaps: boundary CA & L08 spike; mid layers aid A'),
+            title=tr('16 层双向替换：首尾 CA 与 L08 升幅最大，部分中段层降 A loss', '16 swaps: L01, L08 & L15 rise most; mid layers help A'),
         )
         ax[1].legend(fontsize=7.8, loc='upper center', frameon=True, facecolor='white', framealpha=0.95, edgecolor='#e2e8f0')
-        fig.suptitle(tr('层间漂移格局对应换层敏感峰：首尾 CA 层与中段层表现分化', 'Layerwise drift explains swap spikes at boundary CA layers'), fontsize=13.5, fontweight='semibold')
+        fig.suptitle(tr('逐层权重变化与双向换层结果：首尾 CA 层替换后 loss 升幅最大', 'Layerwise L2 change and bidirectional single-layer swap ratios'), fontsize=13.5, fontweight='semibold')
         for a in ax:
             a.grid(axis='y', alpha=0.16); a.set_axisbelow(True)
             a.tick_params(axis='x', labelsize=8.5)
@@ -369,10 +369,10 @@ def figure(language, name, note_name):
             xticks=x, xticklabels=h_labels, ylim=(0, 128),
             xlabel=tr('50 步动作块内的预测步位置', 'Step index within 50-step predicted chunk'),
             ylabel=tr('低于 −100 的越界位置数', 'Positions below −100'),
-            title=tr('按预测步分解：C 大幅压低中段越界，首尾仍残留', 'By horizon bin: C cuts mid-chunk crossings ~75%'),
+            title=tr('按预测步分解：C 明显减少中段越界，首尾仍有残留', 'By horizon bin: C cuts mid-chunk crossings ~75%'),
         )
         ax[1].legend(fontsize=7.9, loc='upper left', frameon=True, facecolor='white', edgecolor='#e2e8f0')
-        fig.suptitle(tr('无界连续预测碰到贴边示范：精度提升减少越界，但不能替代边界约束', 'Unbounded flow predictions meet boundary-adjacent demos'), fontsize=13.5, fontweight='semibold')
+        fig.suptitle(tr('贴边起始窗口的越界分布与离线裁剪核对', 'Start-window boundary crossings and offline clipping check'), fontsize=13.5, fontweight='semibold')
         for a in ax:
             a.grid(axis='y', alpha=0.16); a.set_axisbelow(True)
 

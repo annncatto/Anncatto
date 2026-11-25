@@ -18,7 +18,7 @@
 <div class="bilingual"><p lang="en">Both trials launched from altered starting poses fail to complete grasping and deposit.</p><p lang="zh-CN">两次改变初始姿态的试验均未能完成抓取与投放。</p></div>
 
 <div class="bilingual"><p lang="en">The three successful clips confirm that the 120-demo policy can execute the complete approach–grasp–deposit chain when starting conditions align with training. Failure concentrates at the approach endpoint, where base stopping distance, wrist positioning, and gripper timing must simultaneously match the toy’s relative location.</p><p lang="zh-CN">三段成功记录说明，起点与示范对齐时，120 条模型能够走完“接近—抓取—投放”全流程。失败集中在接近终点：底盘停车距离、手腕落位和夹爪闭合时机必须同时对准玩偶的相对位置。</p></div>
-<div class="bilingual"><p lang="en">Altering the starting pose simultaneously shifts camera viewpoints and joint-state readings, pushing the policy off its trained approach corridor before the grasp phase even begins.</p><p lang="zh-CN">改变初始姿态会同时改变四路相机视角和关节状态读数，使策略在进入抓取阶段前就偏离训练过的接近走廊。</p></div>
+<div class="bilingual"><p lang="en">Altering the starting pose simultaneously shifts camera viewpoints and joint-state readings, moving the rollout outside the approach trajectories covered by the training demonstrations before the grasp phase begins.</p><p lang="zh-CN">改变初始姿态会同时改变四路相机视角和关节状态读数，使机器人在进入抓取阶段前就偏离训练集覆盖的接近轨迹范围。</p></div>
 
 <h4 id="continued-training"><span lang="en">Continued training (150 demonstrations)</span><span lang="zh-CN">继续训练（150 条）</span></h4>
 
@@ -38,7 +38,7 @@
 <h4><span lang="en">Normalization statistics</span><span lang="zh-CN">统计量变化</span></h4>
 <div class="bilingual"><p lang="en">Recomputing dataset statistics shifts the normalized coordinates representing stop and forward base commands:</p><p lang="zh-CN">重算数据集统计量后，底盘停止与前进对应的标准化数值坐标随之移动：</p></div>
 <div class="sv-table" tabindex="0"><table><caption><span lang="en">Forward-base action statistics</span><span lang="zh-CN">底盘前向速度的动作统计</span></caption><thead><tr><th><span lang="en">Statistic</span><span lang="zh-CN">统计量</span></th><th>120</th><th>150</th></tr></thead><tbody><tr><td>$\mu_x$</td><td>0.02427</td><td>0.02222</td></tr><tr><td>$\sigma_x$</td><td>0.05524</td><td>0.05559</td></tr><tr><td>$z_x(a=0)$</td><td>−0.43939</td><td>−0.39968</td></tr><tr><td>$z_x(a=0.15)$</td><td>2.27589</td><td>2.29847</td></tr></tbody></table></div>
-<div class="bilingual"><p lang="en">Holding the old normalized prediction fixed under the 150-demo statistics maps stop to −0.00221 and forward motion to 0.14874. Continued training therefore has to re-adapt both the shifted coordinates and the 30 new demonstrations; why it struggled to absorb them at low learning rates is examined in <a href="#precision-results">Numerical updates and action fit</a>.</p><p lang="zh-CN">若固定旧模型的标准化预测、只换用 150 条统计量还原，原停止值会落到 −0.00221，前进值落到 0.14874。因此继续训练必须同时重学坐标偏移与新增示教；它在低学习率下为何迟迟未能消化这些变化，将在<a href="#precision-results">精度更新与动作拟合</a>一节拆解。</p></div>
+<div class="bilingual"><p lang="en">Holding the old normalized prediction fixed under the 150-demo statistics maps stop to −0.00221 and forward motion to 0.14874. Continued training therefore has to re-fit both the shifted coordinates and the 30 new demonstrations; why the continued run did not lower training loss at low learning rates is examined in <a href="#precision-results">Numerical updates and action fit</a>.</p><p lang="zh-CN">若固定旧模型的标准化预测、只换用 150 条统计量还原，原停止值会落到 −0.00221，前进值落到 0.14874。因此继续训练必须同时重新拟合坐标变化与新增示教；它在低学习率下未能进一步降低 loss 的原因将在<a href="#precision-results">精度更新与动作拟合</a>一节分析。</p></div>
 
 <h4 id="pi05-rollout"><span lang="en">π0.5 (120 demonstrations)</span><span lang="zh-CN">π0.5（120 条）</span></h4>
 
@@ -66,4 +66,4 @@
 
 <div class="bilingual"><p lang="en">Neither recorded two-toy rollout completes collecting and depositing both toys.</p><p lang="zh-CN">两段双玩偶测试均未完成两个玩偶的收集与投放。</p></div>
 
-<div class="bilingual"><p lang="en">Single-toy performance also regressed after adding this multi-object stage. Completing a two-toy rollout demands re-approaching a second target after the first deposit, when both the robot pose and visual scene have changed substantially—magnifying the same transition fragility already visible in the single-toy failures.</p><p lang="zh-CN">加入双玩偶阶段后，原本的单玩偶表现也同步回退。连续抓取两个玩偶要求在首次投放后，于已经变化了的车体姿态和视觉场景下重新建立接近，这直接放大了单玩偶阶段已经暴露出的衔接脆弱性。</p></div>
+<div class="bilingual"><p lang="en">Single-toy performance also regressed after adding this multi-object stage. Completing a two-toy rollout requires approaching a second target after the first deposit, when both the robot pose and visual scene have changed substantially—consistent with the approach and handoff failures already observed in single-toy rollouts.</p><p lang="zh-CN">加入双玩偶阶段后，原本的单玩偶表现也同步回退。连续抓取两个玩偶要求在首次投放后，于已经变化了的车体姿态和视觉场景下重新接近第二个目标，这与单玩偶阶段在接近和交接处容易失败的表现一致。</p></div>

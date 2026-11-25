@@ -47,7 +47,7 @@ def draw(language=None):
     a.append(
         '<title id="smol-swap-title">SmolVLA mixed-storage layout, 32D/18D pathway, and parameter swaps</title>'
         '<desc id="smol-swap-desc">Frozen 350.17M VLM, 96.61M BF16 expert body stalled in A vs FP32 in B, '
-        '3.27M FP32 external and odd-layer cross-attention KV projections with larger L2 drift in A, '
+        '3.27M FP32 external and odd-layer cross-attention KV projections with larger relative L2 weight change in A, '
         '18D supervised vs 32D Euler-integrated action path, and wrapping parameter-swap loss results.</desc>'
         '<style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>'
     )
@@ -66,11 +66,11 @@ def draw(language=None):
     rect(275, 56, 15, 15, CORAL_BG, CORAL_STROKE, rx=3, sw=1.4)
     text(297, 69, 'A 中 BF16 主体（96.61M · L2 4.46%｜B 全 FP32：13.71%）', 'BF16 in A (96.61M · 4.46% | FP32 in B: 13.71%)', 13.5, CORAL, 500, 'start')
     rect(735, 56, 15, 15, BLUE_BG, BLUE, rx=3, sw=1.4)
-    text(757, 69, 'A/B 均 FP32（3.27M · A 漂移为 B 的 1.6–2.5×）', 'FP32 in A & B (3.27M · 1.6–2.5× larger drift in A)', 13.5, BLUE, 500, 'start')
+    text(757, 69, 'A/B 均 FP32（3.27M · A 变化为 B 的 1.6–2.5×）', 'FP32 in A & B (3.27M · 1.6–2.5× larger L2 change in A)', 13.5, BLUE, 500, 'start')
 
     # ================= SECTION 1 =================
-    text(28, 110, '① 存储类型分布与 32/18 维数据流（百分比为相对共同初始化的 L2 漂移）',
-         '1. Storage-dtype layout and 32D/18D flow (percentages show L2 drift from init)', 17.5, INK, 650, 'start')
+    text(28, 110, '① 存储类型分布与 32/18 维数据流（百分比为相对共同初始化的 L2 变化率）',
+         '1. Storage-dtype layout and 32D/18D flow (percentages show relative L2 change from init)', 17.5, INK, 650, 'start')
 
     # Row 1: Frozen VLM prefix
     rect(28, 138, 166, 70, GRAY_BG, GRAY_STROKE, dash='4 3')
@@ -184,10 +184,10 @@ def draw(language=None):
     text(903, 492, 'B 14.3%', 'B 14.3%', 11.5, BLUE, 600)
 
     # Two-line Expert footer cleanly inside container (w=488)
-    text(712, 529, 'A：96.58M BF16 主体 L2 漂移 4.46%（32 个 RMSNorm 保持 0.00%）',
-         'A: 96.58M BF16 body drifts 4.46% (all 32 RMSNorms stay 0.00%)', 12.3, CORAL, 600)
-    text(712, 548, 'A 的 16 个 CA K,V 漂移 17.31%（B 为 7.03%，主体达 13.71%）',
-         'A’s 16 CA K,V drift 17.31% (B: 7.03%, while B’s body reaches 13.71%)', 12.3, BLUE, 600)
+    text(712, 529, 'A：96.58M BF16 主体相对 L2 变化 4.46%（32 个 RMSNorm 为 0.00%）',
+         'A: 96.58M BF16 body L2 change 4.46% (32 RMSNorms: 0.00%)', 12.3, CORAL, 600)
+    text(712, 548, 'A 的 16 个 CA K,V 变化 17.31%（B 为 7.03%，B 主体达 13.71%）',
+         'A’s 16 CA K,V change 17.31% (B: 7.03%, B body: 13.71%)', 12.3, BLUE, 600)
 
     # Row 3 right: action_out_proj (FP32) + Training loss upward branch
     arrow([(956, 432), (982, 432)], BLUE)
@@ -224,8 +224,8 @@ def draw(language=None):
     a.append('<line x1="28" y1="706" x2="1172" y2="706" stroke="#dde5ec" stroke-width="1.5"/>')
 
     # ================= SECTION 2 =================
-    text(28, 744, '② 整组参数交换（同一 16 窗口 × 2 抽样，统一 FP32 计算）：接口包裹专家，跨模型坐标失配',
-         '2. Whole-module swaps (16 windows × 2 draws, uniform FP32): interfaces wrap the expert; crossing breaks alignment', 17.5, INK, 650, 'start')
+    text(28, 744, '② 整组参数交换（同一 16 窗口 × 2 抽样，统一 FP32 计算）：外部投影包裹专家，跨模型组合后 loss 显著升高',
+         '2. Whole-module swaps (16 windows × 2 draws, uniform FP32): crossing P and E raises loss', 17.5, INK, 650, 'start')
 
     # Column headers (shifted slightly left so Interpretation has w=258!)
     text(28, 784, '模型组合', 'Pairing', 14, MUTED, 600, 'start')
@@ -233,7 +233,7 @@ def draw(language=None):
     text(496, 784, '16 层动作专家 E（含 CA K,V）', '16-layer expert E (incl. CA K,V)', 14, MUTED, 600)
     text(710, 784, '输出头 P_out', 'Output P_out', 14, MUTED, 600)
     text(840, 784, 'Flow loss', 'Flow loss', 14, MUTED, 600)
-    text(1042, 784, '匹配 / 失配原因', 'Mechanism', 14, MUTED, 600)
+    text(1042, 784, '参数组合说明', 'Combination', 14, MUTED, 600)
 
     loss_A = s['uniform_fp32_flow_loss']['A']
     loss_B = s['uniform_fp32_flow_loss']['B']
@@ -241,10 +241,10 @@ def draw(language=None):
     loss_BA = next(v['mean_loss'] for v in s['module_swaps'] if v['base'] == 'A' and v['swapped'] == 'projections')
 
     rows = [
-        ('A 原配', 'A native', 'A', 'A', loss_A, INK, '基线', 'baseline', '大幅偏移的接口配合停滞主体', 'Shifted P matches stalled E'),
-        ('B 原配', 'B native', 'B', 'B', loss_B, BLUE, '−52.3%', '−52.3%', '充分更新的主体配合小幅调整接口', 'Updated E + modest P'),
-        ('A 投影 + B 专家', 'A proj + B expert', 'A', 'B', loss_AB, CORAL, '+174% vs A', '+174% vs A', 'A 的大幅偏移接口不匹配 B 主体', 'A’s shifted P mismatches B’s E'),
-        ('B 投影 + A 专家', 'B proj + A expert', 'B', 'A', loss_BA, CORAL, '+127% vs A', '+127% vs A', 'B 的小幅调整接口不匹配 A 主体', 'B’s modest P mismatches A’s E'),
+        ('A 原配', 'A native', 'A', 'A', loss_A, INK, '基线', 'baseline', '原配：大变化接口 + 小变化主体', 'Native: large P + small E'),
+        ('B 原配', 'B native', 'B', 'B', loss_B, BLUE, '−52.3%', '−52.3%', '原配：小变化接口 + 大变化主体', 'Native: small P + large E'),
+        ('A 投影 + B 专家', 'A proj + B expert', 'A', 'B', loss_AB, CORAL, '+174% vs A', '+174% vs A', '跨组合：A 外部投影接 B 专家', 'Crossed: A’s P with B’s E'),
+        ('B 投影 + A 专家', 'B proj + A expert', 'B', 'A', loss_BA, CORAL, '+127% vs A', '+127% vs A', '跨组合：B 外部投影接 A 专家', 'Crossed: B’s P with A’s E'),
     ]
 
     for idx, (zh, en, p_own, e_own, loss, lcol, delta_zh, delta_en, why_zh, why_en) in enumerate(rows):
@@ -286,8 +286,8 @@ caption = (
     '<span lang="en">Mixed-storage layout, 32D/18D pathway, and module swaps</span>'
     '<span lang="zh-CN">更新范围、存储类型分布与参数交换</span></span>'
     '<span class="figure-description">'
-    '<span lang="en">Top: frozen VLM, A’s stalled 96.61M BF16 expert body versus its 26 FP32 tensors (external projections plus odd-layer CA K/V, which drift 1.6–2.5× farther than in B), and the 18D-supervised versus 32D-integrated action path. Bottom: wrapping swap topology under uniform FP32 replay (slate A, blue B, coral mismatch increases).</span>'
-    '<span lang="zh-CN">上图展示冻结 VLM、模型 A 中变化很小的 96.61M BF16 专家主体与偏移更大的 26 个 FP32 张量（外部投影与 8 个奇数 CA 层的 K/V），以及训练监督 18 维与推理积分 32 维的分流。下图按接口包裹专家的拓扑展示整组参数交换结果（灰 A、蓝 B、红为失配增大）。</span>'
+    '<span lang="en">Top: frozen VLM, A’s 96.61M BF16 expert body with small weight change versus its 26 FP32 tensors (external projections plus odd-layer CA K/V, whose relative L2 change is 1.6–2.5× larger than in B), and the 18D-supervised versus 32D-integrated action path. Bottom: whole-module swap topology under uniform FP32 replay (slate A, blue B, coral crossed-swap loss increase).</span>'
+    '<span lang="zh-CN">上图展示冻结 VLM、模型 A 中变化很小的 96.61M BF16 专家主体与变化更大的 26 个 FP32 张量（外部投影与 8 个奇数 CA 层的 K/V），以及训练监督 18 维与推理积分 32 维的差异。下图按外部投影包裹动作专家的拓扑展示整组参数交换结果（灰 A、蓝 B、红为跨组合 loss 升高）。</span>'
     '</span></figcaption>'
 )
 (R / 'content/smolvla/09-intervention-diagram.html').write_text(

@@ -542,7 +542,7 @@ L 779.284916 38.251423
      </g>
     </g>
     <g id="text_31">
-     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="333.109135" transform="rotate(-0 619.673825 333.109135)">相对共同初始化的权重 L2 漂移（%）</text>
+     <text style="font-size: 10px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="333.109135" transform="rotate(-0 619.673825 333.109135)">相对共同初始化的权重 L2 变化率（%）</text>
     </g>
    </g>
    <g id="matplotlib.axis_4">
@@ -690,19 +690,19 @@ L 779.284916 303.89976
     <text style="font-weight: 600; font-size: 8.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #3263d9" x="563.835306" y="87.070642" transform="rotate(-0 563.835306 87.070642)">7.03%</text>
    </g>
    <g id="patch_20">
-    <path d="M 668.38113 97.260901
-Q 686.225636 80.036068 703.185287 63.665362
+    <path d="M 668.200788 96.770191
+Q 686.129693 79.783361 703.165832 63.642386
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
-    <path d="M 699.729046 64.749982
-L 703.185287 63.665362
-L 701.979239 67.081127
+    <path d="M 699.699647 64.694794
+L 703.165832 63.642386
+L 701.928047 67.046779
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_44">
-    <text style="font-weight: 600; font-size: 8.1px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b9544f" x="582.076546" y="107.111127" transform="rotate(-0 582.076546 107.111127)">A 主体变化小，FP32 通道漂移达 B 的 2.5×</text>
+    <text style="font-weight: 600; font-size: 8.1px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b9544f" x="582.076546" y="107.111127" transform="rotate(-0 582.076546 107.111127)">A 主体变化小，FP32 K,V 变化达 B 的 2.5×</text>
    </g>
    <g id="text_45">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="32.251423" transform="rotate(-0 619.673825 32.251423)">四类参数分组：A 集中在 FP32 接口，B 集中在专家主体</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="32.251423" transform="rotate(-0 619.673825 32.251423)">四类参数分组：A 集中在 FP32 张量，B 集中在专家主体</text>
    </g>
    <g id="legend_2">
     <g id="patch_21">
@@ -743,7 +743,7 @@ z
    </g>
   </g>
   <g id="text_48">
-   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">低学习率衰减期 A 的停滞过程与两类存储参数的漂移差异</text>
+   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">学习率衰减期 A 的停滞过程与两类存储参数的 L2 变化</text>
   </g>
  </g>
  <defs>

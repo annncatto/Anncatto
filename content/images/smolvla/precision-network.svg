@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1190" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif">
-<title id="smol-swap-title">SmolVLA mixed-storage layout, 32D/18D pathway, and parameter swaps</title><desc id="smol-swap-desc">Frozen 350.17M VLM, 96.61M BF16 expert body stalled in A vs FP32 in B, 3.27M FP32 external and odd-layer cross-attention KV projections with larger L2 drift in A, 18D supervised vs 32D Euler-integrated action path, and wrapping parameter-swap loss results.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
+<title id="smol-swap-title">SmolVLA mixed-storage layout, 32D/18D pathway, and parameter swaps</title><desc id="smol-swap-desc">Frozen 350.17M VLM, 96.61M BF16 expert body stalled in A vs FP32 in B, 3.27M FP32 external and odd-layer cross-attention KV projections with larger relative L2 weight change in A, 18D supervised vs 32D Euler-integrated action path, and wrapping parameter-swap loss results.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
 <marker id="smol-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3263d9"/></marker>
 <marker id="smol-arrow-b9544f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b9544f"/></marker>
 <marker id="smol-arrow-475569" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker>
@@ -11,8 +11,8 @@
 <rect x="275" y="56" width="15" height="15" rx="3" fill="#fff4f2" stroke="#d99a94" stroke-width="1.4"/>
 <text lang="en" x="297" y="69" font-size="13.5" fill="#b9544f" font-weight="500" text-anchor="start">BF16 in A (96.61M · 4.46% | FP32 in B: 13.71%)</text>
 <rect x="735" y="56" width="15" height="15" rx="3" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="en" x="757" y="69" font-size="13.5" fill="#3263d9" font-weight="500" text-anchor="start">FP32 in A &amp; B (3.27M · 1.6–2.5× larger drift in A)</text>
-<text lang="en" x="28" y="110" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">1. Storage-dtype layout and 32D/18D flow (percentages show L2 drift from init)</text>
+<text lang="en" x="757" y="69" font-size="13.5" fill="#3263d9" font-weight="500" text-anchor="start">FP32 in A &amp; B (3.27M · 1.6–2.5× larger L2 change in A)</text>
+<text lang="en" x="28" y="110" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">1. Storage-dtype layout and 32D/18D flow (percentages show relative L2 change from init)</text>
 <rect x="28" y="138" width="166" height="70" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="4 3"/>
 <text lang="en" x="111" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">4 images + text</text>
 <text lang="en" x="111" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">512×512 · 4×64 + 48</text>
@@ -97,8 +97,8 @@
 <text lang="en" x="903" y="453" font-size="11" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
 <text lang="en" x="903" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 4.5%</text>
 <text lang="en" x="903" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 14.3%</text>
-<text lang="en" x="712" y="529" font-size="12.3" fill="#b9544f" font-weight="600" text-anchor="middle">A: 96.58M BF16 body drifts 4.46% (all 32 RMSNorms stay 0.00%)</text>
-<text lang="en" x="712" y="548" font-size="12.3" fill="#3263d9" font-weight="600" text-anchor="middle">A’s 16 CA K,V drift 17.31% (B: 7.03%, while B’s body reaches 13.71%)</text>
+<text lang="en" x="712" y="529" font-size="12.3" fill="#b9544f" font-weight="600" text-anchor="middle">A: 96.58M BF16 body L2 change 4.46% (32 RMSNorms: 0.00%)</text>
+<text lang="en" x="712" y="548" font-size="12.3" fill="#3263d9" font-weight="600" text-anchor="middle">A’s 16 CA K,V change 17.31% (B: 7.03%, B body: 13.71%)</text>
 <path d="M956 432 L982 432" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
 <rect x="986" y="376" width="186" height="114" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
 <text lang="en" x="1079" y="400" font-size="14" fill="#3263d9" font-weight="650" text-anchor="middle">action_out_proj (FP32)</text>
@@ -123,13 +123,13 @@
 <text lang="en" x="371" y="626" font-size="14.2" fill="#b9544f" font-weight="600" text-anchor="middle">Host field clamp (shoulder_lift ≥ −100)</text>
 <text lang="en" x="371" y="650" font-size="12.2" fill="#19364b" font-weight="400" text-anchor="middle">Live requests reach −119.6; clipped to −100</text>
 <line x1="28" y1="706" x2="1172" y2="706" stroke="#dde5ec" stroke-width="1.5"/>
-<text lang="en" x="28" y="744" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">2. Whole-module swaps (16 windows × 2 draws, uniform FP32): interfaces wrap the expert; crossing breaks alignment</text>
+<text lang="en" x="28" y="744" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">2. Whole-module swaps (16 windows × 2 draws, uniform FP32): crossing P and E raises loss</text>
 <text lang="en" x="28" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="start">Pairing</text>
 <text lang="en" x="260" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Input / state / time P_in</text>
 <text lang="en" x="496" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">16-layer expert E (incl. CA K,V)</text>
 <text lang="en" x="710" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Output P_out</text>
 <text lang="en" x="840" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Flow loss</text>
-<text lang="en" x="1042" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Mechanism</text>
+<text lang="en" x="1042" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Combination</text>
 <text lang="en" x="28" y="836" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A native</text>
 <rect x="176" y="808" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
 <text lang="en" x="260" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
@@ -142,7 +142,7 @@
 <text lang="en" x="840" y="829" font-size="16" fill="#19364b" font-weight="700" text-anchor="middle">0.026730</text>
 <text lang="en" x="840" y="849" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">baseline</text>
 <rect x="912" y="810" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
-<text lang="en" x="1042" y="836" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Shifted P matches stalled E</text>
+<text lang="en" x="1042" y="836" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Native: large P + small E</text>
 <text lang="en" x="28" y="914" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B native</text>
 <rect x="176" y="886" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
 <text lang="en" x="260" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
@@ -155,7 +155,7 @@
 <text lang="en" x="840" y="907" font-size="16" fill="#3263d9" font-weight="700" text-anchor="middle">0.012758</text>
 <text lang="en" x="840" y="927" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">−52.3%</text>
 <rect x="912" y="888" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
-<text lang="en" x="1042" y="914" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Updated E + modest P</text>
+<text lang="en" x="1042" y="914" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Native: small P + large E</text>
 <text lang="en" x="28" y="992" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A proj + B expert</text>
 <rect x="176" y="964" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
 <text lang="en" x="260" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
@@ -168,7 +168,7 @@
 <text lang="en" x="840" y="985" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.073255</text>
 <text lang="en" x="840" y="1005" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+174% vs A</text>
 <rect x="912" y="966" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
-<text lang="en" x="1042" y="992" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">A’s shifted P mismatches B’s E</text>
+<text lang="en" x="1042" y="992" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Crossed: A’s P with B’s E</text>
 <text lang="en" x="28" y="1070" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B proj + A expert</text>
 <rect x="176" y="1042" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
 <text lang="en" x="260" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
@@ -181,6 +181,6 @@
 <text lang="en" x="840" y="1063" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.060578</text>
 <text lang="en" x="840" y="1083" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+127% vs A</text>
 <rect x="912" y="1044" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
-<text lang="en" x="1042" y="1070" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">B’s modest P mismatches A’s E</text>
+<text lang="en" x="1042" y="1070" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Crossed: B’s P with A’s E</text>
 <text lang="en" x="28" y="1152" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="start">Note: External P (1.64M) = state_proj, action_in_proj, action_time_mlp, action_out_proj; Expert E (98.25M) spans all 16 layers including odd-layer CA K/V. All share the frozen VLM (350.17M).</text>
 </svg>
