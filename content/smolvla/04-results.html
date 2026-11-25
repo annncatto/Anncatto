@@ -9,16 +9,16 @@
 
 {{svmedia:failure-grasp|failure-base}}
 
-<div class="bilingual"><p lang="en">The left failure closes the gripper without lifting the toy. The right failure advances the base too far, leaving the toy too close for the grasp.</p><p lang="zh-CN">左侧失败中，夹爪闭合但未抬起玩偶。右侧底盘前进过多，玩偶离底盘过近，抓取失败。</p></div>
+<div class="bilingual"><p lang="en">In the left clip, the gripper closes without lifting the toy. In the right clip, the base advances too far, leaving the toy too close to the chassis to grasp.</p><p lang="zh-CN">左侧失败中，夹爪闭合但未将玩偶抬起。右侧失败中，底盘前进过多，玩偶离车体过近，机械臂无法完成抓取。</p></div>
 
 <p class="sv-record-label" id="initial-pose"><strong><span lang="en">Failures with mismatched initial poses:</span><span lang="zh-CN">因初始位姿不一致失败：</span></strong></p>
 
 {{svmedia:initial-pose-a|initial-pose-b}}
 
-<div class="bilingual"><p lang="en">Both changed-initial-pose trials fail to complete grasping and deposit.</p><p lang="zh-CN">两次改变初始姿态的试验均未完成抓取与投放。</p></div>
+<div class="bilingual"><p lang="en">Both trials launched from altered starting poses fail to complete grasping and deposit.</p><p lang="zh-CN">两次改变初始姿态的试验均未能完成抓取与投放。</p></div>
 
-<div class="bilingual"><p lang="en">The successful clips establish the approach–grasp–deposit sequence. The failure cases locate its fragile transition at the approach endpoint, where base stopping, wrist position and gripper closure must agree on the toy’s relative position.</p><p lang="zh-CN">成功片段完成了“接近—抓取—投放”的主流程。失败集中在接近终点：底盘停止位置、手腕位置和夹爪闭合时机，需要对应同一个玩偶相对位置。</p></div>
-<div class="bilingual"><p lang="en">Changing the initial pose changes both the images and joint state. The failed trials therefore test adaptation of the learned approach and grasp timing to a new starting condition.</p><p lang="zh-CN">改变初始姿态会同时改变图像和关节状态。这两次失败检验的是模型能否从新的起点调整接近路径与抓取时机。</p></div>
+<div class="bilingual"><p lang="en">The three successful clips confirm that the 120-demo policy can execute the complete approach–grasp–deposit chain when starting conditions align with training. Failure concentrates at the approach endpoint, where base stopping distance, wrist positioning, and gripper timing must simultaneously match the toy’s relative location.</p><p lang="zh-CN">三段成功记录说明，起点与示范对齐时，120 条模型能够走完“接近—抓取—投放”全流程。失败集中在接近终点：底盘停车距离、手腕落位和夹爪闭合时机必须同时对准玩偶的相对位置。</p></div>
+<div class="bilingual"><p lang="en">Altering the starting pose simultaneously shifts camera viewpoints and joint-state readings, pushing the policy off its trained approach corridor before the grasp phase even begins.</p><p lang="zh-CN">改变初始姿态会同时改变四路相机视角和关节状态读数，使策略在进入抓取阶段前就偏离训练过的接近走廊。</p></div>
 
 <h4 id="continued-training"><span lang="en">Continued training (150 demonstrations)</span><span lang="zh-CN">继续训练（150 条）</span></h4>
 
@@ -30,13 +30,15 @@
 
 {{svmedia:continued-missed-grasp|continued-retreat}}
 
-<div class="bilingual"><p lang="en">The continued model completes one recorded rollout but also misses a grasp and fails to retreat.</p><p lang="zh-CN">继续训练后的模型既有完成记录，也出现漏抓和未能后退。</p></div>
+<div class="bilingual"><p lang="en">The continued model completes one recorded transfer, but still misses a grasp in one failure clip and fails to retreat in the other.</p><p lang="zh-CN">继续训练后的模型虽然有一段完整成功的搬运，但在两段失败记录中仍出现漏抓和未能后退。</p></div>
 
-
-<div class="bilingual"><ul lang="en"><li><strong>Data:</strong> retain the original 120 demonstrations, add 30 and train for another 100k steps.</li><li><strong>Coordinates:</strong> recompute mean/std on all 150 demonstrations, changing the state/action mapping.</li><li><strong>Optimizer:</strong> rebuild Adam, restarting its moment history.</li></ul><ul lang="zh-CN"><li><strong>数据：</strong>保留原 120 条示教，增加 30 条，再训练 100k 步。</li><li><strong>坐标：</strong>用全部 150 条重算均值与标准差，改变状态和动作映射。</li><li><strong>优化器：</strong>重建 Adam，重新累计矩估计。</li></ul></div>
+<div class="bilingual"><p lang="en">Continuing from the 120-demo checkpoint onto 150 demonstrations changed three training conditions at once, and the final training loss plateaued near 0.026 rather than dropping below stage one (0.018):</p><p lang="zh-CN">从 120 条检查点续训至 150 条示教同时改变了三项条件，且末端训练 loss 停在 0.026 附近，反而高于第一阶段（0.018）：</p></div>
+<div class="bilingual"><ul lang="en"><li><strong>Data:</strong> keep the original 120 demonstrations, add 30 new episodes, and run another 100k updates at a lower peak learning rate ($2\times10^{-5}$ decaying to $5\times10^{-7}$).</li><li><strong>Coordinates:</strong> recompute mean and standard deviation across all 150 demonstrations, shifting the numerical coordinates inherited by the stage-one weights.</li><li><strong>Optimizer:</strong> reinitialize AdamW so moment estimates rebuild from zero under the new coordinate scale.</li></ul><ul lang="zh-CN"><li><strong>数据与学习率：</strong>保留原 120 条、补充 30 条示教，再训练 100k 步，同时峰值学习率降至 $2\times10^{-5}$、末端衰减至 $5\times10^{-7}$。</li><li><strong>归一化坐标：</strong>按全部 150 条重算均值与标准差，改变了第一阶段权重原本适应的状态和动作坐标。</li><li><strong>优化器状态：</strong>重建 AdamW，一二阶矩在新坐标下从零重新累计。</li></ul></div>
 
 <h4><span lang="en">Normalization statistics</span><span lang="zh-CN">统计量变化</span></h4>
-<div class="bilingual"><p lang="en">Recomputed statistics change the coordinates in which the inherited policy represents stopping and forward motion:</p><p lang="zh-CN">重算统计改变了继承策略表示停止与前进的数值坐标：</p></div><div class="sv-table" tabindex="0"><table><caption><span lang="en">Forward-base action statistics</span><span lang="zh-CN">底盘前向速度的动作统计</span></caption><thead><tr><th><span lang="en">Statistic</span><span lang="zh-CN">统计量</span></th><th>120</th><th>150</th></tr></thead><tbody><tr><td>$\mu_x$</td><td>0.02427</td><td>0.02222</td></tr><tr><td>$\sigma_x$</td><td>0.05524</td><td>0.05559</td></tr><tr><td>$z_x(a=0)$</td><td>-0.43939</td><td>-0.39968</td></tr><tr><td>$z_x(a=0.15)$</td><td>2.27589</td><td>2.29847</td></tr></tbody></table></div><div class="bilingual"><p lang="en">Holding the old normalized prediction fixed and substituting the new statistics maps stop to −0.00221 and forward motion to 0.14874. This calculation isolates the coordinate change; the continued policy must learn the revised mapping.</p><p lang="zh-CN">固定旧的标准化预测，仅替换统计量，原停止值会还原为 −0.00221，前进值还原为 0.14874。这项计算单独呈现坐标变化；继续训练需要让模型适应新的映射。</p></div>
+<div class="bilingual"><p lang="en">Recomputing dataset statistics shifts the normalized coordinates representing stop and forward base commands:</p><p lang="zh-CN">重算数据集统计量后，底盘停止与前进对应的标准化数值坐标随之移动：</p></div>
+<div class="sv-table" tabindex="0"><table><caption><span lang="en">Forward-base action statistics</span><span lang="zh-CN">底盘前向速度的动作统计</span></caption><thead><tr><th><span lang="en">Statistic</span><span lang="zh-CN">统计量</span></th><th>120</th><th>150</th></tr></thead><tbody><tr><td>$\mu_x$</td><td>0.02427</td><td>0.02222</td></tr><tr><td>$\sigma_x$</td><td>0.05524</td><td>0.05559</td></tr><tr><td>$z_x(a=0)$</td><td>−0.43939</td><td>−0.39968</td></tr><tr><td>$z_x(a=0.15)$</td><td>2.27589</td><td>2.29847</td></tr></tbody></table></div>
+<div class="bilingual"><p lang="en">Holding the old normalized prediction fixed under the 150-demo statistics maps stop to −0.00221 and forward motion to 0.14874. Continued training therefore has to re-adapt both the shifted coordinates and the 30 new demonstrations; why it struggled to absorb them at low learning rates is examined in <a href="#precision-results">Numerical updates and action fit</a>.</p><p lang="zh-CN">若固定旧模型的标准化预测、只换用 150 条统计量还原，原停止值会落到 −0.00221，前进值落到 0.14874。因此继续训练必须同时重学坐标偏移与新增示教；它在低学习率下为何迟迟未能消化这些变化，将在<a href="#precision-results">精度更新与动作拟合</a>一节拆解。</p></div>
 
 <h4 id="pi05-rollout"><span lang="en">π0.5 (120 demonstrations)</span><span lang="zh-CN">π0.5（120 条）</span></h4>
 
@@ -44,18 +46,17 @@
 
 {{svmedia:pi05-rollout}}
 
-<div class="bilingual"><p lang="en">The π0.5 clip completes alignment, grasping, lifting and deposit with few pauses.</p><p lang="zh-CN">π0.5 片段完成对准、抓取、抬升和投放，阶段间停顿较少。</p></div>
+<div class="bilingual"><p lang="en">As an architectural reference on the same 120 demonstrations, π0.5 completes alignment, grasping, lifting, and deposit smoothly with few pauses.</p><p lang="zh-CN">作为同一批 120 条示教上的架构参照，π0.5 顺利完成了对准、抓取、抬升与投放，各阶段之间停顿较少。</p></div>
 
 <details class="sv-supplement"><summary><span lang="en">Deployment timing results</span><span lang="zh-CN">部署计时结果</span></summary>
-<div class="bilingual"><p lang="en">A separate October 27 timing test measures about 106 ms per prediction. With 25 executed actions at 30 Hz and a synchronous replan, $25/(25/30+0.106)\approx26.6$ Hz, matching the recorded 26–27 Hz.</p><p lang="zh-CN">另一次 10 月 27 日部署测试测得单次预测约 106 ms。按每块执行 25 步、控制频率 30 Hz 和同步重规划计算，平均频率为 $25/(25/30+0.106)\approx26.6$ Hz，与记录的 26–27 Hz 一致。</p></div>
+<div class="bilingual"><p lang="en">A separate October 27 timing test measures about 106 ms per prediction. Executing 25 actions at 30 Hz with synchronous replanning gives $25/(25/30+0.106)\approx26.6$ Hz, matching the observed 26–27 Hz command rate.</p><p lang="zh-CN">另一次 10 月 27 日部署计时测得单次预测约 106 ms。按 30 Hz 执行 25 步后同步重规划计算，平均发送频率为 $25/(25/30+0.106)\approx26.6$ Hz，与实测的 26–27 Hz 一致。</p></div>
 </details>
 
-<div class="bilingual"><p lang="en">The clip shows fewer repeated alignment corrections than the SmolVLA examples. π0.5’s bidirectional action attention coordinates positions within a chunk; continuity across chunks also depends on the execution schedule.</p><p lang="zh-CN">该片段中的反复对准比 SmolVLA 示例更少。π0.5 的双向动作注意力协调块内各位置，跨块连续性还取决于执行调度。</p></div>
-<div class="bilingual"><p lang="en">The timing test quantifies waits at replanning boundaries. Average command rate describes this overhead, while trajectory continuity describes how the old and new targets connect.</p><p lang="zh-CN">计时测试量化了重规划边界的等待开销。平均指令频率描述这项开销，轨迹连续性则描述新旧目标怎样接上。</p></div>
+<div class="bilingual"><p lang="en">Compared with SmolVLA, π0.5 exhibits far fewer back-and-forth alignment retries. Inside a single chunk, π0.5’s bidirectional action attention coordinates future steps jointly, while across chunks the synchronous replanning boundary determines how cleanly successive targets connect.</p><p lang="zh-CN">与 SmolVLA 相比，π0.5 的反复微调对准明显更少。单块内部，π0.5 的双向动作注意力能前后协同各步预测；跨块衔接则由同步重规划边界决定新旧目标能否平滑接续。</p></div>
 
 <h4 id="two-toy-extension"><span lang="en">Two-toy experiment</span><span lang="zh-CN">双玩偶实验</span></h4>
 
-<div class="bilingual"><p lang="en">The extension adds 120 two-toy demonstrations covering three relative layouts and placement variations.</p><p lang="zh-CN">扩展任务新增 120 条双玩偶示教，覆盖三种相对布局及位置变化。</p></div>
+<div class="bilingual"><p lang="en">Extending the task with 120 two-toy demonstrations covers three relative object layouts and placement variations.</p><p lang="zh-CN">将任务扩展为双玩偶时，补充了 120 条示教，覆盖三种相对摆放布局与位置变化。</p></div>
 
 <div class="sv-media-grid sv-three"><figure><img src="/assets/content/smolvla/two-toys-layout-1.webp" loading="lazy" alt="Two plush toys in relative layout A" width="700" height="700"><figcaption><span lang="en">Relative layout A</span><span lang="zh-CN">相对布局 A</span></figcaption></figure><figure><img src="/assets/content/smolvla/two-toys-layout-2.webp" loading="lazy" alt="Two plush toys in relative layout B" width="700" height="700"><figcaption><span lang="en">Relative layout B</span><span lang="zh-CN">相对布局 B</span></figcaption></figure><figure><img src="/assets/content/smolvla/two-toys-layout-3.webp" loading="lazy" alt="Two plush toys in relative layout C" width="700" height="700"><figcaption><span lang="en">Relative layout C</span><span lang="zh-CN">相对布局 C</span></figcaption></figure></div>
 
@@ -63,7 +64,6 @@
 
 {{svmedia:two-toys-a|two-toys-b}}
 
-<div class="bilingual"><p lang="en">Neither recorded two-toy test completes collection and deposit.</p><p lang="zh-CN">两段双玩偶测试均未完成收集与投放。</p></div>
+<div class="bilingual"><p lang="en">Neither recorded two-toy rollout completes collecting and depositing both toys.</p><p lang="zh-CN">两段双玩偶测试均未完成两个玩偶的收集与投放。</p></div>
 
-<div class="bilingual"><p lang="en">Single-toy performance also regresses after this extension. Completing the longer task requires a new approach after the first deposit, when both the scene and robot pose have changed.</p><p lang="zh-CN">这次扩展后，单玩偶表现也出现回退。较长任务要求第一次投放后重新接近目标，此时场景和机器人姿态都已改变。</p></div>
-<div class="bilingual"><p lang="en">Evaluate the two effects separately: retention of single-toy grasping, and successful transition to the second target. The three layouts cover placement variation; the intermediate states determine sequential-task coverage.</p><p lang="zh-CN">评估分别记录单玩偶抓取的保留情况，以及转向第二个目标的成功情况。三种布局覆盖位置变化，而任务中间状态决定了连续执行的覆盖范围。</p></div>
+<div class="bilingual"><p lang="en">Single-toy performance also regressed after adding this multi-object stage. Completing a two-toy rollout demands re-approaching a second target after the first deposit, when both the robot pose and visual scene have changed substantially—magnifying the same transition fragility already visible in the single-toy failures.</p><p lang="zh-CN">加入双玩偶阶段后，原本的单玩偶表现也同步回退。连续抓取两个玩偶要求在首次投放后，于已经变化了的车体姿态和视觉场景下重新建立接近，这直接放大了单玩偶阶段已经暴露出的衔接脆弱性。</p></div>

@@ -1,85 +1,186 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1020" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans CJK JP',sans-serif">
-<title id="smol-swap-title">SmolVLA trained modules, sampling, and parameter swaps</title><desc id="smol-swap-desc">Frozen vision-language prefix, trainable state/action/time projections and a sixteen-layer expert. Memory-only module swaps use identical FP32 replay. The sampler integrates 32 dimensions; loss supervises 18.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1190" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif">
+<title id="smol-swap-title">SmolVLA precision split, 32D/18D pathway, and parameter swaps</title><desc id="smol-swap-desc">Frozen 350.17M VLM, 96.61M BF16 expert body stalled in A vs FP32 in B, 3.27M FP32 external and odd-layer cross-attention KV projections that over-drift in A, 18D supervised vs 32D Euler-integrated action path, and wrapping parameter-swap loss results.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
 <marker id="smol-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3263d9"/></marker>
-<marker id="smol-arrow-79a948" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#79a948"/></marker>
-<marker id="smol-arrow-8798aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#8798aa"/></marker>
-</defs><rect width="1200" height="1020" fill="white"/>
-<text lang="en" x="35" y="42" font-size="25" fill="#19364b" font-weight="650" text-anchor="start">SmolVLA: trained modules and parameter-swap locations</text>
-<text lang="en" x="35" y="78" font-size="17" fill="#8798aa" font-weight="400" text-anchor="start">1. Frozen VLM; trained expert/projections. Sample 32 dimensions, supervise 18.</text>
-<rect x="30" y="120" width="190" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="125.0" y="158.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">4 images + instruction</text>
-<rect x="270" y="120" width="210" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="375.0" y="158.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Image / text embeddings</text>
-<rect x="550" y="120" width="250" height="80" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="675.0" y="166.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Frozen VLM prefix</text>
-<rect x="30" y="225" width="190" height="60" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="125.0" y="261.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">State 18 → pad 32</text>
-<rect x="270" y="225" width="210" height="60" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
-<text lang="en" x="375.0" y="261.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">State projection Pₛ</text>
-<rect x="30" y="335" width="190" height="70" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="125.0" y="376.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Noisy actions + time t</text>
-<rect x="270" y="335" width="210" height="70" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
-<text lang="en" x="375.0" y="376.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Action-in / time projections</text>
-<rect x="550" y="310" width="250" height="100" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
-<text lang="en" x="675.0" y="366.0" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Action expert E · 16 layers</text>
-<rect x="870" y="330" width="260" height="65" rx="7" fill="#edf3ff" stroke="#b6c9ea" stroke-width="1.4"/>
-<text lang="en" x="1000.0" y="368.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Output Pₒ: vₜ[50,32]</text>
-<rect x="870" y="445" width="260" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="1000.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">10 Euler steps: z[50,32]</text>
-<rect x="550" y="445" width="250" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="675.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Keep 18: a = μ + σz</text>
-<rect x="270" y="445" width="210" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="375.0" y="483.5" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Host field-wise constraints</text>
-<text lang="en" x="675" y="186" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">Frozen total: 350.17M</text>
-<path d="M220 153 L267 153" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M480 153 L547 153" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M220 255 L267 255" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M480 255 L520 255 L520 165 L547 165" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<path d="M675 200 L675 307" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="690" y="260" font-size="16" fill="#19364b" font-weight="400" text-anchor="start">Prefix K/V</text>
-<path d="M220 370 L267 370" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M480 370 L547 370" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<path d="M800 362 L867 362" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<path d="M1000 395 L1000 442" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M870 478 L803 478" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<path d="M550 478 L483 478" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<rect x="870" y="210" width="260" height="65" rx="7" fill="#f1f4f7" stroke="#c8d5df" stroke-width="1.4"/>
-<text lang="en" x="1000" y="238" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Training loss: first 18 dims</text>
-<text lang="en" x="1000" y="260" font-size="14" fill="#8798aa" font-weight="400" text-anchor="middle">14 padded feature dimensions</text>
-<path d="M1000 330 L1000 278" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="35" y="553" font-size="18" fill="#19364b" font-weight="550" text-anchor="start">Trainable 99.88M: expert 98.25M + external projections 1.64M</text>
-<text lang="en" x="35" y="584" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">The linear head, Euler updates and affine restoration retain continuous outputs; Host constrains each field.</text>
-<text lang="en" x="35" y="633" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">2. Parameter swaps: matched observations/noise, uniform FP32 compute, no retraining</text>
-<text lang="en" x="440" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">P: state, action-in/out, time</text>
-<text lang="en" x="790" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">16-layer action expert E</text>
-<text lang="en" x="1100" y="666" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Flow loss</text>
-<text lang="en" x="35" y="721" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">A native</text>
-<rect x="320" y="690" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="en" x="442.5" y="721" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">P · A</text>
-<rect x="665" y="690" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="en" x="787.5" y="721" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">E · A</text>
-<path d="M565 714 L662 714" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="1100" y="721" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.026730</text>
-<text lang="en" x="35" y="786" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">B native</text>
-<rect x="320" y="755" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
-<text lang="en" x="442.5" y="786" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">P · B</text>
-<rect x="665" y="755" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
-<text lang="en" x="787.5" y="786" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">E · B</text>
-<path d="M565 779 L662 779" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="1100" y="786" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.012758</text>
-<text lang="en" x="35" y="851" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">A projections + B expert</text>
-<rect x="320" y="820" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="en" x="442.5" y="851" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">P · A</text>
-<rect x="665" y="820" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
-<text lang="en" x="787.5" y="851" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">E · B</text>
-<path d="M565 844 L662 844" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="1100" y="851" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.073255</text>
-<text lang="en" x="35" y="916" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">B projections + A expert</text>
-<rect x="320" y="885" width="245" height="48" rx="7" fill="#eff5e8" stroke="#79a948" stroke-width="1.4"/>
-<text lang="en" x="442.5" y="916" font-size="19" fill="#79a948" font-weight="550" text-anchor="middle">P · B</text>
-<rect x="665" y="885" width="245" height="48" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="en" x="787.5" y="916" font-size="19" fill="#3263d9" font-weight="550" text-anchor="middle">E · A</text>
-<path d="M565 909 L662 909" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#smol-arrow-8798aa)"/>
-<text lang="en" x="1100" y="916" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">0.060578</text>
-<text lang="en" x="35" y="987" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">A/B are the 150-episode-stage 100k models; all cases share the frozen VLM and 16 windows × 2 draws.</text>
+<marker id="smol-arrow-b9544f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b9544f"/></marker>
+<marker id="smol-arrow-475569" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker>
+<marker id="smol-arrow-64748b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#64748b"/></marker>
+</defs><rect width="1200" height="1190" fill="white"/>
+<text lang="en" x="28" y="38" font-size="24" fill="#19364b" font-weight="650" text-anchor="start">SmolVLA: precision split, 32D/18D pathway, and parameter swaps</text>
+<rect x="28" y="56" width="15" height="15" rx="3" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.4" stroke-dasharray="3 2"/>
+<text lang="en" x="50" y="69" font-size="13.5" fill="#6b7d8f" font-weight="500" text-anchor="start">Frozen VLM (350.17M · 0%)</text>
+<rect x="275" y="56" width="15" height="15" rx="3" fill="#fff4f2" stroke="#d99a94" stroke-width="1.4"/>
+<text lang="en" x="297" y="69" font-size="13.5" fill="#b9544f" font-weight="500" text-anchor="start">BF16 in A (96.61M · 4.46% | FP32 in B: 13.71%)</text>
+<rect x="735" y="56" width="15" height="15" rx="3" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="en" x="757" y="69" font-size="13.5" fill="#3263d9" font-weight="500" text-anchor="start">FP32 in A &amp; B (3.27M · 1.6–2.5× drift in A)</text>
+<text lang="en" x="28" y="110" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">1. Internal precision split and 32D/18D flow (percentages show L2 drift from init)</text>
+<rect x="28" y="138" width="166" height="70" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text lang="en" x="111" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">4 images + text</text>
+<text lang="en" x="111" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">512×512 · 4×64 + 48</text>
+<path d="M194 173 L222 173" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="226" y="138" width="198" height="70" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="4 3"/>
+<text lang="en" x="325" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">Vision / text embed</text>
+<text lang="en" x="325" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">pixel shuffle → 960d</text>
+<path d="M424 173 L464 173" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="468" y="132" width="488" height="82" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="5 3"/>
+<text lang="en" x="712" y="163" font-size="17" fill="#19364b" font-weight="600" text-anchor="middle">Frozen SmolVLM2 prefix (16 layers · 350.17M)</text>
+<text lang="en" x="712" y="189" font-size="13.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">Prefix P = 305; cached layer K/V (identical in A &amp; B)</text>
+<rect x="28" y="240" width="166" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
+<text lang="en" x="111" y="266" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">State 18D → pad 32D</text>
+<rect x="40" y="280" width="79" height="24" rx="4" fill="#dce6f7" stroke="#7aa0e8" stroke-width="1"/>
+<text lang="en" x="79.5" y="297" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 real</text>
+<rect x="121" y="280" width="61" height="24" rx="4" fill="#e6ecf1" stroke="#c8d5df" stroke-width="1"/>
+<text lang="en" x="151.5" y="297" font-size="11.5" fill="#6b7d8f" font-weight="500" text-anchor="middle">14 zero</text>
+<path d="M194 278 L222 278" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="226" y="238" width="198" height="80" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="325" y="262" font-size="15" fill="#3263d9" font-weight="600" text-anchor="middle">state_proj (FP32)</text>
+<text lang="en" x="325" y="284" font-size="12.5" fill="#19364b" font-weight="400" text-anchor="middle">56.25% (=18/32) active</text>
+<text lang="en" x="325" y="304" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 3.9% vs B 2.2%</text>
+<path d="M424 278 L446 278 L446 192 L464 192" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<rect x="429" y="224" width="36" height="18" rx="3" fill="white" stroke="none" stroke-width="0"/>
+<text lang="en" x="447" y="237" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">1 tok</text>
+<rect x="28" y="386" width="166" height="86" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
+<text lang="en" x="111" y="413" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">Noisy xₜ + flow time t</text>
+<rect x="40" y="430" width="79" height="26" rx="4" fill="#dce6f7" stroke="#7aa0e8" stroke-width="1"/>
+<text lang="en" x="79.5" y="448" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 real</text>
+<rect x="121" y="430" width="61" height="26" rx="4" fill="#fcebe8" stroke="#d99a94" stroke-width="1"/>
+<text lang="en" x="151.5" y="448" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">14 noise</text>
+<path d="M194 429 L222 429" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="226" y="362" width="198" height="140" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="325" y="385" font-size="14.5" fill="#3263d9" font-weight="650" text-anchor="middle">Input &amp; time proj (FP32)</text>
+<rect x="236" y="397" width="178" height="44" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.2"/>
+<text lang="en" x="325" y="416" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_in_proj: 100% active</text>
+<text lang="en" x="325" y="434" font-size="11" fill="#b9544f" font-weight="400" text-anchor="middle">all 32D carry Gaussian noise</text>
+<rect x="236" y="449" width="178" height="43" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.2"/>
+<text lang="en" x="325" y="468" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_time_mlp (1.56M)</text>
+<text lang="en" x="325" y="485" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 12.1% vs B 6.1%</text>
+<path d="M424 432 L464 432" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<rect x="468" y="296" width="488" height="264" rx="10" fill="#fafbfd" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="484" y="324" font-size="16" fill="#19364b" font-weight="650" text-anchor="start">Action expert E (16 alternating SA/CA · 98.25M)</text>
+<path d="M904 214 L904 346" fill="none" stroke="#3263d9" stroke-width="2"/>
+<rect x="504" y="240" width="384" height="28" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.1"/>
+<text lang="en" x="696" y="259" font-size="12.8" fill="#3263d9" font-weight="600" text-anchor="middle">Prefix K/V → 8 odd CA layers’ FP32 K,V (1.64M)</text>
+<path d="M888 254 L904 254" fill="none" stroke="#3263d9" stroke-width="1.6"/>
+<path d="M616 346 L904 346" fill="none" stroke="#3263d9" stroke-width="2"/>
+<path d="M616 346 L616 368" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<path d="M727 346 L727 368" fill="none" stroke="#3263d9" stroke-width="1.7" stroke-dasharray="4 3" marker-end="url(#smol-arrow-3263d9)"/>
+<path d="M904 346 L904 368" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<rect x="482" y="372" width="70" height="134" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
+<text lang="en" x="517" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L00</text>
+<text lang="en" x="517" y="414" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">SA · even</text>
+<text lang="en" x="517" y="439" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">All BF16</text>
+<text lang="en" x="517" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.8%</text>
+<text lang="en" x="517" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 8.1%</text>
+<rect x="562" y="372" width="108" height="56" rx="6" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="en" x="616" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L01 · CA K,V</text>
+<text lang="en" x="616" y="412" font-size="11" fill="#3263d9" font-weight="600" text-anchor="middle">A 11–15% | B 6%</text>
+<rect x="562" y="432" width="108" height="74" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
+<text lang="en" x="616" y="453" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
+<text lang="en" x="616" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.5% (BF16)</text>
+<text lang="en" x="616" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.0% (FP32)</text>
+<rect x="680" y="372" width="94" height="134" rx="6" fill="#f3f6fa" stroke="#c8d5df" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text lang="en" x="727" y="395" font-size="13" fill="#19364b" font-weight="650" text-anchor="middle">L02 – L13</text>
+<text lang="en" x="727" y="415" font-size="11.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">6 SA + 6 CA</text>
+<text lang="en" x="727" y="439" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">CA K,V: FP32</text>
+<text lang="en" x="727" y="458" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">A 13–23%</text>
+<text lang="en" x="727" y="480" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">Body A 3.6%</text>
+<text lang="en" x="727" y="497" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">Body B 11.3%</text>
+<rect x="784" y="372" width="66" height="134" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
+<text lang="en" x="817" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L14</text>
+<text lang="en" x="817" y="414" font-size="11.5" fill="#19364b" font-weight="500" text-anchor="middle">SA · even</text>
+<text lang="en" x="817" y="439" font-size="11" fill="#b9544f" font-weight="600" text-anchor="middle">All BF16</text>
+<text lang="en" x="817" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.7%</text>
+<text lang="en" x="817" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.5%</text>
+<rect x="860" y="372" width="86" height="56" rx="6" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
+<text lang="en" x="903" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L15 · CA</text>
+<text lang="en" x="903" y="412" font-size="11.5" fill="#3263d9" font-weight="700" text-anchor="middle">A 22–25%</text>
+<rect x="860" y="432" width="86" height="74" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
+<text lang="en" x="903" y="453" font-size="11" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
+<text lang="en" x="903" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 4.5%</text>
+<text lang="en" x="903" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 14.3%</text>
+<text lang="en" x="712" y="529" font-size="12.3" fill="#b9544f" font-weight="600" text-anchor="middle">A: 96.58M BF16 body drifts 4.46% (all 32 RMSNorms strictly 0.00%)</text>
+<text lang="en" x="712" y="548" font-size="12.3" fill="#3263d9" font-weight="600" text-anchor="middle">A’s 16 CA K,V over-drift 17.31% (B: 7.03%, while B’s body reaches 13.71%)</text>
+<path d="M956 432 L982 432" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
+<rect x="986" y="376" width="186" height="114" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="1079" y="400" font-size="14" fill="#3263d9" font-weight="650" text-anchor="middle">action_out_proj (FP32)</text>
+<text lang="en" x="1079" y="422" font-size="13" fill="#19364b" font-weight="400" text-anchor="middle">Linear head vₜ [50, 32]</text>
+<text lang="en" x="1079" y="444" font-size="12" fill="#19364b" font-weight="400" text-anchor="middle">56.25% (=18/32) active</text>
+<text lang="en" x="1079" y="466" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 9.6% vs B 5.3%</text>
+<path d="M1079 376 L1079 318" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="986" y="236" width="186" height="78" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
+<text lang="en" x="1079" y="262" font-size="13.5" fill="#19364b" font-weight="600" text-anchor="middle">Train loss: first 18D only</text>
+<text lang="en" x="1079" y="284" font-size="12" fill="#6b7d8f" font-weight="400" text-anchor="middle">14 pad dims get zero grad</text>
+<text lang="en" x="1079" y="302" font-size="11" fill="#6b7d8f" font-weight="400" text-anchor="middle">(Training path)</text>
+<path d="M1079 490 L1079 594" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="898" y="598" width="274" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
+<text lang="en" x="1035" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">Inference: 10 Euler steps on all 32D</text>
+<text lang="en" x="1035" y="650" font-size="12.2" fill="#b9544f" font-weight="400" text-anchor="middle">Unbounded ODE; 14 pad dims re-enter xₜ</text>
+<path d="M898 636 L858 636" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="572" y="598" width="282" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
+<text lang="en" x="713" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">Crop 18D · affine a = μ + σz</text>
+<text lang="en" x="713" y="650" font-size="12.2" fill="#6b7d8f" font-weight="400" text-anchor="middle">Rescales linearly; enforces no joint bounds</text>
+<path d="M572 636 L532 636" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="214" y="598" width="314" height="76" rx="8" fill="#fff4f2" stroke="#d99a94" stroke-width="1.5"/>
+<text lang="en" x="371" y="626" font-size="14.2" fill="#b9544f" font-weight="600" text-anchor="middle">Host field clamp (shoulder_lift ≥ −100)</text>
+<text lang="en" x="371" y="650" font-size="12.2" fill="#19364b" font-weight="400" text-anchor="middle">Live requests reach −119.6; clipped to −100</text>
+<line x1="28" y1="706" x2="1172" y2="706" stroke="#dde5ec" stroke-width="1.5"/>
+<text lang="en" x="28" y="744" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">2. Whole-module swaps (16 windows × 2 draws, uniform FP32): interfaces wrap the expert; crossing breaks alignment</text>
+<text lang="en" x="28" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="start">Pairing</text>
+<text lang="en" x="260" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Input / state / time P_in</text>
+<text lang="en" x="496" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">16-layer expert E (incl. CA K,V)</text>
+<text lang="en" x="710" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Output P_out</text>
+<text lang="en" x="840" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Flow loss</text>
+<text lang="en" x="1042" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Mechanism</text>
+<text lang="en" x="28" y="836" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A native</text>
+<rect x="176" y="808" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="260" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
+<path d="M344 831 L376 831" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="380" y="808" width="232" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="496" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A (16 layers)</text>
+<path d="M612 831 L644 831" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="648" y="808" width="124" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="710" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
+<text lang="en" x="840" y="829" font-size="16" fill="#19364b" font-weight="700" text-anchor="middle">0.026730</text>
+<text lang="en" x="840" y="849" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">baseline</text>
+<rect x="912" y="810" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
+<text lang="en" x="1042" y="836" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Over-shifted P fits stalled E</text>
+<text lang="en" x="28" y="914" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B native</text>
+<rect x="176" y="886" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="260" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
+<path d="M344 909 L376 909" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="380" y="886" width="232" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="496" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B (16 layers)</text>
+<path d="M612 909 L644 909" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="648" y="886" width="124" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="710" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
+<text lang="en" x="840" y="907" font-size="16" fill="#3263d9" font-weight="700" text-anchor="middle">0.012758</text>
+<text lang="en" x="840" y="927" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">−52.3%</text>
+<rect x="912" y="888" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
+<text lang="en" x="1042" y="914" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Deeply adapted E + compact P</text>
+<text lang="en" x="28" y="992" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A proj + B expert</text>
+<rect x="176" y="964" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="260" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
+<path d="M344 987 L376 987" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="380" y="964" width="232" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="496" y="993" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B (16 layers)</text>
+<path d="M612 987 L644 987" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="648" y="964" width="124" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="710" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
+<text lang="en" x="840" y="985" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.073255</text>
+<text lang="en" x="840" y="1005" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+174% vs A</text>
+<rect x="912" y="966" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
+<text lang="en" x="1042" y="992" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Over-drifted P mismatches B’s E</text>
+<text lang="en" x="28" y="1070" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B proj + A expert</text>
+<rect x="176" y="1042" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="260" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
+<path d="M344 1065 L376 1065" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="380" y="1042" width="232" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
+<text lang="en" x="496" y="1071" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A (16 layers)</text>
+<path d="M612 1065 L644 1065" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
+<rect x="648" y="1042" width="124" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
+<text lang="en" x="710" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
+<text lang="en" x="840" y="1063" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.060578</text>
+<text lang="en" x="840" y="1083" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+127% vs A</text>
+<rect x="912" y="1044" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
+<text lang="en" x="1042" y="1070" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Compact P mismatches stalled E</text>
+<text lang="en" x="28" y="1152" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="start">Note: External P (1.64M) = state_proj, action_in_proj, action_time_mlp, action_out_proj; Expert E (98.25M) spans all 16 layers including odd-layer CA K/V. All share the frozen VLM (350.17M).</text>
 </svg>

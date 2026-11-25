@@ -20,7 +20,8 @@ export function mountArticleNavigation(){
  const close=()=>dialog.close();closeButton.addEventListener('click',close);
  dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}});
  dialog.addEventListener('close',()=>{document.documentElement.style.overflow=lockedOverflow;content.replaceChildren();openFigure=undefined;origin?.focus({preventScroll:true});});
- const open=(figure:HTMLElement,trigger:HTMLElement,source:Element|null=figure.querySelector('svg,img:not([hidden])'))=>{
+ const activeMedia=(figure:HTMLElement)=>{const lang=language==='en'?'en':'zh-CN';return figure.querySelector('svg')??figure.querySelector(`img[lang="${lang}"]:not([hidden])`)??figure.querySelector('img:not([lang]):not([hidden])')??figure.querySelector('img:not([hidden])');};
+ const open=(figure:HTMLElement,trigger:HTMLElement,source:Element|null=activeMedia(figure))=>{
   if(!source)return;
   origin=trigger;openFigure=figure;const clone=source.cloneNode(true) as HTMLElement;
   if(source instanceof HTMLImageElement){const img=clone as HTMLImageElement;img.src=source.currentSrc||source.src;img.removeAttribute('loading');}
