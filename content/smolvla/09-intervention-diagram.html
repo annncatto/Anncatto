@@ -1,291 +1,278 @@
-<figure class="sv-eval-figure" id="smol-network-figure" data-enlarge-svg="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1190" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif">
-<title id="smol-swap-title">SmolVLA mixed-storage layout, 32D/18D pathway, and parameter swaps</title><desc id="smol-swap-desc">Frozen 350.17M VLM, 96.61M BF16 expert body stalled in A vs FP32 in B, 3.27M FP32 external and odd-layer cross-attention KV projections with larger relative L2 weight change in A, 18D supervised vs 32D Euler-integrated action path, and wrapping parameter-swap loss results.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
-<marker id="smol-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#3263d9"/></marker>
-<marker id="smol-arrow-b9544f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b9544f"/></marker>
-<marker id="smol-arrow-475569" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#475569"/></marker>
-<marker id="smol-arrow-64748b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#64748b"/></marker>
-</defs><rect width="1200" height="1190" fill="white"/>
-<text lang="zh-CN" x="28" y="38" font-size="24" fill="#19364b" font-weight="650" text-anchor="start">SmolVLA：混合存储分布、32/18 维通路与参数交换</text>
-<text lang="en" x="28" y="38" font-size="24" fill="#19364b" font-weight="650" text-anchor="start">SmolVLA: mixed-storage layout, 32D/18D pathway, and parameter swaps</text>
-<rect x="28" y="56" width="15" height="15" rx="3" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.4" stroke-dasharray="3 2"/>
-<text lang="zh-CN" x="50" y="69" font-size="13.5" fill="#6b7d8f" font-weight="500" text-anchor="start">冻结 VLM（350.17M · 0% 变）</text>
-<text lang="en" x="50" y="69" font-size="13.5" fill="#6b7d8f" font-weight="500" text-anchor="start">Frozen VLM (350.17M · 0%)</text>
-<rect x="275" y="56" width="15" height="15" rx="3" fill="#fff4f2" stroke="#d99a94" stroke-width="1.4"/>
-<text lang="zh-CN" x="297" y="69" font-size="13.5" fill="#b9544f" font-weight="500" text-anchor="start">A 中 BF16 主体（96.61M · L2 4.46%｜B 全 FP32：13.71%）</text>
-<text lang="en" x="297" y="69" font-size="13.5" fill="#b9544f" font-weight="500" text-anchor="start">BF16 in A (96.61M · 4.46% | FP32 in B: 13.71%)</text>
-<rect x="735" y="56" width="15" height="15" rx="3" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="zh-CN" x="757" y="69" font-size="13.5" fill="#3263d9" font-weight="500" text-anchor="start">A/B 均 FP32（3.27M · A 变化为 B 的 1.6–2.5×）</text>
-<text lang="en" x="757" y="69" font-size="13.5" fill="#3263d9" font-weight="500" text-anchor="start">FP32 in A &amp; B (3.27M · 1.6–2.5× larger L2 change in A)</text>
-<text lang="zh-CN" x="28" y="110" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">① 存储类型分布与 32/18 维数据流（百分比为相对共同初始化的 L2 变化率）</text>
-<text lang="en" x="28" y="110" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">1. Storage-dtype layout and 32D/18D flow (percentages show relative L2 change from init)</text>
-<rect x="28" y="138" width="166" height="70" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="4 3"/>
-<text lang="zh-CN" x="111" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">四路图像 + 指令</text>
-<text lang="en" x="111" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">4 images + text</text>
-<text lang="zh-CN" x="111" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">512×512 · 4×64 + 48</text>
-<text lang="en" x="111" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">512×512 · 4×64 + 48</text>
-<path d="M194 173 L222 173" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="226" y="138" width="198" height="70" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="4 3"/>
-<text lang="zh-CN" x="325" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">视觉 / 语言嵌入</text>
-<text lang="en" x="325" y="168" font-size="15.5" fill="#19364b" font-weight="500" text-anchor="middle">Vision / text embed</text>
-<text lang="zh-CN" x="325" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">pixel shuffle → 960d</text>
-<text lang="en" x="325" y="192" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">pixel shuffle → 960d</text>
-<path d="M424 173 L464 173" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="468" y="132" width="488" height="82" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5" stroke-dasharray="5 3"/>
-<text lang="zh-CN" x="712" y="163" font-size="17" fill="#19364b" font-weight="600" text-anchor="middle">冻结 SmolVLM2 前缀（前 16 层 · 350.17M）</text>
-<text lang="en" x="712" y="163" font-size="17" fill="#19364b" font-weight="600" text-anchor="middle">Frozen SmolVLM2 prefix (16 layers · 350.17M)</text>
-<text lang="zh-CN" x="712" y="189" font-size="13.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">前缀 P = 305；输出各层 K/V 缓存（A 与 B 逐元素一致）</text>
-<text lang="en" x="712" y="189" font-size="13.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">Prefix P = 305; cached layer K/V (identical in A &amp; B)</text>
-<rect x="28" y="240" width="166" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
-<text lang="zh-CN" x="111" y="266" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">状态 18 维 → 补零 32</text>
-<text lang="en" x="111" y="266" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">State 18D → pad 32D</text>
-<rect x="40" y="280" width="79" height="24" rx="4" fill="#dce6f7" stroke="#7aa0e8" stroke-width="1"/>
-<text lang="zh-CN" x="79.5" y="297" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 真实</text>
-<text lang="en" x="79.5" y="297" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 real</text>
-<rect x="121" y="280" width="61" height="24" rx="4" fill="#e6ecf1" stroke="#c8d5df" stroke-width="1"/>
-<text lang="zh-CN" x="151.5" y="297" font-size="11.5" fill="#6b7d8f" font-weight="500" text-anchor="middle">14 补零</text>
-<text lang="en" x="151.5" y="297" font-size="11.5" fill="#6b7d8f" font-weight="500" text-anchor="middle">14 zero</text>
-<path d="M194 278 L222 278" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="226" y="238" width="198" height="80" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="325" y="262" font-size="15" fill="#3263d9" font-weight="600" text-anchor="middle">state_proj（FP32）</text>
-<text lang="en" x="325" y="262" font-size="15" fill="#3263d9" font-weight="600" text-anchor="middle">state_proj (FP32)</text>
-<text lang="zh-CN" x="325" y="284" font-size="12.5" fill="#19364b" font-weight="400" text-anchor="middle">仅 56.25% (=18/32) 更新</text>
-<text lang="en" x="325" y="284" font-size="12.5" fill="#19364b" font-weight="400" text-anchor="middle">56.25% (=18/32) active</text>
-<text lang="zh-CN" x="325" y="304" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2：A 3.9% vs B 2.2%</text>
-<text lang="en" x="325" y="304" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 3.9% vs B 2.2%</text>
-<path d="M424 278 L446 278 L446 192 L464 192" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<rect x="429" y="224" width="36" height="18" rx="3" fill="white" stroke="none" stroke-width="0"/>
-<text lang="zh-CN" x="447" y="237" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">1 tok</text>
-<text lang="en" x="447" y="237" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">1 tok</text>
-<rect x="28" y="386" width="166" height="86" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
-<text lang="zh-CN" x="111" y="413" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">加噪动作 xₜ + 时间 t</text>
-<text lang="en" x="111" y="413" font-size="14.5" fill="#19364b" font-weight="500" text-anchor="middle">Noisy xₜ + flow time t</text>
-<rect x="40" y="430" width="79" height="26" rx="4" fill="#dce6f7" stroke="#7aa0e8" stroke-width="1"/>
-<text lang="zh-CN" x="79.5" y="448" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 监督</text>
-<text lang="en" x="79.5" y="448" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">18 real</text>
-<rect x="121" y="430" width="61" height="26" rx="4" fill="#fcebe8" stroke="#d99a94" stroke-width="1"/>
-<text lang="zh-CN" x="151.5" y="448" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">14 噪声</text>
-<text lang="en" x="151.5" y="448" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">14 noise</text>
-<path d="M194 429 L222 429" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="226" y="362" width="198" height="140" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="325" y="385" font-size="14.5" fill="#3263d9" font-weight="650" text-anchor="middle">输入与时间投影（FP32）</text>
-<text lang="en" x="325" y="385" font-size="14.5" fill="#3263d9" font-weight="650" text-anchor="middle">Input &amp; time proj (FP32)</text>
-<rect x="236" y="397" width="178" height="44" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.2"/>
-<text lang="zh-CN" x="325" y="416" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_in_proj：100% 变</text>
-<text lang="en" x="325" y="416" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_in_proj: 100% active</text>
-<text lang="zh-CN" x="325" y="434" font-size="11" fill="#b9544f" font-weight="400" text-anchor="middle">32 维均含高斯噪声</text>
-<text lang="en" x="325" y="434" font-size="11" fill="#b9544f" font-weight="400" text-anchor="middle">all 32D carry Gaussian noise</text>
-<rect x="236" y="449" width="178" height="43" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.2"/>
-<text lang="zh-CN" x="325" y="468" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_time_mlp（1.56M）</text>
-<text lang="en" x="325" y="468" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">action_time_mlp (1.56M)</text>
-<text lang="zh-CN" x="325" y="485" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2：A 12.1% vs B 6.1%</text>
-<text lang="en" x="325" y="485" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 12.1% vs B 6.1%</text>
-<path d="M424 432 L464 432" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<rect x="468" y="296" width="488" height="264" rx="10" fill="#fafbfd" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="484" y="324" font-size="16" fill="#19364b" font-weight="650" text-anchor="start">动作专家 E（16 层交替 SA / CA · 98.25M）</text>
-<text lang="en" x="484" y="324" font-size="16" fill="#19364b" font-weight="650" text-anchor="start">Action expert E (16 alternating SA/CA · 98.25M)</text>
-<path d="M904 214 L904 346" fill="none" stroke="#3263d9" stroke-width="2"/>
-<rect x="504" y="240" width="384" height="28" rx="5" fill="white" stroke="#7aa0e8" stroke-width="1.1"/>
-<text lang="zh-CN" x="696" y="259" font-size="12.8" fill="#3263d9" font-weight="600" text-anchor="middle">Prefix K/V → 8 个奇数 CA 层的 FP32 K,V（1.64M）</text>
-<text lang="en" x="696" y="259" font-size="12.8" fill="#3263d9" font-weight="600" text-anchor="middle">Prefix K/V → 8 odd CA layers’ FP32 K,V (1.64M)</text>
-<path d="M888 254 L904 254" fill="none" stroke="#3263d9" stroke-width="1.6"/>
-<path d="M616 346 L904 346" fill="none" stroke="#3263d9" stroke-width="2"/>
-<path d="M616 346 L616 368" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<path d="M727 346 L727 368" fill="none" stroke="#3263d9" stroke-width="1.7" stroke-dasharray="4 3" marker-end="url(#smol-arrow-3263d9)"/>
-<path d="M904 346 L904 368" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<rect x="482" y="372" width="70" height="134" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
-<text lang="zh-CN" x="517" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L00</text>
-<text lang="en" x="517" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L00</text>
-<text lang="zh-CN" x="517" y="414" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">SA · 偶</text>
-<text lang="en" x="517" y="414" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">SA · even</text>
-<text lang="zh-CN" x="517" y="439" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">全 BF16</text>
-<text lang="en" x="517" y="439" font-size="11.5" fill="#b9544f" font-weight="600" text-anchor="middle">All BF16</text>
-<text lang="zh-CN" x="517" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.8%</text>
-<text lang="en" x="517" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.8%</text>
-<text lang="zh-CN" x="517" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 8.1%</text>
-<text lang="en" x="517" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 8.1%</text>
-<rect x="562" y="372" width="108" height="56" rx="6" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="zh-CN" x="616" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L01 · CA K,V</text>
-<text lang="en" x="616" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L01 · CA K,V</text>
-<text lang="zh-CN" x="616" y="412" font-size="11" fill="#3263d9" font-weight="600" text-anchor="middle">A 11–15%｜B 6%</text>
-<text lang="en" x="616" y="412" font-size="11" fill="#3263d9" font-weight="600" text-anchor="middle">A 11–15% | B 6%</text>
-<rect x="562" y="432" width="108" height="74" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
-<text lang="zh-CN" x="616" y="453" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
-<text lang="en" x="616" y="453" font-size="12" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
-<text lang="zh-CN" x="616" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.5% (BF16)</text>
-<text lang="en" x="616" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.5% (BF16)</text>
-<text lang="zh-CN" x="616" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.0% (FP32)</text>
-<text lang="en" x="616" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.0% (FP32)</text>
-<rect x="680" y="372" width="94" height="134" rx="6" fill="#f3f6fa" stroke="#c8d5df" stroke-width="1.2" stroke-dasharray="4 3"/>
-<text lang="zh-CN" x="727" y="395" font-size="13" fill="#19364b" font-weight="650" text-anchor="middle">L02 – L13</text>
-<text lang="en" x="727" y="395" font-size="13" fill="#19364b" font-weight="650" text-anchor="middle">L02 – L13</text>
-<text lang="zh-CN" x="727" y="415" font-size="11.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">6 SA + 6 CA</text>
-<text lang="en" x="727" y="415" font-size="11.5" fill="#6b7d8f" font-weight="400" text-anchor="middle">6 SA + 6 CA</text>
-<text lang="zh-CN" x="727" y="439" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">CA K,V: FP32</text>
-<text lang="en" x="727" y="439" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">CA K,V: FP32</text>
-<text lang="zh-CN" x="727" y="458" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">A 13–23%</text>
-<text lang="en" x="727" y="458" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">A 13–23%</text>
-<text lang="zh-CN" x="727" y="480" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">主体 A 3.6%</text>
-<text lang="en" x="727" y="480" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">Body A 3.6%</text>
-<text lang="zh-CN" x="727" y="497" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">主体 B 11.3%</text>
-<text lang="en" x="727" y="497" font-size="11.5" fill="#3263d9" font-weight="400" text-anchor="middle">Body B 11.3%</text>
-<rect x="784" y="372" width="66" height="134" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
-<text lang="zh-CN" x="817" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L14</text>
-<text lang="en" x="817" y="394" font-size="14" fill="#b9544f" font-weight="700" text-anchor="middle">L14</text>
-<text lang="zh-CN" x="817" y="414" font-size="11.5" fill="#19364b" font-weight="500" text-anchor="middle">SA · 偶</text>
-<text lang="en" x="817" y="414" font-size="11.5" fill="#19364b" font-weight="500" text-anchor="middle">SA · even</text>
-<text lang="zh-CN" x="817" y="439" font-size="11" fill="#b9544f" font-weight="600" text-anchor="middle">全 BF16</text>
-<text lang="en" x="817" y="439" font-size="11" fill="#b9544f" font-weight="600" text-anchor="middle">All BF16</text>
-<text lang="zh-CN" x="817" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.7%</text>
-<text lang="en" x="817" y="463" font-size="12" fill="#b9544f" font-weight="400" text-anchor="middle">A 3.7%</text>
-<text lang="zh-CN" x="817" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.5%</text>
-<text lang="en" x="817" y="483" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">B 11.5%</text>
-<rect x="860" y="372" width="86" height="56" rx="6" fill="#edf3ff" stroke="#3263d9" stroke-width="1.4"/>
-<text lang="zh-CN" x="903" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L15 · CA</text>
-<text lang="en" x="903" y="392" font-size="12.5" fill="#3263d9" font-weight="700" text-anchor="middle">L15 · CA</text>
-<text lang="zh-CN" x="903" y="412" font-size="11.5" fill="#3263d9" font-weight="700" text-anchor="middle">A 22–25%</text>
-<text lang="en" x="903" y="412" font-size="11.5" fill="#3263d9" font-weight="700" text-anchor="middle">A 22–25%</text>
-<rect x="860" y="432" width="86" height="74" rx="6" fill="#fff4f2" stroke="#d99a94" stroke-width="1.3"/>
-<text lang="zh-CN" x="903" y="453" font-size="11" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
-<text lang="en" x="903" y="453" font-size="11" fill="#19364b" font-weight="500" text-anchor="middle">Q / O / MLP</text>
-<text lang="zh-CN" x="903" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 4.5%</text>
-<text lang="en" x="903" y="473" font-size="11.5" fill="#b9544f" font-weight="400" text-anchor="middle">A 4.5%</text>
-<text lang="zh-CN" x="903" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 14.3%</text>
-<text lang="en" x="903" y="492" font-size="11.5" fill="#3263d9" font-weight="600" text-anchor="middle">B 14.3%</text>
-<text lang="zh-CN" x="712" y="529" font-size="12.3" fill="#b9544f" font-weight="600" text-anchor="middle">A：96.58M BF16 主体相对 L2 变化 4.46%（32 个 RMSNorm 为 0.00%）</text>
-<text lang="en" x="712" y="529" font-size="12.3" fill="#b9544f" font-weight="600" text-anchor="middle">A: 96.58M BF16 body L2 change 4.46% (32 RMSNorms: 0.00%)</text>
-<text lang="zh-CN" x="712" y="548" font-size="12.3" fill="#3263d9" font-weight="600" text-anchor="middle">A 的 16 个 CA K,V 变化 17.31%（B 为 7.03%，B 主体达 13.71%）</text>
-<text lang="en" x="712" y="548" font-size="12.3" fill="#3263d9" font-weight="600" text-anchor="middle">A’s 16 CA K,V change 17.31% (B: 7.03%, B body: 13.71%)</text>
-<path d="M956 432 L982 432" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#smol-arrow-3263d9)"/>
-<rect x="986" y="376" width="186" height="114" rx="8" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="1079" y="400" font-size="14" fill="#3263d9" font-weight="650" text-anchor="middle">action_out_proj（FP32）</text>
-<text lang="en" x="1079" y="400" font-size="14" fill="#3263d9" font-weight="650" text-anchor="middle">action_out_proj (FP32)</text>
-<text lang="zh-CN" x="1079" y="422" font-size="13" fill="#19364b" font-weight="400" text-anchor="middle">线性输出 vₜ [50, 32]</text>
-<text lang="en" x="1079" y="422" font-size="13" fill="#19364b" font-weight="400" text-anchor="middle">Linear head vₜ [50, 32]</text>
-<text lang="zh-CN" x="1079" y="444" font-size="12" fill="#19364b" font-weight="400" text-anchor="middle">仅 56.25% (=18/32) 更新</text>
-<text lang="en" x="1079" y="444" font-size="12" fill="#19364b" font-weight="400" text-anchor="middle">56.25% (=18/32) active</text>
-<text lang="zh-CN" x="1079" y="466" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2：A 9.6% vs B 5.3%</text>
-<text lang="en" x="1079" y="466" font-size="12.5" fill="#3263d9" font-weight="600" text-anchor="middle">L2: A 9.6% vs B 5.3%</text>
-<path d="M1079 376 L1079 318" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="986" y="236" width="186" height="78" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
-<text lang="zh-CN" x="1079" y="262" font-size="13.5" fill="#19364b" font-weight="600" text-anchor="middle">训练 loss：仅监督前 18 维</text>
-<text lang="en" x="1079" y="262" font-size="13.5" fill="#19364b" font-weight="600" text-anchor="middle">Train loss: first 18D only</text>
-<text lang="zh-CN" x="1079" y="284" font-size="12" fill="#6b7d8f" font-weight="400" text-anchor="middle">后 14 维补零区零梯度</text>
-<text lang="en" x="1079" y="284" font-size="12" fill="#6b7d8f" font-weight="400" text-anchor="middle">14 pad dims get zero grad</text>
-<text lang="zh-CN" x="1079" y="302" font-size="11" fill="#6b7d8f" font-weight="400" text-anchor="middle">（训练分支）</text>
-<text lang="en" x="1079" y="302" font-size="11" fill="#6b7d8f" font-weight="400" text-anchor="middle">(Training path)</text>
-<path d="M1079 490 L1079 594" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="898" y="598" width="274" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
-<text lang="zh-CN" x="1035" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">推理：10 步 Euler 积分全部 32 维</text>
-<text lang="en" x="1035" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">Inference: 10 Euler steps on all 32D</text>
-<text lang="zh-CN" x="1035" y="650" font-size="12.2" fill="#b9544f" font-weight="400" text-anchor="middle">无界线性积分；14 个无监督维仍每步回传</text>
-<text lang="en" x="1035" y="650" font-size="12.2" fill="#b9544f" font-weight="400" text-anchor="middle">Unbounded ODE; 14 pad dims re-enter xₜ</text>
-<path d="M898 636 L858 636" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="572" y="598" width="282" height="76" rx="8" fill="#f4f6f8" stroke="#c8d5df" stroke-width="1.5"/>
-<text lang="zh-CN" x="713" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">裁取前 18 维 · 仿射还原 a = μ + σz</text>
-<text lang="en" x="713" y="626" font-size="14.2" fill="#19364b" font-weight="600" text-anchor="middle">Crop 18D · affine a = μ + σz</text>
-<text lang="zh-CN" x="713" y="650" font-size="12.2" fill="#6b7d8f" font-weight="400" text-anchor="middle">只做尺度还原，不执行关节边界限幅</text>
-<text lang="en" x="713" y="650" font-size="12.2" fill="#6b7d8f" font-weight="400" text-anchor="middle">Rescales linearly; enforces no joint bounds</text>
-<path d="M572 636 L532 636" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="214" y="598" width="314" height="76" rx="8" fill="#fff4f2" stroke="#d99a94" stroke-width="1.5"/>
-<text lang="zh-CN" x="371" y="626" font-size="14.2" fill="#b9544f" font-weight="600" text-anchor="middle">Host 按字段限幅（shoulder_lift ≥ −100）</text>
-<text lang="en" x="371" y="626" font-size="14.2" fill="#b9544f" font-weight="600" text-anchor="middle">Host field clamp (shoulder_lift ≥ −100)</text>
-<text lang="zh-CN" x="371" y="650" font-size="12.2" fill="#19364b" font-weight="400" text-anchor="middle">真机请求曾达 −119.6，Host 截断至 −100</text>
-<text lang="en" x="371" y="650" font-size="12.2" fill="#19364b" font-weight="400" text-anchor="middle">Live requests reach −119.6; clipped to −100</text>
-<line x1="28" y1="706" x2="1172" y2="706" stroke="#dde5ec" stroke-width="1.5"/>
-<text lang="zh-CN" x="28" y="744" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">② 整组参数交换（同一 16 窗口 × 2 抽样，统一 FP32 计算）：外部投影包裹专家，跨模型组合后 loss 显著升高</text>
-<text lang="en" x="28" y="744" font-size="17.5" fill="#19364b" font-weight="650" text-anchor="start">2. Whole-module swaps (16 windows × 2 draws, uniform FP32): crossing P and E raises loss</text>
-<text lang="zh-CN" x="28" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="start">模型组合</text>
-<text lang="en" x="28" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="start">Pairing</text>
-<text lang="zh-CN" x="260" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">输入 / 状态 / 时间 P_in</text>
-<text lang="en" x="260" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Input / state / time P_in</text>
-<text lang="zh-CN" x="496" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">16 层动作专家 E（含 CA K,V）</text>
-<text lang="en" x="496" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">16-layer expert E (incl. CA K,V)</text>
-<text lang="zh-CN" x="710" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">输出头 P_out</text>
-<text lang="en" x="710" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Output P_out</text>
-<text lang="zh-CN" x="840" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Flow loss</text>
-<text lang="en" x="840" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Flow loss</text>
-<text lang="zh-CN" x="1042" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">参数组合说明</text>
-<text lang="en" x="1042" y="784" font-size="14" fill="#6b7d8f" font-weight="600" text-anchor="middle">Combination</text>
-<text lang="zh-CN" x="28" y="836" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A 原配</text>
-<text lang="en" x="28" y="836" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A native</text>
-<rect x="176" y="808" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="260" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
-<text lang="en" x="260" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
-<path d="M344 831 L376 831" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="380" y="808" width="232" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="496" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A（16 层）</text>
-<text lang="en" x="496" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A (16 layers)</text>
-<path d="M612 831 L644 831" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="648" y="808" width="124" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="710" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
-<text lang="en" x="710" y="837" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
-<text lang="zh-CN" x="840" y="829" font-size="16" fill="#19364b" font-weight="700" text-anchor="middle">0.026730</text>
-<text lang="en" x="840" y="829" font-size="16" fill="#19364b" font-weight="700" text-anchor="middle">0.026730</text>
-<text lang="zh-CN" x="840" y="849" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">基线</text>
-<text lang="en" x="840" y="849" font-size="12" fill="#19364b" font-weight="600" text-anchor="middle">baseline</text>
-<rect x="912" y="810" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
-<text lang="zh-CN" x="1042" y="836" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">原配：大变化接口 + 小变化主体</text>
-<text lang="en" x="1042" y="836" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Native: large P + small E</text>
-<text lang="zh-CN" x="28" y="914" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B 原配</text>
-<text lang="en" x="28" y="914" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B native</text>
-<rect x="176" y="886" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="260" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
-<text lang="en" x="260" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
-<path d="M344 909 L376 909" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="380" y="886" width="232" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="496" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B（16 层）</text>
-<text lang="en" x="496" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B (16 layers)</text>
-<path d="M612 909 L644 909" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="648" y="886" width="124" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="710" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
-<text lang="en" x="710" y="915" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
-<text lang="zh-CN" x="840" y="907" font-size="16" fill="#3263d9" font-weight="700" text-anchor="middle">0.012758</text>
-<text lang="en" x="840" y="907" font-size="16" fill="#3263d9" font-weight="700" text-anchor="middle">0.012758</text>
-<text lang="zh-CN" x="840" y="927" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">−52.3%</text>
-<text lang="en" x="840" y="927" font-size="12" fill="#3263d9" font-weight="600" text-anchor="middle">−52.3%</text>
-<rect x="912" y="888" width="260" height="42" rx="6" fill="#f8fafc" stroke="#dce4ec" stroke-width="1.1"/>
-<text lang="zh-CN" x="1042" y="914" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">原配：小变化接口 + 大变化主体</text>
-<text lang="en" x="1042" y="914" font-size="12.5" fill="#19364b" font-weight="500" text-anchor="middle">Native: small P + large E</text>
-<text lang="zh-CN" x="28" y="992" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A 投影 + B 专家</text>
-<text lang="en" x="28" y="992" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">A proj + B expert</text>
-<rect x="176" y="964" width="168" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="260" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
-<text lang="en" x="260" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_in · A</text>
-<path d="M344 987 L376 987" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="380" y="964" width="232" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="496" y="993" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B（16 层）</text>
-<text lang="en" x="496" y="993" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">E · B (16 layers)</text>
-<path d="M612 987 L644 987" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="648" y="964" width="124" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="710" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
-<text lang="en" x="710" y="993" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">P_out · A</text>
-<text lang="zh-CN" x="840" y="985" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.073255</text>
-<text lang="en" x="840" y="985" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.073255</text>
-<text lang="zh-CN" x="840" y="1005" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+174% vs A</text>
-<text lang="en" x="840" y="1005" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+174% vs A</text>
-<rect x="912" y="966" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
-<text lang="zh-CN" x="1042" y="992" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">跨组合：A 外部投影接 B 专家</text>
-<text lang="en" x="1042" y="992" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Crossed: A’s P with B’s E</text>
-<text lang="zh-CN" x="28" y="1070" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B 投影 + A 专家</text>
-<text lang="en" x="28" y="1070" font-size="15" fill="#19364b" font-weight="600" text-anchor="start">B proj + A expert</text>
-<rect x="176" y="1042" width="168" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="260" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
-<text lang="en" x="260" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_in · B</text>
-<path d="M344 1065 L376 1065" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="380" y="1042" width="232" height="46" rx="7" fill="#eef2f6" stroke="#7b8c9d" stroke-width="1.5"/>
-<text lang="zh-CN" x="496" y="1071" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A（16 层）</text>
-<text lang="en" x="496" y="1071" font-size="15.5" fill="#475569" font-weight="650" text-anchor="middle">E · A (16 layers)</text>
-<path d="M612 1065 L644 1065" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#smol-arrow-64748b)"/>
-<rect x="648" y="1042" width="124" height="46" rx="7" fill="#edf3ff" stroke="#3263d9" stroke-width="1.5"/>
-<text lang="zh-CN" x="710" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
-<text lang="en" x="710" y="1071" font-size="15.5" fill="#3263d9" font-weight="650" text-anchor="middle">P_out · B</text>
-<text lang="zh-CN" x="840" y="1063" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.060578</text>
-<text lang="en" x="840" y="1063" font-size="16" fill="#b9544f" font-weight="700" text-anchor="middle">0.060578</text>
-<text lang="zh-CN" x="840" y="1083" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+127% vs A</text>
-<text lang="en" x="840" y="1083" font-size="12" fill="#b9544f" font-weight="600" text-anchor="middle">+127% vs A</text>
-<rect x="912" y="1044" width="260" height="42" rx="6" fill="#fff8f7" stroke="#d99a94" stroke-width="1.1"/>
-<text lang="zh-CN" x="1042" y="1070" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">跨组合：B 外部投影接 A 专家</text>
-<text lang="en" x="1042" y="1070" font-size="12.5" fill="#b9544f" font-weight="500" text-anchor="middle">Crossed: B’s P with A’s E</text>
-<text lang="zh-CN" x="28" y="1152" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="start">注：外部投影 P（1.64M）含 state_proj、action_in_proj、action_time_mlp、action_out_proj；专家 E（98.25M）含 16 层及其奇数 CA 层 K/V 投影。四组共用冻结 VLM（350.17M）。</text>
-<text lang="en" x="28" y="1152" font-size="12.5" fill="#6b7d8f" font-weight="400" text-anchor="start">Note: External P (1.64M) = state_proj, action_in_proj, action_time_mlp, action_out_proj; Expert E (98.25M) spans all 16 layers including odd-layer CA K/V. All share the frozen VLM (350.17M).</text>
-</svg><figcaption><span class="figure-title"><span lang="en">Mixed-storage layout, 32D/18D pathway, and module swaps</span><span lang="zh-CN">更新范围、存储类型分布与参数交换</span></span><span class="figure-description"><span lang="en">Top: frozen VLM, A’s 96.61M BF16 expert body with small weight change versus its 26 FP32 tensors (external projections plus odd-layer CA K/V, whose relative L2 change is 1.6–2.5× larger than in B), and the 18D-supervised versus 32D-integrated action path. Bottom: whole-module swap topology under uniform FP32 replay (slate A, blue B, coral crossed-swap loss increase).</span><span lang="zh-CN">上图展示冻结 VLM、模型 A 中变化很小的 96.61M BF16 专家主体与变化更大的 26 个 FP32 张量（外部投影与 8 个奇数 CA 层的 K/V），以及训练监督 18 维与推理积分 32 维的差异。下图按外部投影包裹动作专家的拓扑展示整组参数交换结果（灰 A、蓝 B、红为跨组合 loss 升高）。</span></span></figcaption></figure>
+<figure class="sv-eval-figure" id="smol-network-figure" data-enlarge-svg="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" role="img" data-smol-intervention="true" aria-labelledby="smol-swap-title smol-swap-desc" style="display:block;width:100%;height:auto;font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif">
+<title id="smol-swap-title">SmolVLA weight updates, 32D/18D pathway, and module swaps</title><desc id="smol-swap-desc">Three visual panels: relative L2 weight changes across four parameter groups in Mixed 100k vs FP32 100k, proportional 18D/14D strips for state and action projections, and horizontal flow-loss bars for whole-module swaps.</desc><style>.figure-viewer-content>svg[data-smol-intervention]{min-width:1100px}</style><defs>
+<marker id="smol-arrow-237ab2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#237ab2"/></marker>
+<marker id="smol-arrow-b55d4c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#b55d4c"/></marker>
+<marker id="smol-arrow-556b73" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#556b73"/></marker>
+<marker id="smol-arrow-61747b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#61747b"/></marker>
+<marker id="smol-arrow-4b9c80" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="#4b9c80"/></marker>
+</defs><rect width="1200" height="940" fill="white"/>
+<text lang="zh-CN" x="28" y="36" font-size="23" fill="#273b43" font-weight="650" text-anchor="start">SmolVLA：参数更新分布、32/18 维通路与整组替换</text>
+<text lang="en" x="28" y="36" font-size="23" fill="#273b43" font-weight="650" text-anchor="start">SmolVLA: weight updates, 32D/18D pathway, and module swaps</text>
+<rect x="28" y="54" width="14" height="14" rx="3" fill="#556b73"/>
+<text lang="zh-CN" x="49" y="66" font-size="12.8" fill="#273b43" font-weight="500" text-anchor="start">混合 100k（96.6M BF16 + 3.3M FP32）</text>
+<text lang="en" x="49" y="66" font-size="12.8" fill="#273b43" font-weight="500" text-anchor="start">Mixed 100k (96.6M BF16 + 3.3M FP32)</text>
+<rect x="334" y="54" width="14" height="14" rx="3" fill="#237ab2"/>
+<text lang="zh-CN" x="355" y="66" font-size="12.8" fill="#273b43" font-weight="500" text-anchor="start">FP32 100k（全 FP32）</text>
+<text lang="en" x="355" y="66" font-size="12.8" fill="#273b43" font-weight="500" text-anchor="start">FP32 100k (all FP32)</text>
+<rect x="534" y="54" width="14" height="14" rx="3" fill="#b55d4c"/>
+<text lang="zh-CN" x="555" y="66" font-size="12.8" fill="#b55d4c" font-weight="500" text-anchor="start">越界 / 跨组合升高</text>
+<text lang="en" x="555" y="66" font-size="12.8" fill="#b55d4c" font-weight="500" text-anchor="start">Out-of-range / crossed swap</text>
+<rect x="930" y="48" width="242" height="24" rx="12" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1"/>
+<text lang="zh-CN" x="1051" y="64" font-size="12" fill="#237ab2" font-weight="500" text-anchor="middle">悬停任意色块查看精确明细</text>
+<text lang="en" x="1051" y="64" font-size="12" fill="#237ab2" font-weight="500" text-anchor="middle">Hover any block for exact numbers</text>
+<text lang="zh-CN" x="28" y="104" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">① 四类参数的存储类型与相对 L2 变化（横条统一按 0–20% 比例绘制）</text>
+<text lang="en" x="28" y="104" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">1. Storage dtype and relative L2 weight change (shared 0–20% bar scale)</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="冻结 VLM：345 个张量 / 350,165,184 元素（视觉编码器与 SmolVLM2 前 16 层），训练期间 0% 更新，两个模型逐元素一致。" data-tip-en="Frozen VLM: 345 tensors / 350,165,184 elements (vision encoder + first 16 SmolVLM2 layers); 0% updated, identical across models.">
+<rect x="28" y="124" width="194" height="242" rx="10" fill="#f5f8f7" stroke="#d2e0e0" stroke-width="1.4" stroke-dasharray="5 3"/>
+<text lang="zh-CN" x="125" y="158" font-size="15.2" fill="#273b43" font-weight="650" text-anchor="middle">冻结 VLM 前缀</text>
+<text lang="en" x="125" y="158" font-size="15.2" fill="#273b43" font-weight="650" text-anchor="middle">Frozen VLM prefix</text>
+<text lang="zh-CN" x="125" y="180" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">350M · BF16</text>
+<text lang="en" x="125" y="180" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">350M · BF16</text>
+<rect x="60" y="214" width="130" height="34" rx="6" fill="white" stroke="#d2e0e0" stroke-width="1.1"/>
+<text lang="zh-CN" x="125" y="236" font-size="14" fill="#61747b" font-weight="650" text-anchor="middle">0% 变化</text>
+<text lang="en" x="125" y="236" font-size="14" fill="#61747b" font-weight="650" text-anchor="middle">0% change</text>
+<text lang="zh-CN" x="125" y="290" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">只输出前 16 层</text>
+<text lang="en" x="125" y="290" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">Outputs cached K/V</text>
+<text lang="zh-CN" x="125" y="310" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">视觉/语言 K,V 缓存</text>
+<text lang="en" x="125" y="310" font-size="12.2" fill="#61747b" font-weight="400" text-anchor="middle">for all 16 layers</text>
+<rect x="46" y="330" width="158" height="24" rx="5" fill="#eaf0f0"/>
+<text lang="zh-CN" x="125" y="346" font-size="11.5" fill="#556b73" font-weight="600" text-anchor="middle">两个模型逐元素一致</text>
+<text lang="en" x="125" y="346" font-size="11.5" fill="#556b73" font-weight="600" text-anchor="middle">Identical across runs</text>
+</g>
+<path d="M222 245 L248 245" fill="none" stroke="#237ab2" stroke-width="1.9" marker-end="url(#smol-arrow-237ab2)"/>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="奇数 CA 层 K,V：16 个张量 / 1,638,400 元素（L01–L15）；相对 L2 变化：混合 17.31% vs FP32 7.03%（2.46×）。L01 v_proj: 14.64% vs 5.74%；L15 k/v: 22.16%/24.63% vs 8.78%/7.81%。" data-tip-en="Odd CA K,V: 16 tensors / 1,638,400 elements (L01–L15); relative L2 change: Mixed 17.31% vs FP32 7.03% (2.46×). L01 v_proj: 14.64% vs 5.74%; L15 k/v: 22.16%/24.63% vs 8.78%/7.81%.">
+<rect x="252" y="124" width="284" height="242" rx="10" fill="#f8fbfc" stroke="#b8d4e2" stroke-width="1.4"/>
+<text lang="zh-CN" x="394.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">8 个奇数 CA 层 K,V</text>
+<text lang="en" x="394.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">8 odd CA layers’ K,V</text>
+<text lang="zh-CN" x="394.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">1.6M · 均存 FP32</text>
+<text lang="en" x="394.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">1.6M · FP32 in both</text>
+<line x1="308.0" y1="198" x2="308.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="308.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<text lang="en" x="308.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<line x1="391.0" y1="198" x2="391.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="391.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<text lang="en" x="391.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<line x1="474.0" y1="198" x2="474.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="474.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="en" x="474.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="zh-CN" x="300" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">混合</text>
+<text lang="en" x="300" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">Mixed</text>
+<rect x="308" y="210" width="166" height="20" rx="4" fill="#edf2f2"/>
+<rect x="308" y="210" width="143.673" height="20" rx="4" fill="#556b73"/>
+<text lang="zh-CN" x="482" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">17.3%</text>
+<text lang="en" x="482" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">17.3%</text>
+<text lang="zh-CN" x="300" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<text lang="en" x="300" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<rect x="308" y="250" width="166" height="20" rx="4" fill="#e8f2f7"/>
+<rect x="308" y="250" width="58.349000000000004" height="20" rx="4" fill="#237ab2"/>
+<text lang="zh-CN" x="482" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">7.0%</text>
+<text lang="en" x="482" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">7.0%</text>
+<rect x="266" y="326" width="256" height="28" rx="6" fill="#faf1ef"/>
+<text lang="zh-CN" x="394.0" y="344" font-size="11.8" fill="#b55d4c" font-weight="600" text-anchor="middle">混合为 FP32 的 2.5×（L15 达 25%）</text>
+<text lang="en" x="394.0" y="344" font-size="11.8" fill="#b55d4c" font-weight="600" text-anchor="middle">2.5× larger in Mixed (25% at L15)</text>
+</g>
+<path d="M536 245 L562 245" fill="none" stroke="#556b73" stroke-width="1.9" marker-end="url(#smol-arrow-556b73)"/>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="动作专家主体：97 个主张量（96,584,400 元素，相对 L2 变化：混合 4.46% vs FP32 13.71%，3.07×）+ 32 个 RMSNorm（23,040 元素，混合 0.00% vs FP32 0.49%）。95k→100k 元素变化率：混合 0.08267% vs FP32 99.99785%。" data-tip-en="Expert body: 97 main tensors (96,584,400 elements, L2 change: Mixed 4.46% vs FP32 13.71%, 3.07×) + 32 RMSNorms (23,040 elements, 0.00% vs 0.49%). Final-5k changed: Mixed 0.08267% vs FP32 99.99785%.">
+<rect x="566" y="124" width="292" height="242" rx="10" fill="#fbf7f6" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="zh-CN" x="712.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">16 层动作专家主体</text>
+<text lang="en" x="712.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">16-layer expert body</text>
+<text lang="zh-CN" x="712.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">96.6M · 混合存 BF16 / FP32 存 FP32</text>
+<text lang="en" x="712.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">96.6M · BF16 in Mixed / FP32</text>
+<line x1="622.0" y1="198" x2="622.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="622.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<text lang="en" x="622.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<line x1="709.0" y1="198" x2="709.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="709.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<text lang="en" x="709.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<line x1="796.0" y1="198" x2="796.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="796.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="en" x="796.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="zh-CN" x="614" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">混合</text>
+<text lang="en" x="614" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">Mixed</text>
+<rect x="622" y="210" width="174" height="20" rx="4" fill="#edf2f2"/>
+<rect x="622" y="210" width="38.802" height="20" rx="4" fill="#556b73"/>
+<text lang="zh-CN" x="804" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">4.5%</text>
+<text lang="en" x="804" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">4.5%</text>
+<text lang="zh-CN" x="614" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<text lang="en" x="614" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<rect x="622" y="250" width="174" height="20" rx="4" fill="#e8f2f7"/>
+<rect x="622" y="250" width="119.277" height="20" rx="4" fill="#237ab2"/>
+<text lang="zh-CN" x="804" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">13.7%</text>
+<text lang="en" x="804" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">13.7%</text>
+<rect x="580" y="326" width="264" height="28" rx="6" fill="#edf5f8"/>
+<text lang="zh-CN" x="712.0" y="344" font-size="11.8" fill="#237ab2" font-weight="600" text-anchor="middle">FP32 为混合的 3.1× · 末 5k 混合仅 0.08% 变</text>
+<text lang="en" x="712.0" y="344" font-size="11.8" fill="#237ab2" font-weight="600" text-anchor="middle">3.1× larger in FP32 · Mixed final-5k: 0.08%</text>
+</g>
+<path d="M858 245 L884 245" fill="none" stroke="#556b73" stroke-width="1.9" marker-end="url(#smol-arrow-556b73)"/>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="外部投影：10 个张量 / 1,635,152 元素（state_proj、action_in_proj、action_time_mlp、action_out_proj）；相对 L2 变化：混合 7.88% vs FP32 4.81%（1.64×），其中 action_time_mlp_out 为 12.12% vs 6.08%。" data-tip-en="External projections: 10 tensors / 1,635,152 elements (state_proj, action_in_proj, action_time_mlp, action_out_proj); L2 change: Mixed 7.88% vs FP32 4.81% (1.64×); action_time_mlp_out 12.12% vs 6.08%.">
+<rect x="888" y="124" width="284" height="242" rx="10" fill="#f8fbfc" stroke="#b8d4e2" stroke-width="1.4"/>
+<text lang="zh-CN" x="1030.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">外部输入 / 输出投影</text>
+<text lang="en" x="1030.0" y="156" font-size="15.0" fill="#273b43" font-weight="650" text-anchor="middle">External projections</text>
+<text lang="zh-CN" x="1030.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">1.6M · 均存 FP32</text>
+<text lang="en" x="1030.0" y="178" font-size="12.0" fill="#61747b" font-weight="400" text-anchor="middle">1.6M · FP32 in both</text>
+<line x1="944.0" y1="198" x2="944.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="944.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<text lang="en" x="944.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">0%</text>
+<line x1="1027.0" y1="198" x2="1027.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="1027.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<text lang="en" x="1027.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">10%</text>
+<line x1="1110.0" y1="198" x2="1110.0" y2="288" stroke="#dce9e9" stroke-width="1"/>
+<text lang="zh-CN" x="1110.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="en" x="1110.0" y="304" font-size="10.5" fill="#61747b" font-weight="400" text-anchor="middle">20%</text>
+<text lang="zh-CN" x="936" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">混合</text>
+<text lang="en" x="936" y="224" font-size="12" fill="#556b73" font-weight="650" text-anchor="end">Mixed</text>
+<rect x="944" y="210" width="166" height="20" rx="4" fill="#edf2f2"/>
+<rect x="944" y="210" width="65.404" height="20" rx="4" fill="#556b73"/>
+<text lang="zh-CN" x="1118" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">7.9%</text>
+<text lang="en" x="1118" y="225" font-size="12.8" fill="#556b73" font-weight="700" text-anchor="start">7.9%</text>
+<text lang="zh-CN" x="936" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<text lang="en" x="936" y="264" font-size="12" fill="#237ab2" font-weight="650" text-anchor="end">FP32</text>
+<rect x="944" y="250" width="166" height="20" rx="4" fill="#e8f2f7"/>
+<rect x="944" y="250" width="39.923" height="20" rx="4" fill="#237ab2"/>
+<text lang="zh-CN" x="1118" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">4.8%</text>
+<text lang="en" x="1118" y="265" font-size="12.8" fill="#237ab2" font-weight="700" text-anchor="start">4.8%</text>
+<rect x="902" y="326" width="256" height="28" rx="6" fill="#faf1ef"/>
+<text lang="zh-CN" x="1030.0" y="344" font-size="11.8" fill="#b55d4c" font-weight="600" text-anchor="middle">混合为 FP32 的 1.6×（时间 MLP 达 12%）</text>
+<text lang="en" x="1030.0" y="344" font-size="11.8" fill="#b55d4c" font-weight="600" text-anchor="middle">1.6× larger in Mixed (time MLP 12%)</text>
+</g>
+<line x1="28" y1="392" x2="1172" y2="392" stroke="#dce9e9" stroke-width="1.3"/>
+<text lang="zh-CN" x="28" y="424" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">② 32 维内部通路与 18 维真实动作（横条按 18:14 实际维度比例绘制）</text>
+<text lang="en" x="28" y="424" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">2. 32D internal tensors vs 18D robot commands (exact 18:14 dimension scale)</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="state_proj.weight 在两个模型中均恰好有 56.25%（= 18/32）的元素发生变化；后 14 维输入恒为 0，梯度恒为零。" data-tip-en="state_proj.weight changes on exactly 56.25% (= 18/32) of elements in both runs; the 14 zero-padded inputs carry zero gradient.">
+<rect x="28" y="446" width="1144" height="42" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="472" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">state_proj（状态输入）</text>
+<text lang="en" x="28" y="472" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">state_proj (state in)</text>
+<rect x="248" y="450" width="252" height="34" rx="5" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.2"/>
+<text lang="zh-CN" x="374.0" y="472" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 维真实状态</text>
+<text lang="en" x="374.0" y="472" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 real state</text>
+<rect x="504" y="450" width="196" height="34" rx="5" fill="#f5f8f7" stroke="#d2e0e0" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text lang="zh-CN" x="602.0" y="472" font-size="12.2" fill="#61747b" font-weight="600" text-anchor="middle">14 维补零 = 0</text>
+<text lang="en" x="602.0" y="472" font-size="12.2" fill="#61747b" font-weight="600" text-anchor="middle">14 zero-padded</text>
+<path d="M706 467 L722 467" fill="none" stroke="#556b73" stroke-width="1.8" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="726" y="450" width="446" height="34" rx="6" fill="#f6f9f9" stroke="#d2e0e0" stroke-width="1.2"/>
+<text lang="zh-CN" x="949" y="472" font-size="12.3" fill="#273b43" font-weight="600" text-anchor="middle">56% 权重更新（18/32）· 后 14 维零梯度</text>
+<text lang="en" x="949" y="472" font-size="12.3" fill="#273b43" font-weight="600" text-anchor="middle">56% weights updated (18/32) · 14 dims zero grad</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="action_in_proj.weight 在两个模型中均 100% 更新：流匹配向全部 32 维注入高斯噪声，推理时 10 步无界 Euler 积分每步也将全部 32 维送回输入投影。" data-tip-en="action_in_proj.weight updates on 100% of elements: flow matching adds Gaussian noise to all 32 dims, and 10 Euler steps feed all 32 coords back at inference.">
+<rect x="28" y="500" width="1144" height="42" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="526" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">action_in_proj（动作输入）</text>
+<text lang="en" x="28" y="526" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">action_in_proj (action in)</text>
+<rect x="248" y="504" width="252" height="34" rx="5" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.2"/>
+<text lang="zh-CN" x="374.0" y="526" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 维加噪动作</text>
+<text lang="en" x="374.0" y="526" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 noisy actions</text>
+<rect x="504" y="504" width="196" height="34" rx="5" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.2"/>
+<text lang="zh-CN" x="602.0" y="526" font-size="12.2" fill="#b55d4c" font-weight="600" text-anchor="middle">14 维高斯噪声</text>
+<text lang="en" x="602.0" y="526" font-size="12.2" fill="#b55d4c" font-weight="600" text-anchor="middle">14 Gaussian noise</text>
+<path d="M706 521 L722 521" fill="none" stroke="#556b73" stroke-width="1.8" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="726" y="504" width="446" height="34" rx="6" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.2"/>
+<text lang="zh-CN" x="949" y="526" font-size="12.3" fill="#b55d4c" font-weight="600" text-anchor="middle">100% 权重更新 · 推理 10 步 Euler 全部 32 维回传</text>
+<text lang="en" x="949" y="526" font-size="12.3" fill="#b55d4c" font-weight="600" text-anchor="middle">100% updated · 10 Euler steps feed all 32D back</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="action_out_proj.weight 恰好更新 56.25%（18/32）；推理只裁取前 18 维并做仿射还原 a = μ + σz（无界）。右臂 shoulder_lift 真机请求曾低至 −119.6287，由 Host 截断至 −100。" data-tip-en="action_out_proj.weight updates on 56.25% (18/32); inference crops 18D and applies unbounded affine scaling a = μ + σz. Live right shoulder_lift reached −119.6287 before Host clamped to −100.">
+<rect x="28" y="554" width="1144" height="42" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="580" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">action_out_proj（动作输出）</text>
+<text lang="en" x="28" y="580" font-size="13.8" fill="#273b43" font-weight="600" text-anchor="start">action_out_proj (action out)</text>
+<rect x="248" y="558" width="252" height="34" rx="5" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.2"/>
+<text lang="zh-CN" x="374.0" y="580" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 维计训练 loss</text>
+<text lang="en" x="374.0" y="580" font-size="12.2" fill="#237ab2" font-weight="600" text-anchor="middle">18 supervised</text>
+<rect x="504" y="558" width="196" height="34" rx="5" fill="#f5f8f7" stroke="#d2e0e0" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text lang="zh-CN" x="602.0" y="580" font-size="12.2" fill="#61747b" font-weight="600" text-anchor="middle">14 维零梯度</text>
+<text lang="en" x="602.0" y="580" font-size="12.2" fill="#61747b" font-weight="600" text-anchor="middle">14 zero grad</text>
+<path d="M706 575 L722 575" fill="none" stroke="#556b73" stroke-width="1.8" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="726" y="558" width="446" height="34" rx="6" fill="#f6f9f9" stroke="#d2e0e0" stroke-width="1.2"/>
+<text lang="zh-CN" x="949" y="580" font-size="12.3" fill="#273b43" font-weight="600" text-anchor="middle">56% 更新 → 裁 18 维 → 仿射还原 → Host 限幅 ≥ −100</text>
+<text lang="en" x="949" y="580" font-size="12.3" fill="#273b43" font-weight="600" text-anchor="middle">56% updated → crop 18D → affine → Host clamp ≥ −100</text>
+</g>
+<line x1="28" y1="618" x2="1172" y2="618" stroke="#dce9e9" stroke-width="1.3"/>
+<text lang="zh-CN" x="28" y="650" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">③ 整组参数交换（16 窗口 × 2 抽样，统一 FP32 回放）：跨模型组合后 loss 明显升高</text>
+<text lang="en" x="28" y="650" font-size="16.5" fill="#273b43" font-weight="650" text-anchor="start">3. Whole-module swaps (16 windows × 2 draws, uniform FP32): crossing projections and expert raises loss</text>
+<text lang="zh-CN" x="28" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="start">模型组合</text>
+<text lang="en" x="28" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="start">Pairing</text>
+<text lang="zh-CN" x="392" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="middle">外部投影 P_in → 16 层专家 E → 输出头 P_out</text>
+<text lang="en" x="392" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="middle">P_in → 16-layer expert E → P_out</text>
+<text lang="zh-CN" x="628" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="start">配对 flow loss（越低越好）</text>
+<text lang="en" x="628" y="682" font-size="13" fill="#61747b" font-weight="600" text-anchor="start">Matched flow loss (lower is better)</text>
+<line x1="753.0" y1="692" x2="753.0" y2="892" stroke="#99adb2" stroke-width="1.2" stroke-dasharray="4 3"/>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="混合 100k 原配统一 FP32 回放 loss = 0.026730（基线）。" data-tip-en="Mixed 100k native uniform FP32 replay loss = 0.026730 (baseline).">
+<rect x="28" y="700" width="1144" height="38" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="724" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">混合 100k 原配</text>
+<text lang="en" x="28" y="724" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">Mixed 100k native</text>
+<rect x="206" y="704" width="92" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="252" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_in·混合</text>
+<text lang="en" x="252" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_in·Mixed</text>
+<path d="M298 719 L320 719" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="324" y="704" width="136" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="392" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">E·混合（16层）</text>
+<text lang="en" x="392" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">E·Mixed (16L)</text>
+<path d="M460 719 L482 719" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="486" y="704" width="102" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="537" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_out·混合</text>
+<text lang="en" x="537" y="724" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_out·Mixed</text>
+<rect x="628" y="707" width="374" height="24" rx="5" fill="#f1f6f6"/>
+<rect x="628" y="707" width="124.96286965470063" height="24" rx="5" fill="#556b73"/>
+<text lang="zh-CN" x="1014" y="724" font-size="13.5" fill="#273b43" font-weight="700" text-anchor="start">0.027（基线）</text>
+<text lang="en" x="1014" y="724" font-size="13.5" fill="#273b43" font-weight="700" text-anchor="start">0.027 (baseline)</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="FP32 100k 原配统一 FP32 回放 loss = 0.012758，比混合 100k 低 52.3%。" data-tip-en="FP32 100k native uniform FP32 replay loss = 0.012758 (−52.3% vs Mixed).">
+<rect x="28" y="748" width="1144" height="38" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="772" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">FP32 100k 原配</text>
+<text lang="en" x="28" y="772" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">FP32 100k native</text>
+<rect x="206" y="752" width="92" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="252" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_in·FP32</text>
+<text lang="en" x="252" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_in·FP32</text>
+<path d="M298 767 L320 767" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="324" y="752" width="136" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="392" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">E·FP32（16层）</text>
+<text lang="en" x="392" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">E·FP32 (16L)</text>
+<path d="M460 767 L482 767" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="486" y="752" width="102" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="537" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_out·FP32</text>
+<text lang="en" x="537" y="772" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_out·FP32</text>
+<rect x="628" y="755" width="374" height="24" rx="5" fill="#f1f6f6"/>
+<rect x="628" y="755" width="59.64454759405271" height="24" rx="5" fill="#237ab2"/>
+<text lang="zh-CN" x="1014" y="772" font-size="13.5" fill="#237ab2" font-weight="700" text-anchor="start">0.013（−52%）</text>
+<text lang="en" x="1014" y="772" font-size="13.5" fill="#237ab2" font-weight="700" text-anchor="start">0.013 (−52%)</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="混合 100k 外部投影 + FP32 100k 动作专家：loss = 0.073255，较混合基线升高 174%、较 FP32 基线升高 474%。" data-tip-en="Mixed external projections + FP32 16-layer expert: loss = 0.073255 (+174% vs Mixed, +474% vs FP32).">
+<rect x="28" y="796" width="1144" height="38" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="820" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">混合投影 + FP32 专家</text>
+<text lang="en" x="28" y="820" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">Mixed P + FP32 E</text>
+<rect x="206" y="800" width="92" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="252" y="820" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_in·混合</text>
+<text lang="en" x="252" y="820" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_in·Mixed</text>
+<path d="M298 815 L320 815" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="324" y="800" width="136" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="392" y="820" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">E·FP32（16层）</text>
+<text lang="en" x="392" y="820" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">E·FP32 (16L)</text>
+<path d="M460 815 L482 815" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="486" y="800" width="102" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="537" y="820" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_out·混合</text>
+<text lang="en" x="537" y="820" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">P_out·Mixed</text>
+<rect x="628" y="803" width="374" height="24" rx="5" fill="#f1f6f6"/>
+<rect x="628" y="803" width="342.468285303039" height="24" rx="5" fill="#b55d4c"/>
+<text lang="zh-CN" x="1014" y="820" font-size="13.5" fill="#b55d4c" font-weight="700" text-anchor="start">0.073（+174%）</text>
+<text lang="en" x="1014" y="820" font-size="13.5" fill="#b55d4c" font-weight="700" text-anchor="start">0.073 (+174%)</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="FP32 100k 外部投影 + 混合 100k 动作专家：loss = 0.060578，较混合基线升高 127%、较 FP32 基线升高 375%。" data-tip-en="FP32 external projections + Mixed 16-layer expert: loss = 0.060578 (+127% vs Mixed, +375% vs FP32).">
+<rect x="28" y="844" width="1144" height="38" rx="6" fill="transparent"/>
+<text lang="zh-CN" x="28" y="868" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">FP32 投影 + 混合专家</text>
+<text lang="en" x="28" y="868" font-size="13.5" fill="#273b43" font-weight="600" text-anchor="start">FP32 P + Mixed E</text>
+<rect x="206" y="848" width="92" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="252" y="868" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_in·FP32</text>
+<text lang="en" x="252" y="868" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_in·FP32</text>
+<path d="M298 863 L320 863" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="324" y="848" width="136" height="30" rx="6" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.3"/>
+<text lang="zh-CN" x="392" y="868" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">E·混合（16层）</text>
+<text lang="en" x="392" y="868" font-size="12.2" fill="#556b73" font-weight="650" text-anchor="middle">E·Mixed (16L)</text>
+<path d="M460 863 L482 863" fill="none" stroke="#556b73" stroke-width="1.6" marker-end="url(#smol-arrow-556b73)"/>
+<rect x="486" y="848" width="102" height="30" rx="6" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.3"/>
+<text lang="zh-CN" x="537" y="868" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_out·FP32</text>
+<text lang="en" x="537" y="868" font-size="12.2" fill="#237ab2" font-weight="650" text-anchor="middle">P_out·FP32</text>
+<rect x="628" y="851" width="374" height="24" rx="5" fill="#f1f6f6"/>
+<rect x="628" y="851" width="283.2043278023775" height="24" rx="5" fill="#b55d4c"/>
+<text lang="zh-CN" x="1014" y="868" font-size="13.5" fill="#b55d4c" font-weight="700" text-anchor="start">0.061（+127%）</text>
+<text lang="en" x="1014" y="868" font-size="13.5" fill="#b55d4c" font-weight="700" text-anchor="start">0.061 (+127%)</text>
+</g>
+<text lang="zh-CN" x="28" y="922" font-size="12" fill="#61747b" font-weight="400" text-anchor="start">注：外部投影 P（1.6M）含 state_proj、action_in_proj、action_time_mlp、action_out_proj；专家 E（98.2M）含 16 层及其奇数 CA K,V。</text>
+<text lang="en" x="28" y="922" font-size="12" fill="#61747b" font-weight="400" text-anchor="start">Note: External P (1.6M) = state_proj, action_in_proj, action_time_mlp, action_out_proj; Expert E (98.2M) covers all 16 layers incl. odd CA K,V.</text>
+</svg><figcaption><span class="figure-title"><span lang="en">Weight-update distribution, 32D/18D pathway, and module swaps</span><span lang="zh-CN">参数更新分布、32/18 维通路与整组替换</span></span><span class="figure-description"><span lang="en">Top: relative L2 weight change across four parameter groups on a shared 0–20% scale. Middle: 18:14 proportional strips showing active dimensions across projections. Bottom: matched flow loss for native and crossed module pairings (hover any block for exact values).</span><span lang="zh-CN">上：四类参数相对初始化的 L2 变化率（统一 0–20% 比例）。中：按 18:14 实际比例绘制的 32 维通路更新范围。下：原配与跨模型整组替换的配对 flow loss 对比（悬停色块可查看精确数值）。</span></span></figcaption></figure>
