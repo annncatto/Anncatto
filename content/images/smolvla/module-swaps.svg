@@ -545,7 +545,7 @@ L 370.854881 80.169927
     <text style="font-weight: 600; font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b9544f" x="272.216851" y="67.797952" transform="rotate(-0 272.216851 67.797952)">L15 K,V: 23.4%</text>
    </g>
    <g id="text_26">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="213.000198" y="32.732361" transform="rotate(-0 213.000198 32.732361)">Layerwise drift: A’s CA K,V over-drift sharply with depth</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="213.000198" y="32.732361" transform="rotate(-0 213.000198 32.732361)">Layerwise drift: A’s odd CA K,V drift increases with depth</text>
    </g>
    <g id="legend_1">
     <g id="patch_14">
@@ -1121,7 +1121,7 @@ L 573.194055 293.58989
     <text style="font-weight: 600; font-size: 8px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #79a948" x="530.201056" y="302.466597" transform="rotate(-0 530.201056 302.466597)">L06 −7.43%</text>
    </g>
    <g id="text_60">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="611.349802" y="32.732361" transform="rotate(-0 611.349802 32.732361)">16 bidirectional swaps: boundary CA &amp; L08 spike; mid layers aid A</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="611.349802" y="32.732361" transform="rotate(-0 611.349802 32.732361)">16 swaps: boundary CA &amp; L08 spike; mid layers aid A</text>
    </g>
    <g id="legend_2">
     <g id="patch_31">

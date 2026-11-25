@@ -4485,10 +4485,10 @@ z
    <g id="text_16">
     <g id="patch_9">
      <path d="M 666.547608 44.332361
-L 704.525045 44.332361
-Q 706.045045 44.332361 706.045045 42.812361
-L 706.045045 26.202324
-Q 706.045045 24.682324 704.525045 24.682324
+L 704.547608 44.332361
+Q 706.067608 44.332361 706.067608 42.812361
+L 706.067608 26.202324
+Q 706.067608 24.682324 704.547608 24.682324
 L 666.547608 24.682324
 Q 665.027608 24.682324 665.027608 26.202324
 L 665.027608 42.812361
@@ -4497,7 +4497,7 @@ z
 " style="fill: #ffffff; opacity: 0.94; stroke: #e2c0bc; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
     <text style="font-weight: 600; font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(666.547608 32.266886)">③ 251.12s</text>
-    <text style="font-weight: 600; font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(666.547608 41.178361)">锯齿卡死</text>
+    <text style="font-weight: 600; font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(666.547608 41.178361)">锯齿振荡期</text>
    </g>
    <g id="text_17">
     <g id="patch_10">
@@ -4513,7 +4513,7 @@ Q 447.511527 53.11337 450.001527 53.11337
 z
 " style="fill: #ffffff; opacity: 0.92; stroke: #cbd5e1; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
-    <text style="font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #19364b" transform="translate(450.001527 38.893395)">95–290 s 持续锯齿振荡（约 200 s）</text>
+    <text style="font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #19364b" transform="translate(450.001527 38.893395)">95–290 s 持续锯齿振荡（约 195 s）</text>
     <text style="font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #19364b" transform="translate(465.779956 48.722151)">蓝框 150–160 s 见下方放大</text>
    </g>
    <g id="text_18">
@@ -12280,7 +12280,7 @@ L 780.67476 307.094478
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_35">
-    <text style="font-weight: 600; font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #b9544f" x="515.605245" y="251.056562" transform="rotate(-0 515.605245 251.056562)">95–290 s 锯齿期夹爪全程闭合（≈2）</text>
+    <text style="font-weight: 600; font-size: 8.3px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #b9544f" x="515.605245" y="251.056562" transform="rotate(-0 515.605245 251.056562)">95–290 s 振荡期夹爪保持闭合（≈2）</text>
    </g>
    <g id="legend_2">
     <g id="patch_16">
@@ -12905,11 +12905,11 @@ Q 51.156203 400.70357 53.206203 400.70357
 z
 " style="fill: #ffffff; opacity: 0.94; stroke: #e2c0bc; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
-    <text style="font-weight: 600; font-size: 8.2px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(53.206203 387.275558)">块交接断崖跌落</text>
+    <text style="font-weight: 600; font-size: 8.2px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(53.206203 387.275558)">块交接阶跃回落</text>
     <text style="font-weight: 600; font-size: 8.2px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(53.206203 396.89057)">−10.9 → −79.1</text>
    </g>
    <g id="text_53">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="412.522656" y="354.170583" transform="rotate(-0 412.522656 354.170583)">局部放大（150–160 s）：周期性块交接断崖导致物理臂无法跟随（19.37 MAE 根源）</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="412.522656" y="354.170583" transform="rotate(-0 412.522656 354.170583)">局部放大（150–160 s）：周期性块交接阶跃回落造成较大请求—反馈差（MAE 19.37）</text>
    </g>
    <g id="line2d_92">
     <path d="M 45.830747 487.860579
@@ -13101,44 +13101,44 @@ L 779.177939 426.789801
    </g>
    <g id="legend_3">
     <g id="patch_22">
-     <path d="M 590.786385 508.89976
+     <path d="M 583.186385 508.89976
 L 775.35476 508.89976
 Q 776.87476 508.89976 776.87476 507.37976
 L 776.87476 473.36976
 Q 776.87476 471.84976 775.35476 471.84976
-L 590.786385 471.84976
-Q 589.266385 471.84976 589.266385 473.36976
-L 589.266385 507.37976
-Q 589.266385 508.89976 590.786385 508.89976
+L 583.186385 471.84976
+Q 581.666385 471.84976 581.666385 473.36976
+L 581.666385 507.37976
+Q 581.666385 508.89976 583.186385 508.89976
 z
 " style="fill: #ffffff; opacity: 0.94; stroke: #e2e8f0; stroke-linejoin: miter"/>
     </g>
     <g id="line2d_93">
-     <path d="M 592.306385 478.278885
+     <path d="M 584.706385 478.278885
+L 592.306385 478.278885
 L 599.906385 478.278885
-L 607.506385 478.278885
 " style="fill: none; stroke: #64748b; stroke-width: 2; stroke-linecap: square"/>
     </g>
     <g id="text_54">
-     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="613.586385" y="480.938885" transform="rotate(-0 613.586385 480.938885)">调用前反馈（物理臂滞后在 −50~−80 晃动）</text>
+     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="605.986385" y="480.938885" transform="rotate(-0 605.986385 480.938885)">调用前反馈（物理臂滞后在 −50~−80 摆动）</text>
     </g>
     <g id="line2d_94">
-     <path d="M 592.306385 489.868885
+     <path d="M 584.706385 489.868885
+L 592.306385 489.868885
 L 599.906385 489.868885
-L 607.506385 489.868885
 " style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #79a948; stroke-width: 1.6"/>
     </g>
     <g id="text_55">
-     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="613.586385" y="492.528885" transform="rotate(-0 613.586385 492.528885)">Host 接受目标（交接处滞后约 2 帧）</text>
+     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="605.986385" y="492.528885" transform="rotate(-0 605.986385 492.528885)">Host 接受目标（交接处滞后约 2 帧）</text>
     </g>
     <g id="line2d_95">
-     <path d="M 592.306385 501.458885
+     <path d="M 584.706385 501.458885
+L 592.306385 501.458885
 L 599.906385 501.458885
-L 607.506385 501.458885
 " style="fill: none; stroke: #3263d9; stroke-width: 1.8; stroke-linecap: square"/>
     </g>
     <g id="text_56">
-     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="613.586385" y="504.118885" transform="rotate(-0 613.586385 504.118885)">模型请求（每 ~0.9 s 抬至 −10 后断崖砸回 −98）</text>
+     <text style="font-size: 7.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #19364b" x="605.986385" y="504.118885" transform="rotate(-0 605.986385 504.118885)">模型请求（每 ~0.9 s 升至 −10 后阶跃回落至 −98）</text>
     </g>
    </g>
   </g>

@@ -271,30 +271,30 @@ L 362.902109 303.89976
 " style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_6">
-    <path d="M 254.176088 144.928993
-Q 259.261772 153.564872 263.723379 161.14102
+    <path d="M 247.717229 144.682969
+Q 255.864365 153.566928 263.180275 161.544485
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
-    <path d="M 263.465986 157.393255
-L 263.723379 161.14102
-L 260.57073 159.098275
+    <path d="M 262.147485 157.932651
+L 263.180275 161.544485
+L 259.671134 160.203617
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_14">
     <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(194.423736 129.552611)">50k 后学习率衰减</text>
-    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(194.423736 139.402136)">A 停滞（0.0275→0.0270）</text>
+    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #b9544f" transform="translate(194.423736 139.402136)">A 趋于停滞（−1.8%）</text>
    </g>
    <g id="patch_7">
-    <path d="M 248.808034 257.738622
-Q 266.576589 246.85866 283.296308 236.620917
+    <path d="M 252.278204 257.665841
+Q 268.334517 246.858757 283.37057 236.738384
 " style="fill: none; stroke: #3263d9; stroke-width: 1.1; stroke-linecap: round"/>
-    <path d="M 279.553526 236.942756
-L 283.296308 236.620917
-L 281.30811 239.808246
+    <path d="M 279.645082 237.220813
+L 283.37057 236.738384
+L 281.52122 240.008232
 " style="fill: none; stroke: #3263d9; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_15">
-    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #3263d9" transform="translate(185.556453 267.485401)">B 继续降半</text>
-    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #3263d9" transform="translate(185.556453 277.334926)">−52.3%（统一 FP32）</text>
+    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #3263d9" transform="translate(179.644931 267.485401)">B 继续下降 39.4%</text>
+    <text style="font-weight: 600; font-size: 8.4px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; fill: #3263d9" transform="translate(179.644931 277.334926)">终点低 52.3%（统一 FP32）</text>
    </g>
    <g id="text_16">
     <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="203.291018" y="32.251423" transform="rotate(-0 203.291018 32.251423)">训练过程：A 在低学习率段停滞，B 持续下降</text>
@@ -690,19 +690,19 @@ L 779.284916 303.89976
     <text style="font-weight: 600; font-size: 8.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #3263d9" x="563.835306" y="87.070642" transform="rotate(-0 563.835306 87.070642)">7.03%</text>
    </g>
    <g id="patch_20">
-    <path d="M 669.841454 97.14908
-Q 686.968858 79.993255 703.227357 63.707777
+    <path d="M 668.38113 97.260901
+Q 686.225636 80.036068 703.185287 63.665362
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
-    <path d="M 699.749354 64.870315
-L 703.227357 63.707777
-L 702.070586 67.187702
+    <path d="M 699.729046 64.749982
+L 703.185287 63.665362
+L 701.979239 67.081127
 " style="fill: none; stroke: #b9544f; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_44">
-    <text style="font-weight: 600; font-size: 8.2px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b9544f" x="590.589138" y="107.111127" transform="rotate(-0 590.589138 107.111127)">A 主体卡死，FP32 通道被迫 2.5× 过漂</text>
+    <text style="font-weight: 600; font-size: 8.1px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b9544f" x="582.076546" y="107.111127" transform="rotate(-0 582.076546 107.111127)">A 主体变化小，FP32 通道漂移达 B 的 2.5×</text>
    </g>
    <g id="text_45">
-    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="32.251423" transform="rotate(-0 619.673825 32.251423)">四类参数分组：A 停滞主体、过漂接口；B 主体承担适应</text>
+    <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="619.673825" y="32.251423" transform="rotate(-0 619.673825 32.251423)">四类参数分组：A 集中在 FP32 接口，B 集中在专家主体</text>
    </g>
    <g id="legend_2">
     <g id="patch_21">
@@ -743,7 +743,7 @@ z
    </g>
   </g>
   <g id="text_48">
-   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">BF16 写入舍入如何导致 A 后期停滞与内部分工反转</text>
+   <text style="font-weight: 600; font-size: 13.5px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #19364b" x="396" y="13.772818" transform="rotate(-0 396 13.772818)">低学习率衰减期 A 的停滞过程与两类存储参数的漂移差异</text>
   </g>
  </g>
  <defs>
