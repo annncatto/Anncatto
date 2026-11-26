@@ -15,20 +15,11 @@
 <img class="sv-data-plot" lang="zh-CN" src="/assets/content/openwam-slots/color-sort-followup-keyframes-zh.webp" width="1084" height="1612" loading="lazy" alt="11 月 26 日六段真机颜色分拣复测的前视相机关键帧">
 <figcaption><span class="figure-title"><span lang="en">Forward-camera keyframes across all six November 26 runs</span><span lang="zh-CN">六段真机复测前视关键帧（含微调对照与 π0.5 短段）</span></span><span class="figure-description"><span lang="en">Each row corresponds to one capture above; elapsed time starts from the first Host state sample, and baskets are identified by the blocks already inside.</span><span lang="zh-CN">每行对应上表一段记录；时间自首条 Host 状态采样起算，篮子按预置积木颜色辨认。</span></span></figcaption></figure>
 
-<div class="sv-cards is-three">
-<div class="sv-card is-blue">
-<p class="sv-card-title"><span lang="en">Same 3-block cross-side layout</span><span lang="zh-CN">同三块跨侧布局对照</span></p>
-<div class="bilingual"><p lang="en"><strong>π0.5 21k</strong> (29.9 s, done by 21 s) and <strong>Restarted 10k</strong> (51.2 s) both transfer the cross-side green block cleanly without intervention, while <strong>Fine-tuned 10k</strong> repeatedly drops it into the blue basket.</p><p lang="zh-CN"><strong>π0.5 21k</strong>（29.9 s，21 s 清空）与<strong>重训 10k</strong>（51.2 s）均无介入完成跨侧绿块入绿篮；<strong>微调 10k</strong> 清空同侧两块后多次将蓝侧绿块投入蓝篮。</p></div>
-</div>
-<div class="sv-card is-alert">
-<p class="sv-card-title"><span lang="en">Repeatability and double-crossed cases</span><span lang="zh-CN">复现稳定性与双色交叉</span></p>
-<div class="bilingual"><p lang="en">Restarted 10k still mis-sorts in its second trial (13.7 s), and π0.5 makes early wrong drops in both double-crossed captures—confirming basket choice stays fragile across layouts.</p><p lang="zh-CN">重训 10k 另一段仍在 13.7 s 误投，π0.5 在两段双色交叉布局中也都出现早期错篮，说明“选对目标篮子”仍是主要瓶颈。</p></div>
-</div>
-<div class="sv-card is-green">
-<p class="sv-card-title"><span lang="en">Effective control rate</span><span lang="zh-CN">实测有效指令提交率</span></p>
-<div class="bilingual"><p lang="en">Against a 30 Hz target, command-sequence increments over Host time estimate <span class="sv-tip" tabindex="0" data-tip="Restarted 20.59 / 20.38 Hz; Fine-tuned 20.36 Hz; recorded frames 17.7–17.9 Hz">20.4–20.6 Hz</span> on OpenWAM versus <span class="sv-tip" tabindex="0" data-tip="π0.5 27.63 / 27.86 / 27.81 Hz; recorded frames 23.4–24.2 Hz">27.6–27.9 Hz</span> on π0.5 (including queued-chunk steps).</p><p lang="zh-CN">在 30 Hz 目标控制周期下，按指令序号增量除以 Host 时长估计，OpenWAM 约 <span class="sv-tip" tabindex="0" data-tip="重训 20.59 / 20.38 Hz，微调 20.36 Hz；录制帧率 17.7–17.9 Hz">20.4–20.6 Hz</span>，π0.5 约 <span class="sv-tip" tabindex="0" data-tip="π0.5 三段 27.63 / 27.86 / 27.81 Hz；录制帧率 23.4–24.2 Hz">27.6–27.9 Hz</span>（含队列步消费）。</p></div>
-</div>
-</div>
+<ul class="sv-points">
+<li><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Matched 3-block cross-side layout</span><span lang="zh-CN">同三块跨侧布局对照</span></strong><div class="bilingual"><p lang="en"><strong>π0.5 21k</strong> (29.9 s, cleared by 21 s) and <strong>Restarted 10k</strong> (51.2 s) both transfer the cross-side green block into the green basket without intervention, whereas <strong>Fine-tuned 10k</strong> clears the two same-side blocks then repeatedly drops the cross-side green block into the blue basket.</p><p lang="zh-CN"><strong>π0.5 21k</strong>（29.9 s，21 s 已清空）与<strong>重训 10k</strong>（51.2 s）均无介入完成跨侧绿块入绿篮；<strong>微调 10k</strong> 清空同侧两块后多次将蓝侧绿块投入蓝篮。</p></div></div></li>
+<li class="is-alert"><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Repeatability and double-crossed cases</span><span lang="zh-CN">复现稳定性与双色交叉局面</span></strong><div class="bilingual"><p lang="en">Restarted 10k still mis-sorts in its second trial (13.7 s), and π0.5 makes early wrong drops in both double-crossed captures—confirming that destination choice remains the main failure mode across layouts.</p><p lang="zh-CN">重训 10k 另一段仍在 13.7 s 误投，π0.5 在两段双色交叉布局中也都出现早期错篮，说明“选对目标篮子”仍是主要失败点。</p></div></div></li>
+<li class="is-green"><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Effective control rate</span><span lang="zh-CN">实测有效指令提交率</span></strong><div class="bilingual"><p lang="en">Against a 30 Hz target, command-sequence increments over Host time estimate <span class="sv-tip" tabindex="0" data-tip="Restarted 20.59 / 20.38 Hz; Fine-tuned 20.36 Hz; recorded frames 17.7–17.9 Hz">20.4–20.6 Hz</span> on OpenWAM versus <span class="sv-tip" tabindex="0" data-tip="π0.5 27.63 / 27.86 / 27.81 Hz; recorded frames 23.4–24.2 Hz">27.6–27.9 Hz</span> on π0.5 (including actions consumed from queued chunks).</p><p lang="zh-CN">在 30 Hz 目标控制周期下，按指令序号增量除以 Host 时长估计，OpenWAM 约 <span class="sv-tip" tabindex="0" data-tip="重训 20.59 / 20.38 Hz，微调 20.36 Hz；录制帧率 17.7–17.9 Hz">20.4–20.6 Hz</span>，π0.5 约 <span class="sv-tip" tabindex="0" data-tip="π0.5 三段 27.63 / 27.86 / 27.81 Hz；录制帧率 23.4–24.2 Hz">27.6–27.9 Hz</span>（含消费已生成动作块的步数）。</p></div></div></li>
+</ul>
 
 <h4 id="color-sort-followup-training"><span lang="en">Deployed checkpoints on the shared validation split</span><span lang="zh-CN">实机检查点的训练与共同旧验证曲线</span></h4>
 <figure class="sv-eval-figure">

@@ -1,27 +1,15 @@
 <h3 id="experiment-discussion"><span lang="en">Implications</span><span lang="zh-CN">实验启发</span></h3>
-<div class="sv-cards is-three">
-<div class="sv-card is-alert">
-<span class="sv-card-kicker"><span lang="en">Action 1 · Preprocessing</span><span lang="zh-CN">改进一 · 预处理</span></span>
-<p class="sv-card-title"><span lang="en">Fix near-constant channel scaling</span><span lang="zh-CN">取消近常量通道紧 min/max</span></p>
-<div class="bilingual"><p lang="en">Replace data-driven min/max on fixed lift and stationary base channels with hardware range floors (e.g. 0–600 mm lift stroke), and freeze old stats when fine-tuning so 0.19 mm offsets never shift state tokens by 50%.</p><p lang="zh-CN">对固定升降轴和静止底盘改用硬件行程下限（如 0–600 mm），且基于旧权重微调时冻结原统计，杜绝 0.19 mm 复归微差被放大成 50% 状态跳变。</p></div>
-</div>
-<div class="sv-card is-blue">
-<span class="sv-card-kicker"><span lang="en">Action 2 · Optimization</span><span lang="zh-CN">改进二 · 训练精度</span></span>
-<p class="sv-card-title"><span lang="en">Enable FP32 fine-tuning states</span><span lang="zh-CN">续训启用 FP32 主权重/矩估计</span></p>
-<div class="bilingual"><p lang="en">Avoid fine-tuning pure-BF16 checkpoints at 1×10⁻⁵ with BF16 moments (sub-ULP rounding freezes &gt;92% of weights). Use FP32 master states or higher lr, and test earlier validation minima (OpenWAM 6k; early π0.5).</p><p lang="zh-CN">避免纯 BF16 + 1×10⁻⁵ 续训（半步长舍入会冻结超 92% 参数）；续训启用 FP32 主权重/矩估计或提高学习率，并实测旧验证最低点（OpenWAM 6k 与 π0.5 早期步数）。</p></div>
-</div>
-<div class="sv-card is-green">
-<span class="sv-card-kicker"><span lang="en">Action 3 · Data &amp; prompts</span><span lang="zh-CN">改进三 · 数据与指令</span></span>
-<p class="sv-card-title"><span lang="en">Balance layouts and paired rules</span><span lang="zh-CN">扩充交叉布局与成对反规则</span></p>
-<div class="bilingual"><p lang="en">Collect crossed demos across all six blue/green × left/middle/right layouts and upweight corrective frames (currently 28.2%). For language-switchable sorting, include paired opposite-rule episodes instead of one fixed prompt.</p><p lang="zh-CN">补采“蓝/绿 × 左/中/右”六类交叉示教并提高纠偏采样权重（当前新增帧仅占 28.2%）；如需按文字切换左右规则，必须加入成对反规则示教而非单一固定模板。</p></div>
-</div>
-</div>
+<ol class="sv-points">
+<li class="is-alert"><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Replace tight min/max on near-constant channels</span><span lang="zh-CN">取消近常量通道的数据紧 min/max</span></strong><div class="bilingual"><p lang="en">Replace data-driven min/max on fixed lift and stationary base channels with physical hardware range floors (e.g. 0–600 mm lift stroke), and freeze old stats when fine-tuning so 0.19 mm offsets never shift state tokens by 50%.</p><p lang="zh-CN">对固定升降轴和静止底盘改用硬件物理行程下限（如 0–600 mm），且基于旧权重微调时冻结原统计，杜绝 0.19 mm 复归微差被放大成 50% 状态跳变。</p></div></div></li>
+<li><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Enable FP32 fine-tuning states and verify early checkpoints</span><span lang="zh-CN">续训启用 FP32 主权重/矩估计并实测早期检查点</span></strong><div class="bilingual"><p lang="en">Avoid fine-tuning pure-BF16 checkpoints at 1×10⁻⁵ with BF16 moments (sub-ULP rounding freezes &gt;92% of weights). Use FP32 master states or higher lr, and evaluate earlier validation minima (OpenWAM 6k; early π0.5).</p><p lang="zh-CN">避免纯 BF16 + 1×10⁻⁵ 续训（半步长舍入会冻结超 92% 参数）；续训需启用 FP32 主权重/矩估计或提高学习率，同时实测旧验证最低点（OpenWAM 6k 与 π0.5 早期步数）。</p></div></div></li>
+<li class="is-green"><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Balance crossed layouts and add paired opposite-rule prompts</span><span lang="zh-CN">扩充交叉布局与成对反规则示教</span></strong><div class="bilingual"><p lang="en">Collect crossed demos across all six blue/green × left/middle/right layouts and upweight corrective frames (currently 28.2%). For language-switchable sorting, include paired opposite-rule episodes instead of one fixed prompt.</p><p lang="zh-CN">补采“蓝/绿 × 左/中/右”六类交叉示教并提高纠偏采样权重（当前新增帧仅占 28.2%）；如需按文字切换左右规则，必须加入成对反规则示教而非单一固定模板。</p></div></div></li>
+</ol>
 
 <h3 id="next-experiment"><span lang="en">Next comparison</span><span lang="zh-CN">下一轮验证</span></h3>
 <div class="bilingual"><p lang="en">Verify whether Restarted 10k’s lower release-window MAE translates into higher closed-loop correct-deposit rates than Fine-tuned 10k and early/21k π0.5 checkpoints on held-out color–position layouts.</p><p lang="zh-CN">在未参与训练的颜色—位置布局上开展配对真机评测，核验重训 10k 在松爪窗口的拟合优势是否转化为高于微调 10k 与 π0.5（含早期检查点与 21k）的正确投放率。</p></div>
-<ul class="bilingual-list">
-<li><div class="bilingual"><p lang="en"><strong>Controlled protocol:</strong> Six held-out placement categories (blue/green × left/middle/right) with fixed baskets, prompt, initial pose, base/lift constraints, and 30 Hz target; switch only the checkpoint.</p><p lang="zh-CN"><strong>固定变量：</strong>采用“蓝/绿 × 左/中/右”六类留出摆放，固定篮子、指令、初始位姿、底盘/升降约束与 30 Hz 目标，仅替换检查点。</p></div></li>
-<li><div class="bilingual"><p lang="en"><strong>Sample size and scoring:</strong> Ten independent trials per layout and model (60 per checkpoint), scoring grasp completion and <em>correct-deposit rate = correct deposits / total attempts</em> per layout, with manual resets logged outside clean trials.</p><p lang="zh-CN"><strong>试验规模与计分：</strong>每类摆放、每检查点各 10 次独立尝试（单模型 60 次），按布局报告抓取完成率与<strong>正确投放率 = 正确投放次数 / 总尝试次数</strong>，人工重摆单独剔除标注。</p></div></li>
+<ul class="sv-points">
+<li><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Controlled protocol</span><span lang="zh-CN">固定变量</span></strong><div class="bilingual"><p lang="en">Six held-out placement categories (blue/green × left/middle/right) with fixed baskets, prompt, initial pose, base/lift constraints, and 30 Hz target; switch only the checkpoint.</p><p lang="zh-CN">采用“蓝/绿 × 左/中/右”六类留出摆放，固定篮子、指令、初始位姿、底盘/升降约束与 30 Hz 目标，仅替换检查点。</p></div></div></li>
+<li class="is-green"><div class="sv-point-body"><strong class="sv-point-title"><span lang="en">Sample size and scoring</span><span lang="zh-CN">试验规模与计分</span></strong><div class="bilingual"><p lang="en">Ten independent trials per layout and model (60 per checkpoint), scoring grasp completion and <em>correct-deposit rate = correct deposits / total attempts</em> per layout, with manual resets logged outside clean trials.</p><p lang="zh-CN">每类摆放、每检查点各 10 次独立尝试（单模型 60 次），按布局报告抓取完成率与<strong>正确投放率 = 正确投放次数 / 总尝试次数</strong>，人工重摆单独剔除标注。</p></div></div></li>
 </ul>
 
 <h4 id="alpha80-pending"><span lang="en">TCP representation · 80 semantic slots</span><span lang="zh-CN">末端表示 · 80 维语义槽</span></h4>

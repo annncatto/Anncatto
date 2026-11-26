@@ -10,7 +10,7 @@
   - π0.5 21k 三段：短成功段 29.860 s / 701 帧（cmd 27.63 Hz，同三块布局 18.0 s 跨侧绿块入绿篮、21 s 无介入清空）；现场标注成功长段 59.880 s / 1,423 帧（cmd 27.86 Hz，双色交叉前段有误投与 13.3 s / 46.6 s 人工重摆，59.8 s 绿块入绿篮）；误投段 47.760 s / 1,157 帧（cmd 27.81 Hz，5.3 s 蓝块过绿篮上、10.6 s 绿入蓝篮）。
 - 检查点与曲线对齐：微调 10k、重训 10k 均用本轮 10k 权重，π0.5 用 20k 续训分支保存的 21k 权重；云端与实机三份 checkpoint manifest SHA-256 一致。π0.5 旧验证 loss 从 1k 的 0.02499 升至实机 21k 续训分支的 0.05945（原分支 21k 为 0.06002）。
 - GR00T 2 结构升级与视觉收紧：
-  - 改为“结果前置 → 逐项拆解原因”主线，将 `13-live-followup.html` 提前至 `06-next.html` 之前，并新增全站可复用实验报告组件（`.sv-cards` 平行对比卡片、`.sv-finding` 高亮结论条、`.sv-step-bar` 播放/步进条、`.sv-live-bars` 同步读数条），沉淀写入 `docs/experimental-article-workflow.md`。
+  - 改为“结果前置 → 逐项拆解原因”主线，将 `13-live-followup.html` 提前至 `06-next.html` 之前；全文取消 680 px 窄栏内的多列并列小卡片，顶部“关键发现”改为 5 条全宽编号因果结论（`ol.sv-points` + 轻量全宽 `.sv-inline-bars` 对比条，直接写清各追问的现象、测量口径、成因与工程思考），正文长公式独立成行显示（`<div class="formula">`），并沉淀写入 `docs/experimental-article-workflow.md`。
   - 新增两项有信息增量的交互组件：① `12-masking-diagram.html` 升级为可点击/自动动画巡检的 6 层组屏蔽图（实时高亮 SVG 被切层组与红叉，并驱动三模型末端速度场偏离动态条）；② `#correction-controls` 新增升降轴紧 min/max 与硬件物理行程下限（0–600 mm）实时归一化模拟器。
   - 全部 155 回合图表升级为双语 SVG/WebP（EN/ZH 配对），统一至站点原生低饱和配色（`#273b43`、`#556b73`、`#237ab2`、`#4b9c80`、`#b55d4c`、`#dce9e9`），修复 `correction-network-actions` 图例遮挡柱标问题；去除全文与图表中 `A/B` 代号、“漂移”措辞及设问句；抽取共享悬浮提示模块 `src/sv-tooltip.ts` 接入 `openwam-slots.ts`，正文保留 1–2 位可读数值，精确多位值与原始拆解明细放入悬浮提示与折叠表；同步更新 Obsidian 笔记（同样改为结果前置）与 7 张中文配图。
 - 复现：`scripts/figures/openwam-correction-analysis.py`、`openwam-network-analysis.py`、`openwam-pathway-diagram.py`、`openwam-color-sort-followup.py` 均支持 `--note-output` 同源导出 Obsidian 中文图，公开 JSON 仅按白名单导出，不含私有路径、IP 或凭据。
