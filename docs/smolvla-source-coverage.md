@@ -13,11 +13,13 @@ Keep the unpublished robot workbench and D20 homepage separate from article rele
 - Model order follows the source note: architecture,
   observation features, attention, flow training, sampling, π0.5 comparison,
   SmolVLM, asynchronous inference.
-- The experiment chapter follows a results-first order: task/question, 4-card
-  grouped findings, real-robot cases and FP32 300 s live execution (with the
-  interactive 25-step chunk-handoff diagram), historical 120-demo arm/base
-  trajectories, precision updates and fast-weight mechanisms, unified live
-  input-substitution and white-box routing attribution, implications, next
+- The experiment chapter follows a results-first order matching the site
+  experimental-article workflow: task/question, full-width numbered findings
+  (`ol.sv-points` + `.sv-inline-bars`, no multi-column KPI cards), real-robot
+  cases and FP32 300 s live execution (with the interactive 25-step chunk-handoff
+  diagram), historical 120-demo arm/base trajectories, precision updates and
+  fast-weight mechanisms, unified live input-substitution and white-box routing
+  attribution, implications with a consolidated evidence-boundaries block, next
   tests, and experimental conditions. Full setup is the last H3; references
   remain collapsed.
 - Dataset-specific normalization is Data preprocessing under Experimental
@@ -392,3 +394,6 @@ article after a successful Pages deployment.
   - Reordered the experiment chapter to present real-robot outcomes first (`task-observations` → `fp32-live-record`) before tracing historical 120-demo trajectories (`long-record`), precision/coadaptation mechanisms (`precision-results`, split `module-coadaptation` and `layerwise-swaps` so two large figures do not stack back-to-back), fast-weight MLP analysis (`fast-weight-analysis`), and unified black-box/white-box live attribution (`08b-live-attribution.html`).
   - Removed duplicated summary bullets below the 4-card KPI strip in `03-intro.html` and added 5 restrained inline `.sv-contrast` lines separating easily confused concept pairs without uniform boxed cards (`offline fit vs closed-loop execution`, `storage vs compute precision`, `offline clipping vs model fit`, `slow vs fast weights`, `compression vs routing`).
   - Upgraded `{{smolvla:fastweights}}` to switch live across Full 305 / Route Top-16 / Compress `m=4` / MiTA `4+12` on one fixed 305-unit observation strip, and added `{{smolvla:handoff}}` toggling synchronous 25-step hard switching (`−11 → −79`) against overlap / RTC conditioning.
+- **November 26 workflow alignment (full-width points, evidence boundaries, restrained blue-green palette)**:
+  - Replaced the 2×2 `.sv-kpi-grid` cards in `03-intro.html` with full-width numbered `ol.sv-points` + `.sv-inline-bars` per `docs/experimental-article-workflow.md`; converted mechanism bullet lists to `.sv-points`; removed all rhetorical questions (`?`/`？`) and inline equations with `=`/fractions/norms across the experiment chapters; consolidated measured facts, coupled-variable boundaries, and deferred hypotheses into a dedicated `.sv-finding` evidence-boundaries block in `05-analysis.html`.
+  - Tightened all 7 Matplotlib figure pairs, the 3-panel network diagram, Obsidian PNG exports, and both interactive SVGs (`fastweights`, `handoff`) toward the restrained OpenWAM slate/blue/green palette (`#556b73`, `#237ab2`, `#4b9c80`), removing pink background spans and superfluous accent hues while reserving `#b55d4c` strictly for threshold/failure highlights.

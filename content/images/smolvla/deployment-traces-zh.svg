@@ -42,7 +42,7 @@ L 742.211286 164.29147
 L 742.211286 18.575865
 L 272.973552 18.575865
 z
-" clip-path="url(#p4ecff5b267)" style="fill: #faf1ef; opacity: 0.72; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#p4ecff5b267)" style="fill: #f2f6f6; opacity: 0.82; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 405.322656 164.29147
@@ -50,7 +50,7 @@ L 429.38613 164.29147
 L 429.38613 18.575865
 L 405.322656 18.575865
 z
-" clip-path="url(#p4ecff5b267)" style="fill: #dceef6; opacity: 0.72; stroke: #dceef6; stroke-linejoin: miter"/>
+" clip-path="url(#p4ecff5b267)" style="fill: #e4f1f6; opacity: 0.82; stroke: #e4f1f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -7485,7 +7485,7 @@ L 742.211286 288.909327
 L 742.211286 187.54195
 L 272.973552 187.54195
 z
-" clip-path="url(#p29e7d933c3)" style="fill: #faf1ef; opacity: 0.72; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#p29e7d933c3)" style="fill: #f2f6f6; opacity: 0.82; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_3">
     <g id="xtick_8">
@@ -12032,7 +12032,7 @@ L 766.27476 288.909327
 " style="fill: none; stroke: #c8dada; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_35">
-    <text style="font-weight: 600; font-size: 8.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #b55d4c" x="506.389245" y="238.85523" transform="rotate(-0 506.389245 238.85523)">夹爪闭合（≈2）</text>
+    <text style="font-weight: 600; font-size: 8.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #556b73" x="506.389245" y="238.85523" transform="rotate(-0 506.389245 238.85523)">夹爪闭合（≈2）</text>
    </g>
    <g id="legend_2">
     <g id="patch_16">

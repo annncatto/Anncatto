@@ -42,7 +42,7 @@ L 742.211286 164.192437
 L 742.211286 18.575865
 L 272.973552 18.575865
 z
-" clip-path="url(#pf7a42cdef5)" style="fill: #faf1ef; opacity: 0.72; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#pf7a42cdef5)" style="fill: #f2f6f6; opacity: 0.82; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 405.322656 164.192437
@@ -50,7 +50,7 @@ L 429.38613 164.192437
 L 429.38613 18.575865
 L 405.322656 18.575865
 z
-" clip-path="url(#pf7a42cdef5)" style="fill: #dceef6; opacity: 0.72; stroke: #dceef6; stroke-linejoin: miter"/>
+" clip-path="url(#pf7a42cdef5)" style="fill: #e4f1f6; opacity: 0.82; stroke: #e4f1f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -7485,7 +7485,7 @@ L 742.211286 288.741401
 L 742.211286 187.442917
 L 272.973552 187.442917
 z
-" clip-path="url(#p03dd336d12)" style="fill: #faf1ef; opacity: 0.72; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#p03dd336d12)" style="fill: #f2f6f6; opacity: 0.82; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_3">
     <g id="xtick_8">
@@ -12031,7 +12031,7 @@ L 766.27476 288.741401
 " style="fill: none; stroke: #c8dada; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_35">
-    <text style="font-weight: 600; font-size: 8.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #b55d4c" x="506.389245" y="238.873527" transform="rotate(-0 506.389245 238.873527)">Gripper closed (≈2)</text>
+    <text style="font-weight: 600; font-size: 8.6px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #556b73" x="506.389245" y="238.873527" transform="rotate(-0 506.389245 238.873527)">Gripper closed (≈2)</text>
    </g>
    <g id="legend_2">
     <g id="patch_16">

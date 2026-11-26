@@ -134,7 +134,7 @@ def draw(language=None):
         '1.6M · FP32', '1.6M · FP32',
         17.31, 7.03,
         '混合 2.5×（L15 25%）', 'Mixed 2.5× (L15 25%)',
-        '#f8fbfc', BLUE_STROKE, CORAL_BG, CORAL,
+        '#f8fbfc', BLUE_STROKE, SLATE_BG, SLATE,
         '奇数 CA 层 K,V：16 个张量 / 1,638,400 元素（L01–L15）；相对 L2 变化：混合 17.31% vs FP32 7.03%（2.46×）。L01 v_proj: 14.64% vs 5.74%；L15 k/v: 22.16%/24.63% vs 8.78%/7.81%。',
         'Odd CA K,V: 16 tensors / 1,638,400 elements (L01–L15); relative L2 change: Mixed 17.31% vs FP32 7.03% (2.46×). L01 v_proj: 14.64% vs 5.74%; L15 k/v: 22.16%/24.63% vs 8.78%/7.81%.',
     )
@@ -146,7 +146,7 @@ def draw(language=None):
         '96.6M · BF16 / FP32', '96.6M · BF16 / FP32',
         4.46, 13.71,
         'FP32 3.1× · 混合末 5k 仅 0.08%', 'FP32 3.1× · Mixed final-5k 0.08%',
-        '#fbf7f6', CORAL_STROKE, BLUE_BG, BLUE,
+        '#f8fbfc', BLUE_STROKE, BLUE_BG, BLUE,
         '动作专家主体：97 个主张量（96,584,400 元素，相对 L2 变化：混合 4.46% vs FP32 13.71%，3.07×）+ 32 个 RMSNorm（23,040 元素，混合 0.00% vs FP32 0.49%）。95k→100k 元素变化率：混合 0.08267% vs FP32 99.99785%。',
         'Expert body: 97 main tensors (96,584,400 elements, L2 change: Mixed 4.46% vs FP32 13.71%, 3.07×) + 32 RMSNorms (23,040 elements, 0.00% vs 0.49%). Final-5k changed: Mixed 0.08267% vs FP32 99.99785%.',
     )
@@ -158,7 +158,7 @@ def draw(language=None):
         '1.6M · FP32', '1.6M · FP32',
         7.88, 4.81,
         '混合 1.6×（时间 MLP 12%）', 'Mixed 1.6× (time MLP 12%)',
-        '#f8fbfc', BLUE_STROKE, CORAL_BG, CORAL,
+        '#f8fbfc', BLUE_STROKE, SLATE_BG, SLATE,
         '外部投影：10 个张量 / 1,635,152 元素（state_proj、action_in_proj、action_time_mlp、action_out_proj）；相对 L2 变化：混合 7.88% vs FP32 4.81%（1.64×），其中 action_time_mlp_out 为 12.12% vs 6.08%。',
         'External projections: 10 tensors / 1,635,152 elements (state_proj, action_in_proj, action_time_mlp, action_out_proj); L2 change: Mixed 7.88% vs FP32 4.81% (1.64×); action_time_mlp_out 12.12% vs 6.08%.',
     )

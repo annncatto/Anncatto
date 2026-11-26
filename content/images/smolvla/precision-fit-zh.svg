@@ -42,7 +42,7 @@ L 307.256969 282.29976
 L 307.256969 18.575865
 L 175.468448 18.575865
 z
-" clip-path="url(#pf187a3917e)" style="fill: #faf1ef; opacity: 0.82; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#pf187a3917e)" style="fill: #f2f6f6; opacity: 0.88; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -295,14 +295,14 @@ L 250.360286 215.202396
    <g id="patch_7">
     <path d="M 230.351793 109.745188
 Q 236.724522 122.343832 242.542142 133.845047
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
     <path d="M 242.523425 129.820168
 L 242.542142 133.845047
 L 239.311009 131.445093
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_16">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b55d4c" x="212.369234" y="104.022407" transform="rotate(-0 212.369234 104.022407)">−1.8%</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #556b73" x="212.369234" y="104.022407" transform="rotate(-0 212.369234 104.022407)">−1.8%</text>
    </g>
    <g id="text_17">
     <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #273b43" x="209.733464" y="12.575865" transform="rotate(-0 209.733464 12.575865)">5k–120k 收敛曲线</text>
@@ -692,14 +692,14 @@ L 774.59976 282.29976
    <g id="patch_20">
     <path d="M 654.326657 77.032337
 Q 681.177871 60.131317 706.988264 43.885422
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
     <path d="M 702.982706 44.279765
 L 706.988264 43.885422
 L 704.900403 47.326474
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_44">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b55d4c" x="630.944143" y="87.278131" transform="rotate(-0 630.944143 87.278131)">2.5×</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #556b73" x="630.944143" y="87.278131" transform="rotate(-0 630.944143 87.278131)">2.5×</text>
    </g>
    <g id="text_45">
     <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #273b43" x="608.546224" y="12.575865" transform="rotate(-0 608.546224 12.575865)">四类参数相对 L2 变化</text>

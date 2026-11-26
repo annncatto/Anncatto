@@ -87,20 +87,19 @@ export function fastWeightsSVG(step=0){
  // 0: Full 305 CA | 1: Route-only Top-16 | 2: Compress-only Agent m=4 | 3: MiTA (4 shared + 12 routed)
  const s=Math.max(0,Math.min(3,Math.round(step)));
  const pulse='<animate attributeName="stroke-dashoffset" from="24" to="0" dur="1.25s" repeatCount="indefinite"/>';
- // 6 blocks representing the 280 valid + 25 pad prefix tokens along x=[40..960]
+ // 6 blocks representing the 280 valid + 25 pad prefix tokens along x=[40..960] (restrained blue/green/slate palette)
  const blocks:[string,string,number,number,string,number,number[]][]=[
   ['forward','forward',40,185,'#4b9c80',13.8,[1,0,0,1,0,0]],
-  ['chest','chest',231,185,'#7f9aa1',10.2,[0,0,1,0,0,0]],
-  ['wrist_left','wrist_left',422,185,'#5f96b3',11.6,[0,1,0,0,1,0]],
+  ['chest','chest',231,185,'#8da6ab',10.2,[0,0,1,0,0,0]],
+  ['wrist_left','wrist_left',422,185,'#6ea6c4',11.6,[0,1,0,0,1,0]],
   ['wrist_right','wrist_right',613,185,'#237ab2',25.2,[1,1,1,1,1,0]],
-  ['text (23)','文本 (23)',804,104,'#60767e',18.9,[1,0,1,0]],
-  ['state','state',914,46,'#b55d4c',20.4,[1]],
+  ['text (23)','文本 (23)',804,104,'#61747b',18.9,[1,0,1,0]],
+  ['state','state',914,46,'#273b43',20.4,[1]],
  ];
  const showRaw=s===0||s===1||s===3;
- const showComp=s===2||s===3;
  const modeMeta:[string,string,string,string,string,number][]=[
   ['Full CA (305)','全量 CA（305）','loss 0.0128 · MAE 0.0283','loss 0.0128 · MAE 0.0283','#273b43',100],
-  ['Route-only Top-16','纯路由 Top-16','loss 0.0151 (+18%) · MAE 0.0304','loss 0.0151 (+18%) · MAE 0.0304','#b55d4c',5.2],
+  ['Route-only Top-16','纯路由 Top-16','loss 0.0151 (+18%) · MAE 0.0304','loss 0.0151 (+18%) · MAE 0.0304','#556b73',5.2],
   ['Compress-only Agent m=4','纯压缩 Agent m=4','loss 0.0129 (+1.5%) · MAE 0.0288','loss 0.0129 (+1.5%) · MAE 0.0288','#4b9c80',1.3],
   ['MiTA (4 shared + 12 routed)','MiTA（4 摘要 + 12 路由）','loss 0.0126 (−0.9%) · MAE 0.0290','loss 0.0126 (−0.9%) · MAE 0.0290','#237ab2',5.2],
  ];
@@ -141,10 +140,10 @@ export function fastWeightsSVG(step=0){
  }else if(s===1){
   // Only sparse lit raw tokens flow through; dim tokens are dropped
   for(const lx of litCenters){
-   mid+=`<path d="M${lx.toFixed(1)},114 C${lx.toFixed(1)},158 500,154 500,186" fill="none" stroke="#b55d4c" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.85">${pulse}</path>`;
+   mid+=`<path d="M${lx.toFixed(1)},114 C${lx.toFixed(1)},158 500,154 500,186" fill="none" stroke="#556b73" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.82">${pulse}</path>`;
   }
-  mid+=`<rect x="200" y="188" width="600" height="44" rx="7" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>`;
-  mid+=`<text x="500" y="215" text-anchor="middle" font-size="14.5" font-weight="600" fill="#b55d4c"><tspan lang="en">Hard Top-16 keeps exact cells, but drops L15 broad context (effN 53.7)</tspan><tspan lang="zh-CN">硬截断保留精确单点，却丢弃深层 L15 宽背景（有效宽度 53.7）</tspan></text>`;
+  mid+=`<rect x="200" y="188" width="600" height="44" rx="7" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>`;
+  mid+=`<text x="500" y="215" text-anchor="middle" font-size="14.5" font-weight="600" style="fill:#273b43"><tspan lang="en">Hard Top-16 keeps exact cells, but drops L15 broad context (effN 53.7)</tspan><tspan lang="zh-CN">硬截断保留精确单点，却丢弃深层 L15 宽背景（有效宽度 53.7）</tspan></text>`;
  }else if(s===2){
   // All 6 blocks compress into 4 temporal landmark summary nodes
   const lxPos=[300,433,567,700];
@@ -217,7 +216,7 @@ export function handoffSVG(mode:'sync'|'blend'='sync'){
  const body=
   grid+
   `<rect x="${x0}" y="${yTop}" width="${splitX-x0}" height="${yBot-yTop}" fill="#edf5f8" opacity="0.35"/>`+
-  `<rect x="${splitX}" y="${yTop}" width="${x1-splitX}" height="${yBot-yTop}" fill="${isSync?'#faf1ef':'#eef6f1'}" opacity="0.45"/>`+
+  `<rect x="${splitX}" y="${yTop}" width="${x1-splitX}" height="${yBot-yTop}" fill="${isSync?'#f4f7f7':'#eef6f1'}" opacity="0.55"/>`+
   `<line x1="${splitX}" y1="${yTop-6}" x2="${splitX}" y2="${yBot+6}" stroke="${isSync?'#b55d4c':'#4b9c80'}" stroke-width="1.8" stroke-dasharray="5 4"/>`+
   `<text x="${splitX}" y="25" text-anchor="middle" font-size="14" font-weight="650" fill="${isSync?'#b55d4c':'#2a644f'}"><tspan lang="en">${isSync?'Step 25 · Hard switch (−11 → −79)':'Step 25 · Committed prefix / blend'}</tspan><tspan lang="zh-CN">${isSync?'第 25 步 · 硬切块（−11 → −79）':'第 25 步 · 前缀条件 / 重叠衔接'}</tspan></text>`+
   `<text x="${(x0+splitX)/2}" y="52" text-anchor="middle" font-size="12.5" fill="#556b73"><tspan lang="en">Old chunk (steps 0–24)</tspan><tspan lang="zh-CN">旧动作块（执行 0–24 步）</tspan></text>`+

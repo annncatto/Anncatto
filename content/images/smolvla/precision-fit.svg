@@ -42,7 +42,7 @@ L 305.582242 281.870072
 L 305.582242 18.73149
 L 174.631085 18.73149
 z
-" clip-path="url(#p7e5e2ea0c7)" style="fill: #faf1ef; opacity: 0.82; stroke: #faf1ef; stroke-linejoin: miter"/>
+" clip-path="url(#p7e5e2ea0c7)" style="fill: #f2f6f6; opacity: 0.88; stroke: #f2f6f6; stroke-linejoin: miter"/>
    </g>
    <g id="matplotlib.axis_1">
     <g id="xtick_1">
@@ -295,14 +295,14 @@ L 249.035895 214.945662
    <g id="patch_7">
     <path d="M 229.244087 109.717172
 Q 235.536433 122.272554 241.277752 133.72845
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
     <path d="M 241.273995 129.70353
 L 241.277752 133.72845
 L 238.055562 131.316503
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_16">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b55d4c" x="211.297409" y="103.988391" transform="rotate(-0 211.297409 103.988391)">−1.8%</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #556b73" x="211.297409" y="103.988391" transform="rotate(-0 211.297409 103.988391)">−1.8%</text>
    </g>
    <g id="text_17">
     <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #273b43" x="208.678386" y="12.73149" transform="rotate(-0 208.678386 12.73149)">5k–120k loss curves</text>
@@ -692,14 +692,14 @@ L 774.59976 281.870072
    <g id="patch_20">
     <path d="M 655.187268 77.029633
 Q 681.817787 60.182102 707.40899 43.992084
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
     <path d="M 703.404347 44.395615
 L 707.40899 43.992084
 L 705.329029 47.437917
-" style="fill: none; stroke: #b55d4c; stroke-width: 1.1; stroke-linecap: round"/>
+" style="fill: none; stroke: #556b73; stroke-width: 1.1; stroke-linecap: round"/>
    </g>
    <g id="text_44">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #b55d4c" x="631.856908" y="87.281277" transform="rotate(-0 631.856908 87.281277)">2.5×</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: start; fill: #556b73" x="631.856908" y="87.281277" transform="rotate(-0 631.856908 87.281277)">2.5×</text>
    </g>
    <g id="text_45">
     <text style="font-weight: 600; font-size: 12px; font-family: 'Noto Sans CJK JP', 'DejaVu Sans'; text-anchor: middle; fill: #273b43" x="609.601302" y="12.73149" transform="rotate(-0 609.601302 12.73149)">Relative L2 change by group</text>

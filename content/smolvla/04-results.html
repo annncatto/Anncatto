@@ -41,7 +41,8 @@
 <div class="bilingual"><p lang="en">As an architectural reference on the same 120 demonstrations, π0.5 completes alignment, grasping, lifting, and deposit smoothly with fewer alignment retries, aided by bidirectional within-chunk action attention.</p><p lang="zh-CN">同一批 120 条示教上，架构参照 π0.5 顺利完成对准、抓取、抬升与投放，反复微调更少，单块内的双向动作注意力有助于各步协同。</p></div>
 
 <details class="sv-supplement"><summary><span lang="en">Deployment timing results</span><span lang="zh-CN">部署计时结果</span></summary>
-<div class="bilingual"><p lang="en">An October 27 timing test measures ~106 ms per prediction; executing 25 actions at 30 Hz with synchronous replanning yields $25/(25/30+0.106)\approx26.6$ Hz, matching the observed 26–27 Hz rate.</p><p lang="zh-CN">10 月 27 日计时测得单次预测约 106 ms；按 30 Hz 同步执行 25 步计算平均频率为 $25/(25/30+0.106)\approx26.6$ Hz，与实测 26–27 Hz 一致。</p></div>
+<div class="bilingual"><p lang="en">Offline timing measures ~106 ms per prediction; executing 25 actions at 30 Hz with synchronous replanning yields an average loop rate matching the observed 26–27 Hz:</p><p lang="zh-CN">离线计时测得单次预测约 106 ms；按 30 Hz 同步执行 25 步计算平均控制频率，与实测 26–27 Hz 一致：</p></div>
+<div class="formula">$$f_{\mathrm{avg}} = \frac{25}{25 / 30 + 0.106} \approx 26.6\text{ Hz}.$$</div>
 </details>
 
 <h4 id="two-toy-extension"><span lang="en">Two-toy experiment</span><span lang="zh-CN">双玩偶实验</span></h4>

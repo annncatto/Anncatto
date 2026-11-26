@@ -248,7 +248,7 @@ def figure(language, name, note_name):
         steps_B = [r['step'] / 1000 for r in rep if r['version'] == 'fp32']
         loss_B = [r['flow_loss_mean'] for r in rep if r['version'] == 'fp32']
 
-        ax[0].axvspan(50, 100, color='#faf1ef', alpha=0.82, zorder=0)
+        ax[0].axvspan(50, 100, color='#f2f6f6', alpha=0.88, zorder=0)
         ax[0].plot(steps_A, loss_A, 'o-', color=SLATE, lw=2.2, ms=5.5, label=tr('混合存储', 'Mixed'))
         ax[0].plot(steps_B, loss_B, 'o-', color=BLUE, lw=2.2, ms=5.5, label=tr('全 FP32', 'Full FP32'))
         ax[0].plot([100, 120], [loss_B[-1], flow['C']], 'D--', color=GREEN, lw=1.8, ms=5.5, zorder=5,
@@ -257,8 +257,8 @@ def figure(language, name, note_name):
                       label=tr('混合统一 FP32', 'Mixed (FP32 eval)'))
         ax[0].annotate('−39%', xy=(80, 0.0138), xytext=(56, 0.0055), fontsize=9.0, color=BLUE, fontweight='bold',
                        arrowprops=dict(arrowstyle='->', color=BLUE, lw=1.1))
-        ax[0].annotate('−1.8%', xy=(76, 0.0276), xytext=(64, 0.0338), fontsize=9.0, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.1))
+        ax[0].annotate('−1.8%', xy=(76, 0.0276), xytext=(64, 0.0338), fontsize=9.0, color=SLATE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=SLATE, lw=1.1))
         ax[0].set(
             xticks=[5, 20, 50, 80, 100, 120],
             xticklabels=['5k', '20k', '50k', '80k', '100k', '120k'],
@@ -283,8 +283,8 @@ def figure(language, name, note_name):
         bB = ax[1].barh(y - h / 2, vals_B, height=h, color=BLUE, label='FP32 100k')
         ax[1].bar_label(bA, labels=[f'{v:.1f}%' for v in vals_A], padding=4, fontsize=8.8, color=SLATE, fontweight='semibold')
         ax[1].bar_label(bB, labels=[f'{v:.1f}%' for v in vals_B], padding=4, fontsize=8.8, color=BLUE, fontweight='semibold')
-        ax[1].annotate('2.5×', xy=(17.3, 3.18), xytext=(12.2, 2.48), fontsize=9.0, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.1))
+        ax[1].annotate('2.5×', xy=(17.3, 3.18), xytext=(12.2, 2.48), fontsize=9.0, color=SLATE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=SLATE, lw=1.1))
         ax[1].set(
             yticks=y, yticklabels=g_labels, xlim=(0, 21.5),
             xlabel=tr('相对 L2 变化（%）', 'Relative L2 change (%)'),
@@ -304,12 +304,12 @@ def figure(language, name, note_name):
         odd_x = [p[0] for p in layer_drift['A_ca_kv']]
         odd_A = [p[1] for p in layer_drift['A_ca_kv']]
         odd_B = [p[1] for p in layer_drift['B_ca_kv']]
-        ax[0].plot(layers, layer_drift['A_body'], 's-', color=SLATE, lw=2.0, ms=4.5, label=tr('混合 BF16 主体', 'Mixed BF16 body'))
+        ax[0].plot(layers, layer_drift['A_body'], 's-', color='#95a8ae', lw=2.0, ms=4.5, label=tr('混合 BF16 主体', 'Mixed BF16 body'))
         ax[0].plot(layers, layer_drift['B_all'], 'o-', color=BLUE, lw=2.1, ms=4.5, label=tr('FP32 全层', 'FP32 full layer'))
-        ax[0].plot(odd_x, odd_A, 'D--', color=CORAL, lw=2.0, ms=5.2, label=tr('混合 CA K,V', 'Mixed CA K,V'))
-        ax[0].plot(odd_x, odd_B, '^:', color='#5fa0c8', lw=1.6, ms=4.5, label=tr('FP32 CA K,V', 'FP32 CA K,V'))
-        ax[0].annotate('L15: 23%', xy=(15, odd_A[-1]), xytext=(11.2, 24.4), fontsize=8.6, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
+        ax[0].plot(odd_x, odd_A, 'D--', color=SLATE, lw=2.1, ms=5.2, label=tr('混合 CA K,V', 'Mixed CA K,V'))
+        ax[0].plot(odd_x, odd_B, '^:', color=GREEN, lw=1.7, ms=4.6, label=tr('FP32 CA K,V', 'FP32 CA K,V'))
+        ax[0].annotate('L15: 23%', xy=(15, odd_A[-1]), xytext=(11.2, 24.4), fontsize=8.6, color=SLATE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=SLATE, lw=1.0))
         ax[0].set(
             xticks=layers, xlim=(-0.6, 15.6), ylim=(0, 27.0),
             xlabel=tr('专家层（蓝底：奇数 CA）', 'Expert layer (shaded: odd CA)'),
@@ -328,12 +328,12 @@ def figure(language, name, note_name):
             ratio = [r['mean_loss'] / float(np.mean(sw['baselines'][model])) for r in rows]
             ax[1].plot(layers, ratio, 'o-', color=color, lw=2.0, ms=4.5, label=lbl, zorder=3)
 
-        ax[1].annotate('L01 · 1.97×', xy=(1, 1.968), xytext=(2.4, 1.82), fontsize=8.4, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
-        ax[1].annotate('L08 · 1.87×', xy=(8, 1.874), xytext=(9.3, 1.96), fontsize=8.4, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
-        ax[1].annotate('L15 · 1.81×', xy=(15, 1.809), xytext=(11.2, 1.62), fontsize=8.4, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
+        ax[1].annotate('L01 · 1.97×', xy=(1, 1.968), xytext=(2.4, 1.82), fontsize=8.4, color=BLUE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=BLUE, lw=1.0))
+        ax[1].annotate('L08 · 1.87×', xy=(8, 1.874), xytext=(9.3, 1.96), fontsize=8.4, color=SLATE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=SLATE, lw=1.0))
+        ax[1].annotate('L15 · 1.81×', xy=(15, 1.809), xytext=(11.2, 1.62), fontsize=8.4, color=BLUE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=BLUE, lw=1.0))
         ax[1].annotate('L06 −7.4%', xy=(6, 0.9257), xytext=(3.6, 0.855), fontsize=8.4, color=GREEN, fontweight='bold',
                        arrowprops=dict(arrowstyle='->', color=GREEN, lw=1.0))
         ax[1].set(
@@ -350,7 +350,7 @@ def figure(language, name, note_name):
     elif name == 'boundary-replay':
         fig, ax = plt.subplots(1, 2, figsize=(10.8, 4.3), layout='constrained')
         bins = np.linspace(-103.0, -95.0, 49)
-        ax[0].axvspan(-103.0, -100.0, color='#faf1ef', alpha=0.9, zorder=0)
+        ax[0].axvspan(-103.0, -100.0, color='#f2f6f6', alpha=0.92, zorder=0)
         ax[0].axvline(-100.0, color=CORAL, ls='--', lw=1.6, zorder=4, label=tr('下限 −100', 'Bound −100'))
         ax[0].hist(tgt_start, bins=bins, histtype='stepfilled', color='#dce9e9', alpha=0.65, edgecolor='#9eb4b7', lw=1.2,
                    label=tr('示范目标', 'Demo targets'))
@@ -401,8 +401,8 @@ def figure(language, name, note_name):
         req, acc, st = series['requested'][:, 8], series['accepted'][:, 8], series['state'][:, 8]
         g_req, g_st = series['requested'][:, 13], series['state'][:, 13]
 
-        ax0.axvspan(95, 290, color='#faf1ef', alpha=0.72, zorder=0)
-        ax0.axvspan(150, 160, color='#dceef6', alpha=0.72, zorder=0)
+        ax0.axvspan(95, 290, color='#f2f6f6', alpha=0.82, zorder=0)
+        ax0.axvspan(150, 160, color='#e4f1f6', alpha=0.82, zorder=0)
         ax0.plot(t, st, color='#8fa3a8', lw=0.9, label=tr('反馈', 'Feedback'), zorder=2)
         ax0.plot(t, acc, color=GREEN, lw=0.85, label=tr('Host 目标', 'Host target'), zorder=3)
         ax0.plot(t, req, color=BLUE, lw=0.75, alpha=0.9, label=tr('模型请求', 'Request'), zorder=4)
@@ -422,11 +422,11 @@ def figure(language, name, note_name):
                 title=tr('FP32 100k · 300 s 真机记录', 'FP32 100k · 300 s live record'))
         ax0.legend(ncols=4, fontsize=8.2, loc='lower center', frameon=True, facecolor='white', framealpha=0.95, edgecolor='#dce9e9')
 
-        ax1.axvspan(95, 290, color='#faf1ef', alpha=0.72, zorder=0)
+        ax1.axvspan(95, 290, color='#f2f6f6', alpha=0.82, zorder=0)
         ax1.plot(t, g_req, color=BLUE, lw=0.9, label=tr('请求', 'Request'))
         ax1.plot(t, g_st, color=GREEN, lw=0.9, label=tr('反馈', 'Feedback'))
         ax1.text(192, 26, tr('夹爪闭合（≈2）', 'Gripper closed (≈2)'),
-                 ha='center', va='center', fontsize=8.6, color=CORAL, fontweight='semibold')
+                 ha='center', va='center', fontsize=8.6, color=SLATE, fontweight='semibold')
         ax1.set(xlim=(0, 300), ylim=(-2, 52), xlabel=tr('时间（s）', 'Time (s)'),
                 ylabel=tr('右夹爪', 'Right gripper'))
         ax1.legend(fontsize=8.2, loc='upper right', frameon=True, facecolor='white', edgecolor='#dce9e9')
@@ -508,8 +508,8 @@ def figure(language, name, note_name):
         b_mita = [8, 16, 32, 64]
         y_mita = [sw_f[t]['flow_loss_mean'] for t in ['mita_m4_k4', 'mita_m4_k12', 'mita_m4_k28', 'mita_m8_k56']]
 
-        ax[0].axhline(full_f, color=SLATE, ls='--', lw=1.2, label=tr('全量 305 基线', 'Full 305 baseline'))
-        ax[0].plot(b_topk, y_topk, 's-', color=CORAL, lw=2.1, ms=5.5, label=tr('纯路由 (Top-k)', 'Route-only (Top-k)'))
+        ax[0].axhline(full_f, color='#95a8ae', ls='--', lw=1.2, label=tr('全量 305 基线', 'Full 305 baseline'))
+        ax[0].plot(b_topk, y_topk, 's-', color=SLATE, lw=2.1, ms=5.5, label=tr('纯路由 (Top-k)', 'Route-only (Top-k)'))
         ax[0].plot(b_agent, y_agent, '^-', color=GREEN, lw=2.1, ms=5.8, label=tr('纯压缩 (Agent m)', 'Compress-only (Agent)'))
         ax[0].plot(b_mita, y_mita, 'o-', color=BLUE, lw=2.3, ms=5.8, label=tr('MiTA (m + k)', 'MiTA (m + k)'))
         # Overlay reusable m=4 landmark routing point at budget 20/36 to prove 4 experts match 50 private
@@ -517,8 +517,8 @@ def figure(language, name, note_name):
                       marker='x', s=52, color=INK, lw=1.6, zorder=6, label=tr('4 地标共享 Top-k', '4-landmark Top-k'))
         ax[0].annotate('m=4: 0.0129', xy=(4, y_agent[1]), xytext=(5.0, 0.0108), fontsize=8.4, color=GREEN, fontweight='bold',
                        arrowprops=dict(arrowstyle='->', color=GREEN, lw=1.0))
-        ax[0].annotate('Top-16: +18%', xy=(16, y_topk[2]), xytext=(21, 0.0172), fontsize=8.4, color=CORAL, fontweight='bold',
-                       arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
+        ax[0].annotate('Top-16: +18%', xy=(16, y_topk[2]), xytext=(21, 0.0172), fontsize=8.4, color=SLATE, fontweight='bold',
+                       arrowprops=dict(arrowstyle='->', color=SLATE, lw=1.0))
         ax[0].set_xscale('log', base=2)
         ax[0].set(
             xticks=[2, 4, 8, 16, 32, 64], xticklabels=['2', '4', '8', '16', '32', '64'],
@@ -568,11 +568,11 @@ def figure(language, name, note_name):
             tr('251s 振荡', '251s Osc.'),
         ]
         segs = [
-            ('state', tr('state (1)', 'state (1)'), CORAL),
-            ('wrist_right', 'wrist_right', BLUE),
-            ('forward', 'forward', GREEN),
-            ('other_cams', tr('其余 2 图', '2 cams'), '#a7bcc1'),
-            ('text', tr('文本', 'text'), '#dce7e8'),
+            ('state', tr('state (1)', 'state (1)'), BLUE),
+            ('wrist_right', 'wrist_right', GREEN),
+            ('forward', 'forward', '#8dc2b0'),
+            ('other_cams', tr('其余 2 图', '2 cams'), '#b7ccce'),
+            ('text', tr('文本', 'text'), '#e1ecec'),
         ]
         y = np.arange(4)
         left = np.zeros(4)
@@ -589,7 +589,7 @@ def figure(language, name, note_name):
             for idx_r, v in enumerate(vals):
                 if v >= 16:
                     ax0.text(left[idx_r] + v / 2, idx_r, f'{v:.0f}%', ha='center', va='center',
-                             fontsize=8.2, color='white' if scol in (CORAL, BLUE, GREEN) else INK, fontweight='bold')
+                             fontsize=8.2, color='white' if scol in (BLUE, GREEN) else INK, fontweight='bold')
             left += vals
         ax0.annotate('state 0.4%', xy=(0.8, 0), xytext=(14, -0.58), fontsize=8.3, color=CORAL, fontweight='bold',
                      arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
@@ -606,10 +606,10 @@ def figure(language, name, note_name):
         m_saw = [fw_p2['routing_miou_pairs']['sawtooth_before_vs_after'][str(L)] for L in odd_layers]
         m_wr = [fw_p2['routing_miou_pairs']['oscillation_vs_swap_wrist_right'][str(L)] for L in odd_layers]
         ax1.plot(odd_layers, m_saw, 'o-', color=GREEN, lw=2.2, ms=5.2, label=tr('跳变前后 40 ms', 'Across 40 ms drop'))
-        ax1.plot(odd_layers, m_wr, 's-', color=CORAL, lw=2.2, ms=5.2, label=tr('251s 仅换 wrist_right', '251s swap wrist_right'))
+        ax1.plot(odd_layers, m_wr, 's-', color=BLUE, lw=2.2, ms=5.2, label=tr('251s 仅换 wrist_right', '251s swap wrist_right'))
         ax1.annotate('0.84', xy=(11, m_saw[5]), xytext=(7.2, 0.90), fontsize=8.5, color=GREEN, fontweight='bold')
-        ax1.annotate('L13: 0.35', xy=(13, m_wr[6]), xytext=(6.8, 0.34), fontsize=8.5, color=CORAL, fontweight='bold',
-                     arrowprops=dict(arrowstyle='->', color=CORAL, lw=1.0))
+        ax1.annotate('L13: 0.35', xy=(13, m_wr[6]), xytext=(6.8, 0.34), fontsize=8.5, color=BLUE, fontweight='bold',
+                     arrowprops=dict(arrowstyle='->', color=BLUE, lw=1.0))
         ax1.set(
             xticks=odd_layers, xticklabels=[f'L{L:02d}' for L in odd_layers],
             xlim=(0.4, 15.6), ylim=(0.22, 1.0),
