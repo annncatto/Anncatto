@@ -1,19 +1,32 @@
-<h3 id="experiment-discussion"><span lang="zh-CN">实验启发</span><span lang="en">Implications</span></h3>
+<h3 id="experiment-discussion"><span lang="en">Implications</span><span lang="zh-CN">实验启发</span></h3>
+<div class="sv-cards is-three">
+<div class="sv-card is-alert">
+<span class="sv-card-kicker"><span lang="en">Action 1 · Preprocessing</span><span lang="zh-CN">改进一 · 预处理</span></span>
+<p class="sv-card-title"><span lang="en">Fix near-constant channel scaling</span><span lang="zh-CN">取消近常量通道紧 min/max</span></p>
+<div class="bilingual"><p lang="en">Replace data-driven min/max on fixed lift and stationary base channels with hardware range floors (e.g. 0–600 mm lift stroke), and freeze old stats when fine-tuning so 0.19 mm offsets never shift state tokens by 50%.</p><p lang="zh-CN">对固定升降轴和静止底盘改用硬件行程下限（如 0–600 mm），且基于旧权重微调时冻结原统计，杜绝 0.19 mm 复归微差被放大成 50% 状态跳变。</p></div>
+</div>
+<div class="sv-card is-blue">
+<span class="sv-card-kicker"><span lang="en">Action 2 · Optimization</span><span lang="zh-CN">改进二 · 训练精度</span></span>
+<p class="sv-card-title"><span lang="en">Enable FP32 fine-tuning states</span><span lang="zh-CN">续训启用 FP32 主权重/矩估计</span></p>
+<div class="bilingual"><p lang="en">Avoid fine-tuning pure-BF16 checkpoints at 1×10⁻⁵ with BF16 moments (sub-ULP rounding freezes &gt;92% of weights). Use FP32 master states or higher lr, and test earlier validation minima (OpenWAM 6k; early π0.5).</p><p lang="zh-CN">避免纯 BF16 + 1×10⁻⁵ 续训（半步长舍入会冻结超 92% 参数）；续训启用 FP32 主权重/矩估计或提高学习率，并实测旧验证最低点（OpenWAM 6k 与 π0.5 早期步数）。</p></div>
+</div>
+<div class="sv-card is-green">
+<span class="sv-card-kicker"><span lang="en">Action 3 · Data &amp; prompts</span><span lang="zh-CN">改进三 · 数据与指令</span></span>
+<p class="sv-card-title"><span lang="en">Balance layouts and paired rules</span><span lang="zh-CN">扩充交叉布局与成对反规则</span></p>
+<div class="bilingual"><p lang="en">Collect crossed demos across all six blue/green × left/middle/right layouts and upweight corrective frames (currently 28.2%). For language-switchable sorting, include paired opposite-rule episodes instead of one fixed prompt.</p><p lang="zh-CN">补采“蓝/绿 × 左/中/右”六类交叉示教并提高纠偏采样权重（当前新增帧仅占 28.2%）；如需按文字切换左右规则，必须加入成对反规则示教而非单一固定模板。</p></div>
+</div>
+</div>
+
+<h3 id="next-experiment"><span lang="en">Next comparison</span><span lang="zh-CN">下一轮验证</span></h3>
+<div class="bilingual"><p lang="en">Verify whether Restarted 10k’s lower release-window MAE translates into higher closed-loop correct-deposit rates than Fine-tuned 10k and early/21k π0.5 checkpoints on held-out color–position layouts.</p><p lang="zh-CN">在未参与训练的颜色—位置布局上开展配对真机评测，核验重训 10k 在松爪窗口的拟合优势是否转化为高于微调 10k 与 π0.5（含早期检查点与 21k）的正确投放率。</p></div>
 <ul class="bilingual-list">
-<li><div class="bilingual"><p lang="zh-CN"><strong>数据采集：</strong>原失败发生在绿色物体靠近蓝色篮子的条件，下一轮优先补充蓝、绿物体位于左侧、中部和右侧的交叉示范。新增帧当前占训练集 28.24%，关键纠偏条件的采样权重决定它在混合训练中被反复看到的频率。</p><p lang="en"><strong>Data collection:</strong> the observed error places a green object near the blue basket, motivating crossed demonstrations of both colors at left, middle, and right positions. Added frames currently account for 28.24% of training, so corrective-condition sampling controls their exposure within the mixture.</p></div></li>
-<li><div class="bilingual"><p lang="zh-CN"><strong>训练选择：</strong>B 在新增窗口中拟合更好，A 节省了早期适配；本轮实际配置同时改变了起点、学习率和累计历史。状态尺度漂移与保守的参数改写已经被分别测量，后续训练对照应统一归一化、学习率和采样权重，再比较初始化。</p><p lang="en"><strong>Training choice:</strong> B fits added windows better, while A saves early adaptation; the recipes also differ in initialization, learning rate, and history. State-scale shifts and conservative weight changes have been measured separately, motivating matched normalization, learning rate, and sampling when comparing initialization.</p></div></li>
-<li><div class="bilingual"><p lang="zh-CN"><strong>网络拆解：</strong>中段与末段的视频—动作连接是本轮局部干预中更敏感的环节，颜色与状态的逐层响应提供了追踪条件融合的位置。后续可在这些层段继续比较关键纠偏场景中的隐藏响应与完整去噪动作。</p><p lang="en"><strong>Network analysis:</strong> middle and final video–action connections are more sensitive under these local interventions; layerwise color and state responses locate condition fusion. Further probes can compare hidden responses and complete denoising in the critical correction scenes.</p></div></li>
-<li><div class="bilingual"><p lang="zh-CN"><strong>真机执行：</strong>目标篮子选择、夹持状态、动作块生成和轮速反馈分别对应任务、接触、计算和传感环节。将抓取完成、正确投放、生成耗时与实际反馈分别记录，才能把网络变化连接到相应的执行结果。</p><p lang="en"><strong>Robot execution:</strong> destination choice, holding state, chunk generation, and wheel feedback concern task selection, contact, computation, and sensing. Recording grasp completion, correct deposits, generation time, and feedback separately connects network changes to the relevant execution outcomes.</p></div></li>
+<li><div class="bilingual"><p lang="en"><strong>Controlled protocol:</strong> Six held-out placement categories (blue/green × left/middle/right) with fixed baskets, prompt, initial pose, base/lift constraints, and 30 Hz target; switch only the checkpoint.</p><p lang="zh-CN"><strong>固定变量：</strong>采用“蓝/绿 × 左/中/右”六类留出摆放，固定篮子、指令、初始位姿、底盘/升降约束与 30 Hz 目标，仅替换检查点。</p></div></li>
+<li><div class="bilingual"><p lang="en"><strong>Sample size and scoring:</strong> Ten independent trials per layout and model (60 per checkpoint), scoring grasp completion and <em>correct-deposit rate = correct deposits / total attempts</em> per layout, with manual resets logged outside clean trials.</p><p lang="zh-CN"><strong>试验规模与计分：</strong>每类摆放、每检查点各 10 次独立尝试（单模型 60 次），按布局报告抓取完成率与<strong>正确投放率 = 正确投放次数 / 总尝试次数</strong>，人工重摆单独剔除标注。</p></div></li>
 </ul>
-<h3 id="next-experiment"><span lang="zh-CN">下一轮验证</span><span lang="en">Next comparison</span></h3>
-<div class="bilingual"><p lang="zh-CN"><strong>核心问题：</strong>B 在新增轨迹拟合上的优势，能否转化为更高的正确投放率？先使用现有两份检查点，在未参与训练的颜色—位置组合中配对测试。</p><p lang="en"><strong>Core question:</strong> does B's better fit on added trajectories translate into more correct deposits? First compare the existing checkpoints in paired color–position combinations excluded from training.</p></div>
-<ul class="bilingual-list">
-<li><div class="bilingual"><p lang="zh-CN"><strong>保持一致：</strong>采用“蓝/绿 × 左/中/右”六类摆放，固定篮子、任务指令、初始状态、配对噪声种子、控制频率与安全约束，只替换 A/B 检查点。</p><p lang="en"><strong>Hold fixed:</strong> use six blue/green × left/middle/right placement categories with matched baskets, instruction, initial state, noise seeds, control frequency, and safety constraints; switch only the A/B checkpoint.</p></div></li>
-<li><div class="bilingual"><p lang="zh-CN"><strong>建议次数与指标：</strong>每类摆放、每模型各 10 次，共 120 次；分场景报告抓取完成率和正确投放率，正确投放率的分母为总尝试次数。现存三条补充数据闭环记录均属于 A，本组配对测试直接比较两份模型的任务结果。</p><p lang="en"><strong>Proposed repetitions and metrics:</strong> ten trials per model and placement category, 120 total. Report grasp-completion and correct-deposit rates by category, using all attempts as the denominator for correct deposits. The three existing expanded-data rollouts all use A; this paired test compares task outcomes for both models.</p></div></li>
-</ul>
-<h4 id="alpha80-pending"><span lang="zh-CN">末端表示 · 80 维语义槽</span><span lang="en">TCP representation · 80 semantic slots</span></h4>
-<div class="bilingual"><p lang="zh-CN">末端表示模型待训练。该组将关节示教经标定 FK 转换后映射到官方槽位，保留原有输入输出投影，部署时通过 IK 恢复关节目标。</p><p lang="en">The TCP model is pending training. Calibrated FK will convert joint demonstrations into the official slots, retaining the original input/output projections; IK will recover joint targets at deployment. </p></div>
-<div class="bilingual"><p lang="zh-CN">与关节表示对照时，应使用相同的数据划分、训练预算和底盘约束，并同时记录任务结果、IK 拒绝率与关节轨迹连续性。</p><p lang="en">The joint-space comparison should use the same data split, training budget, and base constraints, measuring task outcomes, IK rejection, and joint continuity.</p></div>
-<div class="ow-experiment-status"><p><span lang="zh-CN">待训练，尚无实机结果。</span><span lang="en">Pending training; no robot results yet.</span></p></div>
-<h4 id="efficiency-next"><span lang="zh-CN">训练效率对照</span><span lang="en">Training-efficiency control</span></h4>
-<div class="bilingual"><p lang="zh-CN">后续效率对照固定数据与三路相机、有效 batch 和软件版本，分别改变每卡 batch/累积、重计算及注意力实现，同时记录更新耗时与峰值显存。跨模型对照保留各自合理的输入表示，并将统一评估标准下的任务成功率与累计训练时间一起报告，从而同时比较更新吞吐和任务学习效率。</p><p lang="en">A subsequent efficiency comparison fixes data, three camera streams, effective batch, and software versions, then varies microbatch/accumulation, checkpointing, and attention implementation separately while recording update time and peak memory. Cross-model comparisons retain suitable input representations and report task success under a shared evaluation protocol alongside accumulated training time, covering both update throughput and task-learning efficiency.</p></div>
+
+<h4 id="alpha80-pending"><span lang="en">TCP representation · 80 semantic slots</span><span lang="zh-CN">末端表示 · 80 维语义槽</span></h4>
+<div class="bilingual"><p lang="en">Pending training. Calibrated FK maps joint demonstrations into official <code>alpha80</code> slots so pretrained input/output projections are retained, with IK recovering joint targets online under matched data split, budget, and base constraints—logging task outcome, IK rejection rate, and joint continuity.</p><p lang="zh-CN">待训练。经标定 FK 将关节示教映射到官方 <code>alpha80</code> 槽位以保留预训练投影，部署时经 IK 还原关节目标；在相同划分、预算与底盘约束下与 18 维关节模型对照，同步记录任务结果、IK 拒绝率与轨迹连续性。</p></div>
+<div class="ow-experiment-status"><p><span lang="en">Pending training; no robot results yet.</span><span lang="zh-CN">待训练，尚无实机结果。</span></p></div>
+
+<h4 id="efficiency-next"><span lang="en">Training-efficiency control</span><span lang="zh-CN">训练效率对照</span></h4>
+<div class="bilingual"><p lang="en">Fix data, three cameras, effective batch 32, and software version; vary microbatch/accumulation, activation checkpointing, and attention implementation one at a time while logging update time, peak VRAM, and task success versus cumulative GPU hours.</p><p lang="zh-CN">固定数据、三相机、有效 batch 32 与软件版本，逐项改变每卡 batch/累积、重计算与注意力实现，同时报告单步耗时、峰值显存与统一计分下的任务成功率及累计 GPU 小时。</p></div>

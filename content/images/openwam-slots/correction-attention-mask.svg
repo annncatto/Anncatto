@@ -1,141 +1,187 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1090" role="img" data-pathway-mask="true" aria-labelledby="pathway-mask-title pathway-mask-desc" style="font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif;display:block;width:100%;height:auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" role="img" data-pathway-mask="true" aria-labelledby="pathway-mask-title pathway-mask-desc" style="font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif;display:block;width:100%;height:auto">
 <title id="pathway-mask-title">Grouped video-to-action attention intervention</title>
 <desc id="pathway-mask-desc">Thirty paired video and action layers. Only action-query to video-key entries are masked within one selected group of five layers. All other connections retain their original masks.</desc>
 <style>.figure-viewer-content>svg[data-pathway-mask]{min-width:1100px}</style>
 <defs>
-<marker id="mask-arrow-19364b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#19364b"/></marker>
-<marker id="mask-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#3263d9"/></marker>
-<marker id="mask-arrow-79a948" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#79a948"/></marker>
-<marker id="mask-arrow-8798aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#8798aa"/></marker>
-<marker id="mask-arrow-b9544f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b9544f"/></marker>
-</defs><rect width="1200" height="1090" fill="white"/>
-<text lang="en" x="40" y="40" font-size="25" fill="#19364b" font-weight="650" text-anchor="start">Mask video → action within one five-layer group</text>
-<text lang="en" x="40" y="75" font-size="17" fill="#8798aa" font-weight="400" text-anchor="start">Example: layers 25–29. Reset to baseline before testing the next group.</text>
-<text lang="en" x="40" y="123" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">1. Full network: all 30 layers still execute</text>
-<rect x="30" y="175" width="170" height="65" rx="8" fill="#f0f5fc" stroke="#b5c8e8" stroke-width="1.4"/>
-<rect x="30" y="295" width="170" height="65" rx="8" fill="#f2f6ee" stroke="#c3d6ae" stroke-width="1.4"/>
-<text lang="en" x="115" y="201" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Video tokens</text>
-<text lang="en" x="115" y="225" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">360 × 3072</text>
-<text lang="en" x="115" y="321" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Action tokens</text>
-<text lang="en" x="115" y="345" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">32 × 1024</text>
-<path d="M200 207 L242 207" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M200 327 L242 327" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<text lang="en" x="305" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">0–4</text>
-<rect x="245" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="245" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="305" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="305" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M365 208 L391 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M365 328 L391 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M287 235 L287 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M323 301 L323 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="en" x="455" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">5–9</text>
-<rect x="395" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="395" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="455" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="455" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M515 208 L541 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M515 328 L541 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M437 235 L437 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M473 301 L473 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="en" x="605" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">10–14</text>
-<rect x="545" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="545" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="605" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="605" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M665 208 L691 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M665 328 L691 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M587 235 L587 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M623 301 L623 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="en" x="755" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">15–19</text>
-<rect x="695" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="695" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="755" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="755" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M815 208 L841 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M815 328 L841 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M737 235 L737 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M773 301 L773 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="en" x="905" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">20–24</text>
-<rect x="845" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="845" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="905" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="905" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M965 208 L991 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M965 328 L991 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M887 235 L887 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M923 301 L923 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<rect x="985" y="147" width="140" height="229" rx="10" fill="#fff6f3" stroke="#dbb5ae" stroke-width="1.4"/>
-<text lang="en" x="1055" y="169" font-size="17" fill="#b9544f" font-weight="600" text-anchor="middle">25–29</text>
-<rect x="995" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="995" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="1055" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="en" x="1055" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M1037 235 L1037 301" fill="none" stroke="#b9544f" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#mask-arrow-b9544f)"/>
-<path d="M1073 301 L1073 235" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M1030 259 L1044 273" fill="none" stroke="#b9544f" stroke-width="3"/>
-<path d="M1030 273 L1044 259" fill="none" stroke="#b9544f" stroke-width="3"/>
-<text lang="en" x="465" y="402" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Text/state conditioning, residuals and FFNs remain active</text>
-<text lang="en" x="1100" y="402" font-size="17" fill="#79a948" font-weight="400" text-anchor="middle">Velocity output</text>
-<path d="M1105 355 L1105 378" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<text lang="en" x="40" y="442" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">Arrows show information flow: video K/V → action Q; the reverse path retains its original mask.</text>
-<text lang="en" x="40" y="496" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">2. Inside a selected layer: modify the attention mask</text>
-<rect x="50" y="535" width="205" height="65" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="320" y="535" width="205" height="65" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="152" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Video stream</text>
-<text lang="en" x="152" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
-<text lang="en" x="422" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Action stream</text>
-<text lang="en" x="422" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
-<path d="M152 600 L152 641" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M422 600 L422 641" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<rect x="70" y="645" width="435" height="110" rx="8" fill="#f8fafc" stroke="#c5d2de" stroke-width="1.4"/>
-<text lang="en" x="287" y="675" font-size="20" fill="#19364b" font-weight="600" text-anchor="middle">Joint attention</text>
-<text lang="en" x="287" y="704" font-size="21" fill="#19364b" font-weight="400" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
-<text lang="en" x="287" y="735" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Only M[action Q, video K] becomes −∞</text>
-<path d="M152 755 L152 793" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M422 755 L422 793" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<rect x="50" y="797" width="205" height="60" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="320" y="797" width="205" height="60" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="en" x="152" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Video block suffix</text>
-<text lang="en" x="422" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Action block suffix</text>
-<text lang="en" x="152" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
-<text lang="en" x="422" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
-<rect x="70" y="882" width="435" height="42" rx="8" fill="#f7f9fc" stroke="#c5d2de" stroke-width="1.4"/>
-<text lang="en" x="287" y="909" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Text + state token (separate cross-attention)</text>
-<path d="M152 882 L152 859" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M422 882 L422 859" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="en" x="938" y="529" font-size="19" fill="#19364b" font-weight="600" text-anchor="middle">Mask blocks: Q rows, K/V columns</text>
-<text lang="en" x="826.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Observed</text>
-<text lang="en" x="826.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">120</text>
-<text lang="en" x="938.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Future</text>
-<text lang="en" x="938.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">240</text>
-<text lang="en" x="1050.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Action</text>
-<text lang="en" x="1050.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">32</text>
-<text lang="en" x="752" y="644" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Observed Q</text>
-<rect x="772" y="602" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="en" x="826.0" y="645" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="884" y="602" width="108" height="73" rx="4" fill="#f1f4f7" stroke="#cbd4dd" stroke-width="1.4"/>
-<text lang="en" x="938.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">Existing</text>
-<rect x="996" y="602" width="108" height="73" rx="4" fill="#f1f4f7" stroke="#cbd4dd" stroke-width="1.4"/>
-<text lang="en" x="1050.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">Existing</text>
-<text lang="en" x="752" y="721" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Future Q</text>
-<rect x="772" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="en" x="826.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="884" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="en" x="938.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="996" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="en" x="1050.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<text lang="en" x="752" y="798" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Action Q</text>
-<rect x="772" y="756" width="108" height="73" rx="4" fill="#fcece7" stroke="#d7a19a" stroke-width="1.4"/>
-<text lang="en" x="826.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Masked</text>
-<rect x="884" y="756" width="108" height="73" rx="4" fill="#fcece7" stroke="#d7a19a" stroke-width="1.4"/>
-<text lang="en" x="938.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Masked</text>
-<rect x="996" y="756" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="en" x="1050.0" y="799" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<text lang="en" x="940" y="867" font-size="15" fill="#b9544f" font-weight="400" text-anchor="middle">New mask: action Q cannot read 360 video K/V tokens</text>
-<text lang="en" x="940" y="895" font-size="14" fill="#8798aa" font-weight="400" text-anchor="middle">Other entries retain the original mask; blocks are not to scale.</text>
-<rect x="40" y="939" width="1120" height="105" rx="8" fill="#f7f9fc" stroke="#dae2e9" stroke-width="1.4"/>
-<text lang="en" x="65" y="970" font-size="18" fill="#19364b" font-weight="550" text-anchor="start">Baseline vs intervention: same model, observation, state, text, noise and denoising time</text>
-<text lang="en" x="65" y="1003" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">Run all 30 layers, then compare the final action velocity; record residuals by layer separately.</text>
-<text lang="en" x="65" y="1029" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">Fixed weights; four windows, t = 500, equal signal/noise; masked probabilities are 0</text>
+<marker id="mask-arrow-273b43" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#273b43"/></marker>
+<marker id="mask-arrow-237ab2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#237ab2"/></marker>
+<marker id="mask-arrow-4b9c80" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4b9c80"/></marker>
+<marker id="mask-arrow-556b73" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#556b73"/></marker>
+<marker id="mask-arrow-b55d4c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b55d4c"/></marker>
+</defs><rect width="1200" height="940" fill="white"/>
+<text lang="en" x="36" y="38" font-size="23" fill="#273b43" font-weight="650" text-anchor="start">Grouped five-layer video → action attention mask</text>
+<text lang="en" x="36" y="66" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="start">Example: mask layers 25–29 only; reset to baseline before each group (all 30 layers still run)</text>
+<text lang="en" x="36" y="112" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">1. Full network: all 30 layers execute; cut video K/V → action Q in one five-layer group</text>
+<g>
+<rect x="30" y="152" width="166" height="62" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<text lang="en" x="113" y="177" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Video tokens</text>
+<text lang="en" x="113" y="200" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">360 × 3072</text>
+</g>
+<g>
+<rect x="30" y="270" width="166" height="62" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="113" y="295" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Action tokens</text>
+<text lang="en" x="113" y="318" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">32 × 1024</text>
+</g>
+<path d="M196 183 L236 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M196 301 L236 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="230" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="en" x="300" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">0–4</text>
+<rect x="240" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="240" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="300" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="300" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="300" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">14.2% / 14.8%</text>
+<path class="ow-mg-cut-arrow" d="M282 209 L282 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M318 274 L318 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+</g>
+<path d="M360 183 L386 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M360 301 L386 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="380" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="en" x="450" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">5–9</text>
+<rect x="390" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="390" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="450" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="450" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="450" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">3.6% / 3.9%</text>
+<path class="ow-mg-cut-arrow" d="M432 209 L432 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M468 274 L468 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+</g>
+<path d="M510 183 L536 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M510 301 L536 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="530" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="en" x="600" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">10–14</text>
+<rect x="540" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="540" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="600" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="600" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="600" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">25.3% / 28.0%</text>
+<path class="ow-mg-cut-arrow" d="M582 209 L582 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M618 274 L618 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+</g>
+<path d="M660 183 L686 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M660 301 L686 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="680" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="en" x="750" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">15–19</text>
+<rect x="690" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="690" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="750" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="750" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="750" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">26.9% / 30.5%</text>
+<path class="ow-mg-cut-arrow" d="M732 209 L732 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M768 274 L768 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+</g>
+<path d="M810 183 L836 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M810 301 L836 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="830" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="en" x="900" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">20–24</text>
+<rect x="840" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="840" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="900" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="900" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="900" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">8.1% / 8.0%</text>
+<path class="ow-mg-cut-arrow" d="M882 209 L882 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M918 274 L918 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+</g>
+<path d="M960 183 L986 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M960 301 L986 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect class="ow-mg-bg" x="980" y="128" width="140" height="238" rx="10" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="en" x="1050" y="148" font-size="15.5" fill="#b55d4c" font-weight="650" text-anchor="middle" class="ow-mg-label">25–29</text>
+<rect x="990" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="990" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="1050" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="en" x="1050" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="en" x="1050" y="351" font-size="12.4" fill="#b55d4c" font-weight="600" text-anchor="middle" class="ow-mg-val">35.0% / 32.5%</text>
+<path class="ow-mg-cut-arrow" d="M1032 209 L1032 274" fill="none" stroke="#b55d4c" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#mask-arrow-b55d4c)"/>
+<path class="ow-mg-ret-arrow" d="M1068 274 L1068 209" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="ow-mg-cross" opacity="1">
+<path d="M1026 234 L1038 246 M1026 246 L1038 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<text lang="en" x="36" y="392" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="start">Numbers below groups = final action-velocity relative L2 change (Fine-tuned 10k / Restarted 10k); all other layers &amp; text/state cross-attention stay active.</text>
+<path d="M36 418 L1164 418" fill="none" stroke="#dce9e9" stroke-width="1.2"/>
+<text lang="en" x="36" y="456" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">2. Inside a selected layer: edit only joint-attention mask M</text>
+<rect x="46" y="488" width="204" height="60" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="316" y="488" width="204" height="60" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="148" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Video stream</text>
+<text lang="en" x="148" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
+<text lang="en" x="418" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Action stream</text>
+<text lang="en" x="418" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
+<path d="M148 548 L148 586" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M418 548 L418 586" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g>
+<rect x="64" y="590" width="438" height="102" rx="8" fill="#f8fbfa" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="en" x="283" y="618" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">Joint attention (24 heads × 128d)</text>
+<text lang="en" x="283" y="647" font-size="19" fill="#273b43" font-weight="500" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
+<text lang="en" x="283" y="676" font-size="15" fill="#b55d4c" font-weight="550" text-anchor="middle">Only M[action Q, video K] = −∞</text>
+</g>
+<path d="M148 692 L148 728" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M418 692 L418 728" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<rect x="46" y="732" width="204" height="56" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="316" y="732" width="204" height="56" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="148" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">Video block suffix</text>
+<text lang="en" x="418" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">Action block suffix</text>
+<text lang="en" x="148" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
+<text lang="en" x="418" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
+<g>
+<rect x="64" y="814" width="438" height="42" rx="8" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="en" x="283" y="840" font-size="14.8" fill="#273b43" font-weight="400" text-anchor="middle">Text + state token (separate cross-attention, unchanged)</text>
+</g>
+<path d="M148 814 L148 790" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path d="M418 814 L418 790" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<text lang="en" x="918" y="492" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">392 × 392 mask blocks: Q rows, K/V columns</text>
+<text lang="en" x="805.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Observed</text>
+<text lang="en" x="805.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">120 tok</text>
+<text lang="en" x="919.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Future</text>
+<text lang="en" x="919.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">240 tok</text>
+<text lang="en" x="1033.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Action</text>
+<text lang="en" x="1033.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">32 tok</text>
+<text lang="en" x="734" y="598" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Observed Q</text>
+<g>
+<rect x="750" y="558" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="805.0" y="599" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g>
+<rect x="864" y="558" width="110" height="70" rx="5" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="en" x="919.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">Existing</text>
+</g>
+<g>
+<rect x="978" y="558" width="110" height="70" rx="5" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="en" x="1033.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">Existing</text>
+</g>
+<text lang="en" x="734" y="672" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Future Q</text>
+<g>
+<rect x="750" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="805.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g>
+<rect x="864" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="919.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g>
+<rect x="978" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="1033.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<text lang="en" x="734" y="746" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Action Q</text>
+<g>
+<rect x="750" y="706" width="110" height="70" rx="5" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="en" x="805.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">Masked</text>
+</g>
+<g>
+<rect x="864" y="706" width="110" height="70" rx="5" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="en" x="919.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">Masked</text>
+</g>
+<g>
+<rect x="978" y="706" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="en" x="1033.0" y="747" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<text lang="en" x="918" y="808" font-size="14" fill="#b55d4c" font-weight="550" text-anchor="middle">New mask: 32×360 block (action Q cannot read 360 video K/V tokens)</text>
+<text lang="en" x="918" y="833" font-size="13" fill="#61747b" font-weight="400" text-anchor="middle">All other entries keep original masks; blocks are not to scale</text>
+<rect x="36" y="872" width="1128" height="48" rx="8" fill="#f8fbfa" stroke="#dce9e9" stroke-width="1.2"/>
+<text lang="en" x="58" y="901" font-size="13.8" fill="#556b73" font-weight="500" text-anchor="start">Probe setup: fixed weights · 4 windows · t = 500 (50% demo + 50% seed-7 noise) · run all 30 layers, compare 32×14 velocity relative L2</text>
 </svg>

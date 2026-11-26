@@ -1,207 +1,295 @@
-<figure class="sv-eval-figure" id="pathway-mask-figure" data-enlarge-svg="true">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1090" role="img" data-pathway-mask="true" aria-labelledby="pathway-mask-title pathway-mask-desc" style="font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif;display:block;width:100%;height:auto">
+<figure class="sv-eval-figure" id="pathway-mask-figure" data-enlarge-svg="true" data-pathway-mask-interactive="true">
+<div class="sv-step-bar" role="group" aria-label="Layer group selector">
+  <button type="button" data-step-play aria-pressed="false"><span lang="zh-CN">▶ 动画巡检</span><span lang="en">▶ Play sweep</span></button>
+  <button type="button" data-mask-step="0" aria-pressed="false"><span lang="zh-CN">0–4 层</span><span lang="en">L0–4</span></button>
+  <button type="button" data-mask-step="1" aria-pressed="false"><span lang="zh-CN">5–9 层</span><span lang="en">L5–9</span></button>
+  <button type="button" data-mask-step="2" aria-pressed="false"><span lang="zh-CN">10–14 层</span><span lang="en">L10–14</span></button>
+  <button type="button" data-mask-step="3" aria-pressed="false"><span lang="zh-CN">15–19 层</span><span lang="en">L15–19</span></button>
+  <button type="button" data-mask-step="4" aria-pressed="false"><span lang="zh-CN">20–24 层</span><span lang="en">L20–24</span></button>
+  <button type="button" data-mask-step="5" aria-pressed="true"><span lang="zh-CN">25–29 层</span><span lang="en">L25–29</span></button>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 940" role="img" data-pathway-mask="true" aria-labelledby="pathway-mask-title pathway-mask-desc" style="font-family:'IBM Plex Sans','Noto Sans SC','Noto Sans CJK JP',sans-serif;display:block;width:100%;height:auto">
 <title id="pathway-mask-title">Grouped video-to-action attention intervention</title>
 <desc id="pathway-mask-desc">Thirty paired video and action layers. Only action-query to video-key entries are masked within one selected group of five layers. All other connections retain their original masks.</desc>
 <style>.figure-viewer-content>svg[data-pathway-mask]{min-width:1100px}</style>
 <defs>
-<marker id="mask-arrow-19364b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#19364b"/></marker>
-<marker id="mask-arrow-3263d9" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#3263d9"/></marker>
-<marker id="mask-arrow-79a948" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#79a948"/></marker>
-<marker id="mask-arrow-8798aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#8798aa"/></marker>
-<marker id="mask-arrow-b9544f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b9544f"/></marker>
-</defs><rect width="1200" height="1090" fill="white"/>
-<text lang="zh-CN" x="40" y="40" font-size="25" fill="#19364b" font-weight="650" text-anchor="start">只屏蔽选定五层中的视频 → 动作通路</text>
-<text lang="en" x="40" y="40" font-size="25" fill="#19364b" font-weight="650" text-anchor="start">Mask video → action within one five-layer group</text>
-<text lang="zh-CN" x="40" y="75" font-size="17" fill="#8798aa" font-weight="400" text-anchor="start">示例：第 25–29 层；每次恢复基线后，再切换到另一组</text>
-<text lang="en" x="40" y="75" font-size="17" fill="#8798aa" font-weight="400" text-anchor="start">Example: layers 25–29. Reset to baseline before testing the next group.</text>
-<text lang="zh-CN" x="40" y="123" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">① 完整网络：30 层全部运行</text>
-<text lang="en" x="40" y="123" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">1. Full network: all 30 layers still execute</text>
-<rect x="30" y="175" width="170" height="65" rx="8" fill="#f0f5fc" stroke="#b5c8e8" stroke-width="1.4"/>
-<rect x="30" y="295" width="170" height="65" rx="8" fill="#f2f6ee" stroke="#c3d6ae" stroke-width="1.4"/>
-<text lang="zh-CN" x="115" y="201" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">视频 token</text>
-<text lang="en" x="115" y="201" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Video tokens</text>
-<text lang="zh-CN" x="115" y="225" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">360 × 3072</text>
-<text lang="en" x="115" y="225" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">360 × 3072</text>
-<text lang="zh-CN" x="115" y="321" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">动作 token</text>
-<text lang="en" x="115" y="321" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Action tokens</text>
-<text lang="zh-CN" x="115" y="345" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">32 × 1024</text>
-<text lang="en" x="115" y="345" font-size="17" fill="#8798aa" font-weight="400" text-anchor="middle">32 × 1024</text>
-<path d="M200 207 L242 207" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M200 327 L242 327" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<text lang="zh-CN" x="305" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">0–4</text>
-<text lang="en" x="305" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">0–4</text>
-<rect x="245" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="245" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="305" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="305" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="305" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="305" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M365 208 L391 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M365 328 L391 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M287 235 L287 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M323 301 L323 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="zh-CN" x="455" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">5–9</text>
-<text lang="en" x="455" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">5–9</text>
-<rect x="395" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="395" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="455" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="455" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="455" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="455" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M515 208 L541 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M515 328 L541 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M437 235 L437 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M473 301 L473 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="zh-CN" x="605" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">10–14</text>
-<text lang="en" x="605" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">10–14</text>
-<rect x="545" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="545" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="605" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="605" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="605" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="605" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M665 208 L691 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M665 328 L691 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M587 235 L587 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M623 301 L623 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="zh-CN" x="755" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">15–19</text>
-<text lang="en" x="755" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">15–19</text>
-<rect x="695" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="695" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="755" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="755" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="755" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="755" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M815 208 L841 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M815 328 L841 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M737 235 L737 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M773 301 L773 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="zh-CN" x="905" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">20–24</text>
-<text lang="en" x="905" y="169" font-size="17" fill="#8798aa" font-weight="600" text-anchor="middle">20–24</text>
-<rect x="845" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="845" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="905" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="905" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="905" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="905" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M965 208 L991 208" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M965 328 L991 328" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M887 235 L887 301" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M923 301 L923 235" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<rect x="985" y="147" width="140" height="229" rx="10" fill="#fff6f3" stroke="#dbb5ae" stroke-width="1.4"/>
-<text lang="zh-CN" x="1055" y="169" font-size="17" fill="#b9544f" font-weight="600" text-anchor="middle">25–29</text>
-<text lang="en" x="1055" y="169" font-size="17" fill="#b9544f" font-weight="600" text-anchor="middle">25–29</text>
-<rect x="995" y="182" width="120" height="52" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="995" y="302" width="120" height="52" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="1055" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">视频 ×5</text>
-<text lang="en" x="1055" y="214" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Video ×5</text>
-<text lang="zh-CN" x="1055" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">动作 ×5</text>
-<text lang="en" x="1055" y="334" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Action ×5</text>
-<path d="M1037 235 L1037 301" fill="none" stroke="#b9544f" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#mask-arrow-b9544f)"/>
-<path d="M1073 301 L1073 235" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<path d="M1030 259 L1044 273" fill="none" stroke="#b9544f" stroke-width="3"/>
-<path d="M1030 273 L1044 259" fill="none" stroke="#b9544f" stroke-width="3"/>
-<text lang="zh-CN" x="465" y="402" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">文本 / 状态条件、残差和 FFN 保持运行</text>
-<text lang="en" x="465" y="402" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Text/state conditioning, residuals and FFNs remain active</text>
-<text lang="zh-CN" x="1100" y="402" font-size="17" fill="#79a948" font-weight="400" text-anchor="middle">输出速度场</text>
-<text lang="en" x="1100" y="402" font-size="17" fill="#79a948" font-weight="400" text-anchor="middle">Velocity output</text>
-<path d="M1105 355 L1105 378" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<text lang="zh-CN" x="40" y="442" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">箭头表示信息流：视频 K/V → 动作 Q；反向连接保留原掩码</text>
-<text lang="en" x="40" y="442" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">Arrows show information flow: video K/V → action Q; the reverse path retains its original mask.</text>
-<text lang="zh-CN" x="40" y="496" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">② 选定层内部：修改注意力掩码</text>
-<text lang="en" x="40" y="496" font-size="21" fill="#19364b" font-weight="650" text-anchor="start">2. Inside a selected layer: modify the attention mask</text>
-<rect x="50" y="535" width="205" height="65" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="320" y="535" width="205" height="65" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="152" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">视频分支</text>
-<text lang="en" x="152" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Video stream</text>
-<text lang="zh-CN" x="152" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
-<text lang="en" x="152" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
-<text lang="zh-CN" x="422" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">动作分支</text>
-<text lang="en" x="422" y="562" font-size="19" fill="#19364b" font-weight="400" text-anchor="middle">Action stream</text>
-<text lang="zh-CN" x="422" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
-<text lang="en" x="422" y="586" font-size="18" fill="#19364b" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
-<path d="M152 600 L152 641" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M422 600 L422 641" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<rect x="70" y="645" width="435" height="110" rx="8" fill="#f8fafc" stroke="#c5d2de" stroke-width="1.4"/>
-<text lang="zh-CN" x="287" y="675" font-size="20" fill="#19364b" font-weight="600" text-anchor="middle">联合注意力</text>
-<text lang="en" x="287" y="675" font-size="20" fill="#19364b" font-weight="600" text-anchor="middle">Joint attention</text>
-<text lang="zh-CN" x="287" y="704" font-size="21" fill="#19364b" font-weight="400" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
-<text lang="en" x="287" y="704" font-size="21" fill="#19364b" font-weight="400" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
-<text lang="zh-CN" x="287" y="735" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">仅 M[动作 Q, 视频 K] 设为 −∞</text>
-<text lang="en" x="287" y="735" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Only M[action Q, video K] becomes −∞</text>
-<path d="M152 755 L152 793" fill="none" stroke="#3263d9" stroke-width="2" marker-end="url(#mask-arrow-3263d9)"/>
-<path d="M422 755 L422 793" fill="none" stroke="#79a948" stroke-width="2" marker-end="url(#mask-arrow-79a948)"/>
-<rect x="50" y="797" width="205" height="60" rx="8" fill="#edf3ff" stroke="#b8c9e9" stroke-width="1.4"/>
-<rect x="320" y="797" width="205" height="60" rx="8" fill="#eff5e8" stroke="#bed2a5" stroke-width="1.4"/>
-<text lang="zh-CN" x="152" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">视频层后处理</text>
-<text lang="en" x="152" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Video block suffix</text>
-<text lang="zh-CN" x="422" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">动作层后处理</text>
-<text lang="en" x="422" y="821" font-size="17" fill="#19364b" font-weight="400" text-anchor="middle">Action block suffix</text>
-<text lang="zh-CN" x="152" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">残差 · Cross-attn · FFN</text>
-<text lang="en" x="152" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
-<text lang="zh-CN" x="422" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">残差 · Cross-attn · FFN</text>
-<text lang="en" x="422" y="845" font-size="13" fill="#8798aa" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
-<rect x="70" y="882" width="435" height="42" rx="8" fill="#f7f9fc" stroke="#c5d2de" stroke-width="1.4"/>
-<text lang="zh-CN" x="287" y="909" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">文本 + 状态 token（独立条件注意力）</text>
-<text lang="en" x="287" y="909" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Text + state token (separate cross-attention)</text>
-<path d="M152 882 L152 859" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<path d="M422 882 L422 859" fill="none" stroke="#8798aa" stroke-width="2" marker-end="url(#mask-arrow-8798aa)"/>
-<text lang="zh-CN" x="938" y="529" font-size="19" fill="#19364b" font-weight="600" text-anchor="middle">掩码分块：行是 Q，列是 K/V</text>
-<text lang="en" x="938" y="529" font-size="19" fill="#19364b" font-weight="600" text-anchor="middle">Mask blocks: Q rows, K/V columns</text>
-<text lang="zh-CN" x="826.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">当前视频</text>
-<text lang="en" x="826.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Observed</text>
-<text lang="zh-CN" x="826.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">120</text>
-<text lang="en" x="826.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">120</text>
-<text lang="zh-CN" x="938.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">未来视频</text>
-<text lang="en" x="938.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Future</text>
-<text lang="zh-CN" x="938.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">240</text>
-<text lang="en" x="938.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">240</text>
-<text lang="zh-CN" x="1050.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">动作</text>
-<text lang="en" x="1050.0" y="568" font-size="16" fill="#19364b" font-weight="400" text-anchor="middle">Action</text>
-<text lang="zh-CN" x="1050.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">32</text>
-<text lang="en" x="1050.0" y="591" font-size="15" fill="#8798aa" font-weight="400" text-anchor="middle">32</text>
-<text lang="zh-CN" x="752" y="644" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">当前视频 Q</text>
-<text lang="en" x="752" y="644" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Observed Q</text>
-<rect x="772" y="602" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="zh-CN" x="826.0" y="645" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">保留</text>
-<text lang="en" x="826.0" y="645" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="884" y="602" width="108" height="73" rx="4" fill="#f1f4f7" stroke="#cbd4dd" stroke-width="1.4"/>
-<text lang="zh-CN" x="938.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">原有屏蔽</text>
-<text lang="en" x="938.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">Existing</text>
-<rect x="996" y="602" width="108" height="73" rx="4" fill="#f1f4f7" stroke="#cbd4dd" stroke-width="1.4"/>
-<text lang="zh-CN" x="1050.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">原有屏蔽</text>
-<text lang="en" x="1050.0" y="645" font-size="16" fill="#8798aa" font-weight="400" text-anchor="middle">Existing</text>
-<text lang="zh-CN" x="752" y="721" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">未来视频 Q</text>
-<text lang="en" x="752" y="721" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Future Q</text>
-<rect x="772" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="zh-CN" x="826.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">保留</text>
-<text lang="en" x="826.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="884" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="zh-CN" x="938.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">保留</text>
-<text lang="en" x="938.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<rect x="996" y="679" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="zh-CN" x="1050.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">保留</text>
-<text lang="en" x="1050.0" y="722" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<text lang="zh-CN" x="752" y="798" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">动作 Q</text>
-<text lang="en" x="752" y="798" font-size="16" fill="#19364b" font-weight="400" text-anchor="end">Action Q</text>
-<rect x="772" y="756" width="108" height="73" rx="4" fill="#fcece7" stroke="#d7a19a" stroke-width="1.4"/>
-<text lang="zh-CN" x="826.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">新增屏蔽</text>
-<text lang="en" x="826.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Masked</text>
-<rect x="884" y="756" width="108" height="73" rx="4" fill="#fcece7" stroke="#d7a19a" stroke-width="1.4"/>
-<text lang="zh-CN" x="938.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">新增屏蔽</text>
-<text lang="en" x="938.0" y="799" font-size="16" fill="#b9544f" font-weight="400" text-anchor="middle">Masked</text>
-<rect x="996" y="756" width="108" height="73" rx="4" fill="#eef5e7" stroke="#bcd0aa" stroke-width="1.4"/>
-<text lang="zh-CN" x="1050.0" y="799" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">保留</text>
-<text lang="en" x="1050.0" y="799" font-size="16" fill="#547435" font-weight="400" text-anchor="middle">Keep</text>
-<text lang="zh-CN" x="940" y="867" font-size="15" fill="#b9544f" font-weight="400" text-anchor="middle">新增屏蔽：动作 Q 读取不到 360 个视频 K/V</text>
-<text lang="en" x="940" y="867" font-size="15" fill="#b9544f" font-weight="400" text-anchor="middle">New mask: action Q cannot read 360 video K/V tokens</text>
-<text lang="zh-CN" x="940" y="895" font-size="14" fill="#8798aa" font-weight="400" text-anchor="middle">其余位置保持原掩码；方格未按 token 数量缩放</text>
-<text lang="en" x="940" y="895" font-size="14" fill="#8798aa" font-weight="400" text-anchor="middle">Other entries retain the original mask; blocks are not to scale.</text>
-<rect x="40" y="939" width="1120" height="105" rx="8" fill="#f7f9fc" stroke="#dae2e9" stroke-width="1.4"/>
-<text lang="zh-CN" x="65" y="970" font-size="18" fill="#19364b" font-weight="550" text-anchor="start">基线与干预：相同模型、观测、状态、文本、噪声和去噪时间</text>
-<text lang="en" x="65" y="970" font-size="18" fill="#19364b" font-weight="550" text-anchor="start">Baseline vs intervention: same model, observation, state, text, noise and denoising time</text>
-<text lang="zh-CN" x="65" y="1003" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">完整跑完 30 层后，比较最终动作速度场；逐层残差另行记录</text>
-<text lang="en" x="65" y="1003" font-size="17" fill="#19364b" font-weight="400" text-anchor="start">Run all 30 layers, then compare the final action velocity; record residuals by layer separately.</text>
-<text lang="zh-CN" x="65" y="1029" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">权重固定；四个窗口，t = 500，示范与固定噪声各 50%，屏蔽项概率为 0</text>
-<text lang="en" x="65" y="1029" font-size="16" fill="#8798aa" font-weight="400" text-anchor="start">Fixed weights; four windows, t = 500, equal signal/noise; masked probabilities are 0</text>
-</svg><figcaption><span class="figure-title"><span lang="zh-CN">五层组屏蔽在网络中的位置</span><span lang="en">Where five-layer masking acts in the network</span></span><span class="figure-description"><span lang="zh-CN">上图以 25–29 层为例；下图红色块对应动作查询行与视频键列。每次只修改一个五层组，其余连接沿用原掩码，全部 30 层继续计算。</span><span lang="en">Top: the 25–29 group as an example. Bottom: red blocks are action-query rows and video-key columns. Each trial changes one five-layer group, retains all other masks, and executes all 30 layers.</span></span></figcaption></figure>
+<marker id="mask-arrow-273b43" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#273b43"/></marker>
+<marker id="mask-arrow-237ab2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#237ab2"/></marker>
+<marker id="mask-arrow-4b9c80" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#4b9c80"/></marker>
+<marker id="mask-arrow-556b73" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#556b73"/></marker>
+<marker id="mask-arrow-b55d4c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#b55d4c"/></marker>
+</defs><rect width="1200" height="940" fill="white"/>
+<text lang="zh-CN" x="36" y="38" font-size="23" fill="#273b43" font-weight="650" text-anchor="start">五层组视频 → 动作注意力屏蔽示意</text>
+<text lang="en" x="36" y="38" font-size="23" fill="#273b43" font-weight="650" text-anchor="start">Grouped five-layer video → action attention mask</text>
+<text lang="zh-CN" data-mask-sub-zh="true" x="36" y="66" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="start">当前选中：仅屏蔽第 25–29 层；每次恢复基线再测试下一组（全部 30 层继续运行）</text>
+<text lang="en" data-mask-sub-en="true" x="36" y="66" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="start">Active cut: mask layers 25–29 only; reset to baseline before each group (all 30 layers run)</text>
+<rect x="900" y="22" width="266" height="26" rx="13" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1"/>
+<text lang="zh-CN" x="1033" y="39" font-size="12.2" fill="#237ab2" font-weight="550" text-anchor="middle">点击层组或播放按钮巡检 6 组实测</text>
+<text lang="en" x="1033" y="39" font-size="12.2" fill="#237ab2" font-weight="550" text-anchor="middle">Click groups or Play to inspect all 6 bands</text>
+<text lang="zh-CN" x="36" y="112" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">① 完整网络：30 层全部运行，每次只切断一组视频 K/V → 动作 Q</text>
+<text lang="en" x="36" y="112" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">1. Full network: all 30 layers execute; cut video K/V → action Q in one five-layer group</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="视频序列共 360 个 token（当前观测 120 + 未来预测 240），残差宽度 3072；经投影进入 24 头 × 128 维联合注意力。" data-tip-en="360 video tokens (120 observed + 240 future), residual width 3072, projected into shared 24×128 joint attention.">
+<rect x="30" y="152" width="166" height="62" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<text lang="zh-CN" x="113" y="177" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">视频 token</text>
+<text lang="en" x="113" y="177" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Video tokens</text>
+<text lang="zh-CN" x="113" y="200" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">360 × 3072</text>
+<text lang="en" x="113" y="200" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">360 × 3072</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="动作序列共 32 个 token（32 步动作块），残差宽度 1024；经投影进入同一 24 头 × 128 维联合注意力空间。" data-tip-en="32 action tokens (32-step chunk), residual width 1024, projected into the same 24×128 joint attention space.">
+<rect x="30" y="270" width="166" height="62" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="113" y="295" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">动作 token</text>
+<text lang="en" x="113" y="295" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Action tokens</text>
+<text lang="zh-CN" x="113" y="318" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">32 × 1024</text>
+<text lang="en" x="113" y="318" font-size="14.5" fill="#61747b" font-weight="400" text-anchor="middle">32 × 1024</text>
+</g>
+<path d="M196 183 L236 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M196 301 L236 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group" data-mask-group="0" tabindex="0" role="button" aria-label="Layers 0-4" data-tip-zh="仅屏蔽第 0–4 层视频→动作后，最终速度场相对 L2 变化：原 115ep 12.38% · 微调 10k 14.23% · 重训 10k 14.77%" data-tip-en="Masking video→action at layers 0–4 changes final velocity L2 by: Orig 115ep 12.38% · Fine-tuned 10k 14.23% · Restarted 10k 14.77%">
+<rect class="ow-mg-bg" x="230" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="zh-CN" x="300" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">0–4</text>
+<text lang="en" x="300" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">0–4</text>
+<rect x="240" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="240" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="300" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="300" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="300" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="300" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="300" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">14.2% / 14.8%</text>
+<text lang="en" x="300" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">14.2% / 14.8%</text>
+<path class="ow-mg-cut-arrow" d="M282 209 L282 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M318 274 L318 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<g class="ow-mg-cross" opacity="0">
+<path d="M276 234 L288 246 M276 246 L288 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M360 183 L386 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M360 301 L386 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group" data-mask-group="1" tabindex="0" role="button" aria-label="Layers 5-9" data-tip-zh="仅屏蔽第 5–9 层视频→动作后，最终速度场相对 L2 变化：原 115ep 5.87% · 微调 10k 3.61% · 重训 10k 3.90%" data-tip-en="Masking video→action at layers 5–9 changes final velocity L2 by: Orig 115ep 5.87% · Fine-tuned 10k 3.61% · Restarted 10k 3.90%">
+<rect class="ow-mg-bg" x="380" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="zh-CN" x="450" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">5–9</text>
+<text lang="en" x="450" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">5–9</text>
+<rect x="390" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="390" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="450" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="450" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="450" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="450" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="450" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">3.6% / 3.9%</text>
+<text lang="en" x="450" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">3.6% / 3.9%</text>
+<path class="ow-mg-cut-arrow" d="M432 209 L432 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M468 274 L468 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<g class="ow-mg-cross" opacity="0">
+<path d="M426 234 L438 246 M426 246 L438 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M510 183 L536 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M510 301 L536 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group" data-mask-group="2" tabindex="0" role="button" aria-label="Layers 10-14" data-tip-zh="仅屏蔽第 10–14 层视频→动作后，最终速度场相对 L2 变化：原 115ep 21.60% · 微调 10k 25.28% · 重训 10k 28.02%" data-tip-en="Masking video→action at layers 10–14 changes final velocity L2 by: Orig 115ep 21.60% · Fine-tuned 10k 25.28% · Restarted 10k 28.02%">
+<rect class="ow-mg-bg" x="530" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="zh-CN" x="600" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">10–14</text>
+<text lang="en" x="600" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">10–14</text>
+<rect x="540" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="540" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="600" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="600" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="600" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="600" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="600" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">25.3% / 28.0%</text>
+<text lang="en" x="600" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">25.3% / 28.0%</text>
+<path class="ow-mg-cut-arrow" d="M582 209 L582 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M618 274 L618 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<g class="ow-mg-cross" opacity="0">
+<path d="M576 234 L588 246 M576 246 L588 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M660 183 L686 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M660 301 L686 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group" data-mask-group="3" tabindex="0" role="button" aria-label="Layers 15-19" data-tip-zh="仅屏蔽第 15–19 层视频→动作后，最终速度场相对 L2 变化：原 115ep 27.03% · 微调 10k 26.90% · 重训 10k 30.49%" data-tip-en="Masking video→action at layers 15–19 changes final velocity L2 by: Orig 115ep 27.03% · Fine-tuned 10k 26.90% · Restarted 10k 30.49%">
+<rect class="ow-mg-bg" x="680" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="zh-CN" x="750" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">15–19</text>
+<text lang="en" x="750" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">15–19</text>
+<rect x="690" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="690" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="750" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="750" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="750" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="750" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="750" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">26.9% / 30.5%</text>
+<text lang="en" x="750" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">26.9% / 30.5%</text>
+<path class="ow-mg-cut-arrow" d="M732 209 L732 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M768 274 L768 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<g class="ow-mg-cross" opacity="0">
+<path d="M726 234 L738 246 M726 246 L738 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M810 183 L836 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M810 301 L836 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group" data-mask-group="4" tabindex="0" role="button" aria-label="Layers 20-24" data-tip-zh="仅屏蔽第 20–24 层视频→动作后，最终速度场相对 L2 变化：原 115ep 11.61% · 微调 10k 8.07% · 重训 10k 7.95%" data-tip-en="Masking video→action at layers 20–24 changes final velocity L2 by: Orig 115ep 11.61% · Fine-tuned 10k 8.07% · Restarted 10k 7.95%">
+<rect class="ow-mg-bg" x="830" y="128" width="140" height="238" rx="10" fill="white" stroke="transparent" stroke-width="1.4"/>
+<text lang="zh-CN" x="900" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">20–24</text>
+<text lang="en" x="900" y="148" font-size="15.5" fill="#61747b" font-weight="650" text-anchor="middle" class="ow-mg-label">20–24</text>
+<rect x="840" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="840" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="900" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="900" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="900" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="900" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="900" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">8.1% / 8.0%</text>
+<text lang="en" x="900" y="351" font-size="12.4" fill="#556b73" font-weight="500" text-anchor="middle" class="ow-mg-val">8.1% / 8.0%</text>
+<path class="ow-mg-cut-arrow" d="M882 209 L882 274" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path class="ow-mg-ret-arrow" d="M918 274 L918 209" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<g class="ow-mg-cross" opacity="0">
+<path d="M876 234 L888 246 M876 246 L888 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<path d="M960 183 L986 183" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M960 301 L986 301" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip ow-mask-group is-active" data-mask-group="5" tabindex="0" role="button" aria-label="Layers 25-29" data-tip-zh="仅屏蔽第 25–29 层视频→动作后，最终速度场相对 L2 变化：原 115ep 33.02% · 微调 10k 35.05% · 重训 10k 32.50%" data-tip-en="Masking video→action at layers 25–29 changes final velocity L2 by: Orig 115ep 33.02% · Fine-tuned 10k 35.05% · Restarted 10k 32.50%">
+<rect class="ow-mg-bg" x="980" y="128" width="140" height="238" rx="10" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="zh-CN" x="1050" y="148" font-size="15.5" fill="#b55d4c" font-weight="650" text-anchor="middle" class="ow-mg-label">25–29</text>
+<text lang="en" x="1050" y="148" font-size="15.5" fill="#b55d4c" font-weight="650" text-anchor="middle" class="ow-mg-label">25–29</text>
+<rect x="990" y="158" width="120" height="50" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="990" y="276" width="120" height="50" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="1050" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">视频 ×5</text>
+<text lang="en" x="1050" y="188" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Video ×5</text>
+<text lang="zh-CN" x="1050" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">动作 ×5</text>
+<text lang="en" x="1050" y="306" font-size="16.5" fill="#273b43" font-weight="400" text-anchor="middle">Action ×5</text>
+<text lang="zh-CN" x="1050" y="351" font-size="12.4" fill="#b55d4c" font-weight="600" text-anchor="middle" class="ow-mg-val">35.0% / 32.5%</text>
+<text lang="en" x="1050" y="351" font-size="12.4" fill="#b55d4c" font-weight="600" text-anchor="middle" class="ow-mg-val">35.0% / 32.5%</text>
+<path class="ow-mg-cut-arrow" d="M1032 209 L1032 274" fill="none" stroke="#b55d4c" stroke-width="2" stroke-dasharray="6 5" marker-end="url(#mask-arrow-b55d4c)"/>
+<path class="ow-mg-ret-arrow" d="M1068 274 L1068 209" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="ow-mg-cross" opacity="1">
+<path d="M1026 234 L1038 246 M1026 246 L1038 234" fill="none" stroke="#b55d4c" stroke-width="2.8" stroke-linecap="round"/>
+</g>
+</g>
+<text lang="zh-CN" x="36" y="392" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="start">各组下方数字 = 仅屏蔽该五层后的最终速度场相对 L2 变化（微调 10k / 重训 10k）；其余层与文本/状态条件均保持运行。</text>
+<text lang="en" x="36" y="392" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="start">Numbers below groups = final action-velocity relative L2 change (Fine-tuned 10k / Restarted 10k); all other layers &amp; text/state cross-attention stay active.</text>
+<path d="M36 418 L1164 418" fill="none" stroke="#dce9e9" stroke-width="1.2"/>
+<text lang="zh-CN" x="36" y="456" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">② 选定层内部：仅修改联合注意力掩码 M</text>
+<text lang="en" x="36" y="456" font-size="18.5" fill="#273b43" font-weight="650" text-anchor="start">2. Inside a selected layer: edit only joint-attention mask M</text>
+<rect x="46" y="488" width="204" height="60" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="316" y="488" width="204" height="60" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="148" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">视频分支</text>
+<text lang="en" x="148" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Video stream</text>
+<text lang="zh-CN" x="148" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
+<text lang="en" x="148" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qᵥ, Kᵥ, Vᵥ</text>
+<text lang="zh-CN" x="418" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">动作分支</text>
+<text lang="en" x="418" y="513" font-size="17" fill="#273b43" font-weight="550" text-anchor="middle">Action stream</text>
+<text lang="zh-CN" x="418" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
+<text lang="en" x="418" y="536" font-size="15.5" fill="#556b73" font-weight="400" text-anchor="middle">Qₐ, Kₐ, Vₐ</text>
+<path d="M148 548 L148 586" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M418 548 L418 586" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="仅将选定五层中 keep[..., 360:392, :360] 置为 False（对应 M = −∞），被屏蔽位置概率归零，其余允许位置重新归一化。" data-tip-en="Sets keep[..., 360:392, :360] = False (M = −∞) in the selected 5 layers; masked probabilities become 0 and remaining allowed positions renormalize.">
+<rect x="64" y="590" width="438" height="102" rx="8" fill="#f8fbfa" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="zh-CN" x="283" y="618" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">联合注意力（24 头 × 128 维）</text>
+<text lang="en" x="283" y="618" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">Joint attention (24 heads × 128d)</text>
+<text lang="zh-CN" x="283" y="647" font-size="19" fill="#273b43" font-weight="500" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
+<text lang="en" x="283" y="647" font-size="19" fill="#273b43" font-weight="500" text-anchor="middle">P = softmax(QKᵀ / √d + M)</text>
+<text lang="zh-CN" x="283" y="676" font-size="15" fill="#b55d4c" font-weight="550" text-anchor="middle">仅 M[动作 Q, 视频 K] 设为 −∞</text>
+<text lang="en" x="283" y="676" font-size="15" fill="#b55d4c" font-weight="550" text-anchor="middle">Only M[action Q, video K] = −∞</text>
+</g>
+<path d="M148 692 L148 728" fill="none" stroke="#237ab2" stroke-width="2" marker-end="url(#mask-arrow-237ab2)"/>
+<path d="M418 692 L418 728" fill="none" stroke="#4b9c80" stroke-width="2" marker-end="url(#mask-arrow-4b9c80)"/>
+<rect x="46" y="732" width="204" height="56" rx="8" fill="#edf5f8" stroke="#b8d4e2" stroke-width="1.4"/>
+<rect x="316" y="732" width="204" height="56" rx="8" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="148" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">视频层后处理</text>
+<text lang="en" x="148" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">Video block suffix</text>
+<text lang="zh-CN" x="418" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">动作层后处理</text>
+<text lang="en" x="418" y="755" font-size="16" fill="#273b43" font-weight="550" text-anchor="middle">Action block suffix</text>
+<text lang="zh-CN" x="148" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">残差 · Cross-attn · FFN</text>
+<text lang="en" x="148" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
+<text lang="zh-CN" x="418" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">残差 · Cross-attn · FFN</text>
+<text lang="en" x="418" y="777" font-size="12.5" fill="#61747b" font-weight="400" text-anchor="middle">Residual · X-attn · FFN</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="文本（umT5，512 位置）与状态 token（1×4096）经独立交叉注意力输入，不经过 392×392 联合注意力掩码。" data-tip-en="Text (umT5, 512 positions) and the single state token (1×4096) enter via separate cross-attention, outside the 392×392 joint mask.">
+<rect x="64" y="814" width="438" height="42" rx="8" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="zh-CN" x="283" y="840" font-size="14.8" fill="#273b43" font-weight="400" text-anchor="middle">文本 + 状态 token（独立条件注意力，保持不变）</text>
+<text lang="en" x="283" y="840" font-size="14.8" fill="#273b43" font-weight="400" text-anchor="middle">Text + state token (separate cross-attention, unchanged)</text>
+</g>
+<path d="M148 814 L148 790" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<path d="M418 814 L418 790" fill="none" stroke="#556b73" stroke-width="2" marker-end="url(#mask-arrow-556b73)"/>
+<text lang="zh-CN" x="918" y="492" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">392 × 392 掩码分块：行 = Q，列 = K/V</text>
+<text lang="en" x="918" y="492" font-size="17.5" fill="#273b43" font-weight="650" text-anchor="middle">392 × 392 mask blocks: Q rows, K/V columns</text>
+<text lang="zh-CN" x="805.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">当前视频</text>
+<text lang="en" x="805.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Observed</text>
+<text lang="zh-CN" x="805.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">120 tok</text>
+<text lang="en" x="805.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">120 tok</text>
+<text lang="zh-CN" x="919.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">未来视频</text>
+<text lang="en" x="919.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Future</text>
+<text lang="zh-CN" x="919.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">240 tok</text>
+<text lang="en" x="919.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">240 tok</text>
+<text lang="zh-CN" x="1033.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">动作</text>
+<text lang="en" x="1033.0" y="526" font-size="15" fill="#273b43" font-weight="550" text-anchor="middle">Action</text>
+<text lang="zh-CN" x="1033.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">32 tok</text>
+<text lang="en" x="1033.0" y="546" font-size="13.5" fill="#61747b" font-weight="400" text-anchor="middle">32 tok</text>
+<text lang="zh-CN" x="734" y="598" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">当前视频 Q</text>
+<text lang="en" x="734" y="598" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Observed Q</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="当前观测视频内部自注意力（120×120）：保留原掩码。" data-tip-en="Observed-video self-attention (120×120): retained.">
+<rect x="750" y="558" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="805.0" y="599" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">保留</text>
+<text lang="en" x="805.0" y="599" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="原有因果限制：当前观测帧原本就不能读取未来视频（120×240）。" data-tip-en="Existing causal mask: observed frames never read future video (120×240).">
+<rect x="864" y="558" width="110" height="70" rx="5" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="zh-CN" x="919.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">原有屏蔽</text>
+<text lang="en" x="919.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">Existing</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="原有因果限制：当前观测帧原本就不能读取动作 token（120×32）。" data-tip-en="Existing causal mask: observed frames never read action tokens (120×32).">
+<rect x="978" y="558" width="110" height="70" rx="5" fill="#eff4f4" stroke="#c5d4d7" stroke-width="1.4"/>
+<text lang="zh-CN" x="1033.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">原有屏蔽</text>
+<text lang="en" x="1033.0" y="599" font-size="15.5" fill="#61747b" font-weight="500" text-anchor="middle">Existing</text>
+</g>
+<text lang="zh-CN" x="734" y="672" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">未来视频 Q</text>
+<text lang="en" x="734" y="672" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Future Q</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="未来视频读取当前观测（240×120）：保留原掩码。" data-tip-en="Future video reading observed frames (240×120): retained.">
+<rect x="750" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="805.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">保留</text>
+<text lang="en" x="805.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="未来视频内部自注意力（240×240）：保留原掩码。" data-tip-en="Future-video self-attention (240×240): retained.">
+<rect x="864" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="919.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">保留</text>
+<text lang="en" x="919.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="反向通路：未来视频读取动作 K/V（240×32）保留原掩码。" data-tip-en="Reverse path: future video reading action K/V (240×32) is retained.">
+<rect x="978" y="632" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="1033.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">保留</text>
+<text lang="en" x="1033.0" y="673" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<text lang="zh-CN" x="734" y="746" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">动作 Q</text>
+<text lang="en" x="734" y="746" font-size="15" fill="#273b43" font-weight="500" text-anchor="end">Action Q</text>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="新增屏蔽（32×120）：选定五层中切断动作 Q 对当前观测视频的读取。" data-tip-en="Newly masked (32×120): blocks action Q from reading observed video in the selected 5 layers.">
+<rect x="750" y="706" width="110" height="70" rx="5" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="zh-CN" x="805.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">新增屏蔽</text>
+<text lang="en" x="805.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">Masked</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="新增屏蔽（32×240）：选定五层中切断动作 Q 对未来视频的读取（单步基线该块约占 42% 注意力质量）。" data-tip-en="Newly masked (32×240): blocks action Q from reading future video (~42% of baseline joint attention mass).">
+<rect x="864" y="706" width="110" height="70" rx="5" fill="#faf1ef" stroke="#dfb8b0" stroke-width="1.4"/>
+<text lang="zh-CN" x="919.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">新增屏蔽</text>
+<text lang="en" x="919.0" y="747" font-size="15.5" fill="#b55d4c" font-weight="600" text-anchor="middle">Masked</text>
+</g>
+<g class="sv-svg-tip" tabindex="0" data-tip-zh="动作内部自注意力（32×32，基线约占 23% 质量）：保留原掩码。" data-tip-en="Action self-attention (32×32, ~23% of baseline mass): retained.">
+<rect x="978" y="706" width="110" height="70" rx="5" fill="#eef6f1" stroke="#bfd9cc" stroke-width="1.4"/>
+<text lang="zh-CN" x="1033.0" y="747" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">保留</text>
+<text lang="en" x="1033.0" y="747" font-size="15.5" fill="#4b9c80" font-weight="500" text-anchor="middle">Keep</text>
+</g>
+<text lang="zh-CN" x="918" y="808" font-size="14" fill="#b55d4c" font-weight="550" text-anchor="middle">新增屏蔽：32×360 子块（动作 Q 看不到任何视频 K/V）</text>
+<text lang="en" x="918" y="808" font-size="14" fill="#b55d4c" font-weight="550" text-anchor="middle">New mask: 32×360 block (action Q cannot read 360 video K/V tokens)</text>
+<text lang="zh-CN" x="918" y="833" font-size="13" fill="#61747b" font-weight="400" text-anchor="middle">其余位置保留原掩码；方格未按 token 数量缩放</text>
+<text lang="en" x="918" y="833" font-size="13" fill="#61747b" font-weight="400" text-anchor="middle">All other entries keep original masks; blocks are not to scale</text>
+<rect x="36" y="872" width="1128" height="48" rx="8" fill="#f8fbfa" stroke="#dce9e9" stroke-width="1.2"/>
+<text lang="zh-CN" x="58" y="901" font-size="13.8" fill="#556b73" font-weight="500" text-anchor="start">探针协议：权重固定 · 4 诊断窗口 · t = 500（示范与 seed 7 噪声各 50%）· 完整跑完 30 层比较 32×14 归一化速度场相对 L2</text>
+<text lang="en" x="58" y="901" font-size="13.8" fill="#556b73" font-weight="500" text-anchor="start">Probe setup: fixed weights · 4 windows · t = 500 (50% demo + 50% seed-7 noise) · run all 30 layers, compare 32×14 velocity relative L2</text>
+</svg>
+<div class="sv-live-bars" data-mask-readout>
+  <div class="sv-live-head">
+    <strong><span lang="zh-CN" data-mask-title-zh>切断第 25–29 层视频→动作</span><span lang="en" data-mask-title-en>Cut video→action at layers 25–29</span></strong>
+    <span><span lang="zh-CN" data-mask-note-zh>末段输出前峰值 · 紧邻动作读出，冲击最大</span><span lang="en" data-mask-note-en>Pre-readout peak · directly precedes velocity head</span></span>
+  </div>
+  <div class="sv-live-grid">
+    <div class="sv-live-item"><div class="sv-live-item-top"><span><span lang="zh-CN">原 115ep</span><span lang="en">Orig 115ep</span></span><b data-mask-val="old">33.0%</b></div><div class="sv-live-track"><div class="sv-live-fill" data-mask-bar="old" style="width:82.5%;background:#95a8ae"></div></div></div>
+    <div class="sv-live-item"><div class="sv-live-item-top"><span><span lang="zh-CN">微调 10k</span><span lang="en">Fine-tuned 10k</span></span><b data-mask-val="ft">35.0%</b></div><div class="sv-live-track"><div class="sv-live-fill" data-mask-bar="ft" style="width:87.6%;background:#556b73"></div></div></div>
+    <div class="sv-live-item"><div class="sv-live-item-top"><span><span lang="zh-CN">重训 10k</span><span lang="en">Restarted 10k</span></span><b data-mask-val="base">32.5%</b></div><div class="sv-live-track"><div class="sv-live-fill" data-mask-bar="base" style="width:81.2%;background:#237ab2"></div></div></div>
+  </div>
+</div>
+<figcaption><span class="figure-title"><span lang="zh-CN">五层组屏蔽在网络中的位置（可点击层组或播放巡检）</span><span lang="en">Where five-layer masking acts in the network (click any group or Play)</span></span><span class="figure-description"><span lang="zh-CN">每次仅切断一组内动作 Q 读取视频 K/V 的 32×360 子块，跑完完整 30 层比较末端动作速度场偏离；底部条形实时显示三份权重的实测变化。</span><span lang="en">Each probe blocks only the 32×360 action-Q → video-K/V sub-block in one five-layer group, runs all 30 layers, and compares final action-velocity deviation; the live bars show measured shifts across all three checkpoints.</span></span></figcaption>
+</figure>
