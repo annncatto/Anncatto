@@ -13,10 +13,13 @@ Keep the unpublished robot workbench and D20 homepage separate from article rele
 - Model order follows the source note: architecture,
   observation features, attention, flow training, sampling, π0.5 comparison,
   SmolVLM, asynchronous inference.
-- The experiment chapter follows task/question, grouped findings, case evidence,
-  historical arm/base trajectories, precision and internal mechanisms, FP32
-  execution, implications, next tests, and
-  experimental conditions. Full setup is the last H3; references remain collapsed.
+- The experiment chapter follows a results-first order: task/question, 4-card
+  grouped findings, real-robot cases and FP32 300 s live execution (with the
+  interactive 25-step chunk-handoff diagram), historical 120-demo arm/base
+  trajectories, precision updates and fast-weight mechanisms, unified live
+  input-substitution and white-box routing attribution, implications, next
+  tests, and experimental conditions. Full setup is the last H3; references
+  remain collapsed.
 - Dataset-specific normalization is Data preprocessing under Experimental
   conditions, after the dataset/camera description and before training settings.
   The dataflow disclosure is colocated there; changing120/150-demo statistics
@@ -385,3 +388,7 @@ article after a successful Pages deployment.
     - Depth sparsity runs shallow-narrow to deep-wide (`FP32 effN`: L01 `2.6` → L15 `53.7`; `Mixed`: L01 `3.2` → L15 `45.1`), opposite to classification ViTs.
     - Live white-box routing: single `state` token holds `40–41%` of L01 mass on normal frames but collapses to `0.4%` at 0.4 s (`49σ` OOD left gripper); at 251 s, L11 hits `70%` Top-16 on `wrist_right` patch `(4,4)` (the toy) and swapping only `wrist_right` drops L13 routing mIoU to `0.35`; across the 40 ms sawtooth drop at 153.4 s, routing mIoU stays `0.84`, confirming chunk-handoff discontinuity rather than per-frame attention jitter.
   - Decluttered all 6 existing figures (removed redundant suptitles, shortened titles/legends/callouts) and exported 2 new bilingual SVG/PNG pairs (`fast-weight-probes`, `live-routing`).
+- **November 26 results-first restructuring & state-switching diagrams**:
+  - Reordered the experiment chapter to present real-robot outcomes first (`task-observations` → `fp32-live-record`) before tracing historical 120-demo trajectories (`long-record`), precision/coadaptation mechanisms (`precision-results`, split `module-coadaptation` and `layerwise-swaps` so two large figures do not stack back-to-back), fast-weight MLP analysis (`fast-weight-analysis`), and unified black-box/white-box live attribution (`08b-live-attribution.html`).
+  - Removed duplicated summary bullets below the 4-card KPI strip in `03-intro.html` and added 5 restrained inline `.sv-contrast` lines separating easily confused concept pairs without uniform boxed cards (`offline fit vs closed-loop execution`, `storage vs compute precision`, `offline clipping vs model fit`, `slow vs fast weights`, `compression vs routing`).
+  - Upgraded `{{smolvla:fastweights}}` to switch live across Full 305 / Route Top-16 / Compress `m=4` / MiTA `4+12` on one fixed 305-unit observation strip, and added `{{smolvla:handoff}}` toggling synchronous 25-step hard switching (`−11 → −79`) against overlap / RTC conditioning.

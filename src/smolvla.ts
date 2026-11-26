@@ -1,6 +1,6 @@
 import {language,onLanguageChange} from './language.js';
 import {latencyBudget,roundingSeries,type FloatFormat} from './smolvla-math.js';
-import {fastWeightsSVG,latencySVG,roundingSVG} from './smolvla-figures.js';
+import {fastWeightsSVG,handoffSVG,latencySVG,roundingSVG} from './smolvla-figures.js';
 import {mountAnchorReveal,mountTooltips} from './sv-tooltip.js';
 
 const root=document.querySelector<HTMLElement>('.sv-article');
@@ -35,10 +35,10 @@ if(root){
  if(fw){
   let fwStep=0,fwTimer=0;
   const fwNotes:[string,string][]=[
-   ['Odd CA layers map 305 frozen VLM K/V through FP32 W_K, W_V into a 305-wide scene-specific MLP.','奇数 CA 层将冻结 VLM 的 305 个 K/V 经 FP32 W_K, W_V 映射为 305 宽场景专属快权重 MLP。'],
-   ['Splitting the 305 units by source: the single state token carries 20.4% CA mass (40% at L01); wrist_right carries 25.2%.','305 个单元拆成 6 路并行子网：仅 1 位的 state 承载 20.4% 权重（L01 达 40%），wrist_right 占 25.2%。'],
-   ['Odd CA reuses one fixed 305-wide observation MLP over all 10 Euler steps; even SA appends a causal (t+1) action sub-MLP.','奇数 CA 在 10 步去噪中反复复用同一张 305 宽网络；偶数 SA 额外拼上因果动作子网络。'],
-   ['Without retraining, 4 temporal summaries (Agent) retain 98% accuracy, and MiTA (budget 16) matches full 305-token CA.','免重训对照中，4 个时序地标压缩即可保住 98% 精度；MiTA 仅用预算 16 即可追平全量 305 注意力。'],
+   ['Full CA keeps all 280 valid observation units active across 10 Euler steps (state 20%, wrist_right 25%).','全量 CA 在 10 步去噪中激活全部 280 个有效观测单元（单 1 位 state 占 20%，wrist_right 占 25%）。'],
+   ['Hard Top-16 drops over 94% of prefix units, hurting deep layer L15 (effective width 53.7) and raising loss +18%.','硬 Top-16 剪掉超 94% 前缀单元，伤及宽背景末层 L15（有效宽度 53.7），loss 升 18%。'],
+   ['4 temporal landmarks compress the full 305-wide strip into 4 summaries, retaining 98% accuracy (+1.5% loss).','4 个时序地标把整条 305 宽前缀压成 4 个摘要，免重训即可保住 98% 精度（loss 仅 +1.5%）。'],
+   ['MiTA combines 4 shared summaries with 12 routed raw units (budget 16), beating full 305 CA (loss 0.0126).','MiTA 把 4 个共享摘要与 12 个路由原始单元拼在同一 softmax 下（预算 16），loss 降至 0.0126。'],
   ];
   const playBtn=fw.querySelector<HTMLButtonElement>('[data-fw-play]')!;
   const stepBtns=[...fw.querySelectorAll<HTMLButtonElement>('[data-fw-step]')];
@@ -46,7 +46,7 @@ if(root){
    if(fwTimer){window.clearInterval(fwTimer);fwTimer=0;}
    playBtn.setAttribute('aria-pressed',String(on));
    playBtn.innerHTML=on?'<span lang="en">Pause</span><span lang="zh-CN">暂停</span>':'<span lang="en">Play</span><span lang="zh-CN">播放</span>';
-   if(on)fwTimer=window.setInterval(()=>renderFw((fwStep+1)%4),3600);
+   if(on)fwTimer=window.setInterval(()=>renderFw((fwStep+1)%4),3400);
   };
   const renderFw=(idx:number)=>{
    fwStep=idx;
@@ -59,6 +59,26 @@ if(root){
   playBtn.addEventListener('click',()=>setPlay(playBtn.getAttribute('aria-pressed')!=='true'));
   onLanguageChange(()=>renderFw(fwStep));
   renderFw(0);
+ }
+ const ho=root.querySelector<HTMLElement>('[data-sv-figure="handoff"]');
+ if(ho){
+  let hoMode:'sync'|'blend'='sync';
+  const hoBtns=[...ho.querySelectorAll<HTMLButtonElement>('[data-ho-mode]')];
+  const renderHo=(mode:'sync'|'blend')=>{
+   hoMode=mode;
+   ho.querySelector('.sv-diagram-scroll')!.innerHTML=handoffSVG(hoMode);
+   hoBtns.forEach(b=>b.setAttribute('aria-pressed',String(b.getAttribute('data-ho-mode')===hoMode)));
+   const en=hoMode==='sync'
+    ?'Executing the old chunk to step 24 (−11) then hard-switching to a freshly replanned chunk (−79) produces the ~0.9 s sawtooth while the arm lags out of phase.'
+    :'Conditioning the new chunk on the committed prefix (RTC) or blending overlapping steps removes the abrupt step-25 drop and lets the arm track smoothly.';
+   const z=hoMode==='sync'
+    ?'旧块执行到第 24 步（−11）后硬切入按现场视角重规划的新块起点（−79），造成每 ~0.9 s 的锯齿骤降与物理臂反相滞后。'
+    :'将旧块已确定前缀作为新块条件（RTC）或对重叠步平滑聚合，可消除第 25 步的阶跃断层，使物理臂连续跟踪。';
+   ho.querySelector('[data-ho-readout]')!.textContent=zh()?z:en;
+  };
+  hoBtns.forEach(b=>b.addEventListener('click',()=>renderHo(b.getAttribute('data-ho-mode') as 'sync'|'blend')));
+  onLanguageChange(()=>renderHo(hoMode));
+  renderHo('sync');
  }
  onLanguageChange(()=>{updateRounding();updateLatency();});
  updateRounding();updateLatency();
