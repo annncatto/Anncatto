@@ -1,24 +1,13 @@
 import {language,onLanguageChange} from './language.js';
 import {latencyBudget,roundingSeries,type FloatFormat} from './smolvla-math.js';
-import {latencySVG,roundingSVG} from './smolvla-figures.js';
+import {fastWeightsSVG,latencySVG,roundingSVG} from './smolvla-figures.js';
+import {mountAnchorReveal,mountTooltips} from './sv-tooltip.js';
 
 const root=document.querySelector<HTMLElement>('.sv-article');
 if(root){
  const zh=()=>language==='zh';
  const chapterDetails=()=>[...root.querySelectorAll<HTMLDetailsElement>('details.sv-chapter')];
- const reveal=(id:string)=>{
-  const el=document.getElementById(id);if(!el||!root.contains(el))return;
-  let parent:HTMLElement|null=el;
-  while(parent&&parent!==root){if(parent instanceof HTMLDetailsElement)parent.open=true;parent=parent.parentElement;}
-  requestAnimationFrame(()=>el.scrollIntoView({block:'start'}));
- };
- document.addEventListener('click',event=>{
-  const a=(event.target as Element).closest<HTMLAnchorElement>('a[href^="#"]');if(!a)return;
-  const id=decodeURIComponent(a.hash.slice(1));if(!id||!root.querySelector(`[id="${CSS.escape(id)}"]`))return;
-  reveal(id);
- });
- addEventListener('hashchange',()=>reveal(decodeURIComponent(location.hash.slice(1))));
- if(location.hash)reveal(decodeURIComponent(location.hash.slice(1)));
+ mountAnchorReveal(root);
  for(const detail of chapterDetails())detail.addEventListener('toggle',()=>{
   for(const video of detail.querySelectorAll<HTMLVideoElement>('video'))if(!detail.open)video.pause();
  });
@@ -42,6 +31,35 @@ if(root){
   latency.querySelector('[data-latency-readout]')!.textContent=zh()?`延迟 ${ms} ms · g=${g.toFixed(2)} · 缓冲 ${(b.buffer*1000).toFixed(0)} ms · 已过去 ${b.elapsedSteps} 步 · 队列等待 ${(b.idle*1000).toFixed(0)} ms。`:`Latency ${ms} ms · g=${g.toFixed(2)} · buffer ${(b.buffer*1000).toFixed(0)} ms · ${b.elapsedSteps} elapsed steps · queue wait ${(b.idle*1000).toFixed(0)} ms.`;
  }
  latency?.querySelectorAll('input').forEach(el=>el.addEventListener('input',updateLatency));
+ const fw=root.querySelector<HTMLElement>('[data-sv-figure="fastweights"]');
+ if(fw){
+  let fwStep=0,fwTimer=0;
+  const fwNotes:[string,string][]=[
+   ['Odd CA layers map 305 frozen VLM K/V through FP32 W_K, W_V into a 305-wide scene-specific MLP.','奇数 CA 层将冻结 VLM 的 305 个 K/V 经 FP32 W_K, W_V 映射为 305 宽场景专属快权重 MLP。'],
+   ['Splitting the 305 units by source: the single state token carries 20.4% CA mass (40% at L01); wrist_right carries 25.2%.','305 个单元拆成 6 路并行子网：仅 1 位的 state 承载 20.4% 权重（L01 达 40%），wrist_right 占 25.2%。'],
+   ['Odd CA reuses one fixed 305-wide observation MLP over all 10 Euler steps; even SA appends a causal (t+1) action sub-MLP.','奇数 CA 在 10 步去噪中反复复用同一张 305 宽网络；偶数 SA 额外拼上因果动作子网络。'],
+   ['Without retraining, 4 temporal summaries (Agent) retain 98% accuracy, and MiTA (budget 16) matches full 305-token CA.','免重训对照中，4 个时序地标压缩即可保住 98% 精度；MiTA 仅用预算 16 即可追平全量 305 注意力。'],
+  ];
+  const playBtn=fw.querySelector<HTMLButtonElement>('[data-fw-play]')!;
+  const stepBtns=[...fw.querySelectorAll<HTMLButtonElement>('[data-fw-step]')];
+  const setPlay=(on:boolean)=>{
+   if(fwTimer){window.clearInterval(fwTimer);fwTimer=0;}
+   playBtn.setAttribute('aria-pressed',String(on));
+   playBtn.innerHTML=on?'<span lang="en">Pause</span><span lang="zh-CN">暂停</span>':'<span lang="en">Play</span><span lang="zh-CN">播放</span>';
+   if(on)fwTimer=window.setInterval(()=>renderFw((fwStep+1)%4),3600);
+  };
+  const renderFw=(idx:number)=>{
+   fwStep=idx;
+   fw.querySelector('.sv-diagram-scroll')!.innerHTML=fastWeightsSVG(fwStep);
+   stepBtns.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===fwStep)));
+   const [en,z]=fwNotes[fwStep];
+   fw.querySelector('[data-fw-readout]')!.textContent=zh()?z:en;
+  };
+  stepBtns.forEach((b,i)=>b.addEventListener('click',()=>{setPlay(false);renderFw(i);}));
+  playBtn.addEventListener('click',()=>setPlay(playBtn.getAttribute('aria-pressed')!=='true'));
+  onLanguageChange(()=>renderFw(fwStep));
+  renderFw(0);
+ }
  onLanguageChange(()=>{updateRounding();updateLatency();});
  updateRounding();updateLatency();
 
@@ -64,32 +82,5 @@ if(root){
  reduceMotion.addEventListener('change',()=>{if(reduceMotion.matches)videos.forEach(pause);});
  document.addEventListener('visibilitychange',()=>{if(document.hidden)videos.forEach(pause);});
 
- // Floating precision tooltip for inline metrics (.sv-tip) and interactive SVG groups (.sv-svg-tip).
- const tip=document.createElement('div');
- tip.className='sv-tooltip';tip.setAttribute('role','tooltip');tip.hidden=true;
- let activeTip:Element|null=null,shownY=0;
- const tipText=(el:Element)=>zh()?(el.getAttribute('data-tip-zh')??el.getAttribute('data-tip')??''):(el.getAttribute('data-tip-en')??el.getAttribute('data-tip')??'');
- const hideTip=()=>{tip.hidden=true;activeTip=null;};
- const placeTip=(el:Element)=>{
-  const r=el.getBoundingClientRect(),t=tip.getBoundingClientRect(),pad=12;
-  const left=Math.max(pad,Math.min(innerWidth-t.width-pad,r.left+(r.width-t.width)/2));
-  const top=r.top-t.height-8>=pad?r.top-t.height-8:Math.min(innerHeight-t.height-pad,r.bottom+8);
-  tip.style.left=`${Math.round(left)}px`;tip.style.top=`${Math.round(top)}px`;
- };
- const showTip=(el:Element)=>{
-  const text=tipText(el);if(!text){hideTip();return;}
-  const host=el.closest('dialog')??document.body;
-  if(tip.parentElement!==host)host.append(tip);
-  tip.textContent=text;tip.hidden=false;activeTip=el;shownY=scrollY;
-  placeTip(el);
- };
- const findTip=(target:EventTarget|null)=>target instanceof Element?target.closest('[data-tip],[data-tip-zh],[data-tip-en]'):null;
- document.addEventListener('pointerover',e=>{if((e as PointerEvent).pointerType==='touch')return;const el=findTip(e.target);if(el)showTip(el);});
- document.addEventListener('pointerout',e=>{const el=findTip(e.target);if(el&&el===activeTip&&!(e.relatedTarget instanceof Element&&el.contains(e.relatedTarget)))hideTip();});
- document.addEventListener('focusin',e=>{const el=findTip(e.target);if(el)showTip(el);});
- document.addEventListener('focusout',e=>{if(activeTip&&findTip(e.target)===activeTip)hideTip();});
- document.addEventListener('click',e=>{const el=findTip(e.target);if(el){if(activeTip===el)hideTip();else showTip(el);}else if(activeTip)hideTip();});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&activeTip)hideTip();});
- addEventListener('scroll',()=>{if(!activeTip)return;if(Math.abs(scrollY-shownY)>32)hideTip();else placeTip(activeTip);},{passive:true});
- onLanguageChange(()=>{if(activeTip)showTip(activeTip);});
+ mountTooltips();
 }

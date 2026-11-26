@@ -1,6 +1,6 @@
 {
-  "schema": 2,
-  "compiled_on": "2026-11-25",
+  "schema": 3,
+  "compiled_on": "2026-11-26",
   "task": "Pick up floor toys and place them into the box held by the left arm",
   "protocol": {
     "dataset_episodes": 150,
@@ -15,8 +15,8 @@
     "flow_draws": 32,
     "prediction_windows": 90,
     "uniform_comparison_compute": "FP32 weights and compute; autocast and TF32 disabled",
-    "precision_comparison": "A/B change training storage, optimizer moments and compute recipe together",
-    "continuation": "C adds 20k updates to B at constant learning rate 5e-7"
+    "precision_comparison": "Mixed 100k vs FP32 100k change training storage, optimizer moments and compute recipe together",
+    "continuation": "FP32 120k adds 20k updates to FP32 100k at constant learning rate 5e-7"
   },
   "parameter_scope": {
     "total": 450046176,
@@ -630,7 +630,7 @@
     }
   },
   "deployment": {
-    "model": "B · FP32 100k",
+    "model": "FP32 100k",
     "frames": 5832,
     "span_s": 299.879791243,
     "recording_hz": 19.444457980414548,
@@ -738,6 +738,615 @@
     "donor": "Nearest demonstrated arm state after train-std scaling with std floor 1",
     "scope": "Saved-observation re-prediction, compared with its matched new baseline; not the cached executed action"
   },
+  "fast_weights": {
+    "valid_prefix_tokens": 280,
+    "total_prefix_tokens": 305,
+    "odd_ca_layers": [
+      1,
+      3,
+      5,
+      7,
+      9,
+      11,
+      13,
+      15
+    ],
+    "sweep": {
+      "mixed": {
+        "full": {
+          "mode": "full",
+          "m": 0,
+          "k": 305,
+          "budget": 305,
+          "flow_loss_mean": 0.02673002559458837,
+          "std_arm14_mae": 0.05018513021059334
+        },
+        "topk_k1": {
+          "mode": "topk",
+          "m": 0,
+          "k": 1,
+          "budget": 1,
+          "flow_loss_mean": 0.06868587309145369
+        },
+        "topk_k2": {
+          "mode": "topk",
+          "m": 0,
+          "k": 2,
+          "budget": 2,
+          "flow_loss_mean": 0.04565044096671045
+        },
+        "topk_k4": {
+          "mode": "topk",
+          "m": 0,
+          "k": 4,
+          "budget": 4,
+          "flow_loss_mean": 0.03614315869344864,
+          "std_arm14_mae": 0.05870677635539323
+        },
+        "topk_k8": {
+          "mode": "topk",
+          "m": 0,
+          "k": 8,
+          "budget": 8,
+          "flow_loss_mean": 0.0320899598300457,
+          "std_arm14_mae": 0.055623974883928895
+        },
+        "topk_k16": {
+          "mode": "topk",
+          "m": 0,
+          "k": 16,
+          "budget": 16,
+          "flow_loss_mean": 0.029824503610143438,
+          "std_arm14_mae": 0.05349264096003026
+        },
+        "topk_k32": {
+          "mode": "topk",
+          "m": 0,
+          "k": 32,
+          "budget": 32,
+          "flow_loss_mean": 0.028420026472304016,
+          "std_arm14_mae": 0.052012445870786905
+        },
+        "topk_k64": {
+          "mode": "topk",
+          "m": 0,
+          "k": 64,
+          "budget": 64,
+          "flow_loss_mean": 0.027435835581854917,
+          "std_arm14_mae": 0.050921422080136836
+        },
+        "topk_k128": {
+          "mode": "topk",
+          "m": 0,
+          "k": 128,
+          "budget": 128,
+          "flow_loss_mean": 0.02689905091392575
+        },
+        "agent_m1": {
+          "mode": "agent",
+          "m": 1,
+          "k": 0,
+          "budget": 1,
+          "flow_loss_mean": 0.03629757381713716
+        },
+        "agent_m2": {
+          "mode": "agent",
+          "m": 2,
+          "k": 0,
+          "budget": 2,
+          "flow_loss_mean": 0.02794102350162575
+        },
+        "agent_m4": {
+          "mode": "agent",
+          "m": 4,
+          "k": 0,
+          "budget": 4,
+          "flow_loss_mean": 0.02659098507865565,
+          "std_arm14_mae": 0.05024801101535559
+        },
+        "agent_m8": {
+          "mode": "agent",
+          "m": 8,
+          "k": 0,
+          "budget": 8,
+          "flow_loss_mean": 0.02640045566658955,
+          "std_arm14_mae": 0.05008447507862002
+        },
+        "agent_m16": {
+          "mode": "agent",
+          "m": 16,
+          "k": 0,
+          "budget": 16,
+          "flow_loss_mean": 0.0263141095492756,
+          "std_arm14_mae": 0.05012786714360118
+        },
+        "agent_m32": {
+          "mode": "agent",
+          "m": 32,
+          "k": 0,
+          "budget": 32,
+          "flow_loss_mean": 0.026182792622421402,
+          "std_arm14_mae": 0.050151996314525604
+        },
+        "agent_m4_pin_state": {
+          "mode": "agent_pin_state",
+          "m": 4,
+          "k": 0,
+          "budget": 5,
+          "flow_loss_mean": 0.028366319427732378
+        },
+        "agent_m16_pin_state": {
+          "mode": "agent_pin_state",
+          "m": 16,
+          "k": 0,
+          "budget": 17,
+          "flow_loss_mean": 0.02697286297188839,
+          "std_arm14_mae": 0.05057629372458905
+        },
+        "mita_route_m4_k8": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 8,
+          "budget": 12,
+          "flow_loss_mean": 0.03220011538360268
+        },
+        "mita_route_m4_k16": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 16,
+          "budget": 20,
+          "flow_loss_mean": 0.02989389974391088,
+          "std_arm14_mae": 0.05354269116651267
+        },
+        "mita_route_m4_k32": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 32,
+          "budget": 36,
+          "flow_loss_mean": 0.02852915508992737,
+          "std_arm14_mae": 0.05216816999018192
+        },
+        "mita_route_m4_k64": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 64,
+          "budget": 68,
+          "flow_loss_mean": 0.027470842105685733
+        },
+        "mita_m2_k6": {
+          "mode": "mita",
+          "m": 2,
+          "k": 6,
+          "budget": 8,
+          "flow_loss_mean": 0.029011409627855755
+        },
+        "mita_m4_k4": {
+          "mode": "mita",
+          "m": 4,
+          "k": 4,
+          "budget": 8,
+          "flow_loss_mean": 0.028781799686839804
+        },
+        "mita_m4_k12": {
+          "mode": "mita",
+          "m": 4,
+          "k": 12,
+          "budget": 16,
+          "flow_loss_mean": 0.027460042263555806,
+          "std_arm14_mae": 0.05164308415260166
+        },
+        "mita_m4_k28": {
+          "mode": "mita",
+          "m": 4,
+          "k": 28,
+          "budget": 32,
+          "flow_loss_mean": 0.027082312320999335,
+          "std_arm14_mae": 0.05126923741772771
+        },
+        "mita_m8_k8": {
+          "mode": "mita",
+          "m": 8,
+          "k": 8,
+          "budget": 16,
+          "flow_loss_mean": 0.02750631912931567
+        },
+        "mita_m8_k24": {
+          "mode": "mita",
+          "m": 8,
+          "k": 24,
+          "budget": 32,
+          "flow_loss_mean": 0.02700348612415837,
+          "std_arm14_mae": 0.05104768089950085
+        },
+        "mita_m8_k56": {
+          "mode": "mita",
+          "m": 8,
+          "k": 56,
+          "budget": 64,
+          "flow_loss_mean": 0.026750715340313036,
+          "std_arm14_mae": 0.05069441860541701
+        },
+        "mita_m4_k12_pin_state": {
+          "mode": "mita_pin_state",
+          "m": 4,
+          "k": 12,
+          "budget": 17,
+          "flow_loss_mean": 0.027464313643577043,
+          "std_arm14_mae": 0.051627312204800546
+        },
+        "mita_m4_k28_pin_state": {
+          "mode": "mita_pin_state",
+          "m": 4,
+          "k": 28,
+          "budget": 33,
+          "flow_loss_mean": 0.027078820137830917,
+          "std_arm14_mae": 0.05125299165956676
+        }
+      },
+      "fp32": {
+        "full": {
+          "mode": "full",
+          "m": 0,
+          "k": 305,
+          "budget": 305,
+          "flow_loss_mean": 0.012758191998727852,
+          "std_arm14_mae": 0.02826049004215747
+        },
+        "topk_k1": {
+          "mode": "topk",
+          "m": 0,
+          "k": 1,
+          "budget": 1,
+          "flow_loss_mean": 0.05499396871891804
+        },
+        "topk_k2": {
+          "mode": "topk",
+          "m": 0,
+          "k": 2,
+          "budget": 2,
+          "flow_loss_mean": 0.03174764313735068
+        },
+        "topk_k4": {
+          "mode": "topk",
+          "m": 0,
+          "k": 4,
+          "budget": 4,
+          "flow_loss_mean": 0.020797677658265457,
+          "std_arm14_mae": 0.03560752817429602
+        },
+        "topk_k8": {
+          "mode": "topk",
+          "m": 0,
+          "k": 8,
+          "budget": 8,
+          "flow_loss_mean": 0.017229115168447606,
+          "std_arm14_mae": 0.03240101155824959
+        },
+        "topk_k16": {
+          "mode": "topk",
+          "m": 0,
+          "k": 16,
+          "budget": 16,
+          "flow_loss_mean": 0.015106011494935956,
+          "std_arm14_mae": 0.030365113983862102
+        },
+        "topk_k32": {
+          "mode": "topk",
+          "m": 0,
+          "k": 32,
+          "budget": 32,
+          "flow_loss_mean": 0.013789872162305983,
+          "std_arm14_mae": 0.029176498530432582
+        },
+        "topk_k64": {
+          "mode": "topk",
+          "m": 0,
+          "k": 64,
+          "budget": 64,
+          "flow_loss_mean": 0.013137236837792443,
+          "std_arm14_mae": 0.028620852855965495
+        },
+        "topk_k128": {
+          "mode": "topk",
+          "m": 0,
+          "k": 128,
+          "budget": 128,
+          "flow_loss_mean": 0.012814089372113813
+        },
+        "agent_m1": {
+          "mode": "agent",
+          "m": 1,
+          "k": 0,
+          "budget": 1,
+          "flow_loss_mean": 0.028501497174147516
+        },
+        "agent_m2": {
+          "mode": "agent",
+          "m": 2,
+          "k": 0,
+          "budget": 2,
+          "flow_loss_mean": 0.01448172746313503
+        },
+        "agent_m4": {
+          "mode": "agent",
+          "m": 4,
+          "k": 0,
+          "budget": 4,
+          "flow_loss_mean": 0.01294848378165625,
+          "std_arm14_mae": 0.02878287388011813
+        },
+        "agent_m8": {
+          "mode": "agent",
+          "m": 8,
+          "k": 0,
+          "budget": 8,
+          "flow_loss_mean": 0.012624212922673905,
+          "std_arm14_mae": 0.028607682790607214
+        },
+        "agent_m16": {
+          "mode": "agent",
+          "m": 16,
+          "k": 0,
+          "budget": 16,
+          "flow_loss_mean": 0.012501062476076186,
+          "std_arm14_mae": 0.028439860907383263
+        },
+        "agent_m32": {
+          "mode": "agent",
+          "m": 32,
+          "k": 0,
+          "budget": 32,
+          "flow_loss_mean": 0.012398871516779764,
+          "std_arm14_mae": 0.02839102188590914
+        },
+        "agent_m4_pin_state": {
+          "mode": "agent_pin_state",
+          "m": 4,
+          "k": 0,
+          "budget": 5,
+          "flow_loss_mean": 0.015043140934722032
+        },
+        "agent_m16_pin_state": {
+          "mode": "agent_pin_state",
+          "m": 16,
+          "k": 0,
+          "budget": 17,
+          "flow_loss_mean": 0.013346139439818216,
+          "std_arm14_mae": 0.029516078997403383
+        },
+        "mita_route_m4_k8": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 8,
+          "budget": 12,
+          "flow_loss_mean": 0.01705913348996546
+        },
+        "mita_route_m4_k16": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 16,
+          "budget": 20,
+          "flow_loss_mean": 0.015247938565153163,
+          "std_arm14_mae": 0.03048872807994485
+        },
+        "mita_route_m4_k32": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 32,
+          "budget": 36,
+          "flow_loss_mean": 0.01386083410034189,
+          "std_arm14_mae": 0.02927910245489329
+        },
+        "mita_route_m4_k64": {
+          "mode": "mita_route",
+          "m": 4,
+          "k": 64,
+          "budget": 68,
+          "flow_loss_mean": 0.01319551921551465
+        },
+        "mita_m2_k6": {
+          "mode": "mita",
+          "m": 2,
+          "k": 6,
+          "budget": 8,
+          "flow_loss_mean": 0.013992076328577241
+        },
+        "mita_m4_k4": {
+          "mode": "mita",
+          "m": 4,
+          "k": 4,
+          "budget": 8,
+          "flow_loss_mean": 0.013311080452695023
+        },
+        "mita_m4_k12": {
+          "mode": "mita",
+          "m": 4,
+          "k": 12,
+          "budget": 16,
+          "flow_loss_mean": 0.012648053587327013,
+          "std_arm14_mae": 0.028954867972061038
+        },
+        "mita_m4_k28": {
+          "mode": "mita",
+          "m": 4,
+          "k": 28,
+          "budget": 32,
+          "flow_loss_mean": 0.012385886289848713,
+          "std_arm14_mae": 0.02852912968955934
+        },
+        "mita_m8_k8": {
+          "mode": "mita",
+          "m": 8,
+          "k": 8,
+          "budget": 16,
+          "flow_loss_mean": 0.012715783253952395
+        },
+        "mita_m8_k24": {
+          "mode": "mita",
+          "m": 8,
+          "k": 24,
+          "budget": 32,
+          "flow_loss_mean": 0.012407032871124102,
+          "std_arm14_mae": 0.02849193522706628
+        },
+        "mita_m8_k56": {
+          "mode": "mita",
+          "m": 8,
+          "k": 56,
+          "budget": 64,
+          "flow_loss_mean": 0.012296885324758478,
+          "std_arm14_mae": 0.02828354958910495
+        },
+        "mita_m4_k12_pin_state": {
+          "mode": "mita_pin_state",
+          "m": 4,
+          "k": 12,
+          "budget": 17,
+          "flow_loss_mean": 0.012643200534512289,
+          "std_arm14_mae": 0.0289540026569739
+        },
+        "mita_m4_k28_pin_state": {
+          "mode": "mita_pin_state",
+          "m": 4,
+          "k": 28,
+          "budget": 33,
+          "flow_loss_mean": 0.012384317094983999,
+          "std_arm14_mae": 0.02853022131603211
+        }
+      }
+    },
+    "ca_layer_eff_tokens": {
+      "mixed": {
+        "1": 3.1981513872742653,
+        "3": 4.599926650524139,
+        "5": 7.700933337211609,
+        "7": 16.00641441345215,
+        "9": 18.732635974884033,
+        "11": 16.669676899909973,
+        "13": 23.460310339927673,
+        "15": 45.05672764778137
+      },
+      "fp32": {
+        "1": 2.6401653587818146,
+        "3": 3.439577415585518,
+        "5": 4.757644131779671,
+        "7": 12.034559518098831,
+        "9": 17.201541304588318,
+        "11": 16.46937096118927,
+        "13": 23.345565676689148,
+        "15": 53.73785090446472
+      }
+    },
+    "ca_source_mass_mean": {
+      "mixed": {
+        "forward": 0.1398967399582034,
+        "chest": 0.10181740283587715,
+        "wrist_left": 0.11631975529917327,
+        "wrist_right": 0.24338935629930347,
+        "text": 0.1951831643928017,
+        "state": 0.20339358329511015
+      },
+      "fp32": {
+        "forward": 0.13807148672640324,
+        "chest": 0.10181707019000896,
+        "wrist_left": 0.11551726829407016,
+        "wrist_right": 0.2522698226966895,
+        "text": 0.1884509908027212,
+        "state": 0.2038733638555641
+      }
+    },
+    "live_l01_source_mass": {
+      "start_underflow": {
+        "forward": 0.2684928238391876,
+        "chest": 0.07041820734739304,
+        "wrist_left": 0.027836117148399352,
+        "wrist_right": 0.300374773144722,
+        "text": 0.32922162413597106,
+        "state": 0.003656450763810426
+      },
+      "base_moving": {
+        "forward": 0.23117991387844086,
+        "chest": 0.0511633351445198,
+        "wrist_left": 0.008266155701130628,
+        "wrist_right": 0.2941193699836731,
+        "text": 0.0032996029884088786,
+        "state": 0.41197161078453065
+      },
+      "active_open_grasp": {
+        "forward": 0.25674535930156706,
+        "chest": 0.06260345913469792,
+        "wrist_left": 0.0025555784814059734,
+        "wrist_right": 0.27550722658634186,
+        "text": 0.0024776355014182625,
+        "state": 0.4001107275485992
+      },
+      "oscillation_251s": {
+        "forward": 0.20341087132692337,
+        "chest": 0.06204907558858395,
+        "wrist_left": 0.00254088417859748,
+        "wrist_right": 0.32955745458602903,
+        "text": 0.0022317018010653555,
+        "state": 0.40021002292633057
+      }
+    },
+    "live_routing_miou_pairs": {
+      "sawtooth_before_vs_after": {
+        "1": 0.8437335167985325,
+        "3": 0.8804724228872837,
+        "5": 0.8376332989336086,
+        "7": 0.8376332989336087,
+        "9": 0.7975094599243208,
+        "11": 0.8803348239880748,
+        "13": 0.808003669303979,
+        "15": 0.8171402362114437,
+        "mean": 0.8378075908726065
+      },
+      "oscillation_vs_swap_wrist_right": {
+        "1": 0.6677458351761757,
+        "3": 0.7424423804609565,
+        "5": 0.6705561211147427,
+        "7": 0.7326204399888613,
+        "9": 0.582749722720109,
+        "11": 0.5267231935790287,
+        "13": 0.3506456498164855,
+        "15": 0.5610642750209315,
+        "mean": 0.6043184522346614
+      },
+      "oscillation_vs_donor_demo": {
+        "1": 0.5651865016075542,
+        "3": 0.5806835490130684,
+        "5": 0.5054703704933884,
+        "7": 0.5825685705389568,
+        "9": 0.42924386312334445,
+        "11": 0.43369594780731313,
+        "13": 0.2914091040467852,
+        "15": 0.46875444503514674,
+        "mean": 0.4821265439581947
+      },
+      "oscillation_vs_active_open": {
+        "1": 0.5755647352901357,
+        "3": 0.5975884654673185,
+        "5": 0.49567288445091645,
+        "7": 0.5098412978116841,
+        "9": 0.4361022328802649,
+        "11": 0.4996605579384777,
+        "13": 0.3173880592171447,
+        "15": 0.45975667677969473,
+        "mean": 0.48644686372945456
+      },
+      "start_vs_base_moving": {
+        "1": 0.3740610693654172,
+        "3": 0.45807532152002023,
+        "5": 0.38577032448580884,
+        "7": 0.45177780887925806,
+        "9": 0.3738533706314026,
+        "11": 0.40173588252075326,
+        "13": 0.3663711361102665,
+        "15": 0.4278463109340302,
+        "mean": 0.40493640305586964
+      }
+    }
+  },
   "source_sha256": {
     "precision/weights.json": "424508d285b47680139176cb116283f6f7895944b3900b3571f009101fd1c96c",
     "precision/parameter_inventory.csv": "ece94feeffa50489e20b1c2b5cbaf0bab16c4a717f4bcf02949502c5c5cd8e78",
@@ -750,7 +1359,9 @@
     "deployment/evaluation.json": "341ff19b71c16f0762efe87ab5722208a744854118f93b14446c85f3cfe316e5",
     "deployment/evaluation-series.npz": "207c5fc75b614a2ff37b1860ed381efeaea3e218d53b8b6fc5dfc8206711482f",
     "deployment/input-interventions.json": "ccbbeb178d5167f3b59fb26eb01967376daf1e71b8781afaa79b638d110f8a6d",
-    "deployment/intervention-inputs.json": "dd0a5e164e7da6553cf416afd26e83101cb3a4a14762091b0f1edab4e82339da"
+    "deployment/intervention-inputs.json": "dd0a5e164e7da6553cf416afd26e83101cb3a4a14762091b0f1edab4e82339da",
+    "fast_weights/probe1_budget_sweep.json": "ae2c65cda5e20eef3b049fa706465e2ba3b2b46dabbdfd1f5b5407a2f0e72f7e",
+    "fast_weights/probe2_live_routing.json": "256d3fa636c5cb81dd50cda11a6a8b8b89ca706da1742a0d658d5f11d3bc6fd7"
   },
   "runtime_checks": {
     "runtime_model_sha256": "5daaa297954acf9ae89397b571322f07bf30798e72f566e61a09393342cb1f99",
