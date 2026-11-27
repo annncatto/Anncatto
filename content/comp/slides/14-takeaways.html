@@ -1,0 +1,29 @@
+<section aria-labelledby="c-takeaways-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-takeaways">
+<header class="slide-header">
+<h2 id="c-takeaways-title"><span lang="en">Key takeaways and practical implications</span><span lang="zh-CN">核心结论与机器人策略实践启发</span></h2>
+<nav aria-label="§6–7 · Scope" class="paper-section-path"><strong><span lang="en">§6–7 · Scope</span><span lang="zh-CN">§6–7 · 边界</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-cost"><span lang="en">Cost &amp; Limits</span><span lang="zh-CN">代价与局限</span></a><a aria-current="step" class="section-path-stage" href="#c-takeaways"><span lang="en">Summary</span><span lang="zh-CN">总结</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=10" rel="noopener" target="_blank">14 · §7 · Conclusion · p. 10 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-table c-fill-table"><table><thead><tr><th><span lang="en">Bottleneck</span><span lang="zh-CN">核心瓶颈</span></th><th><span lang="en">CoMP mechanism</span><span lang="zh-CN">CoMP 机制</span></th><th><span lang="en">Key quantitative proof</span><span lang="zh-CN">关键实证结果</span></th></tr></thead><tbody>
+<tr><th><span lang="en">ODE step refinement collapses BayesDiff variance</span><span lang="zh-CN">加密欧拉步数致 BayesDiff 方差与排序坍缩</span></th><td><span lang="en">Carry state–weight cross-covariance $C_i$ (sum amplitudes before squaring)</span><span lang="zh-CN">递推显式携带互协方差 $C_i$（先叠加振幅再平方）</span></td><td><span lang="en">Bounds lift from $O(1/T) \to O(1)$; robomimic variance error <strong>&lt; 0.2%</strong>, ranking <strong>77%–93%</strong> invariant across $T=50..400$</span><span lang="zh-CN">上界由 $O(1/T)\to O(1)$；方差误差 <strong>&lt; 0.2%</strong>，跨 $T=50\text{–}400$ 排序准确率稳居 <strong>77%–93%</strong></span></td></tr>
+<tr><th><span lang="en">First-order linearization fails on nonlinear VLAs</span><span lang="zh-CN">高维非线性 VLA 上一阶线性化误差累积</span></th><td><span lang="en">CoMP-UKF propagates $2D+1$ deterministic sigma points in one forward batch</span><span lang="zh-CN">CoMP-UKF 以 $2D+1$ 个 sigma 点单批前向保留曲率</span></td><td><span lang="en">Leads LIBERO-90 failure detection (TWA <strong>0.643</strong>, Acc <strong>0.794</strong>, DT <strong>0.474</strong>), beating equal-budget ensemble (0.611)</span><span lang="zh-CN">LIBERO-90 故障检测三项第一（TWA <strong>0.643</strong> / Acc <strong>0.794</strong> / DT <strong>0.474</strong>），高于同算力后验集成（0.611）</span></td></tr>
+<tr><th><span lang="en">Last-layer feature collapse hides input ambiguity</span><span lang="zh-CN">末层特征坍缩掩盖语言与视觉分布偏移</span></th><td><span lang="en">Append pre-computed VLM embeddings $c(o)$ with zero weights (no retraining)</span><span lang="zh-CN">以零权重拼接预计算嵌入 $c(o)$（零重训、动作不变）</span></td><td><span lang="en">Monotonic RoboLab ambiguity response; lifts LIBERO-10 SmolVLA gain to <strong>+3.5 pp</strong> with 78 demos &amp; <strong>75 MB</strong> posterior</span><span lang="zh-CN">RoboLab 语义模糊单调响应；SmolVLA 仅用 78 条示教与 <strong>75 MB</strong> 后验取得 <strong>+3.5 pp</strong> 微调增益</span></td></tr>
+</tbody></table></div>
+<div class="c-three c-fill-grid">
+<div class="c-card is-green">
+<h3><span lang="en">1 · Practical drop-in today</span><span lang="zh-CN">1 · 立即可落地的场景</span></h3>
+<p><span lang="en">Offline <strong>active data curation</strong> for fine-tuning $\pi_{0.5}$ / SmolVLA (only a single forward pass at frame 1 per candidate demo, 75–206 MB posterior).</span><span lang="zh-CN">$\pi_{0.5}$ / SmolVLA <strong>微调前离线数据筛选</strong>（仅评首帧，单模型 + 75–206 MB 后验即可替代双模型集成）。</span></p>
+</div>
+<div class="c-card is-blue">
+<h3><span lang="en">2 · Use $U_{\mathrm{endpoint}}$ + augmented head</span><span lang="zh-CN">2 · 关键工程配搭</span></h3>
+<p><span lang="en">Always pair coherent propagation with <strong>$c(o)$ head widening</strong> and <strong>cross-step endpoint covariance</strong> $U_{\mathrm{endpoint}}$; plain heads miss language/visual shifts.</span><span lang="zh-CN">优先采用<strong>增强头 + 末端协方差 $U_{\mathrm{endpoint}}$</strong>；朴素末层会漏掉语言歧义，对角方差会漏掉跨步累积偏离。</span></p>
+</div>
+<div class="c-card">
+<h3><span lang="en">3 · Next step for real-time &amp; WAMs</span><span lang="zh-CN">3 · 面向实时与 WAM 的演进</span></h3>
+<p><span lang="en">Low-rank covariance propagation (avoiding $2D+1$ sigma points for large chunks, <span style="white-space:nowrap">$H\ge 32$)</span> is the missing piece for 20–30 Hz closed-loop failure monitors.</span><span lang="zh-CN">对 $H\ge 32$ 的大动作块与世界—动作模型，<strong>低秩协方差传播</strong>是打通 20–30 Hz 实时闭环监控的关键下一步。</span></p>
+</div>
+</div>
+<div class="c-finding"><span lang="en"><strong>Take-home message:</strong> Quantifying epistemic uncertainty in pre-trained flow policies requires <em>coherent</em> propagation across ODE steps ($C_i$) and <em>uncollapsed</em> observation features ($c(o)$)—fixing both turns a single frozen VLA into a calibrated failure detector and data curator.</span><span lang="zh-CN"><strong>总结：</strong>让预训练流匹配策略给出可信的认知不确定性，必须同时解决“跨步传播不相干（补回 $C_i$）”与“末层特征坍缩（拼接 $c(o)$）”两道根因；二者齐备后，单个冻结 VLA 即可胜任故障检测与数据筛选。</span></div>
+</div>
+</section>

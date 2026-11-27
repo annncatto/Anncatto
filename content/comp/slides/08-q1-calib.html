@@ -1,0 +1,32 @@
+<section aria-labelledby="c-q1-calib-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-q1-calib">
+<header class="slide-header">
+<h2 id="c-q1-calib-title"><span lang="en">Q1: Faithfulness of propagated covariance</span><span lang="zh-CN">Q1：传播协方差的校准精度（robomimic）</span></h2>
+<nav aria-label="§4 · Eval" class="paper-section-path"><strong><span lang="en">§4 · Eval</span><span lang="zh-CN">§4 · 评测</span></strong><div class="paper-section-stages"><a aria-current="step" class="section-path-stage" href="#c-q1-calib"><span lang="en">Q1 Calib</span><span lang="zh-CN">校准</span></a><a class="section-path-stage" href="#c-q1-ranking"><span lang="en">Q1 Rank</span><span lang="zh-CN">排序</span></a><a class="section-path-stage" href="#c-q2-lang"><span lang="en">Q2 Lang</span><span lang="zh-CN">语义</span></a><a class="section-path-stage" href="#c-q3-fiper"><span lang="en">Q3 Fail</span><span lang="zh-CN">故障</span></a><a class="section-path-stage" href="#c-q4-save"><span lang="en">Q4 Select</span><span lang="zh-CN">选数</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=7" rel="noopener" target="_blank">08 · §4.1 · Fig. 2, 6 · p. 6–7, 23 ↗</a>
+</header>
+<div class="brief-body c-body">
+<figure class="brief-figure c-figure">
+<img alt="CoMP Figure 2: Robomimic calibration against 6000-draw posterior ensemble" decoding="async" height="445" loading="lazy" src="/assets/content/comp/figure-02.webp" width="1760"/>
+<figcaption><span lang="en">Figure 2 · Robomimic (Lift, PickPlaceCan, NutAssemblySquare; 29M flow Diffusion Policy, $H=16$, $T=50$, plain head; median + 95% bootstrap CI over 150 windows/task; reference $M=6000$ draws).</span><span lang="zh-CN">图 2 · Robomimic（Lift / PickPlaceCan / NutAssemblySquare；29M 流匹配 Diffusion Policy，$H=16, T=50$，朴素末层头；每任务 150 观测窗中位数与 95% 置信区间；参考集成 $M=6000$）。</span> <a data-open-figure="c-original-2" href="/assets/content/comp/figure-02.webp">Fig. 2 ↗</a></figcaption>
+</figure>
+<div class="c-three">
+<div class="c-card is-alert">
+<h3><span lang="en">Total variance ratio ($\operatorname{tr}P/\operatorname{tr}P^\star$)</span><span lang="zh-CN">总方差比（目标 = 1）</span></h3>
+<p><span lang="en">BayesDiff recovers only <strong>6%–23%</strong> of reference variance; keeping full state covariance (<strong>full $\Sigma$</strong>) still severely underestimates spread (Cor. 1). CoMP-EKF &amp; UKF match $P^\star$ within <strong>0.2%</strong>.</span><span lang="zh-CN">BayesDiff 仅恢复参考方差的 <strong>6%–23%</strong>；保留满协方差（<strong>full $\Sigma$</strong>）依旧显著低估（推论 1）。CoMP-EKF / UKF 误差在 <strong>0.2%</strong> 以内。</span></p>
+</div>
+<div class="c-card is-blue">
+<h3><span lang="en">Variogram discrepancy (target = 1)</span><span lang="zh-CN">变差函数误差（衡量跨步相关）</span></h3>
+<p><span lang="en">Measures pairwise moment error across action-chunk coordinates. BayesDiff is <strong>13–16×</strong> worse than reference (misreporting cross-step correlation along with scale); CoMP stays within <strong>10%</strong>.</span><span lang="zh-CN">度量动作块坐标间两两相关性误差。BayesDiff 达参考值的 <strong>13–16 倍</strong>（尺度与跨步相关性同时失真）；CoMP 保持在参考值 <strong>10%</strong> 以内。</span></p>
+</div>
+<div class="c-card is-green">
+<h3><span lang="en">Expert-action NLL (lower is better)</span><span lang="zh-CN">专家动作负对数似然（越低越好）</span></h3>
+<p><span lang="en">Collapsed Gaussians assign near-zero density to real expert chunks (BayesDiff NLL <strong>$&gt;10^9$</strong>). CoMP achieves well-calibrated NLLs—and switching to the augmented head lowers CoMP NLL by a further <strong>8%–10%</strong>.</span><span lang="zh-CN">坍缩后的高斯分布对真实专家动作几乎赋予零密度（BayesDiff 达 <strong>$&gt;10^9$</strong>）。CoMP 似然大幅下降，换用增强头后还可再降 <strong>8%–10%</strong>。</span></p>
+</div>
+</div>
+<div class="c-links">
+<span><span lang="en">Appendix evidence:</span><span lang="zh-CN">附录补充证据：</span></span>
+<a data-open-figure="c-original-6" href="/assets/content/comp/figure-06.webp"><span lang="en">Augmented-head calibration · Fig. 6 ↗</span><span lang="zh-CN">增强头校准对照 · 图 6 ↗</span></a>
+<a data-open-figure="c-original-11" href="/assets/content/comp/figure-11.webp"><span lang="en">Robomimic tasks &amp; perturbations · Fig. 11 ↗</span><span lang="zh-CN">Robomimic 任务与扰动 · 图 11 ↗</span></a>
+</div>
+</div>
+</section>

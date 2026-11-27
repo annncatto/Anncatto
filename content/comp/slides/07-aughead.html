@@ -1,0 +1,73 @@
+<section aria-labelledby="c-aughead-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-aughead">
+<header class="slide-header">
+<h2 id="c-aughead-title"><span lang="en">Zero-retraining augmented head $c(o)$</span><span lang="zh-CN">零重训增强末层后验：复用观测嵌入 $c(o)$</span></h2>
+<nav aria-label="§2–3 · Method" class="paper-section-path"><strong><span lang="en">§2–3 · Method</span><span lang="zh-CN">§2–3 · 方法</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-setup"><span lang="en">Setup</span><span lang="zh-CN">背景</span></a><a class="section-path-stage" href="#c-collapse"><span lang="en">Collapse</span><span lang="zh-CN">坍缩</span></a><a class="section-path-stage" href="#c-comp"><span lang="en">CoMP</span><span lang="zh-CN">递推</span></a><a class="section-path-stage" href="#c-ekf-ukf"><span lang="en">EKF/UKF</span><span lang="zh-CN">实现</span></a><a aria-current="step" class="section-path-stage" href="#c-aughead"><span lang="en">Aug. head</span><span lang="zh-CN">增强头</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=6" rel="noopener" target="_blank">07 · §2–3 · App. A.3 · Eq. (5), (23)–(25) · p. 3, 6, 19 ↗</a>
+</header>
+<div class="brief-body c-body">
+<figure class="brief-figure c-figure" data-enlarge-svg="true">
+<svg aria-label="Augmented last-layer Laplace head concatenating velocity features phi with observation embeddings c(o) and zero output weights" role="img" viewBox="0 0 1320 232" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="c-s7-arr" markerHeight="8" markerWidth="8" orient="auto" refX="7" refY="4"><path d="M0,1 L7,4 L0,7 Z" fill="#4f7c8a"/></marker>
+</defs>
+<!-- Left inputs -->
+<rect fill="#f3f7f8" height="82" rx="7" stroke="#9ab8c0" stroke-width="1.5" width="320" x="16" y="18"/>
+<text fill="#2a5565" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="en" text-anchor="middle" x="176" y="48">Action-expert last features φ(x, t)</text>
+<text fill="#2a5565" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="176" y="48">动作专家末层特征 φ(x, t)</text>
+<text fill="#5c737b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="176" y="76">Risk: over-compressed (feature collapse)</text>
+<text fill="#5c737b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="176" y="76">风险：仅拟合速度，易发生特征坍缩</text>
+
+<rect fill="#edf5fb" height="86" rx="7" stroke="#6aa0c4" stroke-width="1.6" width="320" x="16" y="122"/>
+<text fill="#225274" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="en" text-anchor="middle" x="176" y="152">Already-computed VLM c(o) = ζ</text>
+<text fill="#225274" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="176" y="152">策略已算好的观测嵌入 c(o) = ζ</text>
+<text fill="#3d657f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="176" y="180">Pooled camera + language (+ state) tokens</text>
+<text fill="#3d657f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="176" y="180">池化相机视觉 + 语言指令（+ 本体）特征</text>
+<!-- Arrows into concat -->
+<path d="M336,59 L404,96" fill="none" marker-end="url(#c-s7-arr)" stroke="#4f7c8a" stroke-width="2"/>
+<path d="M336,165 L404,128" fill="none" marker-end="url(#c-s7-arr)" stroke="#4f7c8a" stroke-width="2"/>
+<!-- Middle: augmented vector psi & zero-padded MAP -->
+<rect fill="#eef7f3" height="148" rx="8" stroke="#5c9e84" stroke-width="1.8" width="376" x="412" y="38"/>
+<text fill="#1e5943" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="en" text-anchor="middle" x="600" y="68">Augmented Linear Head (No Retraining)</text>
+<text fill="#1e5943" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="zh-CN" text-anchor="middle" x="600" y="68">观测增强线性输出头（零重训）</text>
+<text fill="#254c3d" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="600" y="102">ψ(x, t) = [ φ(x, t) ,  c(o) ]</text>
+<text fill="#254c3d" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="600" y="132">θ̄<tspan dy="3" font-size="10.5">MAP</tspan><tspan dy="-3"> = [ θ</tspan><tspan dy="3" font-size="10.5">MAP</tspan><tspan dy="-3"> ,  0 ]</tspan></text>
+<text fill="#3a6b58" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="600" y="164">u = θ̄<tspan dy="3" font-size="9.5">MAP</tspan><tspan dy="-3"> · ψ = θ</tspan><tspan dy="3" font-size="9.5">MAP</tspan><tspan dy="-3"> · φ  (exact same action)</tspan></text>
+<text fill="#3a6b58" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="600" y="164">u = θ̄<tspan dy="3" font-size="9.5">MAP</tspan><tspan dy="-3"> · ψ = θ</tspan><tspan dy="3" font-size="9.5">MAP</tspan><tspan dy="-3"> · φ（输出动作完全不变）</tspan></text>
+<!-- Two outputs on right -->
+<path d="M788,82 L846,64" fill="none" marker-end="url(#c-s7-arr)" stroke="#4f7c8a" stroke-width="2"/>
+<path d="M788,144 L846,162" fill="none" marker-end="url(#c-s7-arr)" stroke="#4f7c8a" stroke-width="2"/>
+
+<rect fill="#f5f8fa" height="84" rx="7" stroke="#8ab0be" stroke-width="1.5" width="450" x="854" y="18"/>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="en" text-anchor="middle" x="1079" y="48">1 · Exact MAP Action Preservation</text>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="1079" y="48">1 · 严格保持 MAP 动作不变</text>
+<text fill="#4b646d" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="1079" y="76">Zero-padded weights keep policy control bitwise unchanged</text>
+<text fill="#4b646d" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="1079" y="76">补零权重使策略控制输出与原模型逐比特一致</text>
+
+<rect fill="#e9f4ee" height="86" rx="7" stroke="#4b9c80" stroke-width="1.6" width="450" x="854" y="122"/>
+<text fill="#1e5943" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="en" text-anchor="middle" x="1079" y="152">2 · Wider Curvature Posterior Σ<tspan dy="3" font-size="11">θ</tspan><tspan dy="-3"> (KFAC on ψ)</tspan></text>
+<text fill="#1e5943" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="1079" y="152">2 · 扩充曲率后验 Σ<tspan dy="3" font-size="11">θ</tspan><tspan dy="-3">（在 ψ 上拟合 KFAC）</tspan></text>
+<text fill="#2e5e4b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="1079" y="180">ψᵀ Σ<tspan dy="3" font-size="10">d</tspan><tspan dy="-3"> ψ  ≥  φᵀ (Λ</tspan><tspan dy="3" font-size="10">d</tspan><tspan dy="-8" font-size="10">φφ</tspan><tspan dy="5">)⁻¹ φ   (App. A.3, Eq. 25)</tspan></text>
+<text fill="#2e5e4b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="1079" y="180">ψᵀ Σ<tspan dy="3" font-size="10">d</tspan><tspan dy="-3"> ψ  ≥  φᵀ (Λ</tspan><tspan dy="3" font-size="10">d</tspan><tspan dy="-8" font-size="10">φφ</tspan><tspan dy="5">)⁻¹ φ（附录 A.3, Eq. 25）</tspan></text>
+</svg>
+<figcaption><span lang="en">LULA-inspired zero-retraining head widening: reuses VLM embeddings c(o) without needing an OOD dataset, preserving MAP outputs while expanding curvature sensitivity (Eq. 5 &amp; App. A.3).</span><span lang="zh-CN">受 LULA 启发的零重训末层增强：直接复用 VLM 嵌入 c(o)，无需 OOD 数据集、不改变 MAP 动作，同时扩充曲率后验对输入歧义的感知（Eq. 5 与附录 A.3）。</span></figcaption>
+</figure>
+<div class="c-split-wide c-row-auto">
+<div class="c-copy">
+<h3><span lang="en">Why plain last-layer Laplace misses observation shifts</span><span lang="zh-CN">为何朴素末层 Laplace 会出现特征坍缩</span></h3>
+<ul>
+<li><span lang="en"><strong>Feature collapse:</strong> A last layer trained only to regress velocities $\phi(x,t)$ discards visual/language nuances not needed in-distribution, making OOD inputs look falsely familiar.</span><span lang="zh-CN"><strong>特征坍缩：</strong>末层特征 $\phi(x,t)$ 仅受速度回归监督，会过度压缩训练分布内用不到的视觉与语言差异，导致分布外输入看似“熟悉”。</span></li>
+<li><span lang="en"><strong>Advantage over LULA:</strong> LULA trains extra units on an OOD dataset unavailable to pre-trained policies; setting $\zeta = c(o)$ reuses embeddings the VLA already computes, and for a linear head the Gram matrix depends only on $\psi$—giving the exact curvature covariance at $\bar\theta_{\mathrm{MAP}}$.</span><span lang="zh-CN"><strong>相对 LULA 的改进：</strong>LULA 依赖额外 OOD 数据训练新单元；令 $\zeta=c(o)$ 直接复用 VLA 已算好的视觉—语言特征，且线性头 Gram 矩阵仅依赖 $\psi$，在 $\bar\theta_{\mathrm{MAP}}$ 处曲率协方差与后验众数完全一致。</span></li>
+</ul>
+</div>
+<div class="c-copy">
+<h3><span lang="en">Posterior storage &amp; fitting footprint</span><span lang="zh-CN">后验存储与单次拟合开销</span></h3>
+<div class="c-table c-fill-table"><table><thead><tr><th><span lang="en">Policy</span><span lang="zh-CN">策略</span></th><th><span lang="en">Features $\phi \to \psi$</span><span lang="zh-CN">特征维数</span></th><th><span lang="en">Posterior size</span><span lang="zh-CN">后验体积</span></th><th><span lang="en">Fit cost</span><span lang="zh-CN">拟合耗时</span></th></tr></thead><tbody>
+<tr><th>robomimic (29M)</th><td>252 → 756</td><td><span lang="en">&lt; 1% ens.</span><span lang="zh-CN">&lt; 1% 集成</span></td><td>&lt; 0.5 min (5090)</td></tr>
+<tr class="is-ours"><th>$\pi_{0.5}$ (7.2 GB)</th><td>1024 → 7168</td><td>4 → 206 MB (&lt;3%)</td><td>21 min (1×A100)</td></tr>
+<tr class="is-ours"><th>SmolVLA (1.2 GB)</th><td>480 → 4320</td><td>0.95 → 75 MB</td><td>1.8 GPU-h (A100)</td></tr>
+</tbody></table></div>
+</div>
+</div>
+<div class="c-finding"><span lang="en"><strong>Drop-in posterior upgrade:</strong> Appending $c(o)$ requires zero retraining and zero OOD data, keeps MAP actions bitwise unchanged, and improves CoMP and every Laplace baseline alike.</span><span lang="zh-CN"><strong>即插即用后验升级：</strong>拼接 $c(o)$ 无需重训、无需额外 OOD 数据，保持 MAP 动作逐比特不变，且同步提升 CoMP 与全部末层 Laplace 基线。</span></div>
+</div>
+</section>

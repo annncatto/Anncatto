@@ -1,0 +1,66 @@
+<section aria-labelledby="c-comp-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-comp">
+<header class="slide-header">
+<h2 id="c-comp-title"><span lang="en">CoMP: Carrying cross-covariance $C_i$</span><span lang="zh-CN">CoMP：携带状态—权重互协方差 $C_i$</span></h2>
+<nav aria-label="§2–3 · Method" class="paper-section-path"><strong><span lang="en">§2–3 · Method</span><span lang="zh-CN">§2–3 · 方法</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-setup"><span lang="en">Setup</span><span lang="zh-CN">背景</span></a><a class="section-path-stage" href="#c-collapse"><span lang="en">Collapse</span><span lang="zh-CN">坍缩</span></a><a aria-current="step" class="section-path-stage" href="#c-comp"><span lang="en">CoMP</span><span lang="zh-CN">递推</span></a><a class="section-path-stage" href="#c-ekf-ukf"><span lang="en">EKF/UKF</span><span lang="zh-CN">实现</span></a><a class="section-path-stage" href="#c-aughead"><span lang="en">Aug. head</span><span lang="zh-CN">增强头</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=5" rel="noopener" target="_blank">05 · §3 · Eq. (10)–(14) · Thm. 2 · p. 5 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-math-pair c-divided">
+<div class="c-copy">
+<h3><span lang="en">Joint linearization of $(x_i, \theta)$ (Eq. 10)</span><span lang="zh-CN">状态与权重的联合线性化（Eq. 10）</span></h3>
+<div class="formula is-sub">$$\delta x_{i+1} = A_i\delta x_i + B_i\delta\theta,\quad A_i = I + \Delta t\,J_i^x,\quad B_i = \Delta t\,J_i^\theta$$</div>
+<p><span lang="en">Stack $z_i = (\delta x_i, \delta\theta)$ with transition $\begin{pmatrix}A_i &amp; B_i\\ 0 &amp; I\end{pmatrix}$: the bottom identity block carries the <strong>same</strong> $\delta\theta$ unchanged across all $T$ steps, yielding exact closed-form moment updates for $(m_i, P_i, C_i)$ from $(x_0, 0, 0)$.</span><span lang="zh-CN">构造增广状态 $z_i=(\delta x_i,\delta\theta)$ 与转移矩阵 $\begin{pmatrix}A_i &amp; B_i\\ 0 &amp; I\end{pmatrix}$：底部单位块在全部 $T$ 步保持<strong>同一权重偏离</strong> $\delta\theta$ 不变，从 $(x_0,0,0)$ 得到 $(m_i, P_i, C_i)$ 的精确闭式矩更新。</span></p>
+</div>
+<div class="c-copy">
+<h3><span lang="en">CoMP recursion (Eq. 11–13)</span><span lang="zh-CN">CoMP 三元组递推（Eq. 11–13）</span></h3>
+<div class="formula is-core">$$C_{i+1} = A_i C_i + B_i \Sigma_\theta$$</div>
+<div class="formula is-sub" lang="en">$$P_{i+1} = \underbrace{A_i P_i A_i^\top}_{\text{state spread}} + \underbrace{A_i C_i B_i^\top + B_i C_i^\top A_i^\top}_{\text{state–weight cross terms}} + \underbrace{B_i \Sigma_\theta B_i^\top}_{\text{step injection}}$$</div>
+<div class="formula is-sub" lang="zh-CN">$$P_{i+1} = \underbrace{A_i P_i A_i^\top}_{\text{状态扩散}} + \underbrace{A_i C_i B_i^\top + B_i C_i^\top A_i^\top}_{\text{状态—权重交叉项}} + \underbrace{B_i \Sigma_\theta B_i^\top}_{\text{单步注入}}$$</div>
+</div>
+</div>
+<figure class="brief-figure c-figure" data-enlarge-svg="true">
+<svg aria-label="Comparison of unrolled terminal covariance: BayesDiff squares variances per step (1/T) vs CoMP sums amplitudes before squaring (O(1))" role="img" viewBox="0 0 1320 256" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="c-s5-arr-r" markerHeight="8" markerWidth="8" orient="auto" refX="7" refY="4"><path d="M0,1 L7,4 L0,7 Z" fill="#b55d4c"/></marker>
+  <marker id="c-s5-arr-g" markerHeight="8" markerWidth="8" orient="auto" refX="7" refY="4"><path d="M0,1 L7,4 L0,7 Z" fill="#397d64"/></marker>
+</defs>
+<!-- Row 1: BayesDiff (C_i = 0) -->
+<rect fill="#fcf4f1" height="114" rx="8" stroke="#d59a8c" stroke-width="1.5" width="1296" x="12" y="8"/>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="en" x="28" y="34">BayesDiff (Cᵢ ≡ 0 · incoherent sum)</text>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="zh-CN" x="28" y="34">BayesDiff（Cᵢ ≡ 0 · 非相干方差累加）</text>
+<rect fill="#ffffff" height="60" rx="5" stroke="#d9a89d" stroke-width="1.3" width="256" x="28" y="48"/>
+<text fill="#5c362e" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="156" y="73">Step i injects variance</text>
+<text fill="#5c362e" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="156" y="73">第 i 步注入独立方差</text>
+<text fill="#8c3627" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="600" text-anchor="middle" x="156" y="96">Bᵢ Σ<tspan dy="3" font-size="10.5">θ</tspan><tspan dy="-3"> Bᵢᵀ ~ Δt²</tspan></text>
+<path d="M284,78 L322,78" fill="none" marker-end="url(#c-s5-arr-r)" stroke="#b55d4c" stroke-width="2"/>
+<rect fill="#ffffff" height="60" rx="5" stroke="#d9a89d" stroke-width="1.3" width="486" x="328" y="48"/>
+<text fill="#5c362e" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="571" y="73">Squares each step first, then sums T terms:</text>
+<text fill="#5c362e" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="571" y="73">先对每步单独平方，再把 T 项方差相加：</text>
+<text fill="#8c3627" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="600" text-anchor="middle" x="571" y="96">P<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> = Δt² Σᵢ Φᵢ Jᵢ</tspan><tspan dy="-5" font-size="10.5">θ</tspan><tspan dy="5"> Σ</tspan><tspan dy="3" font-size="10.5">θ</tspan><tspan dy="-3"> (Jᵢ</tspan><tspan dy="-5" font-size="10.5">θ</tspan><tspan dy="5">)ᵀ Φᵢᵀ</tspan></text>
+<path d="M814,78 L852,78" fill="none" marker-end="url(#c-s5-arr-r)" stroke="#b55d4c" stroke-width="2"/>
+<rect fill="#f9e6e1" height="60" rx="5" stroke="#b55d4c" stroke-width="1.6" width="434" x="858" y="48"/>
+<text fill="#8c3627" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="700" text-anchor="middle" x="1075" y="73">tr P<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> ≤ T · Δt² · e²ᴸ σ̄</tspan><tspan dy="-5" font-size="10.5">2</tspan><tspan dy="8" font-size="10">max</tspan></text>
+<text fill="#8c3627" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="700" text-anchor="middle" x="1075" y="97">= e²ᴸ σ̄<tspan dy="-5" font-size="10.5">2</tspan><tspan dy="8" font-size="10">max</tspan><tspan dy="-3"> / T  →  0</tspan></text>
+<!-- Row 2: CoMP (carries C_i) -->
+<rect fill="#eef7f3" height="116" rx="8" stroke="#85b5a0" stroke-width="1.5" width="1296" x="12" y="132"/>
+<text fill="#1f5a44" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="en" x="28" y="158">CoMP (carries Cᵢ = Cov(δxᵢ, δθ) · coherent sum)</text>
+<text fill="#1f5a44" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="700" lang="zh-CN" x="28" y="158">CoMP（携带 Cᵢ = Cov(δxᵢ, δθ) · 相干振幅叠加）</text>
+<rect fill="#ffffff" height="60" rx="5" stroke="#8dbba8" stroke-width="1.3" width="256" x="28" y="172"/>
+<text fill="#24513f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="156" y="197">Same δθ adds amplitude</text>
+<text fill="#24513f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="156" y="197">同一 δθ 每步贡献振幅</text>
+<text fill="#1a4e3b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="600" text-anchor="middle" x="156" y="220">Δt · Φᵢ Jᵢ<tspan dy="-5" font-size="10.5">θ</tspan><tspan dy="5"> ~ Δt</tspan></text>
+<path d="M284,202 L322,202" fill="none" marker-end="url(#c-s5-arr-g)" stroke="#397d64" stroke-width="2"/>
+<rect fill="#ffffff" height="60" rx="5" stroke="#8dbba8" stroke-width="1.3" width="486" x="328" y="172"/>
+<text fill="#24513f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="571" y="197">Sums amplitudes coherently first, then squares:</text>
+<text fill="#24513f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="571" y="197">先把全部 T 步振幅相干求和，最后再平方：</text>
+<text fill="#1a4e3b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="600" text-anchor="middle" x="571" y="220">M<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> = Δt Σᵢ Φᵢ Jᵢ</tspan><tspan dy="-5" font-size="10.5">θ</tspan><tspan dy="5">,    P</tspan><tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> = M</tspan><tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> Σ</tspan><tspan dy="3" font-size="10.5">θ</tspan><tspan dy="-3"> M</tspan><tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3">ᵀ</tspan></text>
+<path d="M814,202 L852,202" fill="none" marker-end="url(#c-s5-arr-g)" stroke="#397d64" stroke-width="2"/>
+<rect fill="#dff0e7" height="60" rx="5" stroke="#397d64" stroke-width="1.6" width="434" x="858" y="172"/>
+<text fill="#1a4e3b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="700" text-anchor="middle" x="1075" y="197">tr P<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3"> ≤ (T · Δt · eᴸ σ̄</tspan><tspan dy="3" font-size="10">max</tspan><tspan dy="-3">)²</tspan></text>
+<text fill="#1a4e3b" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="700" text-anchor="middle" x="1075" y="221">= e²ᴸ σ̄<tspan dy="-5" font-size="10.5">2</tspan><tspan dy="8" font-size="10">max</tspan><tspan dy="-3"> = O(1)</tspan></text>
+</svg>
+<figcaption><span lang="en">Proposition 2 &amp; Theorem 2: unrolling the recursion with $\Phi_i = A_{T-1}\cdots A_{i+1}$. Both bounds share the exact constant $e^{2L}\bar\sigma_{\max}^2$ and differ solely by $1/T$ (diagram from §3 &amp; App. A.2).</span><span lang="zh-CN">命题 2 与定理 2：按传播算子 $\Phi_i = A_{T-1}\cdots A_{i+1}$ 展开递推。两项上界常数 $e^{2L}\bar\sigma_{\max}^2$ 完全相同，仅差一个 $1/T$ 因子（据 §3 与附录 A.2 绘制）。</span></figcaption>
+</figure>
+<div class="c-finding"><span lang="en"><strong>Theorem 2 (Step-count invariance):</strong> Carrying $C_i$ adds the $T$ contributions of size $\Delta t$ coherently as amplitudes before squaring ($(T\Delta t)^2 = 1$), whereas setting $C_i \equiv 0$ adds their squares as independent variances ($T\Delta t^2 = 1/T$). For a linear last layer ($\pi_{0.5}$, GR00T, SmolVLA), $J_i^\theta$ and $B_i$ are <strong>analytic</strong>.</span><span lang="zh-CN"><strong>定理 2（与步数无关的常数上界）：</strong>携带 $C_i$ 使 $T$ 步 $\Delta t$ 量级的权重扰动先按振幅相干叠加再平方（$(T\Delta t)^2=1$）；丢弃 $C_i$ 则是先平方再按独立方差累加（$T\Delta t^2=1/T$）。对线性输出头（$\pi_{0.5}$、GR00T、SmolVLA），$J_i^\theta$ 与 $B_i$ 均可<strong>解析计算</strong>。</span></div>
+</div>
+</section>

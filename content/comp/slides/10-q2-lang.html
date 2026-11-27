@@ -1,0 +1,34 @@
+<section aria-labelledby="c-q2-lang-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-q2-lang">
+<header class="slide-header">
+<h2 id="c-q2-lang-title"><span lang="en">Q2: Language ambiguity &amp; augmented head</span><span lang="zh-CN">Q2：增强头与语言指令模糊度响应</span></h2>
+<nav aria-label="§4 · Eval" class="paper-section-path"><strong><span lang="en">§4 · Eval</span><span lang="zh-CN">§4 · 评测</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-q1-calib"><span lang="en">Q1 Calib</span><span lang="zh-CN">校准</span></a><a class="section-path-stage" href="#c-q1-ranking"><span lang="en">Q1 Rank</span><span lang="zh-CN">排序</span></a><a aria-current="step" class="section-path-stage" href="#c-q2-lang"><span lang="en">Q2 Lang</span><span lang="zh-CN">语义</span></a><a class="section-path-stage" href="#c-q3-fiper"><span lang="en">Q3 Fail</span><span lang="zh-CN">故障</span></a><a class="section-path-stage" href="#c-q4-save"><span lang="en">Q4 Select</span><span lang="zh-CN">选数</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=7" rel="noopener" target="_blank">10 · §4.2 · Fig. 3, 8–10 · Table 3 · p. 7, 25–27 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-split-right">
+<figure class="brief-figure c-figure">
+<img alt="CoMP Figure 3: Language instruction shift on RoboLab, plain head vs augmented head" decoding="async" height="785" loading="lazy" src="/assets/content/comp/figure-03.webp" width="1232"/>
+<figcaption><span lang="en">Figure 3 · $\pi_{0.5}$ DROID ($T=10$): success (bars) vs uncertainty (lines).</span><span lang="zh-CN">图 3 · $\pi_{0.5}$ DROID（$T=10$）：成功率（灰柱）与不确定性（折线）。</span> <a data-open-figure="c-original-3" href="/assets/content/comp/figure-03.webp">Fig. 3 ↗</a></figcaption>
+</figure>
+<figure class="brief-figure c-figure">
+<img alt="CoMP Figure 10: BayesDiff response weakens from 10 to 50 integration steps while CoMP stays stable" decoding="async" height="621" loading="lazy" src="/assets/content/comp/figure-10.webp" width="1760"/>
+<figcaption><span lang="en">Figure 10 · Same first decisions re-scored at $T=10, 25, 50$: BayesDiff flattens even with augmented head; CoMP stays invariant.</span><span lang="zh-CN">图 10 · 同一首帧在 $T=10, 25, 50$ 下的响应：即使加了增强头，BayesDiff 仍随步数趋平，CoMP 不变。</span> <a data-open-figure="c-original-10" href="/assets/content/comp/figure-10.webp">Fig. 10 ↗</a></figcaption>
+</figure>
+</div>
+<div class="c-two c-divided">
+<div class="c-copy">
+<h3><span lang="en">Controlled wording protocol (same image &amp; state)</span><span lang="zh-CN">受控指令变体（固定首帧图像与本体状态）</span></h3>
+<p><span lang="en">Fit both Laplace heads once on ≤10 successful <em>specific</em> rollouts + 50k DROID frames. At test time, vary only text—e.g., <em>“Grasp the yellow banana and place it inside the red bowl on the table”</em> → <em>“Pick up the banana and place it in the bowl”</em> → <em>“Put the fruit in the bowl”</em> (Table 3).</span><span lang="zh-CN">两种后验均仅在 ≤10 条成功<em>具体</em>回合 + 50k DROID 帧上拟合一次；测试首帧只改指令措辞——例如从<em>“抓起黄色香蕉放进桌上的红碗”</em>逐步模糊到<em>“把水果放进碗里”</em>（表 3）。</span></p>
+</div>
+<div class="c-copy">
+<h3><span lang="en">Augmented head unlocks semantic sensitivity; CoMP preserves it</span><span lang="zh-CN">增强头恢复语义敏感度，CoMP 保证跨步数不衰退</span></h3>
+<p><span lang="en">On the <strong>plain head</strong>, all estimators remain flat while success drops sharply. On the <strong>augmented head</strong>, every estimator except DECU (saturated at $\ln M$) climbs monotonically with ambiguity—and unlike BayesDiff, CoMP retains full responsiveness up to $T=50$.</span><span lang="zh-CN"><strong>朴素头</strong>上所有估计器几乎走平；<strong>增强头</strong>上除 DECU（触及互信息代理上限 $\ln M$ 饱和）外，所有估计器随语言模糊度单调攀升——且仅 CoMP 在 $T=50$ 下不衰退。</span></p>
+</div>
+</div>
+<div class="c-links">
+<span><span lang="en">Appendix evidence:</span><span lang="zh-CN">附录补充：</span></span>
+<a data-open-figure="c-original-8" href="/assets/content/comp/figure-08.webp"><span lang="en">Ten RoboLab scenes · Fig. 8 ↗</span><span lang="zh-CN">RoboLab 十项场景 · 图 8 ↗</span></a>
+<a data-open-figure="c-original-9" href="/assets/content/comp/figure-09.webp"><span lang="en">Per-task curves (plain vs aug.) · Fig. 9 ↗</span><span lang="zh-CN">十任务逐项曲线 · 图 9 ↗</span></a>
+</div>
+</div>
+</section>

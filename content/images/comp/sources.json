@@ -1,0 +1,209 @@
+{
+  "paper": {
+    "title": "Coherent Moment Propagation: Epistemic Uncertainty for Pre-trained Robot Policies",
+    "authors": "Miguel Saavedra-Ruiz, Anqi Li, Claudia D'Arpino, Alperen Degirmenci, Tucker Hermans, Fabio Ramos",
+    "arxiv": "https://arxiv.org/abs/2611.26855",
+    "pdf": "https://arxiv.org/pdf/2611.26855",
+    "project": "https://comp-uq.github.io/comp-uq/",
+    "license": "http://arxiv.org/licenses/nonexclusive-distrib/1.0/",
+    "submitted": "2026-11-19"
+  },
+  "figures": [
+    {
+      "figure": 1,
+      "file": "figure-01.webp",
+      "page": 2,
+      "width": 1760,
+      "height": 525,
+      "size_kb": 119.3,
+      "sha256": "de354fd551f8c8907fe30f759ca56d307c466bdb8270dd2aa9a1dcbe937c98db",
+      "source_pdfs": [
+        "variance_shrinkage_diag_combined_merged.pdf"
+      ],
+      "description": "Variance collapse in moment propagation (2D flow mixture, T=10..400)"
+    },
+    {
+      "figure": 2,
+      "file": "figure-02.webp",
+      "page": 7,
+      "width": 1760,
+      "height": 445,
+      "size_kb": 50.5,
+      "sha256": "c625b00b7484ca3f9ea94adf379c0e6a23bf0dedebc8858474f6465245b103f8",
+      "source_pdfs": [
+        "calibration_robomimic_nll_axis.pdf"
+      ],
+      "description": "Calibration against posterior ensemble on robomimic (plain head)"
+    },
+    {
+      "figure": 3,
+      "file": "figure-03.webp",
+      "page": 7,
+      "width": 1232,
+      "height": 785,
+      "size_kb": 88.2,
+      "sha256": "5467a5fd8dce4288dd917cc6e604a5aa03063d6abf4ebb8ee6ad17b65e6ddbc2",
+      "source_pdfs": [
+        "robolab_instruction_shift_average_minmax_bywording_04_split_w1.pdf"
+      ],
+      "description": "Language instruction shift on RoboLab (plain vs augmented head)"
+    },
+    {
+      "figure": 4,
+      "file": "figure-04.webp",
+      "page": 8,
+      "width": 1760,
+      "height": 571,
+      "size_kb": 87.2,
+      "sha256": "5cae8c178d118471f1e1e56753241958d5590613f077ccb51f623997cb9b738f",
+      "source_pdfs": [
+        "fiper_main_w5ctq_ours.pdf"
+      ],
+      "description": "Runtime failure detection (FIPER) on robomimic and LIBERO-90"
+    },
+    {
+      "figure": 5,
+      "file": "figure-05.webp",
+      "page": 9,
+      "width": 1232,
+      "height": 1130,
+      "size_kb": 52.3,
+      "sha256": "3867e9f01f4e0e4991ed0c6df92bc86eb82f764cbf3010b266a7ea5493ecd057",
+      "source_pdfs": [
+        "save_libero_oneshot30k_gain_ours_04.pdf"
+      ],
+      "description": "Data selection on LIBERO-10 (SmolVLA)"
+    },
+    {
+      "figure": 6,
+      "file": "figure-06.webp",
+      "page": 23,
+      "width": 1760,
+      "height": 452,
+      "size_kb": 51.7,
+      "sha256": "15df15fd90281627b1dbeb7b991c477158da67db84b4e9b70363e0fecf5cc62e",
+      "source_pdfs": [
+        "appendix/calibration_robomimic_aug.pdf"
+      ],
+      "description": "Calibration with the augmented head on robomimic"
+    },
+    {
+      "figure": 7,
+      "file": "figure-07.webp",
+      "page": 24,
+      "width": 1760,
+      "height": 772,
+      "size_kb": 225.2,
+      "sha256": "cc82543e8fe27de1dfa567ff73693e30b98fca873b1037c3d7840971f08daf0d",
+      "source_pdfs": [
+        "appendix/ranking_study.pdf"
+      ],
+      "description": "Ordering of most and least uncertain observations across Euler steps T"
+    },
+    {
+      "figure": 8,
+      "file": "figure-08.webp",
+      "page": 25,
+      "width": 1320,
+      "height": 602,
+      "size_kb": 139.5,
+      "sha256": "729861a39913d7b79a677f3b6980dafba3e5ae4d15d6e110f7b5ccc3d69fe712",
+      "source_pdfs": [
+        "appendix/robolab_scenes.pdf"
+      ],
+      "description": "Ten RoboLab manipulation tasks and default instructions"
+    },
+    {
+      "figure": 9,
+      "file": "figure-09.webp",
+      "page": 27,
+      "width": 1430,
+      "height": 1252,
+      "size_kb": 225.4,
+      "sha256": "189e61c2c7cdaa84aac21c77ba0ccf1d41d6c6a48e0c4e65f24011e51845671c",
+      "source_pdfs": [
+        "appendix/robolab_instruction_shift_shipped_mixeq_minmax_all_w1.pdf",
+        "appendix/robolab_instruction_shift_cond_mixeq_minmax_all_w1.pdf"
+      ],
+      "description": "RoboLab instruction shift per task (plain top, augmented bottom)"
+    },
+    {
+      "figure": 10,
+      "file": "figure-10.webp",
+      "page": 27,
+      "width": 1760,
+      "height": 621,
+      "size_kb": 76.0,
+      "sha256": "5736c5655488105944e77312c9f67f65ea5991764bddeef235a06a26bb0ac688",
+      "source_pdfs": [
+        "appendix/robolab_instruction_shift_average_minmax_bywording_steps_w1.pdf"
+      ],
+      "description": "BayesDiff response weakens from 10 to 50 integration steps while CoMP stays stable"
+    },
+    {
+      "figure": 11,
+      "file": "figure-11.webp",
+      "page": 28,
+      "width": 1320,
+      "height": 496,
+      "size_kb": 40.1,
+      "sha256": "e54a7bca6ceadae649ce815e7a415a350cacc6a66ea3d823966195a8261c68b9",
+      "source_pdfs": [
+        "appendix/robomimic_perturbations.pdf"
+      ],
+      "description": "Initial object and end-effector perturbations on robomimic"
+    },
+    {
+      "figure": 12,
+      "file": "figure-12.webp",
+      "page": 29,
+      "width": 1320,
+      "height": 587,
+      "size_kb": 85.2,
+      "sha256": "813922a698285bf9e91b7f4e184bcba144dafdaa4f1d9b541411de36a7179bf9",
+      "source_pdfs": [
+        "appendix/libero90_scenes.pdf"
+      ],
+      "description": "Nine held-out LIBERO-90 tasks for runtime failure detection"
+    },
+    {
+      "figure": 13,
+      "file": "figure-13.webp",
+      "page": 31,
+      "width": 1320,
+      "height": 636,
+      "size_kb": 110.6,
+      "sha256": "939bd8e3a73a9732a090917c8873c331974188f23066e6ee2fe584ef5fabb136",
+      "source_pdfs": [
+        "appendix/libero10_scenes.pdf"
+      ],
+      "description": "Ten LIBERO-10 tasks for uncertainty-guided fine-tuning"
+    },
+    {
+      "figure": 14,
+      "file": "figure-14.webp",
+      "page": 32,
+      "width": 1760,
+      "height": 627,
+      "size_kb": 62.5,
+      "sha256": "6357e582f8c03074dd7ab68e6fe4c8e0361c0bdaa58c9771fbec6f418bb47333",
+      "source_pdfs": [
+        "appendix/save_libero_oneshot30k_gain_both.pdf"
+      ],
+      "description": "Effect of augmented Laplace head on LIBERO-10 data selection across all estimators"
+    },
+    {
+      "figure": 15,
+      "file": "figure-15.webp",
+      "page": 33,
+      "width": 1767,
+      "height": 832,
+      "size_kb": 106.5,
+      "sha256": "838c14a22622f26ac3d991c0f46a323d5ff8e1e443b6ca5890b3b350259216f0",
+      "source_pdfs": [
+        "appendix/save_libero_oneshot30k_perestimator_row.pdf"
+      ],
+      "description": "LIBERO-10 success curves per estimator across demonstration budgets X"
+    }
+  ]
+}

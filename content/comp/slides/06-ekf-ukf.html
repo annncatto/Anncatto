@@ -1,0 +1,51 @@
+<section aria-labelledby="c-ekf-ukf-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-ekf-ukf">
+<header class="slide-header">
+<h2 id="c-ekf-ukf-title"><span lang="en">Two realizations: CoMP-EKF vs CoMP-UKF</span><span lang="zh-CN">两种实现：CoMP-EKF 与 CoMP-UKF</span></h2>
+<nav aria-label="§2–3 · Method" class="paper-section-path"><strong><span lang="en">§2–3 · Method</span><span lang="zh-CN">§2–3 · 方法</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-setup"><span lang="en">Setup</span><span lang="zh-CN">背景</span></a><a class="section-path-stage" href="#c-collapse"><span lang="en">Collapse</span><span lang="zh-CN">坍缩</span></a><a class="section-path-stage" href="#c-comp"><span lang="en">CoMP</span><span lang="zh-CN">递推</span></a><a aria-current="step" class="section-path-stage" href="#c-ekf-ukf"><span lang="en">EKF/UKF</span><span lang="zh-CN">实现</span></a><a class="section-path-stage" href="#c-aughead"><span lang="en">Aug. head</span><span lang="zh-CN">增强头</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=6" rel="noopener" target="_blank">06 · §3 · Alg. 1–2 · App. A.4–A.5 · p. 6, 20 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-two c-fill-grid">
+<div class="c-card is-blue c-mode-card" data-active="false" data-mode-panel="ekf">
+<h3><span class="c-card-num">1</span><span lang="en">CoMP-EKF · Local Jacobian linearization (Alg. 1)</span><span lang="zh-CN">CoMP-EKF · 局部雅可比线性化（算法 1）</span></h3>
+<div class="formula is-sub" lang="en">$$A_i = I + \Delta t\,\frac{\partial u_{\theta_{\mathrm{MAP}}}}{\partial x_i}\Big|_{m_i},\qquad P_{i+1} = A_i P_i A_i^\top + \text{cross} + B_i\Sigma_\theta B_i^\top$$</div>
+<div class="formula is-sub" lang="zh-CN">$$A_i = I + \Delta t\,\frac{\partial u_{\theta_{\mathrm{MAP}}}}{\partial x_i}\Big|_{m_i},\qquad P_{i+1} = A_i P_i A_i^\top + \text{交叉项} + B_i\Sigma_\theta B_i^\top$$</div>
+<ul>
+<li><span lang="en">Computes exact $J_i^x$ at the MAP mean $m_i$ via batched reverse-mode autodiff ($D$ backward passes per Euler step).</span><span lang="zh-CN">在均值轨迹 $m_i$ 处经批量反向自动微分求精确状态雅可比 $J_i^x$（每欧拉步需 $D$ 次反传）。</span></li>
+<li><span lang="en"><strong>Tradeoff:</strong> Matches 2D/robomimic calibration, but local linearization error accumulates along nonlinear VLA trajectories.</span><span lang="zh-CN"><strong>局限：</strong>在二维与 robomimic 校准准确，但在高维非线性 VLA 轨迹上会累积一阶线性化误差。</span></li>
+<li><span lang="en"><strong>Cost &amp; score:</strong> 2.13 s on $\pi_{0.5}$ ($D=70$), <strong>10.98 s</strong> on SmolVLA ($D=350$); LIBERO-90 TWA 0.575.</span><span lang="zh-CN"><strong>实测代价：</strong>$\pi_{0.5}$ 耗时 2.13 s，SmolVLA（$D=350$）升至 <strong>10.98 s</strong>；LIBERO-90 TWA 0.575。</span></li>
+</ul>
+</div>
+<div class="c-card is-green c-mode-card" data-active="true" data-mode-panel="ukf">
+<h3><span class="c-card-num">2</span><span lang="en">CoMP-UKF · Deterministic sigma points (Alg. 2)</span><span lang="zh-CN">CoMP-UKF · 无迹变换 sigma 点（算法 2）</span></h3>
+<div class="formula is-sub" lang="en">$$y_j = h_i(\chi_j),\quad (P_i+\varepsilon_i I)A_i^\top = \Sigma_i^{xy},\quad P_{i+1} = \Sigma_i^{yy} + \text{cross} + B_i\Sigma_\theta B_i^\top$$</div>
+<div class="formula is-sub" lang="zh-CN">$$y_j = h_i(\chi_j),\quad (P_i+\varepsilon_i I)A_i^\top = \Sigma_i^{xy},\quad P_{i+1} = \Sigma_i^{yy} + \text{交叉项} + B_i\Sigma_\theta B_i^\top$$</div>
+<ul>
+<li><span lang="en">Places $2D+1$ deterministic sigma points $\chi_j$ around $(m_i, P_i)$ and evaluates them in <strong>one forward batch</strong> through the nonlinear map $h_i$.</span><span lang="zh-CN">围绕 $(m_i, P_i)$ 构造 $2D+1$ 个确定性 sigma 点 $\chi_j$，<strong>单批前向</strong>穿过非线性欧拉映射 $h_i$，保留二阶曲率 $\Sigma_i^{yy}$。</span></li>
+<li><span lang="en"><strong>Key gain:</strong> No backward passes; analytic $B_i$ at $m_i$ means no sigma points are needed for weights $\theta$.</span><span lang="zh-CN"><strong>优势：</strong>无需反向传播；权重项 $B_i$ 仍在 $m_i$ 处解析计算，因此无需对权重 $\theta$ 采样 sigma 点。</span></li>
+<li><span lang="en"><strong>Cost &amp; score:</strong> 1.85 s on $\pi_{0.5}$, <strong>3.38 s</strong> on SmolVLA (3.2× faster than EKF); leads LIBERO-90 (TWA <strong>0.643</strong>).</span><span lang="zh-CN"><strong>实测代价：</strong>$\pi_{0.5}$ 仅 1.85 s，SmolVLA <strong>3.38 s</strong>（快于 EKF 3.2 倍）；LIBERO-90 全面第一（TWA <strong>0.643</strong>）。</span></li>
+</ul>
+</div>
+</div>
+<div class="c-control-box" data-comp-mode="">
+<div class="c-control-head">
+<strong><span lang="en">Compare estimator behavior &amp; verified benchmark numbers</span><span lang="zh-CN">切换查看两种实现的机制差异与实测表现</span></strong>
+<div aria-label="Select CoMP variant" class="c-pills" role="group">
+<button aria-pressed="false" data-mode-choice="ekf" type="button">CoMP-EKF</button>
+<button aria-pressed="true" data-mode-choice="ukf" type="button">CoMP-UKF</button>
+</div>
+</div>
+<p data-mode-readout=""><span lang="en">CoMP-UKF: batches 2D+1 deterministic sigma points through nonlinear hᵢ, keeping curvature Σᵢʸʸ and least-squares surrogate Aᵢ. Leads all LIBERO-90 metrics (TWA 0.643 / Acc 0.794 / DT 0.474) and runs 3.2× faster than EKF on SmolVLA (3.38 s).</span><span lang="zh-CN">CoMP-UKF：以 2D+1 个确定性 sigma 点单批前向穿过非线性欧拉映射 hᵢ，保留二阶曲率 Σᵢʸʸ 并反解仿射代理 Aᵢ。LIBERO-90 全面第一（TWA 0.643 / Acc 0.794 / DT 0.474），SmolVLA 仅需 3.38 s（快于 EKF 3.2 倍）。</span></p>
+</div>
+<div class="c-math-pair c-fill-sub">
+<div class="c-card">
+<h3><span lang="en">Scalar uncertainty scores (App. A.5, Eq. 28)</span><span lang="zh-CN">标量不确定性分数定义（附录 A.5, Eq. 28）</span></h3>
+<div class="formula is-sub">$$U_{\mathrm{chunk}} = \operatorname{tr} P_T,\qquad U_{\mathrm{endpoint}} = \operatorname{tr}\operatorname{Cov}\!\left(\sum_{k=1}^H a_k\right) = \operatorname{tr}\!\left(\sum_{k,k'=1}^H [P_T]_{kk'}\right)$$</div>
+</div>
+<div class="c-card">
+<h3><span lang="en">Why $U_{\mathrm{endpoint}}$ matters in control</span><span lang="zh-CN">为何操作任务使用末端协方差 $U_{\mathrm{endpoint}}$</span></h3>
+<p><span lang="en">$U_{\mathrm{chunk}}$ sums only diagonal per-step variances (used in Q1 to match BayesDiff). $U_{\mathrm{endpoint}}$ incorporates <strong>off-diagonal cross-step blocks $[P_T]_{kk'}$</strong>, capturing accumulated displacement uncertainty across the $H$-step chunk (used in Q2–Q4).</span><span lang="zh-CN">$U_{\mathrm{chunk}}$ 只累加对角单步方差（Q1 与 BayesDiff 直接对比）；$U_{\mathrm{endpoint}}$ 计入<strong>非对角跨步协方差块 $[P_T]_{kk'}$</strong>，度量整个 $H$ 步动作块累积末端位移的不确定性（用于 Q2–Q4）。</span></p>
+</div>
+</div>
+</div>
+</section>

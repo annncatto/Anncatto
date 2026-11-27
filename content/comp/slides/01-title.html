@@ -1,0 +1,22 @@
+<section aria-labelledby="c-title-title" class="slide brief-slide paper-slide c-slide c-cover" data-slide="" id="c-title">
+<div class="brief-body c-body c-cover-body">
+<div class="c-cover-head">
+<div class="c-cover-main">
+<p class="c-cover-eyebrow"><span lang="en">PAPER READING · ARXIV:2611.26855V1 · NOV 2026</span><span lang="zh-CN">论文精读 · ARXIV:2611.26855V1 · 2026 年 11 月</span></p>
+<h1 id="c-title-title"><span lang="en">Coherent Moment Propagation</span><span lang="zh-CN">Coherent Moment Propagation</span></h1>
+<p class="c-cover-subtitle"><span lang="en">Epistemic Uncertainty for Pre-trained Robot Policies</span><span lang="zh-CN">面向预训练流匹配机器人策略的认知不确定性估计</span></p>
+<p class="c-cover-authors"><span lang="en">Miguel Saavedra-Ruiz, Anqi Li, Claudia D’Arpino, Alperen Degirmenci, Tucker Hermans, Fabio Ramos · NVIDIA · UdeM / Mila · Utah · Sydney</span><span lang="zh-CN">Miguel Saavedra-Ruiz, Anqi Li, Claudia D’Arpino, Alperen Degirmenci, Tucker Hermans, Fabio Ramos · NVIDIA · 蒙特利尔大学 / Mila · 犹他大学 · 悉尼大学</span></p>
+<p class="c-cover-links"><a href="https://arxiv.org/abs/2611.26855" rel="noopener" target="_blank">arXiv ↗</a> · <a href="https://arxiv.org/pdf/2611.26855" rel="noopener" target="_blank"><span lang="en">Paper PDF ↗</span><span lang="zh-CN">论文 PDF ↗</span></a> · <a href="https://comp-uq.github.io/comp-uq/" rel="noopener" target="_blank"><span lang="en">Project page ↗</span><span lang="zh-CN">项目页 ↗</span></a></p>
+</div>
+<ol aria-label="Presentation outline" class="c-cover-agenda">
+<li><span class="c-agenda-num">01</span><div><strong><span lang="en">Problem &amp; Theorem 1</span><span lang="zh-CN">问题与定理 1</span></strong><p><span lang="en">Why BayesDiff collapses at $O(1/T)$ as ODE steps refine</span><span lang="zh-CN">揭示 BayesDiff 随欧拉步数按 $O(1/T)$ 坍缩的根因</span></p></div></li>
+<li><span class="c-agenda-num">02</span><div><strong><span lang="en">CoMP &amp; Augmented Head</span><span lang="zh-CN">CoMP 递推与增强头</span></strong><p><span lang="en">Carry cross-covariance $C_i$ (EKF/UKF) &amp; reuse VLM $c(o)$</span><span lang="zh-CN">携带互协方差 $C_i$（EKF/UKF）并零重训复用 $c(o)$</span></p></div></li>
+<li><span class="c-agenda-num">03</span><div><strong><span lang="en">Benchmarks &amp; Scope</span><span lang="zh-CN">四项实证与工程边界</span></strong><p><span lang="en">Calibration, language shift, FIPER alarms, data curation &amp; cost</span><span lang="zh-CN">校准、语义模糊、故障报警、微调选数与推理代价</span></p></div></li>
+</ol>
+</div>
+<figure class="brief-figure c-figure c-cover-figure">
+<img alt="CoMP Figure 1: BayesDiff variance collapse vs CoMP-EKF/UKF recovery across Euler steps T" decoding="async" height="525" loading="eager" src="/assets/content/comp/figure-01.webp" width="1760"/>
+<figcaption><span lang="en">Figure 1 · 2D flow-matching mixture ($T=100$ in a–c; $T=10..400$ in d): BayesDiff shrinks to 1/46 while CoMP-EKF/UKF recover 99%–100% independent of $T$.</span><span lang="zh-CN">图 1 · 二维流匹配混合分布（a–c 为 $T=100$，d 为 $T=10\text{–}400$）：BayesDiff 坍缩至参考值的 1/46，CoMP-EKF / UKF 在任意步数下稳定还原 99%–100%。</span> <a data-open-figure="c-original-1" href="/assets/content/comp/figure-01.webp">Fig. 1 ↗</a></figcaption>
+</figure>
+</div>
+</section>

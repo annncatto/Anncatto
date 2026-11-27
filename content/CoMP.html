@@ -1,0 +1,82 @@
+<p><span lang="en">Saavedra-Ruiz et al. (NVIDIA, UdeM / Mila, Utah, Sydney) · November 2026 · <a href="https://arxiv.org/abs/2611.26855">arXiv:2611.26855v1</a> · <a href="https://arxiv.org/pdf/2611.26855">PDF</a> · <a href="https://comp-uq.github.io/comp-uq/">Project page</a></span><span lang="zh-CN">Saavedra-Ruiz 等（NVIDIA、蒙特利尔大学 / Mila、犹他大学、悉尼大学）· 2026 年 11 月 · <a href="https://arxiv.org/abs/2611.26855">arXiv:2611.26855v1</a> · <a href="https://arxiv.org/pdf/2611.26855">PDF</a> · <a href="https://comp-uq.github.io/comp-uq/">项目页</a></span></p>
+<p><span lang="en">Proves that BayesDiff suffers from $O(1/T)$ variance collapse on flow-matching and diffusion ODEs, introduces Coherent Moment Propagation (CoMP-EKF / CoMP-UKF) carrying state–weight cross-covariance $C_i$, and widens the last-layer Laplace posterior with pre-computed observation embeddings $c(o)$ without retraining.</span><span lang="zh-CN">证明 BayesDiff 在流匹配与扩散 ODE 上存在 $O(1/T)$ 方差坍缩，提出携带状态—权重互协方差 $C_i$ 的相干矩传播（CoMP-EKF / CoMP-UKF），并复用策略已计算的观测嵌入 $c(o)$ 实现零重训末层后验增强，在故障检测与微调数据筛选中得到验证。</span></p>
+<p><a href="/notes/comp/slides/?lang=zh"><span lang="en">Open presentation ↗</span><span lang="zh-CN">打开网页 PPT ↗</span></a></p>
+
+<h2 id="speaker-notes"><span lang="en">Speaker notes</span><span lang="zh-CN">演讲提示稿</span></h2>
+
+<section><h3 id="note-01"><a href="/notes/comp/slides/#c-title">01 · Coherent Moment Propagation ↗</a></h3>
+<p>这篇论文解决一个在部署 $\pi_{0.5}$、GR00T、SmolVLA 这类流匹配机器人策略时非常痛的问题：模型总能吐出一串看似平滑的动作，但在没见过的桌面布局或模糊指令下，<strong>怎么知道此刻输出的动作靠不靠谱？</strong></p>
+<p>图 1 一眼就能看懂全篇核心：在二维流匹配混合分布上，当欧拉积分步数从 $T=10$ 加密到 $400$，已有方法 BayesDiff 报出的总方差一路对半衰减，在 $T=100$ 时只剩真值的 $1/46$；而作者提出的 CoMP-EKF 和 CoMP-UKF 在任意步数下都能把真实后验方差还原到 99%–100%。</p>
+</section>
+
+<section><h3 id="note-02"><a href="/notes/comp/slides/#c-problem">02 · 研究问题与三项核心贡献 ↗</a></h3>
+<p>先区分我们要测的是<strong>认知不确定性（epistemic uncertainty）</strong>——模型因为没见过当前场景、权重后验本身不确定而带来的预测分歧。最直接的做法是训练多份独立策略做集成，但在基础策略规模下反复训练和存储多份大模型权重太昂贵，所以需要“单模型、测试期免重训”的后验方法。</p>
+<p>BayesDiff 把末层 Laplace 和矩传播结合起来，看起来很优雅，但作者指出它藏着一个结构性漏洞：欧拉求解器步数越细，数值解越准，报告的方差反而越接近零。论文的三项贡献严丝合缝：① 严格证明 $O(1/T)$ 坍缩；② 补回状态—权重互协方差提出 CoMP-EKF / UKF；③ 零重训复用观测嵌入 $c(o)$ 解决末层特征坍缩。</p>
+</section>
+
+<section><h3 id="note-03"><a href="/notes/comp/slides/#c-setup">03 · 流匹配策略、末层 Laplace 与 BayesDiff ↗</a></h3>
+<p>这一页把后面全部要用到的符号一次讲清。VLM 骨干先把本体状态 $s$、相机图像 $I$ 和语言 $\ell$ 编成固定条件 $c(o)$，动作专家从高斯噪声 $x_0$ 出发，走 $T$ 步欧拉积分（步长 $\Delta t = 1/T$）输出展平的 $D = H d_a$ 维动作块。</p>
+<p>末层 Laplace 冻结前面全部主干，只在最后一层线性投影上用 KFAC 拟合权重高斯后验 $\theta \sim \mathcal{N}(\theta_{\mathrm{MAP}}, \Sigma_\theta)$。关键细节在于：一条真实的后验轨迹是<strong>先抽定一组权重 $\delta\theta$，然后整个 $T$ 步都用这同一组权重积到底</strong>；而 BayesDiff 每一步都先对 $\theta$ 做边缘化再采样状态粒子，相当于把 $x_i$ 和 $\theta$ 当成相互独立的，丢掉了它们之间的相关性。</p>
+</section>
+
+<section><h3 id="note-04"><a href="/notes/comp/slides/#c-collapse">04 · 定理 1：为何 BayesDiff 会 $O(1/T)$ 方差坍缩 ↗</a></h3>
+<p>定理 1 的证明直觉非常干净：把 BayesDiff 协方差递推取迹，每一步可以严格拆成两项——前面是确定性 MAP 欧拉映射 $h_i(x_i)$ 对当前状态分布的拉伸（在 $L$-Lipschitz 下最多放大 $(1+\Delta t L)^2$），后面是新注入的认知方差 $\Delta t^2 \bar\sigma_i^2$。</p>
+<p>一共走 $T = 1/\Delta t$ 步，就相当于往里加了 $T$ 次 $\Delta t^2 = 1/T^2$ 量级的东西，乘以最大指数拉伸 $e^{2L}$，总量被死死压在 $e^{2L}\bar\sigma_{\max}^2/T = O(1/T)$ 以内。你可以现场点一下页面下方的步数按钮（从 10 切到 400）：蓝线在图 1(d) 上右移时，BayesDiff 每翻倍减半，而 CoMP 纹丝不动。另外两条推论也很重要：即使改成满状态协方差（推论 1）也救不了；在扩散 SDE 中（推论 2），布朗噪声带来的偶然项是 $O(1)$，但认知项依然按 $O(1/T)$ 消失。</p>
+</section>
+
+<section><h3 id="note-05"><a href="/notes/comp/slides/#c-comp">05 · CoMP：携带状态—权重互协方差 $C_i$ ↗</a></h3>
+<p>CoMP 的核心想法非常像状态空间滤波器：既然 $x_i$ 和 $\delta\theta$ 耦在一起，就把它们拼成增广状态 $z_i = (\delta x_i, \delta\theta)$。转移矩阵左下角是 0、右下角是单位阵 $I$，意思是权重偏离 $\delta\theta$ 在整条积分链上保持恒定。</p>
+<p>这样一展开，递推里就自然多出了互协方差 $C_i = \operatorname{Cov}(\delta x_i, \delta\theta)$ 以及 $P_{i+1}$ 里的两个交叉项 $A_i C_i B_i^\top + B_i C_i^\top A_i^\top$。看图里上下两行的对比就立刻明白数学本质：<strong>BayesDiff 是每步先平方再求和（$T\cdot \Delta t^2 = 1/T$），而 CoMP 是同一 $\delta\theta$ 先按振幅相干叠加再平方（$(T\cdot \Delta t)^2 = 1$）</strong>。定理 2 的常数与定理 1 完全一样，唯一差别就是消掉了 $1/T$。</p>
+</section>
+
+<section><h3 id="note-06"><a href="/notes/comp/slides/#c-ekf-ukf">06 · 两种实现：CoMP-EKF 与 CoMP-UKF ↗</a></h3>
+<p>理论递推需要状态转移矩阵 $A_i$ 和传播后的状态协方差 $A_i P_i A_i^\top$，作者给出两种实现。CoMP-EKF 直接在均值轨迹 $m_i$ 上用反向自动微分求状态雅可比 $J_i^x$，需要 $D$ 次反传，在复杂非线性 VLA 上一阶线性化误差会逐步累积。</p>
+<p>CoMP-UKF 改用无迹变换：围绕当前均值和协方差生成 $2D+1$ 个确定性 sigma 点，单批前向穿过真实的非线性欧拉步 $h_i$，直接用 $\Sigma_i^{yy}$ 保留二阶曲率，并用正则化最小二乘反解仿射代理 $A_i$ 供给 $C_i$ 更新；权重项 $B_i$ 仍是解析闭式，不需要对权重采样。同时注意右下角两个指标：Q1 用对角迹 $U_{\mathrm{chunk}}$ 对标 BayesDiff，而 Q2–Q4 的真实操作任务统一采用末端协方差 $U_{\mathrm{endpoint}}$，把动作块内跨步非对角协方差也纳入评估。</p>
+</section>
+
+<section><h3 id="note-07"><a href="/notes/comp/slides/#c-aughead">07 · 零重训增强末层后验：复用观测嵌入 $c(o)$ ↗</a></h3>
+<p>修好了传播机制还不够：如果末层输入特征 $\phi(x,t)$ 本身已经把场景差异压没了（特征坍缩），再准的传播也测不出 OOD。之前 LULA 靠额外 OOD 数据集训练辅助特征，但预训练机器人策略手里并没有现成 OOD 集。</p>
+<p>作者的解法非常巧：直接把 VLA 原本就已经算好的 VLM 图像/语言池化嵌入 $c(o)$ 拼到末层特征后面形成 $\psi=(\phi, c(o))$，新维度对应的输出权重全置零 $\bar\theta_{\mathrm{MAP}}=(\theta_{\mathrm{MAP}}, 0)$。这样有三点好处：策略原本的动作输出逐位不变；完全不需要重训策略，只需过一遍拟合数据重新算 KFAC 曲率；并且由全方差公式严格保证增强头的预测方差处处不小于朴素头。显存开销也极低：$\pi_{0.5}$ 仅 206 MB（不到 7.2 GB 权重的 3%），SmolVLA 仅 75 MB。</p>
+</section>
+
+<section><h3 id="note-08"><a href="/notes/comp/slides/#c-q1-calib">08 · Q1：传播协方差是否忠实还原后验？ ↗</a></h3>
+<p>进入评测部分，Q1 先用 robomimic 三个任务检验最基本的数学忠实度：把 6,000 次后验抽样积分出来的经验协方差当作真值 $P^\star$。看图 2 左中右三联图，差距非常悬殊：BayesDiff 只还原了 6%–23% 的方差，变差函数误差高达真值的 13–16 倍，说明不仅大小缩水、跨步相关性也错了，专家动作 NLL 爆到 $10^9$ 以上；即便换上满状态协方差依然塌缩。</p>
+<p>相比之下，CoMP-EKF 和 CoMP-UKF 的总方差比都在真值 0.2% 以内，变差函数误差在 10% 以内，NLL 降了几个数量级；附录图 6 进一步表明，换用增强头后 CoMP 的专家动作 NLL 还能再降 8%–10%。</p>
+</section>
+
+<section><h3 id="note-09"><a href="/notes/comp/slides/#c-q1-ranking">09 · Q1 延伸：步数增大不仅缩小方差，还打乱排序 ↗</a></h3>
+<p>这一页是审稿补充实验，但洞察极其犀利。很多人第一反应会问：“故障检测和数据筛选都只看相对排序或分位数阈值，方差整体缩水 1/T 又有什么关系？”</p>
+<p>图 7 直接推翻了这个猜测：在 $T=50, 100, 200, 400$ 下，BayesDiff 并不是均匀缩放，而是随着步数增加不断把最不确定（红）和最确定（蓝）的样本混在一起乱序重排，正确归位率最高只有 40%（$T=400$ 掉到 23%），满协方差也只有 ≤53%。反观 CoMP-EKF/UKF，连线几乎完全水平，CoMP-UKF 在全部步数上都稳定保持 77% / 93% 的准确区分度。</p>
+</section>
+
+<section><h3 id="note-10"><a href="/notes/comp/slides/#c-q2-lang">10 · Q2：增强头能否识别模糊语言指令？ ↗</a></h3>
+<p>Q2 用高保真 RoboLab 里的 10 项桌面任务测试语言模糊度，用的是没在 RoboLab 上训过的零样本 $\pi_{0.5}$ DROID。每条测试首帧完全冻结图像和关节状态，只把指令从“具体”改到“默认”再改到“模糊”。</p>
+<p>图 3 对比非常鲜明：随着指令变模糊，任务成功率灰柱一路下跌，但左边朴素头上所有估计器几乎都是平线——这就是典型的末层特征坍缩；换成右边增强头后，除触及 $\ln M$ 饱和上限的 DECU 外，所有方法的不确定性都随模糊度单调升高。再看右边的图 10：把步数从 10 提到 50，即便装了增强头，BayesDiff 的斜率还是会逐渐塌平，而 CoMP 几乎完全不受步数影响。</p>
+</section>
+
+<section><h3 id="note-11"><a href="/notes/comp/slides/#c-q3-fiper">11 · Q3：运行期故障早期检测（FIPER） ↗</a></h3>
+<p>Q3 看实际闭环应用之一：运行期提前报警（FIPER 协议，5 步滑窗 + 20 条成功轨迹保形分位阈值）。在 robomimic 扰动测试中，CoMP-UKF 与最强单模型基线打平，仅用训练集成不到 1% 的参数存储就逼近双模型集成的表现。</p>
+<p>在难度更高的 9 项留出 LIBERO-90 任务（<code>pi05_libero</code>）上，CoMP-UKF 在 TWA（0.643）、准确率（0.794）和归一化检测时间（0.474）三项指标上全面拿第一。特别值得注意的是右下角表 5：即使给后验集成拉满和 CoMP-UKF 完全相同的 141 次模型前向预算，CoMP-UKF 在 LIBERO-90 上依然明显胜出（0.643 对 0.611），证明优势不是靠多算前向堆出来的，而是相干结构化传播本身更稳；同时 CoMP-EKF 落后，也说明非线性策略上 UKF 明显优于局部线性化。</p>
+</section>
+
+<section><h3 id="note-12"><a href="/notes/comp/slides/#c-q4-save">12 · Q4：不确定性引导的微调数据筛选 ↗</a></h3>
+<p>Q4 看另一个极其贴近工程落地的场景：预算有限时挑哪些示教微调 SmolVLA 最划算（LIBERO-10，5 组独立训练种子）。图 14 清楚展示了两个叠加效应：首先，在朴素头上几乎所有单模型方法都跟随机采样差不多，装上增强头后全部方法都有显著抬升；其次，增强头 CoMP-UKF 仅靠单个策略 + 75 MB 后验，用 78 条示教就达到随机 250 条的 90% 水平、平均增益 +3.5 pp，超过了需要额外维护一整份 1.2 GB 模型的双成员 VFD 集成。</p>
+<p>表 6 的步数消融则把全篇理论闭环锁死：当打分步数从 10 增至 50，增强头 BayesDiff 的增益从 +2.7 pp 一路跌穿到 −2.9 pp（反不如随机），而 CoMP-UKF 稳稳维持在 +3.3 到 +3.7 pp。</p>
+</section>
+
+<section><h3 id="note-13"><a href="/notes/comp/slides/#c-cost">13 · 推理开销、三项局限与适用边界 ↗</a></h3>
+<p>论文第六节非常坦诚地列了耗时与三大局限，讲分享时一定要重点带出工程边界。看表 1：在动作块维度较小的 $\pi_{0.5}$（$H=10, D=70$）上，CoMP-UKF 单次决策 1.85 s / 10.8 GB，和强基线 VFD（1.80 s / 10.5 GB）几乎打平；但在大动作块 SmolVLA（$H=50, D=350$）上，sigma 点数量膨胀 5 倍，CoMP-UKF 升至 3.38 s / 4.6 GB（VFD 的 3 倍耗时），而需要 350 次反传的 CoMP-EKF 高达 10.98 s。</p>
+<p>三大局限分别是线性末层依赖、$O(D^2)$ 协方差存储以及随 $D$ 增长的推理延迟。而且表 1 显示所有测试期基线最快也要 0.50 s 以上，所以高频实时 UQ 仍是开放难题——现阶段最稳妥的落地场景是离线微调选数和低频安全关键监控，下一步要靠低秩协方差传播打破 $D$ 的瓶颈。</p>
+</section>
+
+<section><h3 id="note-14"><a href="/notes/comp/slides/#c-takeaways">14 · 核心结论与机器人策略实践启发 ↗</a></h3>
+<p>最后用一张闭环总表回到开篇论点：要让预训练流匹配策略给出靠谱的认知不确定性，必须同时补齐<strong>跨步相干传播（$C_i$ + UKF sigma 点）</strong>和<strong>无坍缩观测特征（零重训拼接 $c(o)$）</strong>。对我们自己的机器人研发工作有三条直接启发：① 可以立即用于 $\pi_{0.5}$ / SmolVLA 的离线纠偏示教筛选，无需多训集成模型；② 实操上优先组合增强头与跨步末端协方差 $U_{\mathrm{endpoint}}$；③ 若要上到 20–30 Hz 闭环或 OpenWAM 这类长动作块模型，低秩协方差传播是值得跟进的后续方向。</p>
+</section>
+
+<details class="references" id="references"><summary><span lang="en">References</span><span lang="zh-CN">参考资料</span></summary><ol class="sources">
+<li><a href="https://arxiv.org/abs/2611.26855">Miguel Saavedra-Ruiz, Anqi Li, Claudia D’Arpino, Alperen Degirmenci, Tucker Hermans, Fabio Ramos. Coherent Moment Propagation: Epistemic Uncertainty for Pre-trained Robot Policies. arXiv:2611.26855v1, Nov 2026.</a></li>
+<li><a href="https://comp-uq.github.io/comp-uq/">Official CoMP project page.</a></li>
+<li><a href="https://arxiv.org/abs/2308.05396">Siqi Kou et al. BayesDiff: Estimating Pixel-wise Uncertainty in Diffusion via Bayesian Inference. ICLR 2024.</a></li>
+<li><a href="https://arxiv.org/abs/2106.10035">Agustinus Kristiadi, Matthias Hein, Philipp Hennig. Learnable Uncertainty under Laplace Approximations (LULA). UAI 2021.</a></li>
+<li><a href="https://arxiv.org/abs/2503.05958">Ralf Römer et al. Failure Prediction at Runtime for Generative Robot Policies (FIPER). 2025.</a></li>
+</ol></details>

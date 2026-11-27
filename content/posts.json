@@ -1,5 +1,16 @@
 [
   {
+    "slug": "comp",
+    "title": "CoMP · 预训练机器人策略的认知不确定性",
+    "titleEn": "CoMP · Epistemic Uncertainty for Robot Policies",
+    "description": "证明 BayesDiff 随欧拉积分步数发生 O(1/T) 方差坍缩，提出携带状态—权重互协方差的 CoMP-EKF/UKF 与零重训观测增强末层后验，并验证于故障检测与微调数据筛选；附逐页提示稿。",
+    "descriptionEn": "Proving BayesDiff's O(1/T) variance collapse, propagating state–weight cross-covariance with CoMP-EKF/UKF, and widening the last-layer Laplace head with observation embeddings for failure detection and data selection, with speaker notes.",
+    "presentation": "comp/presentation.html",
+    "date": "2026-11-27",
+    "source": "CoMP.html",
+    "sections": []
+  },
+  {
     "slug": "gr00t2",
     "title": "GR00T 2",
     "titleEn": "GR00T 2",

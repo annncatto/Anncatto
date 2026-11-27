@@ -1,0 +1,86 @@
+<section aria-labelledby="c-setup-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-setup">
+<header class="slide-header">
+<h2 id="c-setup-title"><span lang="en">Flow policies, Laplace head, and BayesDiff</span><span lang="zh-CN">流匹配策略、末层 Laplace 与 BayesDiff</span></h2>
+<nav aria-label="§2–3 · Method" class="paper-section-path"><strong><span lang="en">§2–3 · Method</span><span lang="zh-CN">§2–3 · 方法</span></strong><div class="paper-section-stages"><a aria-current="step" class="section-path-stage" href="#c-setup"><span lang="en">Setup</span><span lang="zh-CN">背景</span></a><a class="section-path-stage" href="#c-collapse"><span lang="en">Collapse</span><span lang="zh-CN">坍缩</span></a><a class="section-path-stage" href="#c-comp"><span lang="en">CoMP</span><span lang="zh-CN">递推</span></a><a class="section-path-stage" href="#c-ekf-ukf"><span lang="en">EKF/UKF</span><span lang="zh-CN">实现</span></a><a class="section-path-stage" href="#c-aughead"><span lang="en">Aug. head</span><span lang="zh-CN">增强头</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=2" rel="noopener" target="_blank">03 · §2 · Eq. (1)–(7) · p. 2–4 ↗</a>
+</header>
+<div class="brief-body c-body">
+<figure class="brief-figure c-figure" data-enlarge-svg="true">
+<svg aria-label="Flow-matching VLA inference with last-layer Laplace posterior and BayesDiff recursion" role="img" viewBox="0 0 1320 258" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="c-s3-arr" markerHeight="8" markerWidth="8" orient="auto" refX="7" refY="4"><path d="M0,1 L7,4 L0,7 Z" fill="#527b89"/></marker>
+  <marker id="c-s3-arr-red" markerHeight="8" markerWidth="8" orient="auto" refX="7" refY="4"><path d="M0,1 L7,4 L0,7 Z" fill="#b55d4c"/></marker>
+</defs>
+<!-- Box 1: Observation & VLM -->
+<rect fill="#f2f7f8" height="182" rx="8" stroke="#9ebcc3" stroke-width="1.6" width="235" x="14" y="14"/>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="en" text-anchor="middle" x="131" y="44">Observation o = (s, I, ℓ)</text>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="zh-CN" text-anchor="middle" x="131" y="44">观测输入 o = (s, I, ℓ)</text>
+<text fill="#506a72" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="131" y="70">Proprio s · Images I · Lang ℓ</text>
+<text fill="#506a72" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="131" y="70">本体 s · 图像 I · 指令 ℓ</text>
+<rect fill="#e3eff5" height="62" rx="6" stroke="#7aa6be" stroke-width="1.4" width="195" x="34" y="102"/>
+<text fill="#244f6a" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" font-weight="600" lang="en" text-anchor="middle" x="131" y="128">Frozen VLM Backbone</text>
+<text fill="#244f6a" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" font-weight="600" lang="zh-CN" text-anchor="middle" x="131" y="128">冻结 VLM 视觉语言主干</text>
+<text fill="#3c6273" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="en" text-anchor="middle" x="131" y="150">encodes once → c(o)</text>
+<text fill="#3c6273" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" lang="zh-CN" text-anchor="middle" x="131" y="150">单次编码输出 → c(o)</text>
+<!-- Arrow 1->2 -->
+<path d="M249,105 L296,105" fill="none" marker-end="url(#c-s3-arr)" stroke="#527b89" stroke-width="2"/>
+<!-- Box 2: Flow Action Expert + Euler loop -->
+<rect fill="#f1f8f4" height="182" rx="8" stroke="#85b5a0" stroke-width="1.6" width="470" x="304" y="14"/>
+<text fill="#245a46" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="en" text-anchor="middle" x="539" y="44">Action Expert · T Euler Steps (Δt = 1/T)</text>
+<text fill="#245a46" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="zh-CN" text-anchor="middle" x="539" y="44">动作专家 · T 步欧拉积分（Δt = 1/T）</text>
+<rect fill="#ffffff" height="66" rx="6" stroke="#a6c8ba" stroke-width="1.4" width="175" x="324" y="64"/>
+<text fill="#273b43" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" font-weight="600" lang="en" text-anchor="middle" x="411" y="92">Hidden features φ(xᵢ, tᵢ)</text>
+<text fill="#273b43" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" font-weight="600" lang="zh-CN" text-anchor="middle" x="411" y="92">隐藏特征 φ(xᵢ, tᵢ)</text>
+<text fill="#5c7279" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13" lang="en" text-anchor="middle" x="411" y="114">frozen trunk weights</text>
+<text fill="#5c7279" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13" lang="zh-CN" text-anchor="middle" x="411" y="114">主干权重保持冻结</text>
+<path d="M499,97 L536,97" fill="none" marker-end="url(#c-s3-arr)" stroke="#527b89" stroke-width="2"/>
+<rect fill="#e6f2ec" height="66" rx="6" stroke="#4b9c80" stroke-width="1.8" width="212" x="544" y="64"/>
+<text fill="#1f5842" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" font-weight="700" lang="en" text-anchor="middle" x="650" y="92">Linear Last Layer θ</text>
+<text fill="#1f5842" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" font-weight="700" lang="zh-CN" text-anchor="middle" x="650" y="92">线性末层权重 θ</text>
+<text fill="#2e6550" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" text-anchor="middle" x="650" y="114">θ ~ N(θ<tspan dy="3" font-size="10">MAP</tspan><tspan dy="-3">, Σ</tspan><tspan dy="3" font-size="10">θ</tspan><tspan dy="-3">)  (KFAC)</tspan></text>
+<text fill="#2c5c69" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" font-weight="600" text-anchor="middle" x="539" y="168">xᵢ₊₁ = xᵢ + Δt · u<tspan dy="3" font-size="11">θ</tspan><tspan dy="-3">(xᵢ, tᵢ, c(o))    (i = 0 … T−1)</tspan></text>
+<!-- Loop arrow cleanly outside bottom of Action Expert -->
+<path d="M650,196 L650,224 L411,224 L411,203" fill="none" marker-end="url(#c-s3-arr)" stroke="#527b89" stroke-dasharray="6 4" stroke-width="1.7"/>
+<text fill="#496e7a" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" font-weight="500" lang="en" text-anchor="middle" x="530" y="246">repeat T times from x₀ ~ N(0, I)</text>
+<text fill="#496e7a" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" font-weight="500" lang="zh-CN" text-anchor="middle" x="530" y="246">从高斯噪声 x₀ ~ N(0, I) 迭代积分 T 步</text>
+<!-- Arrow 2->3 -->
+<path d="M774,105 L822,105" fill="none" marker-end="url(#c-s3-arr)" stroke="#527b89" stroke-width="2"/>
+<!-- Box 3: Action Chunk + Uncertainty -->
+<rect fill="#f5f8fa" height="182" rx="8" stroke="#97b4c2" stroke-width="1.6" width="210" x="830" y="14"/>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="en" text-anchor="middle" x="935" y="44">Action Chunk x<tspan dy="3" font-size="11">T</tspan></text>
+<text fill="#285573" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="16" font-weight="650" lang="zh-CN" text-anchor="middle" x="935" y="44">动作块输出 x<tspan dy="3" font-size="11">T</tspan></text>
+<text fill="#273b43" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15" text-anchor="middle" x="935" y="82">a<tspan dy="3" font-size="11">1:H</tspan><tspan dy="-3"> ∈ ℝ</tspan><tspan dy="-5" font-size="11">H × dₐ</tspan></text>
+<text fill="#5c7279" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="935" y="112">flattened state D = H · d<tspan dy="3" font-size="10">a</tspan></text>
+<text fill="#5c7279" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="935" y="112">展平状态维度 D = H · d<tspan dy="3" font-size="10">a</tspan></text>
+<rect fill="#e9f3ed" height="46" rx="5" stroke="#6ca38d" stroke-width="1.3" width="176" x="847" y="132"/>
+<text fill="#235440" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="650" lang="en" text-anchor="middle" x="935" y="160">Belief N(m<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3">, P</tspan><tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3">)</tspan></text>
+<text fill="#235440" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="935" y="160">终端分布 N(m<tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3">, P</tspan><tspan dy="3" font-size="10.5">T</tspan><tspan dy="-3">)</tspan></text>
+<!-- Arrow 3->4 (BayesDiff flaw callout) -->
+<path d="M1040,105 L1076,105" fill="none" marker-end="url(#c-s3-arr-red)" stroke="#b55d4c" stroke-width="2"/>
+<rect fill="#fcf3f0" height="182" rx="8" stroke="#c98071" stroke-width="1.6" width="222" x="1084" y="14"/>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="700" lang="en" text-anchor="middle" x="1195" y="44">BayesDiff Flaw</text>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="15.5" font-weight="700" lang="zh-CN" text-anchor="middle" x="1195" y="44">BayesDiff 结构缺陷</text>
+<text fill="#5a362f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="1195" y="80">Integrates θ out at each step:</text>
+<text fill="#5a362f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="1195" y="80">每步先对权重 θ 边缘化：</text>
+<text fill="#8c392a" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="14" font-weight="650" text-anchor="middle" x="1195" y="110">p(u | xᵢ, D) · p(xᵢ)</text>
+<text fill="#5a362f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="en" text-anchor="middle" x="1195" y="142">Treats θ ⊥ xᵢ at every step</text>
+<text fill="#5a362f" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" lang="zh-CN" text-anchor="middle" x="1195" y="142">每步视 θ 与 xᵢ 相互独立</text>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" font-weight="650" lang="en" text-anchor="middle" x="1195" y="170">→ drops Cov(xᵢ, θ)!</text>
+<text fill="#9a4332" font-family="IBM Plex Sans,Noto Sans SC,sans-serif" font-size="13.5" font-weight="650" lang="zh-CN" text-anchor="middle" x="1195" y="170">→ 丢失互协方差 Cov(xᵢ, θ)</text>
+</svg>
+<figcaption><span lang="en">Flow-matching VLA pipeline, Kronecker-factored last-layer Laplace posterior, and where BayesDiff decouples weights from the state they generate (§2).</span><span lang="zh-CN">流匹配 VLA 推理链路、末层 KFAC Laplace 后验，以及 BayesDiff 割裂权重与状态依赖的位置（据 §2 拆解绘制）。</span></figcaption>
+</figure>
+<div class="c-math-pair c-divided">
+<div class="c-copy">
+<h3><span lang="en">Last-layer Laplace posterior (§2, Eq. 4)</span><span lang="zh-CN">末层 Laplace 后验（§2, Eq. 4）</span></h3>
+<div class="formula is-sub">$$p(\theta\mid\mathcal{D}) \approx \mathcal{N}(\theta_{\mathrm{MAP}}, \Sigma_\theta),\qquad \Sigma_\theta = \big(\nabla^2_\theta \mathcal{L}(\mathcal{D};\theta)\big|_{\theta_{\mathrm{MAP}}}\big)^{-1}$$</div>
+<p><span lang="en">Freeze the backbone at $\theta_{\mathrm{MAP}}$ and fit KFAC curvature only on the linear output head over $\mathcal{D}_{\mathrm{fit}}$. A single posterior draw shifts weights by $\delta\theta \triangleq \theta - \theta_{\mathrm{MAP}} \sim \mathcal{N}(0, \Sigma_\theta)$ and is <strong>held fixed across all $T$ steps</strong>.</span><span lang="zh-CN">冻结主干权重，仅对线性输出头在拟合集 $\mathcal{D}_{\mathrm{fit}}$ 上估计 KFAC 曲率；单个后验样本的权重偏离 $\delta\theta \triangleq \theta - \theta_{\mathrm{MAP}} \sim \mathcal{N}(0,\Sigma_\theta)$ 在整个 $T$ 步积分中<strong>保持同一组权重不变</strong>。</span></p>
+</div>
+<div class="c-copy">
+<h3><span lang="en">BayesDiff moment recursion (§2, Eq. 6–7)</span><span lang="zh-CN">BayesDiff 矩递推（§2, Eq. 6–7）</span></h3>
+<div class="formula is-sub">$$P_{i+1} = P_i + 2\Delta t\,\operatorname{diag}\operatorname{Cov}(x_i, u_i) + \Delta t^2\operatorname{diag}\operatorname{Cov}(u_i)$$</div>
+<p><span lang="en">Starts from $(m_0, P_0) = (x_0, 0)$ and uses $S$ Monte Carlo particles $x_i^{(s)} \sim \mathcal{N}(m_i, P_i)$ under $p(u\mid x_i, t_i, \mathcal{D})p(x_i)$. Because weights are marginalized out before each step, the recursion forgets that $x_i$ was generated by the <strong>same $\theta$</strong>.</span><span lang="zh-CN">从 $(m_0, P_0)=(x_0, 0)$ 出发，每步在积分布 $p(u\mid x_i,t_i,\mathcal{D})p(x_i)$ 下采样 $S$ 个粒子估计交叉项；由于每步先将权重边缘化，递推丢失了 $x_i$ 本身由<strong>同一 $\theta$</strong> 生成的关联。</span></p>
+</div>
+</div>
+</div>
+</section>

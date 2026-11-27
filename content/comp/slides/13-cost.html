@@ -1,0 +1,33 @@
+<section aria-labelledby="c-cost-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-cost">
+<header class="slide-header">
+<h2 id="c-cost-title"><span lang="en">Inference cost, limitations, and boundaries</span><span lang="zh-CN">推理开销、三项局限与适用边界</span></h2>
+<nav aria-label="§6–7 · Scope" class="paper-section-path"><strong><span lang="en">§6–7 · Scope</span><span lang="zh-CN">§6–7 · 边界</span></strong><div class="paper-section-stages"><a aria-current="step" class="section-path-stage" href="#c-cost"><span lang="en">Cost &amp; Limits</span><span lang="zh-CN">代价与局限</span></a><a class="section-path-stage" href="#c-takeaways"><span lang="en">Summary</span><span lang="zh-CN">总结</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=10" rel="noopener" target="_blank">13 · §6 · Table 1, Table 5 · p. 9–10 ↗</a>
+</header>
+<div class="brief-body c-body">
+<p class="c-table-cap" id="c-t1-cap"><span lang="en">Table 1 · Per-decision wall time (s) and peak GPU memory (GB) on 1×A100: $\pi_{0.5}$ ($H=10, D=70$) vs SmolVLA ($H=50, D=350$)</span><span lang="zh-CN">表 1 · 单张 A100 每次决策耗时（s）与峰值显存（GB）：$\pi_{0.5}$（$H=10, D=70$）对 SmolVLA（$H=50, D=350$）</span></p>
+<div class="c-table c-fill-table"><table aria-labelledby="c-t1-cap"><thead><tr><th><span lang="en">Metric / Policy</span><span lang="zh-CN">指标 / 策略</span></th><th>BayesDiff</th><th>DEUA</th><th>GU</th><th>DECU</th><th>VFD</th><th>CoMP-EKF</th><th>CoMP-UKF</th></tr></thead><tbody>
+<tr><th><span lang="en">Time (s) · $\pi_{0.5}$ ($D=70$)</span><span lang="zh-CN">耗时 (s) · $\pi_{0.5}$ ($D=70$)</span></th><td>0.91</td><td>0.50</td><td>0.94</td><td>0.53</td><td>1.80</td><td>2.13</td><td class="is-best">1.85</td></tr>
+<tr><th><span lang="en">Time (s) · SmolVLA ($D=350$)</span><span lang="zh-CN">耗时 (s) · SmolVLA ($D=350$)</span></th><td>0.98</td><td>0.54</td><td>0.99</td><td>0.59</td><td>1.11</td><td class="is-bad">10.98</td><td>3.38</td></tr>
+<tr><th><span lang="en">Mem (GB) · $\pi_{0.5}$ ($D=70$)</span><span lang="zh-CN">显存 (GB) · $\pi_{0.5}$ ($D=70$)</span></th><td>7.8</td><td>7.7</td><td>7.9</td><td>7.7</td><td>10.5</td><td>8.3</td><td>10.8</td></tr>
+<tr><th><span lang="en">Mem (GB) · SmolVLA ($D=350$)</span><span lang="zh-CN">显存 (GB) · SmolVLA ($D=350$)</span></th><td>1.4</td><td>1.3</td><td>1.3</td><td>1.3</td><td>1.9</td><td>1.9</td><td>4.6</td></tr>
+</tbody></table></div>
+<div class="c-three c-fill-grid">
+<div class="c-card is-alert">
+<h3><span class="c-card-num">1</span><span lang="en">Linear last-layer assumption</span><span lang="zh-CN">依赖线性末层假设</span></h3>
+<p><span lang="en">Analytic weight Jacobians $J_i^\theta$ and fast KFAC curvature rely on a linear final layer; extending Laplace posteriors into deeper transformer layers remains expensive.</span><span lang="zh-CN">解析权重雅可比 $J_i^\theta$ 与高效 KFAC 曲率依赖线性输出层；向更深层 Transformer 扩展后验仍代价高昂。</span></p>
+</div>
+<div class="c-card is-alert">
+<h3><span class="c-card-num">2</span><span lang="en">$O(D^2)$ covariance storage</span><span lang="zh-CN">$O(D^2)$ 状态协方差存储</span></h3>
+<p><span lang="en">Storing and factorizing $P_i \in \mathbb{R}^{D\times D}$ scales quadratically with the flattened chunk dimension $D = H d_a$, motivating future low-rank propagation.</span><span lang="zh-CN">存储与分解 $P_i\in\mathbb{R}^{D\times D}$ 随展平动作块维度 $D=Hd_a$ 呈平方增长，指向未来低秩协方差传播方向。</span></p>
+</div>
+<div class="c-card is-alert">
+<h3><span class="c-card-num">3</span><span lang="en">Cost grows linearly with $D$</span><span lang="zh-CN">推理开销随 $D$ 线性增长</span></h3>
+<p><span lang="en">UKF batches $2D+1$ sigma points per Euler step (on $\pi_{0.5}$ $D=70$: 1.85 s ≈ VFD 1.80 s; on SmolVLA $D=350$: 3.38 s = 3× VFD). EKF’s $D$ backward passes hit 10.98 s on SmolVLA.</span><span lang="zh-CN">UKF 每步前向 $2D+1$ 个 sigma 点（$\pi_{0.5}$ 1.85 s ≈ VFD 1.80 s；SmolVLA 5 倍维度升至 3.38 s），EKF 反向微分达 10.98 s。</span></p>
+</div>
+</div>
+<div class="c-finding-stack">
+<div class="c-finding is-blue"><span lang="en"><strong>Real-time UQ remains open across all methods:</strong> Even the fastest post-hoc baseline (DEUA) takes $\ge 0.50\text{ s}$/decision on A100. Today, CoMP is directly practical for <strong>offline demonstration curation</strong> and <strong>safety-critical monitoring</strong> where missed failures outweigh latency.</span><span lang="zh-CN"><strong>实时不确定性估计仍是全行业未解问题：</strong>即便最快的基线 DEUA 在 A100 上也需 $\ge 0.50\text{ s}$/次决策。CoMP 当前最适合<strong>离线微调数据筛选</strong>与<strong>安全关键监控</strong>，未来经低秩化可扩展至 WAM 与长时序装配。</span></div>
+</div>
+</div>
+</section>

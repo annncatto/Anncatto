@@ -1,0 +1,41 @@
+<section aria-labelledby="c-problem-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-problem">
+<header class="slide-header">
+<h2 id="c-problem-title"><span lang="en">The problem and three contributions</span><span lang="zh-CN">研究问题与三项核心贡献</span></h2>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=1" rel="noopener" target="_blank">02 · §1 · Introduction · Fig. 1 · p. 1–2 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-two c-divided">
+<div class="c-copy">
+<h3><span lang="en">Why test-time epistemic UQ is hard for flow VLAs</span><span lang="zh-CN">流匹配 VLA 的测试期认知不确定性痛点</span></h3>
+<p><span lang="en">Pre-trained flow policies ($\pi_{0.5}$, GR00T, SmolVLA) integrate an ODE to output action chunks without signaling OOD failure, while training deep ensembles does not scale.</span><span lang="zh-CN">预训练流匹配策略（$\pi_{0.5}$、GR00T、SmolVLA）经 ODE 积分输出动作块，却无法提示分布外失效；训练多份独立集成代价过高。</span></p>
+</div>
+<div class="c-copy">
+<h3><span lang="en">Why post-hoc BayesDiff breaks down</span><span lang="zh-CN">单模型后验方法（BayesDiff）的人为矛盾</span></h3>
+<p><span lang="en">BayesDiff propagates last-layer Laplace moments but marginalizes weights per step: finer ODE grids (larger $T$) improve trajectories yet drive reported uncertainty to zero.</span><span lang="zh-CN">BayesDiff 沿采样链传播末层 Laplace 矩，但每步独立边缘化权重：步数 $T$ 越细、ODE 解越准，不确定性反而趋近于零。</span></p>
+</div>
+</div>
+<blockquote class="c-quote"><span lang="en">“This creates an artificial tradeoff: finer integration better approximates the ODE solution, yet drives the reported uncertainty to zero.”</span><span lang="zh-CN">“这制造了人为矛盾：更细的积分网格能更精确逼近 ODE 解，却把报告的不确定性压向零。”</span></blockquote>
+<figure class="brief-figure c-figure c-problem-fig" data-enlarge-svg="true">
+<svg aria-label="Figure 1(a-c): Ground-truth covariance vs BayesDiff 46x collapse vs CoMP-EKF/UKF recovery" role="img" viewBox="0 0 1136 525" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="c-s2-clip"><rect height="525" width="1136" x="0" y="0"/></clipPath></defs>
+<image clip-path="url(#c-s2-clip)" height="525" href="/assets/content/comp/figure-01.webp" width="1760"/>
+</svg>
+<figcaption><span lang="en">Figure 1(a–c) · At $T=100$, BayesDiff collapses to $4.0\times 10^{-4}$ (46× smaller than reference), whereas CoMP-EKF/UKF recover 99%–100%.</span><span lang="zh-CN">图 1(a–c) · $T=100$ 时 BayesDiff 缩至 $4.0\times 10^{-4}$（参考值的 1/46），CoMP-EKF / UKF 还原 99%–100%。</span> <a data-open-figure="c-original-1" href="/assets/content/comp/figure-01.webp">Fig. 1 ↗</a></figcaption>
+</figure>
+<div class="c-three">
+<div class="c-card is-alert">
+<h3><span class="c-card-num">1</span><span lang="en">Prove $O(1/T)$ collapse</span><span lang="zh-CN">证明 $O(1/T)$ 方差坍缩</span></h3>
+<p><span lang="en">BayesDiff obeys $\operatorname{tr} P_T \le e^{2L}\bar\sigma_{\max}^2/T$ even with full $P_i$ and on diffusion SDEs (Thm. 1, Cor. 1–2).</span><span lang="zh-CN">证明总方差受 $e^{2L}\bar\sigma_{\max}^2/T$ 约束，满协方差与扩散 SDE 亦无法避免（定理 1、推论 1–2）。</span></p>
+</div>
+<div class="c-card is-blue">
+<h3><span class="c-card-num">2</span><span lang="en">CoMP-EKF &amp; CoMP-UKF</span><span lang="zh-CN">提出 CoMP-EKF 与 UKF</span></h3>
+<p><span lang="en">Carry cross-covariance $C_i=\operatorname{Cov}(\delta x_i,\delta\theta)$ for an $O(1)$ bound (Thm. 2) via autodiff or sigma points.</span><span lang="zh-CN">显式维护互协方差 $C_i=\operatorname{Cov}(\delta x_i,\delta\theta)$ 得到 $O(1)$ 上界（定理 2），给出两种实现。</span></p>
+</div>
+<div class="c-card is-green">
+<h3><span class="c-card-num">3</span><span lang="en">Augmented head $c(o)$</span><span lang="zh-CN">零重训增强末层后验</span></h3>
+<p><span lang="en">Append VLM embeddings $c(o)$ with zero weights—preventing feature collapse without altering MAP actions.</span><span lang="zh-CN">零权重拼接已有嵌入 $c(o)$，不重训、不改动作即缓解特征坍缩，并同步提升各类基线。</span></p>
+</div>
+</div>
+<div class="c-finding"><span lang="en"><strong>Validation (§4):</strong> Diffusion Policy, $\pi_{0.5}$, SmolVLA × robomimic, LIBERO, RoboLab — calibration (Q1), language shift (Q2), failure detection (Q3), data selection (Q4).</span><span lang="zh-CN"><strong>验证范围（§4）：</strong>Diffusion Policy、$\pi_{0.5}$、SmolVLA × robomimic、LIBERO、RoboLab，覆盖校准（Q1）、语义模糊（Q2）、故障检测（Q3）与选数（Q4）。</span></div>
+</div>
+</section>

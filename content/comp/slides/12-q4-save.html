@@ -1,0 +1,34 @@
+<section aria-labelledby="c-q4-save-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-q4-save">
+<header class="slide-header">
+<h2 id="c-q4-save-title"><span lang="en">Q4: Uncertainty-guided demonstration selection</span><span lang="zh-CN">Q4：不确定性引导的微调数据筛选</span></h2>
+<nav aria-label="§4 · Eval" class="paper-section-path"><strong><span lang="en">§4 · Eval</span><span lang="zh-CN">§4 · 评测</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-q1-calib"><span lang="en">Q1 Calib</span><span lang="zh-CN">校准</span></a><a class="section-path-stage" href="#c-q1-ranking"><span lang="en">Q1 Rank</span><span lang="zh-CN">排序</span></a><a class="section-path-stage" href="#c-q2-lang"><span lang="en">Q2 Lang</span><span lang="zh-CN">语义</span></a><a class="section-path-stage" href="#c-q3-fiper"><span lang="en">Q3 Fail</span><span lang="zh-CN">故障</span></a><a aria-current="step" class="section-path-stage" href="#c-q4-save"><span lang="en">Q4 Select</span><span lang="zh-CN">选数</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=9" rel="noopener" target="_blank">12 · §4.4 · Fig. 5, 13–15 · Table 6 · p. 8–9, 32–33 ↗</a>
+</header>
+<div class="brief-body c-body">
+<figure class="brief-figure c-figure c-fig-tall">
+<img alt="CoMP Figure 14: Effect of augmented Laplace head on LIBERO-10 data selection across all estimators" decoding="async" height="627" loading="lazy" src="/assets/content/comp/figure-14.webp" width="1760"/>
+<figcaption><span lang="en">Figure 14 · SmolVLA (0.6B, 5 seeds) on LIBERO-10 ($p(j)\propto\bar U_j^{2.5}$): plain (hatched) vs augmented (solid); grey = random, purple = 2-member VFD.</span><span lang="zh-CN">图 14 · SmolVLA（5 种子）在 LIBERO-10 上筛选示教（$p(j)\propto\bar U_j^{2.5}$）：斜线朴素头、实心增强头，灰线随机、紫线双模型 VFD。</span> <a data-open-figure="c-original-14" href="/assets/content/comp/figure-14.webp">Fig. 14 ↗</a></figcaption>
+</figure>
+<div class="c-split-wide c-row-auto">
+<div class="c-copy">
+<h3><span lang="en">One policy + 75 MB beats a 2-policy ensemble</span><span lang="zh-CN">单模型 + 75 MB 后验超过双模型 VFD 集成</span></h3>
+<p><span lang="en">At $T=10$, augmented CoMP-UKF reaches 90% of Random@250 with <strong>78 ± 19 demos</strong> and <strong>+3.5 pp</strong> mean gain—surpassing the 2-member VFD ensemble (+2.5 pp, needing a second 1.2 GB policy). Widening the head lifts <strong>every</strong> estimator (plain heads track random).</span><span lang="zh-CN">$T=10$ 时，增强头 CoMP-UKF 仅用 <strong>78 ± 19 条</strong>示教即达 Random@250 的 90%，平均增益 <strong>+3.5 pp</strong>（高于需多训 1.2 GB 模型的双成员 VFD）。增强头提升了<strong>全部</strong>估计器。</span></p>
+<div class="c-links">
+<span><span lang="en">Main &amp; appendix:</span><span lang="zh-CN">正文与附录原图：</span></span>
+<a data-open-figure="c-original-5" href="/assets/content/comp/figure-05.webp"><span lang="en">Main panel · Fig. 5 ↗</span><span lang="zh-CN">正文主图 · 图 5 ↗</span></a>
+<a data-open-figure="c-original-13" href="/assets/content/comp/figure-13.webp"><span lang="en">LIBERO-10 · Fig. 13 ↗</span><span lang="zh-CN">LIBERO-10 · 图 13 ↗</span></a>
+<a data-open-figure="c-original-15" href="/assets/content/comp/figure-15.webp"><span lang="en">Curves · Fig. 15 ↗</span><span lang="zh-CN">分方法曲线 · 图 15 ↗</span></a>
+</div>
+</div>
+<div class="c-copy">
+<p class="c-table-cap" id="c-t6-cap"><span lang="en">Table 6 · Augmented-head gain (pp) &amp; demos vs $T$</span><span lang="zh-CN">表 6 · 增强头选数增益（pp）与所需示教数随步数 $T$ 变化</span></p>
+<div class="c-table"><table aria-labelledby="c-t6-cap"><thead><tr><th>$T$</th><th>BayesDiff</th><th>CoMP-EKF</th><th>CoMP-UKF</th></tr></thead><tbody>
+<tr><th>10</th><td>+2.7 (95)</td><td>−0.5 (132)</td><td class="is-best">+3.5 (78)</td></tr>
+<tr><th>25</th><td>+0.5 (118)</td><td>+2.5 (102)</td><td class="is-best">+3.3 (74)</td></tr>
+<tr class="is-ours"><th>50</th><td class="is-bad">−2.9 (150)</td><td>+1.7 (108)</td><td class="is-best">+3.7 (84)</td></tr>
+</tbody></table></div>
+</div>
+</div>
+<div class="c-finding"><span lang="en"><strong>Theorem 1 verified end-to-end:</strong> Even with the augmented head, BayesDiff’s selection gain collapses from <strong>+2.7 → −2.9 pp</strong> as $T$ increases from 10 to 50 (worse than random), while CoMP-UKF holds steady at <strong>+3.3 to +3.7 pp</strong> (74–84 demos).</span><span lang="zh-CN"><strong>端到端印证定理 1：</strong>即便配备增强头，步数从 10 增至 50 时 BayesDiff 选数增益仍从 <strong>+2.7 跌至 −2.9 pp</strong>（劣于随机采样），而 CoMP-UKF 稳定保持 <strong>+3.3–+3.7 pp</strong>（仅需 74–84 条示教）。</span></div>
+</div>
+</section>

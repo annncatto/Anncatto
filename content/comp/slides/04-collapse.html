@@ -1,0 +1,48 @@
+<section aria-labelledby="c-collapse-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-collapse">
+<header class="slide-header">
+<h2 id="c-collapse-title"><span lang="en">Theorem 1: BayesDiff’s $O(1/T)$ collapse</span><span lang="zh-CN">定理 1：BayesDiff 的 $O(1/T)$ 方差坍缩</span></h2>
+<nav aria-label="§2–3 · Method" class="paper-section-path"><strong><span lang="en">§2–3 · Method</span><span lang="zh-CN">§2–3 · 方法</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-setup"><span lang="en">Setup</span><span lang="zh-CN">背景</span></a><a aria-current="step" class="section-path-stage" href="#c-collapse"><span lang="en">Collapse</span><span lang="zh-CN">坍缩</span></a><a class="section-path-stage" href="#c-comp"><span lang="en">CoMP</span><span lang="zh-CN">递推</span></a><a class="section-path-stage" href="#c-ekf-ukf"><span lang="en">EKF/UKF</span><span lang="zh-CN">实现</span></a><a class="section-path-stage" href="#c-aughead"><span lang="en">Aug. head</span><span lang="zh-CN">增强头</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=4" rel="noopener" target="_blank">04 · §3 · Thm. 1 · Cor. 1–2 · p. 4–5 ↗</a>
+</header>
+<div class="brief-body c-body">
+<div class="c-split">
+<div class="c-copy">
+<h3><span lang="en">Scalar trace recursion (Eq. 8) &amp; Theorem 1 (Eq. 9)</span><span lang="zh-CN">迹递推恒等式（Eq. 8）与方差坍缩定理（Eq. 9）</span></h3>
+<div class="formula is-sub" lang="en">$$\operatorname{tr} P_{i+1} = \underbrace{\operatorname{tr}\operatorname{Cov}_x\![h_i(x_i)]}_{\le\,(1+\Delta t\,L)^2\operatorname{tr} P_i} + \underbrace{\Delta t^2\,\bar\sigma_i^2}_{\text{epistemic injection}}$$</div>
+<div class="formula is-sub" lang="zh-CN">$$\operatorname{tr} P_{i+1} = \underbrace{\operatorname{tr}\operatorname{Cov}_x\![h_i(x_i)]}_{\le\,(1+\Delta t\,L)^2\operatorname{tr} P_i} + \underbrace{\Delta t^2\,\bar\sigma_i^2}_{\text{单步认知方差注入}}$$</div>
+<div class="formula is-core">$$\operatorname{tr} P_T \;\le\; \frac{\bar\sigma_{\max}^2}{T}\!\left(1+\frac{L}{T}\right)^{2T} \;\le\; e^{2L}\frac{\bar\sigma_{\max}^2}{T} \;=\; O\!\left(\frac{1}{T}\right)$$</div>
+<ul>
+<li><span lang="en"><strong>Two standard conditions:</strong> (A1) $L$-Lipschitz MAP velocity $u_{\theta_{\mathrm{MAP}}}$; (A2) bounded summed predictive variance $\sum_d\gamma_d^2(x,t) \le \bar\sigma_{\max}^2$.</span><span lang="zh-CN"><strong>两项常规假设：</strong>(A1) MAP 速度场对状态 $L$-Lipschitz；(A2) 预测方差和一致有界 $\sum_d \gamma_d^2(x,t) \le \bar\sigma_{\max}^2$。</span></li>
+<li><span lang="en"><strong>Why it vanishes:</strong> $T$ steps inject $T$ variances of size $\Delta t^2 = 1/T^2$; even after maximum $(1+\Delta t L)^2$ stretching, $T \cdot (1/T^2) = 1/T \to 0$.</span><span lang="zh-CN"><strong>坍缩根源：</strong>$T$ 步共注入 $T$ 次 $\Delta t^2 = 1/T^2$ 量级方差；即便每步按最大系数 $(1+\Delta t L)^2$ 放大，总和仍按 $T\cdot(1/T^2)=1/T \to 0$ 消失。</span></li>
+<li><span lang="en"><strong>Corollaries 1 &amp; 2 (App. A.1):</strong> Carrying full state covariance $P_i$ does <strong>not</strong> fix the decay; on diffusion SDEs, the epistemic term still decays as $O(1/T)$ while Brownian noise stays $O(1)$.</span><span lang="zh-CN"><strong>推论 1 与 2（附录 A.1）：</strong>保留满状态协方差 $P_i$ <strong>无法消除</strong>衰减；扩散 SDE 中认知项仍为 $O(1/T)$，仅布朗噪声偶然项维持 $O(1)$。</span></li>
+</ul>
+</div>
+<figure class="brief-figure c-figure" data-enlarge-svg="true">
+<svg aria-label="Figure 1(d): BayesDiff O(1/T) decay vs CoMP O(1) stability across T=10..400" role="img" viewBox="1136 0 624 525" xmlns="http://www.w3.org/2000/svg">
+<defs><clipPath id="c-s4-clip"><rect height="525" width="624" x="1136" y="0"/></clipPath></defs>
+<image clip-path="url(#c-s4-clip)" height="525" href="/assets/content/comp/figure-01.webp" width="1760"/>
+<line data-decay-marker="" stroke="#237ab2" stroke-dasharray="6 4" stroke-width="3.5" x1="1427.5" x2="1427.5" y1="50" y2="430"/>
+</svg>
+<figcaption><span lang="en">Fig. 1(d) · halving with every doubling of $T$; blue line tracks the step count selected below.</span><span lang="zh-CN">图 1(d) · 步数翻倍时 BayesDiff 方差减半；蓝线随下方步数选择同步移动。</span> <a data-open-figure="c-original-1" href="/assets/content/comp/figure-01.webp">Fig. 1 ↗</a></figcaption>
+</figure>
+</div>
+<div class="c-control-box" data-comp-decay="">
+<div class="c-control-head">
+<strong><span lang="en">Interactive: step-count scaling (Proposition 2 · constant-field variance ratio)</span><span lang="zh-CN">交互对照：欧拉步数 $T$ 对方差保留比例的影响（命题 2 · 常速度敏感度解析解）</span></strong>
+<div aria-label="Euler steps T" class="c-pills" role="group">
+<button aria-pressed="false" data-decay-t="10" type="button">T = 10</button>
+<button aria-pressed="false" data-decay-t="25" type="button">T = 25</button>
+<button aria-pressed="false" data-decay-t="50" type="button">T = 50</button>
+<button aria-pressed="true" data-decay-t="100" type="button">T = 100</button>
+<button aria-pressed="false" data-decay-t="200" type="button">T = 200</button>
+<button aria-pressed="false" data-decay-t="400" type="button">T = 400</button>
+</div>
+</div>
+<div class="c-meter-list">
+<div class="c-meter-row"><span>BayesDiff ($C_i \equiv 0$)</span><div class="c-meter-track"><div class="c-meter-fill is-alert" data-decay-bd-fill="" style="width:4%"></div></div><span class="c-meter-val" data-decay-bd-val="">1 / 100 (1.0%)</span></div>
+<div class="c-meter-row"><span><span lang="en">CoMP (carries $C_i$)</span><span lang="zh-CN">CoMP（携带 $C_i$）</span></span><div class="c-meter-track"><div class="c-meter-fill is-green" data-decay-comp-fill="" style="width:100%"></div></div><span class="c-meter-val" data-decay-comp-val="">1.00 (O(1))</span></div>
+</div>
+<p data-decay-summary=""><span lang="en">T = 100 (Δt = 0.010): Fig. 1(a–c) slice: BayesDiff returns tr Pₜ = 4.0×10⁻⁴ (1/46 of reference 1.8×10⁻²); CoMP-EKF recovers 99% and CoMP-UKF 100%.</span><span lang="zh-CN">T = 100（Δt = 0.010）：图 1(a–c) 对应切片：BayesDiff 返回 4.0×10⁻⁴（仅参考值 1.8×10⁻² 的 1/46）；CoMP-EKF 恢复 99%、UKF 恢复 100%。</span></p>
+</div>
+</div>
+</section>

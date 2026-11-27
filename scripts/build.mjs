@@ -44,7 +44,7 @@ for (const name of moduleNames) versionHash.update(await fs.readFile(path.join("
 versionHash.update(await fs.readFile("public/style.css"));
 versionHash.update(await fs.readFile("public/fonts.css"));
 versionHash.update(await fs.readFile("public/slides.css"));
-for(const name of ['gr00t2.css','gr00t2-architecture.css','gr00t2-architecture-vendor.js'])versionHash.update(await fs.readFile(`public/${name}`));
+for(const name of ['gr00t2.css','gr00t2-architecture.css','gr00t2-architecture-vendor.js','comp.css'])versionHash.update(await fs.readFile(`public/${name}`));
 const assetVersion = versionHash.digest("hex").slice(0, 12);
 for (const name of moduleNames) {
   const source = await fs.readFile(path.join(".build", name), "utf8");
@@ -208,7 +208,12 @@ for (const p of posts) {
   );
   if (p.presentation) {
     const slideSource = await readArticleSource(p.presentation, {transformSource: markSlideSources});
-    const slides = (p.slug === 'gr00t2' ? '<link rel="stylesheet" href="/assets/gr00t2.css"><link rel="stylesheet" href="/assets/gr00t2-architecture.css">' : '') + math(addSlideEditLink(slideSource, p.presentation)
+    const extraCss = p.slug === 'gr00t2'
+      ? '<link rel="stylesheet" href="/assets/gr00t2.css"><link rel="stylesheet" href="/assets/gr00t2-architecture.css">'
+      : p.slug === 'comp'
+      ? '<link rel="stylesheet" href="/assets/comp.css">'
+      : '';
+    const slides = extraCss + math(addSlideEditLink(slideSource, p.presentation)
       .replace(/\{\{openwam:([\w-]+)\}\}/g, (_, id) => renderOpenwamDiagram(id)));
     await write(`notes/${p.slug}/slides/index.html`, shell(p.title, p.descriptionEn, slides, true, 'slides', true));
   }

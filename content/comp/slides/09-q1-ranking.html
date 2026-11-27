@@ -1,0 +1,23 @@
+<section aria-labelledby="c-q1-ranking-title" class="slide brief-slide paper-slide paper-compact-header c-slide" data-slide="" id="c-q1-ranking">
+<header class="slide-header">
+<h2 id="c-q1-ranking-title"><span lang="en">Q1: Step count scrambles BayesDiff ranking</span><span lang="zh-CN">Q1 延伸：步数增大不仅缩小方差，还打乱排序</span></h2>
+<nav aria-label="§4 · Eval" class="paper-section-path"><strong><span lang="en">§4 · Eval</span><span lang="zh-CN">§4 · 评测</span></strong><div class="paper-section-stages"><a class="section-path-stage" href="#c-q1-calib"><span lang="en">Q1 Calib</span><span lang="zh-CN">校准</span></a><a aria-current="step" class="section-path-stage" href="#c-q1-ranking"><span lang="en">Q1 Rank</span><span lang="zh-CN">排序</span></a><a class="section-path-stage" href="#c-q2-lang"><span lang="en">Q2 Lang</span><span lang="zh-CN">语义</span></a><a class="section-path-stage" href="#c-q3-fiper"><span lang="en">Q3 Fail</span><span lang="zh-CN">故障</span></a><a class="section-path-stage" href="#c-q4-save"><span lang="en">Q4 Select</span><span lang="zh-CN">选数</span></a></div></nav>
+<a class="slide-kicker" href="https://arxiv.org/pdf/2611.26855#page=24" rel="noopener" target="_blank">09 · §4.1 · App. A.7 · Fig. 7 · p. 7, 24 ↗</a>
+</header>
+<div class="brief-body c-body">
+<figure class="brief-figure c-figure">
+<img alt="CoMP Figure 7: Ranking stability of most and least uncertain observations across Euler steps T=50, 100, 200, 400" decoding="async" height="772" loading="lazy" src="/assets/content/comp/figure-07.webp" width="1760"/>
+<figcaption><span lang="en">Figure 7 · Top 10 most uncertain (red) and bottom 10 least uncertain (blue) windows per robomimic task (30 per group) ranked by the 6,000-draw ensemble at $T=400$, tracked across $T\in\{50,100,200,400\}$. Filled = inside correct band; hollow = misplaced.</span><span lang="zh-CN">图 7 · 以 $T=400$ 的 6,000 样本集成作为真值排序，追踪每个 robomimic 任务中最不确定（红）与最确定（蓝）各 10 个样本（每组 30 个）在 $T\in\{50,100,200,400\}$ 下的排位变化；实心为落入正确区间，空心为错排。</span> <a data-open-figure="c-original-7" href="/assets/content/comp/figure-07.webp">Fig. 7 ↗</a></figcaption>
+</figure>
+<div class="c-two c-divided">
+<div class="c-copy">
+<h3><span lang="en">Why scale-invariant thresholds cannot save BayesDiff</span><span lang="zh-CN">为何“尺度不变”阈值也救不了 BayesDiff</span></h3>
+<p><span lang="en">One might ask: if collapse merely divides every score by $T$, wouldn’t quantile thresholds or top-$k$ selection stay unaffected? Figure 7 refutes this: BayesDiff ranks at most <strong>40%</strong> correctly (falling to <strong>23%</strong> at $T=400$) and <strong>reorders observations at every $T$</strong>; full-$\Sigma$ BayesDiff reaches at most <strong>53%</strong> with the same crossing trajectories.</span><span lang="zh-CN">若坍缩只是给所有样本同比例除以 $T$，保形分位阈值或 top-$k$ 选数本应不受影响。但图 7 证明：BayesDiff 排序正确率最高仅 <strong>40%</strong>（$T=400$ 跌至 <strong>23%</strong>），且随 $T$ 剧烈交叉换位；满协方差版本也仅 <strong>≤53%</strong>。</span></p>
+</div>
+<div class="c-copy">
+<h3><span lang="en">CoMP keeps rankings accurate and invariant to $T$</span><span lang="zh-CN">CoMP 在所有步数下保持高准确率且排序锁定</span></h3>
+<p><span lang="en">Both CoMP-EKF (<strong>77% / 87%–90%</strong>) and CoMP-UKF (<strong>77% / 93%</strong> identically at every $T$) cleanly separate high- and low-uncertainty observations with horizontal tracks—explaining why CoMP retains downstream gains across $T$ while BayesDiff degrades in Q2 and Q4.</span><span lang="zh-CN">CoMP-EKF（<strong>77% / 87%–90%</strong>）与 CoMP-UKF（全部步数稳居 <strong>77% / 93%</strong>）将高低不确定样本彻底分开、连线几乎水平，直接解释了后文 Q2 与 Q4 中步数增加后 BayesDiff 失效而 CoMP 稳定的现象。</span></p>
+</div>
+</div>
+</div>
+</section>
